@@ -1,4 +1,4 @@
 app:
   dataStore:
     baseUrl: 'http://localhost:8082/fhir'
-    pageCount: 1
+    pageCount: 1000

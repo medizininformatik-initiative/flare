@@ -16,12 +16,7 @@ import java.util.List;
  * <p>
  * Examples are {@code Condition} resources representing the concept of a particular disease.
  */
-public final class ConceptCriterion extends AbstractCriterion {
-
-    private ConceptCriterion(Concept concept, List<AttributeFilter> attributeFilters,
-                             TimeRestriction timeRestriction) {
-        super(concept, attributeFilters, timeRestriction);
-    }
+public record ConceptCriterion(Concept concept, List<AttributeFilter> attributeFilters, TimeRestriction timeRestriction) implements Criterion {
 
     /**
      * Returns a {@code ConceptCriterion}.
@@ -57,6 +52,7 @@ public final class ConceptCriterion extends AbstractCriterion {
     private Query query(MappingContext mappingContext, TermCode termCode) {
         var mapping = mappingContext.findMapping(termCode)
                 .orElseThrow(() -> new MappingNotFoundException(termCode));
-        return new Query(mapping.resourceType(), "%s=%s".formatted(mapping.termCodeSearchParameter(), termCode));
+        return new Query(mapping.resourceType(), "%s=%s|%s".formatted(mapping.termCodeSearchParameter(),
+                termCode.system(), termCode.code()));
     }
 }

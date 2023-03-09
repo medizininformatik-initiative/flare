@@ -5,7 +5,7 @@ import de.medizininformatikinitiative.flare.model.Query;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-public interface QueryService {
+public interface FhirQueryService {
 
     CompletableFuture<Set<String>> execute(Query query);
 }

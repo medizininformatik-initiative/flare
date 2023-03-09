@@ -1,0 +1,23 @@
+{
+  "termCode": {
+    "code": "",
+    "display": "",
+    "system": ""
+  },
+  "children": [
+    {
+      "termCode": {
+        "code": "10509002",
+        "system": "http://snomed.info/sct",
+        "display": "Acute bronchitis (disorder)"
+      }
+    },
+    {
+      "termCode": {
+        "system": "http://snomed.info/sct",
+        "code": "162864005",
+        "display": "Body mass index 30+ - obesity (finding)"
+      }
+    }
+  ]
+}

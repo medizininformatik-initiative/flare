@@ -1,7 +1,6 @@
-package de.medizininformatikinitiative.flare.fhir;
+package de.medizininformatikinitiative.flare.service;
 
 import de.medizininformatikinitiative.flare.model.Query;
-import de.medizininformatikinitiative.flare.service.DataStore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;

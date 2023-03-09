@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
 
 @Component
-public class DataStore implements QueryService {
+public class DataStore implements FhirQueryService {
 
     private static final Logger logger = LoggerFactory.getLogger(DataStore.class);
 
@@ -33,7 +33,7 @@ public class DataStore implements QueryService {
     }
 
     public CompletableFuture<Set<String>> execute(Query query) {
-        logger.debug("search for {}s with query: {}", query.type(), query.params());
+        logger.debug("execute search: {}?{}", query.type(), query.params());
         return client.post()
                 .uri("/{type}/_search", query.type())
                 .contentType(APPLICATION_FORM_URLENCODED)
@@ -43,8 +43,7 @@ public class DataStore implements QueryService {
                 .expand(bundle -> bundle.linkWithRel("next")
                         .map(link -> fetchPage(link.url()))
                         .orElse(Mono.empty()))
-                .flatMap(
-                        bundle -> Flux.fromStream(bundle.entry().stream().map(e -> e.resource().patientId())))
+                .flatMap(bundle -> Flux.fromStream(bundle.entry().stream().map(e -> e.resource().patientId())))
                 .collect(Collectors.toSet())
                 .toFuture();
     }

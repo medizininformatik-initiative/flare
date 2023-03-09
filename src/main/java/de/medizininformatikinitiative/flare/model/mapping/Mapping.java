@@ -47,22 +47,22 @@ public final class Mapping {
         return new Mapping(key, resourceType, "value", null, List.of(), List.of(), null, null);
     }
 
-    public static Mapping of(TermCode concept, String resourceType, String valueFhirPath) {
-        return new Mapping(concept, resourceType, valueFhirPath, null, List.of(), List.of(), null, null);
+    public static Mapping of(TermCode concept, String resourceType, String termCodeSearchParameter) {
+        return new Mapping(concept, resourceType, termCodeSearchParameter, null, List.of(), List.of(), null, null);
     }
 
-    public static Mapping of(TermCode concept, String resourceType, String valueFhirPath, String valueType) {
-        return new Mapping(concept, resourceType, valueFhirPath, valueType, List.of(), List.of(), null, null);
+    public static Mapping of(TermCode concept, String resourceType, String termCodeSearchParameter, String valueType) {
+        return new Mapping(concept, resourceType, termCodeSearchParameter, valueType, List.of(), List.of(), null, null);
     }
 
-    public static Mapping of(TermCode key, String resourceType, String valueFhirPath, String valueType, List<Modifier> fixedCriteria,List<AttributeMapping> attributeMappings) {
-        return new Mapping(key, resourceType, valueFhirPath == null ? "value" : valueFhirPath, valueType,
+    public static Mapping of(TermCode key, String resourceType, String termCodeSearchParameter, String valueType, List<Modifier> fixedCriteria,List<AttributeMapping> attributeMappings) {
+        return new Mapping(key, resourceType, termCodeSearchParameter == null ? "value" : termCodeSearchParameter, valueType,
             fixedCriteria == null ? List.of() : List.copyOf(fixedCriteria),
             attributeMappings, null, null);
     }
 
-    public static Mapping of(TermCode key, String resourceType, String valueFhirPath, String valueType, List<Modifier> fixedCriteria, List<AttributeMapping> attributeMappings, String timeRestrictionPath) {
-        return new Mapping(key, resourceType, valueFhirPath == null ? "value" : valueFhirPath, valueType,
+    public static Mapping of(TermCode key, String resourceType, String termCodeSearchParameter, String valueType, List<Modifier> fixedCriteria, List<AttributeMapping> attributeMappings, String timeRestrictionPath) {
+        return new Mapping(key, resourceType, termCodeSearchParameter == null ? "value" : termCodeSearchParameter, valueType,
             fixedCriteria == null ? List.of() : List.copyOf(fixedCriteria),
             attributeMappings, timeRestrictionPath, null);
     }

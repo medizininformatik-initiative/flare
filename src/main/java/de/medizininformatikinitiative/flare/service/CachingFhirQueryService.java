@@ -11,16 +11,16 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class CachingQueryService implements QueryService {
+public class CachingFhirQueryService implements FhirQueryService {
 
     private final AsyncLoadingCache<Query, Set<String>> cache;
 
-    public CachingQueryService(@Qualifier("dataStore") QueryService queryService) {
+    public CachingFhirQueryService(@Qualifier("dataStore") FhirQueryService fhirQueryService) {
         cache = Caffeine.newBuilder()
                 .maximumSize(10_000)
                 .expireAfterWrite(Duration.ofMinutes(5))
                 .refreshAfterWrite(Duration.ofMinutes(1))
-                .buildAsync((query, executor) -> queryService.execute(query));
+                .buildAsync((query, executor) -> fhirQueryService.execute(query));
     }
 
     public CompletableFuture<Set<String>> execute(Query query) {
