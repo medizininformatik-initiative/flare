@@ -20,5 +20,17 @@
     "termCodeSearchParameter": "code",
     "timeRestrictionParameter": "recorded-date",
     "timeRestrictionPath": "onset"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "72166-2",
+      "display": "Tobacco smoking status NHIS"
+    },
+    "termCodeSearchParameter": "code",
+    "valueSearchParameter": "value-concept",
+    "timeRestrictionParameter": "recorded-date",
+    "timeRestrictionPath": "onset"
   }
 ]

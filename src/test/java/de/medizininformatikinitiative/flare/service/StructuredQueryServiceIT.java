@@ -1,12 +1,12 @@
 package de.medizininformatikinitiative.flare.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.medizininformatikinitiative.flare.FlareApplication;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
 import de.medizininformatikinitiative.flare.model.sq.ConceptCriterion;
 import de.medizininformatikinitiative.flare.model.sq.StructuredQuery;
+import de.medizininformatikinitiative.flare.model.sq.ValueSetCriterion;
 import de.numcodex.sq2cql.model.TermCodeNode;
 import de.numcodex.sq2cql.model.common.TermCode;
 import de.numcodex.sq2cql.model.structured_query.Concept;
@@ -26,6 +26,7 @@ import org.testcontainers.images.PullPolicy;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,6 +36,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static java.util.function.Function.identity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
@@ -43,6 +45,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 class StructuredQueryServiceIT {
 
     private static final TermCode C71 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "Z94", "");
+    private static final TermCode COVID = TermCode.of("http://loinc.org", "94500-6", "");
+    private static final TermCode DETECTED = TermCode.of("http://snomed.info/sct", "260373001", "");
 
     private static final Logger logger = LoggerFactory.getLogger(StructuredQueryServiceIT.class);
 
@@ -72,7 +76,7 @@ class StructuredQueryServiceIT {
         public MappingContext mappingContext() throws Exception {
             var mapper = new ObjectMapper();
             var mappings = Arrays.stream(mapper.readValue(slurp("codex-term-code-mapping.json"), Mapping[].class))
-                    .collect(Collectors.toMap(Mapping::key, v -> v));
+                    .collect(Collectors.toMap(Mapping::key, identity()));
             var conceptTree = mapper.readValue(slurp("codex-code-tree.json"), TermCodeNode.class);
             return MappingContext.of(mappings, conceptTree);
         }
@@ -93,6 +97,8 @@ class StructuredQueryServiceIT {
         }
     }
 
+    private static boolean dataImported = false;
+
     @Autowired
     private WebClient dataStoreClient;
 
@@ -100,28 +106,42 @@ class StructuredQueryServiceIT {
     private StructuredQueryService service;
 
     @BeforeEach
-    void setUp() throws Exception {
-        dataStoreClient.post()
-                .contentType(APPLICATION_JSON)
-                .bodyValue(slurp("test-all-attributeFilterUpdate.json"))
-                .retrieve()
-                .toBodilessEntity()
-                .block();
+    void setUp() {
+        if (!dataImported) {
+            dataStoreClient.post()
+                    .contentType(APPLICATION_JSON)
+                    .bodyValue(slurp("test-all-attributeFilterUpdate.json"))
+                    .retrieve()
+                    .toBodilessEntity()
+                    .block();
+            dataImported = true;
+        }
     }
 
     @Test
-    void execute() throws JsonProcessingException {
+    void execute_ConceptCriterion() {
         var query = StructuredQuery.of(List.of(List.of(ConceptCriterion.of(Concept.of(C71)))));
-        System.out.println("new ObjectMapper().writeValueAsString(query) = " + new ObjectMapper().writeValueAsString(query));
-
 
         var result = service.execute(query).block();
 
         assertThat(result).isOne();
     }
 
-    private static String slurp(String name) throws Exception {
-        return Files.readString(resourcePath(name));
+    @Test
+    void execute_ValueSetCriterion() {
+        var query = StructuredQuery.of(List.of(List.of(ValueSetCriterion.of(Concept.of(COVID), DETECTED))));
+
+        var result = service.execute(query).block();
+
+        assertThat(result).isOne();
+    }
+
+    private static String slurp(String name) {
+        try {
+            return Files.readString(resourcePath(name));
+        } catch (IOException | URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static Path resourcePath(String name) throws URISyntaxException {

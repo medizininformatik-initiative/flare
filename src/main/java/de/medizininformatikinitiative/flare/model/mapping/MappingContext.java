@@ -1,13 +1,14 @@
 package de.medizininformatikinitiative.flare.model.mapping;
 
+import de.medizininformatikinitiative.flare.model.sq.ConceptNotExpandableException;
+import de.medizininformatikinitiative.flare.model.sq.MappingNotFoundException;
 import de.numcodex.sq2cql.model.TermCodeNode;
 import de.numcodex.sq2cql.model.common.TermCode;
 import de.numcodex.sq2cql.model.structured_query.Concept;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;
 
@@ -22,17 +23,8 @@ public class MappingContext {
     private final TermCodeNode conceptTree;
 
     private MappingContext(Map<TermCode, Mapping> mappings, TermCodeNode conceptTree) {
-        this.mappings = mappings;
-        this.conceptTree = conceptTree;
-    }
-
-    /**
-     * Returns an empty mapping context.
-     *
-     * @return the mapping context
-     */
-    public static MappingContext of() {
-        return new MappingContext(Map.of(), null);
+        this.mappings = Map.copyOf(mappings);
+        this.conceptTree = requireNonNull(conceptTree);
     }
 
     /**
@@ -43,7 +35,7 @@ public class MappingContext {
      * @return the mapping context
      */
     public static MappingContext of(Map<TermCode, Mapping> mappings, TermCodeNode conceptTree) {
-        return new MappingContext(Map.copyOf(mappings), conceptTree);
+        return new MappingContext(mappings, conceptTree);
     }
 
     /**
@@ -52,8 +44,9 @@ public class MappingContext {
      * @param key the TermCode of the mapping
      * @return either the Mapping or {@code Optional#empty() nothing}
      */
-    public Optional<Mapping> findMapping(TermCode key) {
-        return Optional.ofNullable(mappings.get(requireNonNull(key)));
+    public Mono<Mapping> findMapping(TermCode key) {
+        var mapping = mappings.get(requireNonNull(key));
+        return mapping == null ? Mono.error(new MappingNotFoundException(key)) : Mono.just(mapping);
     }
 
     /**
@@ -62,12 +55,8 @@ public class MappingContext {
      * @param concept the concept to expand
      * @return the stream of TermCodes
      */
-    public Stream<TermCode> expandConcept(Concept concept) {
-        var expandedCodes = conceptTree == null ? List.<TermCode>of() : expandCodes(concept);
-        return (expandedCodes.isEmpty() ? concept.termCodes() : expandedCodes).stream().filter(mappings::containsKey);
-    }
-
-    private List<TermCode> expandCodes(Concept concept) {
-        return concept.termCodes().stream().flatMap(conceptTree::expand).toList();
+    public Flux<TermCode> expandConcept(Concept concept) {
+        return Flux.fromStream(concept.termCodes().stream().flatMap(conceptTree::expand))
+                .switchIfEmpty(Mono.error(new ConceptNotExpandableException(concept)));
     }
 }

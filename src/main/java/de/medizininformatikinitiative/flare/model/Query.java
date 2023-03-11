@@ -1,12 +1,14 @@
 package de.medizininformatikinitiative.flare.model;
 
-public record Query(String type, String params) {
+import de.medizininformatikinitiative.flare.model.sq.QueryParams;
 
-    public static Query of(String type, String params) {
+public record Query(String type, QueryParams params) {
+
+    public static Query of(String type, QueryParams params) {
         return new Query(type, params);
     }
 
     public static Query ofType(String type) {
-        return new Query(type, "");
+        return new Query(type, QueryParams.EMPTY);
     }
 }

@@ -4,16 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import de.medizininformatikinitiative.flare.model.Query;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
+import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCriterion;
 import de.numcodex.sq2cql.model.common.Comparator;
 import de.numcodex.sq2cql.model.common.TermCode;
-import de.numcodex.sq2cql.model.structured_query.AttributeFilter;
 import de.numcodex.sq2cql.model.structured_query.Concept;
 import de.numcodex.sq2cql.model.structured_query.TimeRestriction;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 import static java.util.Objects.requireNonNull;
 
@@ -28,17 +29,17 @@ public interface Criterion {
     @JsonCreator
     static Criterion create(@JsonProperty("termCodes") List<TermCode> termCodes,
                             @JsonProperty("valueFilter") ObjectNode valueFilter,
-                            @JsonProperty("timeRestriction") TimeRestriction conceptTimeRestriction,
+                            @JsonProperty("timeRestriction") TimeRestriction timeRestriction,
                             @JsonProperty("attributeFilters") List<ObjectNode> attributeFilters) {
         var concept = Concept.of(requireNonNull(termCodes, "missing JSON property: termCodes"));
 
         var attributes = (attributeFilters == null ? List.<ObjectNode>of() : attributeFilters).stream()
                 .map(AttributeFilter::fromJsonNode)
                 .flatMap(Optional::stream)
-                .toArray(AttributeFilter[]::new);
+                .toList();
 
         if (valueFilter == null) {
-            return ConceptCriterion.of(concept, conceptTimeRestriction, attributes);
+            return new ConceptCriterion(concept, attributes, null);
         }
 
         var type = valueFilter.get("type").asText();
@@ -47,10 +48,10 @@ public interface Criterion {
             var value = valueFilter.get("value").decimalValue();
             var unit = valueFilter.get("unit");
             if (unit == null) {
-                return NumericCriterion.of(concept, comparator, value, conceptTimeRestriction, attributes);
+                return QuantityComparatorCriterion.of(concept, comparator, value, timeRestriction, attributes.toArray(AttributeFilter[]::new));
             } else {
-                return NumericCriterion.of(concept, comparator, value, unit.get("code").asText(),
-                        conceptTimeRestriction, attributes);
+                return QuantityComparatorCriterion.of(concept, comparator, value, unit.get("code").asText(),
+                        timeRestriction, attributes.toArray(AttributeFilter[]::new));
             }
         }
         /*if ("quantity-range".equals(type)) {
@@ -58,27 +59,27 @@ public interface Criterion {
             var upperBound = valueFilter.get("maxValue").decimalValue();
             var unit = valueFilter.get("unit");
             if (unit == null) {
-                return RangeCriterion.of(concept, lowerBound, upperBound, conceptTimeRestriction, attributes);
+                return RangeCriterion.of(concept, lowerBound, upperBound, timeRestriction, attributes);
             } else {
-                return RangeCriterion.of(concept, lowerBound, upperBound, unit.get("code").asText(), conceptTimeRestriction, attributes);
+                return RangeCriterion.of(concept, lowerBound, upperBound, unit.get("code").asText(), timeRestriction, attributes);
             }
-        }
+        }*/
         if ("concept".equals(type)) {
             var selectedConcepts = valueFilter.get("selectedConcepts");
             if (selectedConcepts == null || selectedConcepts.isEmpty()) {
                 throw new IllegalArgumentException("Missing or empty `selectedConcepts` key in concept criterion.");
             }
             return ValueSetCriterion.of(concept, StreamSupport.stream(selectedConcepts.spliterator(), false)
-                    .map(TermCode::fromJsonNode).toList(), conceptTimeRestriction, attributes);
-        }*/
+                    .map(TermCode::fromJsonNode).toList(), timeRestriction, attributes.toArray(AttributeFilter[]::new));
+        }
         throw new IllegalArgumentException("unknown valueFilter type: " + type);
     }
 
     /**
-     * Translates this criterion into a {@link Query}.
+     * Expands this criterion into a {@link Flux flux} of {@link ExpandedCriterion expanded criteria}.
      *
-     * @param mappingContext contains the mappings needed to create the CQL expression
-     * @return a query
+     * @param mappingContext contains the mappings needed to create the expanded criteria
+     * @return a {@link Flux flux} of {@link ExpandedCriterion expanded criteria}
      */
-    List<Query> toQuery(MappingContext mappingContext);
+    Flux<ExpandedCriterion> expand(MappingContext mappingContext);
 }

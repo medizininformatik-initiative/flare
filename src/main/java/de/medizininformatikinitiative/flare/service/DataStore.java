@@ -2,6 +2,7 @@ package de.medizininformatikinitiative.flare.service;
 
 import de.medizininformatikinitiative.flare.model.Query;
 import de.medizininformatikinitiative.flare.model.fhir.Bundle;
+import de.medizininformatikinitiative.flare.model.sq.QueryParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,7 +38,7 @@ public class DataStore implements FhirQueryService {
         return client.post()
                 .uri("/{type}/_search", query.type())
                 .contentType(APPLICATION_FORM_URLENCODED)
-                .bodyValue(String.join("&", query.params(), extraQueryParams(query.type())))
+                .bodyValue(query.params().appendParams(extraQueryParams(query.type())).toString())
                 .retrieve()
                 .bodyToFlux(Bundle.class)
                 .expand(bundle -> bundle.linkWithRel("next")
@@ -56,8 +57,8 @@ public class DataStore implements FhirQueryService {
                 .bodyToMono(Bundle.class);
     }
 
-    private String extraQueryParams(String type) {
-        return "_elements=%s&_count=%d".formatted(queryElements(type), pageCount);
+    private QueryParams extraQueryParams(String type) {
+        return QueryParams.of("_elements", queryElements(type)).appendParam("_count", Integer.toString(pageCount));
     }
 
     /**

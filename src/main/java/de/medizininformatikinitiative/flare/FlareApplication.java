@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static java.util.function.Function.identity;
+
 @SpringBootApplication
 public class FlareApplication {
 
@@ -47,7 +49,7 @@ public class FlareApplication {
     public MappingContext mappingContext() throws Exception {
         var mapper = new ObjectMapper();
         var mappings = Arrays.stream(mapper.readValue(slurp("synthea-mapping.json"), Mapping[].class))
-                .collect(Collectors.toMap(Mapping::key, v -> v));
+                .collect(Collectors.toMap(Mapping::key, identity()));
         var conceptTree = mapper.readValue(slurp("synthea-tree.json"), TermCodeNode.class);
         return MappingContext.of(mappings, conceptTree);
     }

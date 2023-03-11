@@ -18,8 +18,8 @@ public class CachingFhirQueryService implements FhirQueryService {
     public CachingFhirQueryService(@Qualifier("dataStore") FhirQueryService fhirQueryService) {
         cache = Caffeine.newBuilder()
                 .maximumSize(10_000)
-                .expireAfterWrite(Duration.ofMinutes(5))
-                .refreshAfterWrite(Duration.ofMinutes(1))
+                .expireAfterWrite(Duration.ofMinutes(60))
+                .refreshAfterWrite(Duration.ofMinutes(10))
                 .buildAsync((query, executor) -> fhirQueryService.execute(query));
     }
 

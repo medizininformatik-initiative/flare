@@ -18,6 +18,13 @@
         "code": "162864005",
         "display": "Body mass index 30+ - obesity (finding)"
       }
+    },
+    {
+      "termCode": {
+        "system": "http://loinc.org",
+        "code": "72166-2",
+        "display": "Tobacco smoking status NHIS"
+      }
     }
   ]
 }

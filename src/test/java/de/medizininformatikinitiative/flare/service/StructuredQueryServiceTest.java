@@ -1,8 +1,7 @@
 package de.medizininformatikinitiative.flare.service;
 
 import de.medizininformatikinitiative.flare.model.Query;
-import de.medizininformatikinitiative.flare.model.sq.ConceptCriterion;
-import de.medizininformatikinitiative.flare.model.sq.StructuredQuery;
+import de.medizininformatikinitiative.flare.model.sq.*;
 import de.numcodex.sq2cql.model.common.TermCode;
 import de.numcodex.sq2cql.model.structured_query.Concept;
 import org.junit.jupiter.api.Test;
@@ -10,6 +9,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import reactor.core.publisher.Flux;
+import reactor.test.StepVerifier;
 
 import java.util.List;
 import java.util.Set;
@@ -33,9 +34,9 @@ class StructuredQueryServiceTest {
     private static final String PATIENT_ID = "patient-id-140857";
     private static final String PATIENT_ID_1 = "patient-id-144725";
     private static final String PATIENT_ID_2 = "patient-id-144727";
-    public static final Query CONCEPT_QUERY = Query.of("Condition", "code=C71");
-    public static final Query CONCEPT_QUERY_1 = Query.of("Condition", "code=C72");
-    public static final Query CONCEPT_QUERY_2 = Query.of("Condition", "code=C73");
+    public static final Query CONCEPT_QUERY = Query.of("Condition", QueryParams.of("code", C71));
+    public static final Query CONCEPT_QUERY_1 = Query.of("Condition", QueryParams.of("code", C72));
+    public static final Query CONCEPT_QUERY_2 = Query.of("Condition", QueryParams.of("code", C73));
 
     @Mock
     private FhirQueryService fhirQueryService;
@@ -56,9 +57,19 @@ class StructuredQueryServiceTest {
     }
 
     @Test
+    void execute_singleIncludeConceptCriterion_WithMappingError() {
+        var query = StructuredQuery.of(List.of(List.of(CONCEPT_CRITERION)));
+        when(translator.toQuery(CONCEPT_CRITERION)).thenReturn(Flux.error(new MappingNotFoundException(C71)));
+
+        var result = service.execute(query);
+
+        StepVerifier.create(result).expectError(MappingNotFoundException.class).verify();
+    }
+
+    @Test
     void execute_singleIncludeConceptCriterion() {
         var query = StructuredQuery.of(List.of(List.of(CONCEPT_CRITERION)));
-        when(translator.toQuery(CONCEPT_CRITERION)).thenReturn(List.of(CONCEPT_QUERY));
+        when(translator.toQuery(CONCEPT_CRITERION)).thenReturn(Flux.just(CONCEPT_QUERY));
         when(fhirQueryService.execute(CONCEPT_QUERY)).thenReturn(CompletableFuture.completedFuture(Set.of(PATIENT_ID)));
 
         var result = service.execute(query).block();
@@ -69,7 +80,7 @@ class StructuredQueryServiceTest {
     @Test
     void execute_singleIncludeConceptCriterion_Expanding() {
         var query = StructuredQuery.of(List.of(List.of(CONCEPT_CRITERION)));
-        when(translator.toQuery(CONCEPT_CRITERION)).thenReturn(List.of(CONCEPT_QUERY_1, CONCEPT_QUERY_2));
+        when(translator.toQuery(CONCEPT_CRITERION)).thenReturn(Flux.just(CONCEPT_QUERY_1, CONCEPT_QUERY_2));
         when(fhirQueryService.execute(CONCEPT_QUERY_1)).thenReturn(CompletableFuture.completedFuture(Set.of(PATIENT_ID_1)));
         when(fhirQueryService.execute(CONCEPT_QUERY_2)).thenReturn(CompletableFuture.completedFuture(Set.of(PATIENT_ID_2)));
 
@@ -81,7 +92,7 @@ class StructuredQueryServiceTest {
     @Test
     void execute_singleIncludeConceptCriterion_Expanding_SamePatient() {
         var query = StructuredQuery.of(List.of(List.of(CONCEPT_CRITERION)));
-        when(translator.toQuery(CONCEPT_CRITERION)).thenReturn(List.of(CONCEPT_QUERY_1, CONCEPT_QUERY_2));
+        when(translator.toQuery(CONCEPT_CRITERION)).thenReturn(Flux.just(CONCEPT_QUERY_1, CONCEPT_QUERY_2));
         when(fhirQueryService.execute(CONCEPT_QUERY_1)).thenReturn(CompletableFuture.completedFuture(Set.of(PATIENT_ID)));
         when(fhirQueryService.execute(CONCEPT_QUERY_2)).thenReturn(CompletableFuture.completedFuture(Set.of(PATIENT_ID)));
 
@@ -93,7 +104,7 @@ class StructuredQueryServiceTest {
     @Test
     void execute_same_singleIncludeConceptCriterion_singleExcludeConceptCriterion() {
         var query = StructuredQuery.of(List.of(List.of(CONCEPT_CRITERION)), List.of(List.of(CONCEPT_CRITERION)));
-        when(translator.toQuery(CONCEPT_CRITERION)).thenReturn(List.of(CONCEPT_QUERY));
+        when(translator.toQuery(CONCEPT_CRITERION)).thenReturn(Flux.just(CONCEPT_QUERY));
         when(fhirQueryService.execute(CONCEPT_QUERY)).thenReturn(CompletableFuture.completedFuture(Set.of(PATIENT_ID)));
 
         var result = service.execute(query).block();
@@ -104,8 +115,8 @@ class StructuredQueryServiceTest {
     @Test
     void execute_singleIncludeConceptCriterion_singleExcludeConceptCriterion_SamePatient() {
         var query = StructuredQuery.of(List.of(List.of(CONCEPT_CRITERION_1)), List.of(List.of(CONCEPT_CRITERION_2)));
-        when(translator.toQuery(CONCEPT_CRITERION_1)).thenReturn(List.of(CONCEPT_QUERY_1));
-        when(translator.toQuery(CONCEPT_CRITERION_2)).thenReturn(List.of(CONCEPT_QUERY_2));
+        when(translator.toQuery(CONCEPT_CRITERION_1)).thenReturn(Flux.just(CONCEPT_QUERY_1));
+        when(translator.toQuery(CONCEPT_CRITERION_2)).thenReturn(Flux.just(CONCEPT_QUERY_2));
         when(fhirQueryService.execute(CONCEPT_QUERY_1)).thenReturn(CompletableFuture.completedFuture(Set.of(PATIENT_ID)));
         when(fhirQueryService.execute(CONCEPT_QUERY_2)).thenReturn(CompletableFuture.completedFuture(Set.of(PATIENT_ID)));
 
@@ -117,8 +128,8 @@ class StructuredQueryServiceTest {
     @Test
     void execute_twoIncludeConceptCriteria_orLevel() {
         var query = StructuredQuery.of(List.of(List.of(CONCEPT_CRITERION_1, CONCEPT_CRITERION_2)));
-        when(translator.toQuery(CONCEPT_CRITERION_1)).thenReturn(List.of(CONCEPT_QUERY_1));
-        when(translator.toQuery(CONCEPT_CRITERION_2)).thenReturn(List.of(CONCEPT_QUERY_2));
+        when(translator.toQuery(CONCEPT_CRITERION_1)).thenReturn(Flux.just(CONCEPT_QUERY_1));
+        when(translator.toQuery(CONCEPT_CRITERION_2)).thenReturn(Flux.just(CONCEPT_QUERY_2));
         when(fhirQueryService.execute(CONCEPT_QUERY_1)).thenReturn(CompletableFuture.completedFuture(Set.of(PATIENT_ID_1)));
         when(fhirQueryService.execute(CONCEPT_QUERY_2)).thenReturn(CompletableFuture.completedFuture(Set.of(PATIENT_ID_2)));
 
@@ -130,8 +141,8 @@ class StructuredQueryServiceTest {
     @Test
     void execute_twoIncludeConceptCriteria_andLevel_samePatient() {
         var query = StructuredQuery.of(List.of(List.of(CONCEPT_CRITERION_1), List.of(CONCEPT_CRITERION_2)));
-        when(translator.toQuery(CONCEPT_CRITERION_1)).thenReturn(List.of(CONCEPT_QUERY_1));
-        when(translator.toQuery(CONCEPT_CRITERION_2)).thenReturn(List.of(CONCEPT_QUERY_2));
+        when(translator.toQuery(CONCEPT_CRITERION_1)).thenReturn(Flux.just(CONCEPT_QUERY_1));
+        when(translator.toQuery(CONCEPT_CRITERION_2)).thenReturn(Flux.just(CONCEPT_QUERY_2));
         when(fhirQueryService.execute(CONCEPT_QUERY_1)).thenReturn(CompletableFuture.completedFuture(Set.of(PATIENT_ID)));
         when(fhirQueryService.execute(CONCEPT_QUERY_2)).thenReturn(CompletableFuture.completedFuture(Set.of(PATIENT_ID)));
 
@@ -143,8 +154,8 @@ class StructuredQueryServiceTest {
     @Test
     void execute_twoIncludeConceptCriteria_andLevel_differentPatients() {
         var query = StructuredQuery.of(List.of(List.of(CONCEPT_CRITERION_1), List.of(CONCEPT_CRITERION_2)));
-        when(translator.toQuery(CONCEPT_CRITERION_1)).thenReturn(List.of(CONCEPT_QUERY_1));
-        when(translator.toQuery(CONCEPT_CRITERION_2)).thenReturn(List.of(CONCEPT_QUERY_2));
+        when(translator.toQuery(CONCEPT_CRITERION_1)).thenReturn(Flux.just(CONCEPT_QUERY_1));
+        when(translator.toQuery(CONCEPT_CRITERION_2)).thenReturn(Flux.just(CONCEPT_QUERY_2));
         when(fhirQueryService.execute(CONCEPT_QUERY_1)).thenReturn(CompletableFuture.completedFuture(Set.of(PATIENT_ID_1)));
         when(fhirQueryService.execute(CONCEPT_QUERY_2)).thenReturn(CompletableFuture.completedFuture(Set.of(PATIENT_ID_2)));
 
