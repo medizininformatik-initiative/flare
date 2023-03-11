@@ -5,11 +5,9 @@ import de.medizininformatikinitiative.flare.model.sq.QueryParams;
 import de.numcodex.sq2cql.model.common.TermCode;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ExpandedConceptCriterionTest {
+class ExpandedCriterionTest {
 
     static final TermCode C71_1 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "C71.1",
             "Frontallappen");
@@ -20,7 +18,7 @@ class ExpandedConceptCriterionTest {
 
     @Test
     void toQuery() {
-        var criterion = new ExpandedConceptCriterion("Condition", "code", C71_1, List.of());
+        var criterion = ExpandedCriterion.of("Condition", "code", C71_1);
 
         var query = criterion.toQuery();
 
@@ -28,9 +26,9 @@ class ExpandedConceptCriterionTest {
     }
 
     @Test
-    void toQuery_withOneAttributeFilter() {
-        var criterion = new ExpandedConceptCriterion("Condition", "code", C71_1, List.of(new ConceptFilter(
-                "verification-status", CONFIRMED)));
+    void toQuery_withOneConceptFilter() {
+        var criterion = ExpandedCriterion.of("Condition", "code", C71_1)
+                .appendFilter(new ConceptFilter("verification-status", CONFIRMED));
 
         var query = criterion.toQuery();
 
@@ -40,9 +38,10 @@ class ExpandedConceptCriterionTest {
     }
 
     @Test
-    void toQuery_withTwoAttributeFilters() {
-        var criterion = new ExpandedConceptCriterion("Condition", "code", C71_1, List.of(new ConceptFilter(
-                "verification-status", CONFIRMED), new ConceptFilter("severity", SEVERE)));
+    void toQuery_withTwoConceptFilters() {
+        var criterion = ExpandedCriterion.of("Condition", "code", C71_1)
+                .appendFilter(new ConceptFilter("verification-status", CONFIRMED))
+                .appendFilter(new ConceptFilter("severity", SEVERE));
 
         var query = criterion.toQuery();
 

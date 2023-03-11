@@ -3,19 +3,46 @@ package de.medizininformatikinitiative.flare.model.sq.expanded;
 import de.medizininformatikinitiative.flare.model.Query;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.sq.Criterion;
+import de.medizininformatikinitiative.flare.model.sq.QueryParams;
+import de.numcodex.sq2cql.model.common.TermCode;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import static de.medizininformatikinitiative.flare.model.sq.expanded.Filter.toParams;
+import static java.util.Objects.requireNonNull;
 
 /**
- * A criterion that is already expanded from a {@link Criterion criterion} of the structured query.
+ * A criterion that is already expanded from a {@link Criterion} of the structured query.
  * <p>
  * Expanded criterion {@link #toQuery() translate} to exactly one {@link Query query} and contain already all
  * {@link Mapping mapping information} needed.
+ *
+ * @param resourceType    the type of the resource like Condition or Observation
+ * @param searchParameter the FHIR search parameter code to use for the {@code termCode}
+ * @param code            the main code constraining the resources
+ * @param filters         additional attribute filters
  */
-public interface ExpandedCriterion {
+public record ExpandedCriterion(String resourceType, String searchParameter, TermCode code, List<Filter> filters) {
 
-    /**
-     * Transforms this criterion into a {@link Query query}.
-     *
-     * @return the query of this criterion
-     */
-    Query toQuery();
+    public ExpandedCriterion {
+        requireNonNull(resourceType);
+        requireNonNull(searchParameter);
+        requireNonNull(code);
+        filters = List.copyOf(filters);
+    }
+
+    public static ExpandedCriterion of(String resourceType, String searchParameter, TermCode termCode) {
+        return new ExpandedCriterion(resourceType, searchParameter, termCode, List.of());
+    }
+
+    public ExpandedCriterion appendFilter(Filter attributeFilter) {
+        var attributeFilters = new LinkedList<>(this.filters);
+        attributeFilters.add(attributeFilter);
+        return new ExpandedCriterion(resourceType, searchParameter, code, attributeFilters);
+    }
+
+    public Query toQuery() {
+        return new Query(resourceType, QueryParams.of(searchParameter, code).appendParams(toParams(filters)));
+    }
 }

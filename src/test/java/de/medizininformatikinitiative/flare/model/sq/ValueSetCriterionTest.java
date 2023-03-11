@@ -3,7 +3,7 @@ package de.medizininformatikinitiative.flare.model.sq;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ConceptFilter;
-import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedValueSetCriterion;
+import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCriterion;
 import de.numcodex.sq2cql.model.common.TermCode;
 import de.numcodex.sq2cql.model.structured_query.Concept;
 import org.junit.jupiter.api.Test;
@@ -13,8 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
-import java.util.List;
 
 import static org.mockito.Mockito.when;
 
@@ -59,7 +57,8 @@ class ValueSetCriterionTest {
         var criteria = ValueSetCriterion.of(Concept.of(COVID), POSITIVE).expand(mappingContext);
 
         StepVerifier.create(criteria)
-                .expectNext(new ExpandedValueSetCriterion("Observation", "code", COVID, new ConceptFilter("value-concept", POSITIVE), List.of()))
+                .expectNext(ExpandedCriterion.of("Observation", "code", COVID)
+                        .appendFilter(new ConceptFilter("value-concept", POSITIVE)))
                 .expectComplete()
                 .verify();
     }
@@ -73,8 +72,10 @@ class ValueSetCriterionTest {
         var criteria = ValueSetCriterion.of(Concept.of(SEX), MALE, FEMALE).expand(mappingContext);
 
         StepVerifier.create(criteria)
-                .expectNext(new ExpandedValueSetCriterion("Observation", "code", SEX, new ConceptFilter("value-concept", MALE), List.of()))
-                .expectNext(new ExpandedValueSetCriterion("Observation", "code", SEX, new ConceptFilter("value-concept", FEMALE), List.of()))
+                .expectNext(ExpandedCriterion.of("Observation", "code", SEX)
+                        .appendFilter(new ConceptFilter("value-concept", MALE)))
+                .expectNext(ExpandedCriterion.of("Observation", "code", SEX)
+                        .appendFilter(new ConceptFilter("value-concept", FEMALE)))
                 .expectComplete()
                 .verify();
     }

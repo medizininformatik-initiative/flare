@@ -2,7 +2,6 @@ package de.medizininformatikinitiative.flare.model.sq;
 
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
-import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedConceptCriterion;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCriterion;
 import de.medizininformatikinitiative.flare.model.sq.expanded.Filter;
 import de.numcodex.sq2cql.model.common.TermCode;
@@ -58,9 +57,9 @@ public record ConceptCriterion(Concept concept, List<AttributeFilter> attributeF
                         .defaultIfEmpty(expandedCriterion(mapping, termCode, List.of())));
     }
 
-    private static ExpandedConceptCriterion expandedCriterion(Mapping mapping, TermCode termCode,
-                                                              List<Filter> attributeFilters) {
-        return new ExpandedConceptCriterion(mapping.resourceType(), mapping.termCodeSearchParameter(), termCode,
+    private static ExpandedCriterion expandedCriterion(Mapping mapping, TermCode termCode,
+                                                       List<Filter> attributeFilters) {
+        return new ExpandedCriterion(mapping.resourceType(), mapping.termCodeSearchParameter(), termCode,
                 attributeFilters);
     }
 }

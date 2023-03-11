@@ -4,7 +4,6 @@ import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ConceptFilter;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCriterion;
-import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedValueSetCriterion;
 import de.numcodex.sq2cql.model.common.TermCode;
 import de.numcodex.sq2cql.model.structured_query.Concept;
 import de.numcodex.sq2cql.model.structured_query.TimeRestriction;
@@ -84,7 +83,7 @@ public record ValueSetCriterion(Concept concept, List<AttributeFilter> attribute
 
     private static ExpandedCriterion expandedCriterion(TermCode termCode, Mapping mapping, String valueSearchParameter,
                                                        TermCode selectedConcept) {
-        return new ExpandedValueSetCriterion(mapping.resourceType(), mapping.termCodeSearchParameter(), termCode,
-                new ConceptFilter(valueSearchParameter, selectedConcept), List.of());
+        return ExpandedCriterion.of(mapping.resourceType(), mapping.termCodeSearchParameter(), termCode)
+                .appendFilter(new ConceptFilter(valueSearchParameter, selectedConcept));
     }
 }

@@ -4,7 +4,7 @@ import de.medizininformatikinitiative.flare.model.mapping.AttributeMapping;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ConceptFilter;
-import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedConceptCriterion;
+import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCriterion;
 import de.numcodex.sq2cql.model.common.TermCode;
 import de.numcodex.sq2cql.model.structured_query.Concept;
 import org.junit.jupiter.api.Test;
@@ -64,7 +64,7 @@ class ConceptCriterionTest {
         var criteria = ConceptCriterion.of(Concept.of(C71)).expand(mappingContext);
 
         StepVerifier.create(criteria)
-                .expectNext(ExpandedConceptCriterion.of("Condition", "code", C71))
+                .expectNext(ExpandedCriterion.of("Condition", "code", C71))
                 .expectComplete()
                 .verify();
     }
@@ -78,8 +78,8 @@ class ConceptCriterionTest {
         var criteria = ConceptCriterion.of(Concept.of(C71)).expand(mappingContext);
 
         StepVerifier.create(criteria)
-                .expectNext(ExpandedConceptCriterion.of("Condition", "code", C71_1))
-                .expectNext(ExpandedConceptCriterion.of("Condition", "code", C71_2))
+                .expectNext(ExpandedCriterion.of("Condition", "code", C71_1))
+                .expectNext(ExpandedCriterion.of("Condition", "code", C71_2))
                 .expectComplete()
                 .verify();
     }
@@ -94,8 +94,8 @@ class ConceptCriterionTest {
                 VERIFICATION_STATUS, CONFIRMED)).expand(mappingContext);
 
         StepVerifier.create(criteria)
-                .expectNext(ExpandedConceptCriterion.of("Condition", "code", C71)
-                        .appendAttributeFilter(new ConceptFilter("verification-status", CONFIRMED)))
+                .expectNext(ExpandedCriterion.of("Condition", "code", C71)
+                        .appendFilter(new ConceptFilter("verification-status", CONFIRMED)))
                 .expectComplete()
                 .verify();
     }
@@ -110,10 +110,10 @@ class ConceptCriterionTest {
                 VERIFICATION_STATUS, CONFIRMED).appendConcept(UNCONFIRMED)).expand(mappingContext);
 
         StepVerifier.create(criteria)
-                .expectNext(ExpandedConceptCriterion.of("Condition", "code", C71)
-                        .appendAttributeFilter(new ConceptFilter("verification-status", CONFIRMED)))
-                .expectNext(ExpandedConceptCriterion.of("Condition", "code", C71)
-                        .appendAttributeFilter(new ConceptFilter("verification-status", UNCONFIRMED)))
+                .expectNext(ExpandedCriterion.of("Condition", "code", C71)
+                        .appendFilter(new ConceptFilter("verification-status", CONFIRMED)))
+                .expectNext(ExpandedCriterion.of("Condition", "code", C71)
+                        .appendFilter(new ConceptFilter("verification-status", UNCONFIRMED)))
                 .expectComplete()
                 .verify();
     }
@@ -130,14 +130,14 @@ class ConceptCriterionTest {
                 VERIFICATION_STATUS, CONFIRMED).appendConcept(UNCONFIRMED)).expand(mappingContext);
 
         StepVerifier.create(criteria)
-                .expectNext(ExpandedConceptCriterion.of("Condition", "code", C71_1)
-                        .appendAttributeFilter(new ConceptFilter("verification-status", CONFIRMED)))
-                .expectNext(ExpandedConceptCriterion.of("Condition", "code", C71_1)
-                        .appendAttributeFilter(new ConceptFilter("verification-status", UNCONFIRMED)))
-                .expectNext(ExpandedConceptCriterion.of("Condition", "code", C71_2)
-                        .appendAttributeFilter(new ConceptFilter("verification-status", CONFIRMED)))
-                .expectNext(ExpandedConceptCriterion.of("Condition", "code", C71_2)
-                        .appendAttributeFilter(new ConceptFilter("verification-status", UNCONFIRMED)))
+                .expectNext(ExpandedCriterion.of("Condition", "code", C71_1)
+                        .appendFilter(new ConceptFilter("verification-status", CONFIRMED)))
+                .expectNext(ExpandedCriterion.of("Condition", "code", C71_1)
+                        .appendFilter(new ConceptFilter("verification-status", UNCONFIRMED)))
+                .expectNext(ExpandedCriterion.of("Condition", "code", C71_2)
+                        .appendFilter(new ConceptFilter("verification-status", CONFIRMED)))
+                .expectNext(ExpandedCriterion.of("Condition", "code", C71_2)
+                        .appendFilter(new ConceptFilter("verification-status", UNCONFIRMED)))
                 .expectComplete()
                 .verify();
     }
