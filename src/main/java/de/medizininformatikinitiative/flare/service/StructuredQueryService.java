@@ -1,5 +1,7 @@
 package de.medizininformatikinitiative.flare.service;
 
+import de.medizininformatikinitiative.flare.Util;
+import de.medizininformatikinitiative.flare.model.fhir.Query;
 import de.medizininformatikinitiative.flare.model.sq.Criterion;
 import de.medizininformatikinitiative.flare.model.sq.StructuredQuery;
 import org.slf4j.Logger;
@@ -83,11 +85,8 @@ public class StructuredQueryService {
                 .reduce(StructuredQueryService::union);
     }
 
-    /**
-     *
-     */
     private Flux<Set<String>> executeSingle(Criterion criterion) {
-        logger.info("execute single criterion {}", criterion);
+        logger.debug("execute single criterion {}", criterion);
         return translator.toQuery(criterion).flux()
                 .flatMap(Flux::fromIterable)
                 .flatMap(query -> Mono.fromFuture(fhirQueryService.execute(query)));
@@ -115,5 +114,26 @@ public class StructuredQueryService {
         var ret = new HashSet<>(a);
         ret.removeAll(b);
         return Set.copyOf(ret);
+    }
+
+    public Mono<List<List<Query>>> translate(StructuredQuery query) {
+        return translateConjunctiveNormalForm(query.inclusionCriteria());
+    }
+
+    private Mono<List<List<Query>>> translateConjunctiveNormalForm(List<List<Criterion>> criteria) {
+        return Flux.fromIterable(criteria)
+                .flatMap(this::translateOr)
+                .reduce(List.of(), Util::add);
+    }
+
+    private Mono<List<Query>> translateOr(List<Criterion> criteria) {
+        return Flux.fromIterable(criteria)
+                .flatMap(this::translateSingle)
+                .reduce(Util::concat);
+    }
+
+    private Mono<List<Query>> translateSingle(Criterion criterion) {
+        logger.debug("translate single criterion {}", criterion);
+        return translator.toQuery(criterion);
     }
 }

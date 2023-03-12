@@ -9,4 +9,9 @@ public record Query(String type, QueryParams params) {
     public static Query ofType(String type) {
         return new Query(type, QueryParams.EMPTY);
     }
+
+    @Override
+    public String toString() {
+        return type + "?" + params.toString();
+    }
 }

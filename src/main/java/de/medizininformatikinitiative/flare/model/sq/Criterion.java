@@ -50,7 +50,7 @@ public record Criterion(Concept concept, List<Filter> filters, TimeRestriction t
         if (valueFilter != null) {
             filters.add(ValueFilter.fromJsonNode(valueFilter));
         }
-        for (ObjectNode attributeFilter : attributeFilters) {
+        for (ObjectNode attributeFilter : (attributeFilters == null ? List.<ObjectNode>of() : attributeFilters)) {
             filters.add(AttributeFilter.fromJsonNode(attributeFilter));
         }
 

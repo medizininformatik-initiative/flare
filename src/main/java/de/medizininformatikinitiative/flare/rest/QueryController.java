@@ -1,5 +1,6 @@
 package de.medizininformatikinitiative.flare.rest;
 
+import de.medizininformatikinitiative.flare.model.fhir.Query;
 import de.medizininformatikinitiative.flare.model.sq.StructuredQuery;
 import de.medizininformatikinitiative.flare.service.StructuredQueryService;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Objects;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
@@ -21,6 +23,8 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
 
 @Component
 public class QueryController {
+
+    private static final MediaType MEDIA_TYPE_SQ = MediaType.valueOf("application/sq+json");
 
     private static final Logger logger = LoggerFactory.getLogger(QueryController.class);
 
@@ -32,13 +36,25 @@ public class QueryController {
 
     @Bean
     public RouterFunction<ServerResponse> queryRouter() {
-        return route(POST("query/execute").and(accept(MediaType.valueOf("application/sq+json"))), this::handle);
+        return route(POST("query/execute").and(accept(MEDIA_TYPE_SQ)), this::execute)
+                .andRoute(POST("query/translate").and(accept(MEDIA_TYPE_SQ)), this::translate);
     }
 
-    public Mono<ServerResponse> handle(ServerRequest request) {
+    public Mono<ServerResponse> execute(ServerRequest request) {
         logger.debug("Execute query");
         return request.bodyToMono(StructuredQuery.class)
                 .flatMap(queryService::execute)
                 .flatMap(count -> ok().bodyValue(count));
+    }
+
+    public Mono<ServerResponse> translate(ServerRequest request) {
+        logger.debug("Translate query");
+        return request.bodyToMono(StructuredQuery.class)
+                .flatMap(queryService::translate)
+                .flatMap(queries -> ok().bodyValue(render(queries)));
+    }
+
+    private List<List<String>> render(List<List<Query>> queries) {
+        return queries.stream().map(qs -> qs.stream().map(Query::toString).toList()).toList();
     }
 }
