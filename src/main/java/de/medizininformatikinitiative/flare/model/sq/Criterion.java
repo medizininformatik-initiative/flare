@@ -4,27 +4,38 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCriterion;
-import de.numcodex.sq2cql.model.common.Comparator;
-import de.numcodex.sq2cql.model.common.TermCode;
-import de.numcodex.sq2cql.model.structured_query.Concept;
-import de.numcodex.sq2cql.model.structured_query.TimeRestriction;
+import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
 import reactor.core.publisher.Flux;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 import static java.util.Objects.requireNonNull;
 
 /**
- * A single, atomic criterion in Structured Query.
+ * A single, atomic criterion in a {@link StructuredQuery structured query}.
  *
- * @author Alexander Kiel
+ * @param concept the concept the criterion is about
+ * @param filters the filters applied to entities of {@code concept}
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public interface Criterion {
+public record Criterion(Concept concept, List<Filter> filters, TimeRestriction timeRestriction) {
+
+    public Criterion {
+        requireNonNull(concept);
+        filters = List.copyOf(filters);
+    }
+
+    public static Criterion of(Concept concept) {
+        return new Criterion(concept, List.of(), null);
+    }
+
+    public static Criterion of(Concept concept, ValueFilter valueFilter) {
+        return new Criterion(concept, List.of(valueFilter), null);
+    }
 
     @JsonCreator
     static Criterion create(@JsonProperty("termCodes") List<TermCode> termCodes,
@@ -33,46 +44,21 @@ public interface Criterion {
                             @JsonProperty("attributeFilters") List<ObjectNode> attributeFilters) {
         var concept = Concept.of(requireNonNull(termCodes, "missing JSON property: termCodes"));
 
-        var attributes = (attributeFilters == null ? List.<ObjectNode>of() : attributeFilters).stream()
-                .map(AttributeFilter::fromJsonNode)
-                .flatMap(Optional::stream)
-                .toList();
-
-        if (valueFilter == null) {
-            return new ConceptCriterion(concept, attributes, null);
+        var filters = new LinkedList<Filter>();
+        if (valueFilter != null) {
+            filters.add(ValueFilter.fromJsonNode(valueFilter));
+        }
+        for (ObjectNode attributeFilter : attributeFilters) {
+            filters.add(AttributeFilter.fromJsonNode(attributeFilter));
         }
 
-        var type = valueFilter.get("type").asText();
-        if ("quantity-comparator".equals(type)) {
-            var comparator = Comparator.fromJson(valueFilter.get("comparator").asText());
-            var value = valueFilter.get("value").decimalValue();
-            var unit = valueFilter.get("unit");
-            if (unit == null) {
-                return QuantityComparatorCriterion.of(concept, comparator, value, timeRestriction, attributes.toArray(AttributeFilter[]::new));
-            } else {
-                return QuantityComparatorCriterion.of(concept, comparator, value, unit.get("code").asText(),
-                        timeRestriction, attributes.toArray(AttributeFilter[]::new));
-            }
-        }
-        /*if ("quantity-range".equals(type)) {
-            var lowerBound = valueFilter.get("minValue").decimalValue();
-            var upperBound = valueFilter.get("maxValue").decimalValue();
-            var unit = valueFilter.get("unit");
-            if (unit == null) {
-                return RangeCriterion.of(concept, lowerBound, upperBound, timeRestriction, attributes);
-            } else {
-                return RangeCriterion.of(concept, lowerBound, upperBound, unit.get("code").asText(), timeRestriction, attributes);
-            }
-        }*/
-        if ("concept".equals(type)) {
-            var selectedConcepts = valueFilter.get("selectedConcepts");
-            if (selectedConcepts == null || selectedConcepts.isEmpty()) {
-                throw new IllegalArgumentException("Missing or empty `selectedConcepts` key in concept criterion.");
-            }
-            return ValueSetCriterion.of(concept, StreamSupport.stream(selectedConcepts.spliterator(), false)
-                    .map(TermCode::fromJsonNode).toList(), timeRestriction, attributes.toArray(AttributeFilter[]::new));
-        }
-        throw new IllegalArgumentException("unknown valueFilter type: " + type);
+        return new Criterion(concept, filters, timeRestriction);
+    }
+
+    Criterion appendAttributeFilter(AttributeFilter attributeFilter) {
+        var filters = new LinkedList<>(this.filters);
+        filters.add(attributeFilter);
+        return new Criterion(concept, filters, timeRestriction);
     }
 
     /**
@@ -81,5 +67,21 @@ public interface Criterion {
      * @param mappingContext contains the mappings needed to create the expanded criteria
      * @return a {@link Flux flux} of {@link ExpandedCriterion expanded criteria}
      */
-    Flux<ExpandedCriterion> expand(MappingContext mappingContext);
+    public Flux<ExpandedCriterion> expand(MappingContext mappingContext) {
+        return mappingContext.expandConcept(concept).flatMap(termCode -> expandTermCode(mappingContext, termCode));
+    }
+
+    private Flux<ExpandedCriterion> expandTermCode(MappingContext mappingContext, TermCode termCode) {
+        return mappingContext.findMapping(termCode).flux()
+                .flatMap(mapping -> Flux.fromIterable(filters)
+                        .flatMap(filter -> filter.expand(mapping)
+                                .map(expandedFilter -> expandedCriterion(mapping, termCode, List.of(expandedFilter))))
+                        .defaultIfEmpty(expandedCriterion(mapping, termCode, List.of())));
+    }
+
+    private static ExpandedCriterion expandedCriterion(Mapping mapping, TermCode termCode,
+                                                       List<ExpandedFilter> attributeFilters) {
+        return new ExpandedCriterion(mapping.resourceType(), mapping.termCodeSearchParameter(), termCode,
+                attributeFilters);
+    }
 }

@@ -1,10 +1,7 @@
 package de.medizininformatikinitiative.flare.model.mapping;
 
-import de.medizininformatikinitiative.flare.model.sq.ConceptNotExpandableException;
-import de.medizininformatikinitiative.flare.model.sq.MappingNotFoundException;
-import de.numcodex.sq2cql.model.TermCodeNode;
-import de.numcodex.sq2cql.model.common.TermCode;
-import de.numcodex.sq2cql.model.structured_query.Concept;
+import de.medizininformatikinitiative.flare.model.sq.Concept;
+import de.medizininformatikinitiative.flare.model.sq.TermCode;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

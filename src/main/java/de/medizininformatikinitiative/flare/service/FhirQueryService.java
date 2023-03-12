@@ -1,6 +1,6 @@
 package de.medizininformatikinitiative.flare.service;
 
-import de.medizininformatikinitiative.flare.model.Query;
+import de.medizininformatikinitiative.flare.model.fhir.Query;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;

@@ -1,9 +1,12 @@
 package de.medizininformatikinitiative.flare.service;
 
-import de.medizininformatikinitiative.flare.model.Query;
-import de.medizininformatikinitiative.flare.model.sq.*;
-import de.numcodex.sq2cql.model.common.TermCode;
-import de.numcodex.sq2cql.model.structured_query.Concept;
+import de.medizininformatikinitiative.flare.model.fhir.Query;
+import de.medizininformatikinitiative.flare.model.fhir.QueryParams;
+import de.medizininformatikinitiative.flare.model.mapping.MappingNotFoundException;
+import de.medizininformatikinitiative.flare.model.sq.Concept;
+import de.medizininformatikinitiative.flare.model.sq.Criterion;
+import de.medizininformatikinitiative.flare.model.sq.StructuredQuery;
+import de.medizininformatikinitiative.flare.model.sq.TermCode;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,9 +31,9 @@ class StructuredQueryServiceTest {
             "Malignant neoplasm of brain");
     private static final TermCode C73 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "C73",
             "Malignant neoplasm of brain");
-    public static final ConceptCriterion CONCEPT_CRITERION = ConceptCriterion.of(Concept.of(C71));
-    public static final ConceptCriterion CONCEPT_CRITERION_1 = ConceptCriterion.of(Concept.of(C72));
-    public static final ConceptCriterion CONCEPT_CRITERION_2 = ConceptCriterion.of(Concept.of(C73));
+    public static final Criterion CONCEPT_CRITERION = Criterion.of(Concept.of(C71));
+    public static final Criterion CONCEPT_CRITERION_1 = Criterion.of(Concept.of(C72));
+    public static final Criterion CONCEPT_CRITERION_2 = Criterion.of(Concept.of(C73));
     private static final String PATIENT_ID = "patient-id-140857";
     private static final String PATIENT_ID_1 = "patient-id-144725";
     private static final String PATIENT_ID_2 = "patient-id-144727";

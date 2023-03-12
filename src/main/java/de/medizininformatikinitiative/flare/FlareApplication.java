@@ -3,7 +3,7 @@ package de.medizininformatikinitiative.flare;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
-import de.numcodex.sq2cql.model.TermCodeNode;
+import de.medizininformatikinitiative.flare.model.mapping.TermCodeNode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,6 +1,4 @@
-package de.medizininformatikinitiative.flare.model;
-
-import de.medizininformatikinitiative.flare.model.sq.QueryParams;
+package de.medizininformatikinitiative.flare.model.fhir;
 
 public record Query(String type, QueryParams params) {
 

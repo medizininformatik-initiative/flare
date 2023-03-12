@@ -6,9 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-/**
- * @author Alexander Kiel
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record StructuredQuery(List<List<Criterion>> inclusionCriteria, List<List<Criterion>> exclusionCriteria) {
 

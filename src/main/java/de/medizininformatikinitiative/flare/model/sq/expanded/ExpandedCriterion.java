@@ -1,15 +1,15 @@
 package de.medizininformatikinitiative.flare.model.sq.expanded;
 
-import de.medizininformatikinitiative.flare.model.Query;
+import de.medizininformatikinitiative.flare.model.fhir.Query;
+import de.medizininformatikinitiative.flare.model.fhir.QueryParams;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.sq.Criterion;
-import de.medizininformatikinitiative.flare.model.sq.QueryParams;
-import de.numcodex.sq2cql.model.common.TermCode;
+import de.medizininformatikinitiative.flare.model.sq.TermCode;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import static de.medizininformatikinitiative.flare.model.sq.expanded.Filter.toParams;
+import static de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter.toParams;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -23,7 +23,8 @@ import static java.util.Objects.requireNonNull;
  * @param code            the main code constraining the resources
  * @param filters         additional attribute filters
  */
-public record ExpandedCriterion(String resourceType, String searchParameter, TermCode code, List<Filter> filters) {
+public record ExpandedCriterion(String resourceType, String searchParameter, TermCode code,
+                                List<ExpandedFilter> filters) {
 
     public ExpandedCriterion {
         requireNonNull(resourceType);
@@ -36,7 +37,7 @@ public record ExpandedCriterion(String resourceType, String searchParameter, Ter
         return new ExpandedCriterion(resourceType, searchParameter, termCode, List.of());
     }
 
-    public ExpandedCriterion appendFilter(Filter attributeFilter) {
+    public ExpandedCriterion appendFilter(ExpandedFilter attributeFilter) {
         var attributeFilters = new LinkedList<>(this.filters);
         attributeFilters.add(attributeFilter);
         return new ExpandedCriterion(resourceType, searchParameter, code, attributeFilters);

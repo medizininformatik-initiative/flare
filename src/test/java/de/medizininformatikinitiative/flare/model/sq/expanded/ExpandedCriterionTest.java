@@ -1,8 +1,8 @@
 package de.medizininformatikinitiative.flare.model.sq.expanded;
 
-import de.medizininformatikinitiative.flare.model.Query;
-import de.medizininformatikinitiative.flare.model.sq.QueryParams;
-import de.numcodex.sq2cql.model.common.TermCode;
+import de.medizininformatikinitiative.flare.model.fhir.Query;
+import de.medizininformatikinitiative.flare.model.fhir.QueryParams;
+import de.medizininformatikinitiative.flare.model.sq.TermCode;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,7 +28,7 @@ class ExpandedCriterionTest {
     @Test
     void toQuery_withOneConceptFilter() {
         var criterion = ExpandedCriterion.of("Condition", "code", C71_1)
-                .appendFilter(new ConceptFilter("verification-status", CONFIRMED));
+                .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED));
 
         var query = criterion.toQuery();
 
@@ -40,8 +40,8 @@ class ExpandedCriterionTest {
     @Test
     void toQuery_withTwoConceptFilters() {
         var criterion = ExpandedCriterion.of("Condition", "code", C71_1)
-                .appendFilter(new ConceptFilter("verification-status", CONFIRMED))
-                .appendFilter(new ConceptFilter("severity", SEVERE));
+                .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED))
+                .appendFilter(new ExpandedConceptFilter("severity", SEVERE));
 
         var query = criterion.toQuery();
 

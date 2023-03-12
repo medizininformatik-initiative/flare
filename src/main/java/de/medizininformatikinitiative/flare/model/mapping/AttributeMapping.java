@@ -4,14 +4,14 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
-import de.numcodex.sq2cql.model.common.TermCode;
+import de.medizininformatikinitiative.flare.model.sq.TermCode;
 
-import static de.medizininformatikinitiative.flare.model.mapping.AttributeMapping.Type.CODE;
-import static de.medizininformatikinitiative.flare.model.mapping.AttributeMapping.Type.CODING;
+import static de.medizininformatikinitiative.flare.model.mapping.FilterType.CODE;
+import static de.medizininformatikinitiative.flare.model.mapping.FilterType.CODING;
 import static java.util.Objects.requireNonNull;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record AttributeMapping(Type type, TermCode key, String searchParameter) {
+public record AttributeMapping(FilterType type, TermCode key, String searchParameter) implements FilterMapping {
 
     public AttributeMapping {
         requireNonNull(type);
@@ -20,9 +20,9 @@ public record AttributeMapping(Type type, TermCode key, String searchParameter) 
     }
 
     @JsonCreator
-    public static AttributeMapping of(@JsonProperty("attributeType") Type type,
-                                      @JsonProperty("attributeKey") JsonNode key,
-                                      @JsonProperty("attributeSearchParameter") String searchParameter) {
+    static AttributeMapping of(@JsonProperty("attributeType") FilterType type,
+                               @JsonProperty("attributeKey") JsonNode key,
+                               @JsonProperty("attributeSearchParameter") String searchParameter) {
         return new AttributeMapping(type, TermCode.fromJsonNode(key), searchParameter);
     }
 
@@ -32,10 +32,5 @@ public record AttributeMapping(Type type, TermCode key, String searchParameter) 
 
     public static AttributeMapping coding(TermCode key, String searchParameter) {
         return new AttributeMapping(CODING, key, searchParameter);
-    }
-
-    public enum Type {
-        @JsonProperty("code") CODE,
-        @JsonProperty("coding") CODING
     }
 }

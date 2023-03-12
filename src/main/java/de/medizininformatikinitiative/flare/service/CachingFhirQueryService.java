@@ -2,7 +2,7 @@ package de.medizininformatikinitiative.flare.service;
 
 import com.github.benmanes.caffeine.cache.AsyncLoadingCache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import de.medizininformatikinitiative.flare.model.Query;
+import de.medizininformatikinitiative.flare.model.fhir.Query;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 

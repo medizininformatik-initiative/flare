@@ -4,12 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.medizininformatikinitiative.flare.FlareApplication;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
-import de.medizininformatikinitiative.flare.model.sq.ConceptCriterion;
-import de.medizininformatikinitiative.flare.model.sq.StructuredQuery;
-import de.medizininformatikinitiative.flare.model.sq.ValueSetCriterion;
-import de.numcodex.sq2cql.model.TermCodeNode;
-import de.numcodex.sq2cql.model.common.TermCode;
-import de.numcodex.sq2cql.model.structured_query.Concept;
+import de.medizininformatikinitiative.flare.model.mapping.TermCodeNode;
+import de.medizininformatikinitiative.flare.model.sq.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -44,9 +40,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @SpringBootTest
 class StructuredQueryServiceIT {
 
-    private static final TermCode C71 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "Z94", "");
+    private static final TermCode I08 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "I08", "");
     private static final TermCode COVID = TermCode.of("http://loinc.org", "94500-6", "");
-    private static final TermCode DETECTED = TermCode.of("http://snomed.info/sct", "260373001", "");
+    private static final TermCode INVALID = TermCode.of("http://loinc.org", "LA15841-2", "Invalid");
 
     private static final Logger logger = LoggerFactory.getLogger(StructuredQueryServiceIT.class);
 
@@ -110,7 +106,7 @@ class StructuredQueryServiceIT {
         if (!dataImported) {
             dataStoreClient.post()
                     .contentType(APPLICATION_JSON)
-                    .bodyValue(slurp("test-all-attributeFilterUpdate.json"))
+                    .bodyValue(slurp("GeneratedBundle.json"))
                     .retrieve()
                     .toBodilessEntity()
                     .block();
@@ -119,8 +115,8 @@ class StructuredQueryServiceIT {
     }
 
     @Test
-    void execute_ConceptCriterion() {
-        var query = StructuredQuery.of(List.of(List.of(ConceptCriterion.of(Concept.of(C71)))));
+    void execute_Criterion() {
+        var query = StructuredQuery.of(List.of(List.of(Criterion.of(Concept.of(I08)))));
 
         var result = service.execute(query).block();
 
@@ -128,8 +124,8 @@ class StructuredQueryServiceIT {
     }
 
     @Test
-    void execute_ValueSetCriterion() {
-        var query = StructuredQuery.of(List.of(List.of(ValueSetCriterion.of(Concept.of(COVID), DETECTED))));
+    void execute_Criterion_WithValueFilter() {
+        var query = StructuredQuery.of(List.of(List.of(Criterion.of(Concept.of(COVID), ValueFilter.ofConcept(INVALID)))));
 
         var result = service.execute(query).block();
 

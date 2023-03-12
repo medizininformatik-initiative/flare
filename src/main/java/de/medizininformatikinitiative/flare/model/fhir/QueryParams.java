@@ -1,6 +1,6 @@
-package de.medizininformatikinitiative.flare.model.sq;
+package de.medizininformatikinitiative.flare.model.fhir;
 
-import de.numcodex.sq2cql.model.common.TermCode;
+import de.medizininformatikinitiative.flare.model.sq.TermCode;
 
 import java.util.LinkedList;
 import java.util.List;

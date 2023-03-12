@@ -1,6 +1,6 @@
 package de.medizininformatikinitiative.flare.service;
 
-import de.medizininformatikinitiative.flare.model.Query;
+import de.medizininformatikinitiative.flare.model.fhir.Query;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
 import de.medizininformatikinitiative.flare.model.sq.Criterion;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCriterion;

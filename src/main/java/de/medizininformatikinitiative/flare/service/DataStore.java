@@ -1,8 +1,8 @@
 package de.medizininformatikinitiative.flare.service;
 
-import de.medizininformatikinitiative.flare.model.Query;
 import de.medizininformatikinitiative.flare.model.fhir.Bundle;
-import de.medizininformatikinitiative.flare.model.sq.QueryParams;
+import de.medizininformatikinitiative.flare.model.fhir.Query;
+import de.medizininformatikinitiative.flare.model.fhir.QueryParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;

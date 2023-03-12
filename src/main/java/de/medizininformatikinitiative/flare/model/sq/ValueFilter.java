@@ -3,25 +3,25 @@ package de.medizininformatikinitiative.flare.model.sq;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
+import de.medizininformatikinitiative.flare.model.mapping.ValueMappingNotFoundException;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
 import reactor.core.publisher.Flux;
 
 import static java.util.Objects.requireNonNull;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record AttributeFilter(TermCode code, FilterPart filterPart) implements Filter {
+public record ValueFilter(FilterPart filterPart) implements Filter {
 
-    public AttributeFilter {
-        requireNonNull(code);
+    public ValueFilter {
         requireNonNull(filterPart);
     }
 
-    static AttributeFilter ofConcept(TermCode code, TermCode firstConcept, TermCode... otherConcepts) {
+    public static ValueFilter ofConcept(TermCode firstConcept, TermCode... otherConcepts) {
         var filterPart = ConceptFilterPart.of(firstConcept);
         for (TermCode concept : otherConcepts) {
             filterPart = filterPart.appendConcept(concept);
         }
-        return new AttributeFilter(code, filterPart);
+        return new ValueFilter(filterPart);
     }
 
     /**
@@ -31,12 +31,14 @@ public record AttributeFilter(TermCode code, FilterPart filterPart) implements F
      * @return the parsed attribute filterPart
      * @throws IllegalArgumentException if the JSON isn't valid
      */
-    public static AttributeFilter fromJsonNode(JsonNode node) {
-        var code = TermCode.fromJsonNode(node.get("attributeCode"));
-        return new AttributeFilter(code, FilterPart.fromJsonNode(node));
+    public static ValueFilter fromJsonNode(JsonNode node) {
+        return new ValueFilter(FilterPart.fromJsonNode(node));
     }
 
+    @Override
     public Flux<ExpandedFilter> expand(Mapping mapping) {
-        return mapping.findAttributeMapping(code).flux().flatMap(filterPart::expand);
+        return mapping.valueFilterMapping()
+                .map(filterPart::expand)
+                .orElseGet(() -> Flux.error(new ValueMappingNotFoundException(mapping.key())));
     }
 }
