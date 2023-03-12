@@ -178,4 +178,49 @@ class CriterionTest {
                 ExpandedCriterion.of("Condition", "code", C71_2)
                         .appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED)));
     }
+
+    @Test
+    void expand_OneConceptExpansion_OneFixedCriteria_OneConcept() {
+        when(mappingContext.expandConcept(Concept.of(C71))).thenReturn(Mono.just(List.of(C71)));
+        when(mappingContext.findMapping(C71)).thenReturn(Mono.just(Mapping.of(C71, "Condition", "code")
+                .withFixedCriteria(new FixedCriterion(FilterType.CODING, "verification-status", List.of(CONFIRMED)))));
+
+        var criteria = Criterion.of(Concept.of(C71)).expand(mappingContext).block();
+
+        assertThat(criteria).containsExactly(ExpandedCriterion.of("Condition", "code", C71)
+                .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)));
+    }
+
+    @Test
+    void expand_OneConceptExpansion_OneFixedCriteria_TwoConcepts() {
+        when(mappingContext.expandConcept(Concept.of(C71))).thenReturn(Mono.just(List.of(C71)));
+        when(mappingContext.findMapping(C71)).thenReturn(Mono.just(Mapping.of(C71, "Condition", "code")
+                .withFixedCriteria(new FixedCriterion(FilterType.CODING, "verification-status", List.of(CONFIRMED,
+                        UNCONFIRMED)))));
+
+        var criteria = Criterion.of(Concept.of(C71)).expand(mappingContext).block();
+
+        assertThat(criteria).containsExactly(ExpandedCriterion.of("Condition", "code", C71)
+                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)),
+                ExpandedCriterion.of("Condition", "code", C71)
+                        .appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED)));
+    }
+
+    @Test
+    void toQuery_OneConceptExpansion_OneValueFilter_TwoConcepts_OneFixedCriteria_OneConcept() {
+        when(mappingContext.expandConcept(Concept.of(SEX))).thenReturn(Mono.just(List.of(SEX)));
+        when(mappingContext.findMapping(SEX)).thenReturn(Mono.just(Mapping.of(SEX, "Observation", "code")
+                .withValueSearchParameter("value-concept")
+                .withFixedCriteria(new FixedCriterion(FilterType.CODE, "status", List.of(FINAL)))));
+
+        var criteria = Criterion.of(Concept.of(SEX), ValueFilter.ofConcept(MALE, FEMALE)).expand(mappingContext).block();
+
+        assertThat(criteria).containsExactly(
+                ExpandedCriterion.of("Observation", "code", SEX)
+                        .appendFilter(new ExpandedCodeFilter("status", "final"))
+                        .appendFilter(new ExpandedConceptFilter("value-concept", MALE)),
+                ExpandedCriterion.of("Observation", "code", SEX)
+                        .appendFilter(new ExpandedCodeFilter("status", "final"))
+                        .appendFilter(new ExpandedConceptFilter("value-concept", FEMALE)));
+    }
 }

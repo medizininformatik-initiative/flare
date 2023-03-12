@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import de.medizininformatikinitiative.flare.Util;
+import de.medizininformatikinitiative.flare.model.mapping.FixedCriterion;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCriterion;
@@ -89,7 +90,11 @@ public record Criterion(Concept concept, List<Filter> filters, TimeRestriction t
     private Mono<List<List<ExpandedFilter>>> expandFilters(Mapping mapping) {
         return filters.stream()
                 .map(filter -> filter.expand(mapping))
-                .reduce(Mono.just(List.of()), Util::add, Util::concat);
+                .reduce(Mono.just(fixedCriterionFilters(mapping)), Util::add, Util::concat);
+    }
+
+    private List<List<ExpandedFilter>> fixedCriterionFilters(Mapping mapping) {
+        return mapping.fixedCriteria().stream().map(FixedCriterion::expand).toList();
     }
 
     private static ExpandedCriterion expandedCriterion(Mapping mapping, TermCode termCode) {

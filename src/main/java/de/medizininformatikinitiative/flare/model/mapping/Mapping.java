@@ -6,10 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
 import reactor.core.publisher.Mono;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -22,19 +19,19 @@ public final class Mapping {
     private final String resourceType;
     private final String termCodeSearchParameter;
     private final ValueFilterMapping valueFilterMapping;
-    private final List<FixedCriteria> fixedCriteria;
+    private final List<FixedCriterion> fixedCriteria;
     private final Map<TermCode, AttributeMapping> attributeMappings;
     private final String timeRestrictionPath;
 
     private Mapping(TermCode key, String resourceType, String termCodeSearchParameter,
-                    ValueFilterMapping valueFilterMapping, List<FixedCriteria> fixedCriteria,
+                    ValueFilterMapping valueFilterMapping, List<FixedCriterion> fixedCriteria,
                     Map<TermCode, AttributeMapping> attributeMappings, String timeRestrictionPath) {
         this.key = requireNonNull(key);
         this.resourceType = requireNonNull(resourceType);
         this.termCodeSearchParameter = requireNonNull(termCodeSearchParameter);
         this.valueFilterMapping = valueFilterMapping;
         this.fixedCriteria = List.copyOf(fixedCriteria);
-        this.attributeMappings = attributeMappings;
+        this.attributeMappings = Map.copyOf(attributeMappings);
         this.timeRestrictionPath = timeRestrictionPath;
     }
 
@@ -48,11 +45,18 @@ public final class Mapping {
                 fixedCriteria, attributeMappings, timeRestrictionPath);
     }
 
+    public Mapping withFixedCriteria(FixedCriterion fixedCriterion) {
+        var fixedCriteria = new LinkedList<>(this.fixedCriteria);
+        fixedCriteria.add(fixedCriterion);
+        return new Mapping(key, resourceType, termCodeSearchParameter, valueFilterMapping,
+                fixedCriteria, attributeMappings, timeRestrictionPath);
+    }
+
     public Mapping appendAttributeMapping(AttributeMapping attributeMapping) {
         var attributeMappings = new HashMap<>(this.attributeMappings);
         attributeMappings.put(attributeMapping.key(), attributeMapping);
         return new Mapping(key, resourceType, termCodeSearchParameter, valueFilterMapping,
-                fixedCriteria, Map.copyOf(attributeMappings), timeRestrictionPath);
+                fixedCriteria, attributeMappings, timeRestrictionPath);
     }
 
     @JsonCreator
@@ -61,7 +65,7 @@ public final class Mapping {
                              @JsonProperty("termCodeSearchParameter") String termCodeSearchParameter,
                              @JsonProperty("valueSearchParameter") String valueSearchParameter,
                              @JsonProperty("valueTypeFhir") FilterType valueTypeFhir,
-                             @JsonProperty("fixedCriteria") List<FixedCriteria> fixedCriteria,
+                             @JsonProperty("fixedCriteria") List<FixedCriterion> fixedCriteria,
                              @JsonProperty("attributeSearchParameters") List<AttributeMapping> attributeMappings,
                              @JsonProperty("timeRestrictionPath") String timeRestrictionPath) {
         return new Mapping(key, resourceType, termCodeSearchParameter == null ? "code" : termCodeSearchParameter,
@@ -89,6 +93,10 @@ public final class Mapping {
 
     public Optional<FilterMapping> valueFilterMapping() {
         return Optional.ofNullable(valueFilterMapping);
+    }
+
+    public List<FixedCriterion> fixedCriteria() {
+        return fixedCriteria;
     }
 
     public Mono<AttributeMapping> findAttributeMapping(TermCode code) {
