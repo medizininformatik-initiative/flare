@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
-import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 
@@ -36,7 +38,7 @@ public record AttributeFilter(TermCode code, FilterPart filterPart) implements F
         return new AttributeFilter(code, FilterPart.fromJsonNode(node));
     }
 
-    public Flux<ExpandedFilter> expand(Mapping mapping) {
-        return mapping.findAttributeMapping(code).flux().flatMap(filterPart::expand);
+    public Mono<List<ExpandedFilter>> expand(Mapping mapping) {
+        return mapping.findAttributeMapping(code).flatMap(filterPart::expand);
     }
 }

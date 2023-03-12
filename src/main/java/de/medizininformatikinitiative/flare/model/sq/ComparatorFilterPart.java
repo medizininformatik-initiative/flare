@@ -2,9 +2,10 @@ package de.medizininformatikinitiative.flare.model.sq;
 
 import de.medizininformatikinitiative.flare.model.mapping.FilterMapping;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
-import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 
@@ -39,7 +40,7 @@ public record ComparatorFilterPart(Comparator comparator, BigDecimal value, Stri
     }
 
     @Override
-    public Flux<ExpandedFilter> expand(FilterMapping filterMapping) {
-        return Flux.empty();
+    public Mono<List<ExpandedFilter>> expand(FilterMapping filterMapping) {
+        return Mono.just(List.of());
     }
 }

@@ -4,7 +4,6 @@ import de.medizininformatikinitiative.flare.model.mapping.FilterMapping;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCodeFilter;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedConceptFilter;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.LinkedList;
@@ -34,11 +33,13 @@ public record ConceptFilterPart(List<TermCode> concepts) implements FilterPart {
     }
 
     @Override
-    public Flux<ExpandedFilter> expand(FilterMapping filterMapping) {
-        return Flux.fromIterable(concepts)
-                .flatMap(concept -> switch (filterMapping.type()) {
-                    case CODE -> Mono.just(new ExpandedCodeFilter(filterMapping.searchParameter(), concept.code()));
-                    case CODING -> Mono.just(new ExpandedConceptFilter(filterMapping.searchParameter(), concept));
-                });
+    public Mono<List<ExpandedFilter>> expand(FilterMapping filterMapping) {
+        return Mono.just(concepts.stream()
+                .map(concept -> switch (filterMapping.type()) {
+                    case CODE -> (ExpandedFilter) new ExpandedCodeFilter(filterMapping.searchParameter(),
+                            concept.code());
+                    case CODING -> new ExpandedConceptFilter(filterMapping.searchParameter(), concept);
+                })
+                .toList());
     }
 }

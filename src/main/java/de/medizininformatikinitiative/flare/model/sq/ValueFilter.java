@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.ValueMappingNotFoundException;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
-import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 
@@ -36,9 +38,9 @@ public record ValueFilter(FilterPart filterPart) implements Filter {
     }
 
     @Override
-    public Flux<ExpandedFilter> expand(Mapping mapping) {
+    public Mono<List<ExpandedFilter>> expand(Mapping mapping) {
         return mapping.valueFilterMapping()
                 .map(filterPart::expand)
-                .orElseGet(() -> Flux.error(new ValueMappingNotFoundException(mapping.key())));
+                .orElseGet(() -> Mono.error(new ValueMappingNotFoundException(mapping.key())));
     }
 }

@@ -1,17 +1,19 @@
 package de.medizininformatikinitiative.flare.model.sq;
 
 import de.medizininformatikinitiative.flare.model.mapping.*;
+import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCodeFilter;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedConceptFilter;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCriterion;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -42,7 +44,7 @@ class CriterionTest {
 
     @Test
     void expand_NotExpandable() {
-        when(mappingContext.expandConcept(Concept.of(C71))).thenReturn(Flux.error(new ConceptNotExpandableException(
+        when(mappingContext.expandConcept(Concept.of(C71))).thenReturn(Mono.error(new ConceptNotExpandableException(
                 Concept.of(C71))));
 
         var criteria = Criterion.of(Concept.of(C71)).expand(mappingContext);
@@ -52,7 +54,7 @@ class CriterionTest {
 
     @Test
     void expand_MappingNotFound() {
-        when(mappingContext.expandConcept(Concept.of(C71))).thenReturn(Flux.just(C71));
+        when(mappingContext.expandConcept(Concept.of(C71))).thenReturn(Mono.just(List.of(C71)));
         when(mappingContext.findMapping(C71)).thenReturn(Mono.error(new MappingNotFoundException(C71)));
 
         var criteria = Criterion.of(Concept.of(C71)).expand(mappingContext);
@@ -62,140 +64,118 @@ class CriterionTest {
 
     @Test
     void expand_OneConceptExpansion() {
-        when(mappingContext.expandConcept(Concept.of(C71))).thenReturn(Flux.just(C71));
+        when(mappingContext.expandConcept(Concept.of(C71))).thenReturn(Mono.just(List.of(C71)));
         when(mappingContext.findMapping(C71)).thenReturn(Mono.just(Mapping.of(C71, "Condition", "code")));
 
-        var criteria = Criterion.of(Concept.of(C71)).expand(mappingContext);
+        var criteria = Criterion.of(Concept.of(C71)).expand(mappingContext).block();
 
-        StepVerifier.create(criteria)
-                .expectNext(ExpandedCriterion.of("Condition", "code", C71))
-                .expectComplete()
-                .verify();
+        assertThat(criteria).containsExactly(ExpandedCriterion.of("Condition", "code", C71));
     }
 
     @Test
     void expand_TwoConceptExpansions() {
-        when(mappingContext.expandConcept(Concept.of(C71))).thenReturn(Flux.just(C71_1, C71_2));
+        when(mappingContext.expandConcept(Concept.of(C71))).thenReturn(Mono.just(List.of(C71_1, C71_2)));
         when(mappingContext.findMapping(C71_1)).thenReturn(Mono.just(Mapping.of(C71_1, "Condition", "code")));
         when(mappingContext.findMapping(C71_2)).thenReturn(Mono.just(Mapping.of(C71_2, "Condition", "code")));
 
-        var criteria = Criterion.of(Concept.of(C71)).expand(mappingContext);
+        var criteria = Criterion.of(Concept.of(C71)).expand(mappingContext).block();
 
-        StepVerifier.create(criteria)
-                .expectNext(ExpandedCriterion.of("Condition", "code", C71_1))
-                .expectNext(ExpandedCriterion.of("Condition", "code", C71_2))
-                .expectComplete()
-                .verify();
+        assertThat(criteria).containsExactly(
+                ExpandedCriterion.of("Condition", "code", C71_1),
+                ExpandedCriterion.of("Condition", "code", C71_2));
     }
 
     @Test
     void toQuery_OneConceptExpansion_OneValueFilter_OneConcept() {
-        when(mappingContext.expandConcept(Concept.of(COVID))).thenReturn(Flux.just(COVID));
+        when(mappingContext.expandConcept(Concept.of(COVID))).thenReturn(Mono.just(List.of(COVID)));
         when(mappingContext.findMapping(COVID)).thenReturn(Mono.just(Mapping.of(COVID, "Observation", "code")
                 .withValueSearchParameter("value-concept")));
 
-        var criteria = Criterion.of(Concept.of(COVID), ValueFilter.ofConcept(POSITIVE)).expand(mappingContext);
+        var criteria = Criterion.of(Concept.of(COVID), ValueFilter.ofConcept(POSITIVE)).expand(mappingContext).block();
 
-        StepVerifier.create(criteria)
-                .expectNext(ExpandedCriterion.of("Observation", "code", COVID)
-                        .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE)))
-                .expectComplete()
-                .verify();
+        assertThat(criteria).containsExactly(ExpandedCriterion.of("Observation", "code", COVID)
+                .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE)));
     }
 
     @Test
-    @Disabled("improve expansion")
     void toQuery_OneConceptExpansion_OneValueFilter_OneConcept_OneAttributeFilter_OneConcept() {
-        when(mappingContext.expandConcept(Concept.of(COVID))).thenReturn(Flux.just(COVID));
+        when(mappingContext.expandConcept(Concept.of(COVID))).thenReturn(Mono.just(List.of(COVID)));
         when(mappingContext.findMapping(COVID)).thenReturn(Mono.just(Mapping.of(COVID, "Observation", "code")
                 .withValueSearchParameter("value-concept")
                 .appendAttributeMapping(AttributeMapping.code(OBSERVATION_STATUS, "status"))));
-        var criterion = Criterion.of(Concept.of(COVID), ValueFilter.ofConcept(POSITIVE))
-                .appendAttributeFilter(AttributeFilter.ofConcept(OBSERVATION_STATUS, FINAL));
 
-        System.out.println("criterion = " + criterion);
-        var criteria = criterion.expand(mappingContext);
+        var criteria = Criterion.of(Concept.of(COVID), ValueFilter.ofConcept(POSITIVE))
+                .appendAttributeFilter(AttributeFilter.ofConcept(OBSERVATION_STATUS, FINAL))
+                .expand(mappingContext).block();
 
-        StepVerifier.create(criteria)
-                .expectNext(ExpandedCriterion.of("Observation", "code", COVID)
-                        .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE))
-                        .appendFilter(new ExpandedConceptFilter("status", FINAL)))
-                .expectComplete()
-                .verify();
+        assertThat(criteria).containsExactly(ExpandedCriterion.of("Observation", "code", COVID)
+                .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE))
+                .appendFilter(new ExpandedCodeFilter("status", "final")));
     }
 
     @Test
     void toQuery_OneConceptExpansion_OneValueFilter_TwoConcepts() {
-        when(mappingContext.expandConcept(Concept.of(SEX))).thenReturn(Flux.just(SEX));
+        when(mappingContext.expandConcept(Concept.of(SEX))).thenReturn(Mono.just(List.of(SEX)));
         when(mappingContext.findMapping(SEX)).thenReturn(Mono.just(Mapping.of(SEX, "Observation", "code")
                 .withValueSearchParameter("value-concept")));
 
-        var criteria = Criterion.of(Concept.of(SEX), ValueFilter.ofConcept(MALE, FEMALE)).expand(mappingContext);
+        var criteria = Criterion.of(Concept.of(SEX), ValueFilter.ofConcept(MALE, FEMALE)).expand(mappingContext).block();
 
-        StepVerifier.create(criteria)
-                .expectNext(ExpandedCriterion.of("Observation", "code", SEX)
-                        .appendFilter(new ExpandedConceptFilter("value-concept", MALE)))
-                .expectNext(ExpandedCriterion.of("Observation", "code", SEX)
-                        .appendFilter(new ExpandedConceptFilter("value-concept", FEMALE)))
-                .expectComplete()
-                .verify();
+        assertThat(criteria).containsExactly(
+                ExpandedCriterion.of("Observation", "code", SEX)
+                        .appendFilter(new ExpandedConceptFilter("value-concept", MALE)),
+                ExpandedCriterion.of("Observation", "code", SEX)
+                        .appendFilter(new ExpandedConceptFilter("value-concept", FEMALE)));
     }
 
     @Test
     void expand_OneConceptExpansion_OneAttributeFilter_OneConcept() {
-        when(mappingContext.expandConcept(Concept.of(C71))).thenReturn(Flux.just(C71));
+        when(mappingContext.expandConcept(Concept.of(C71))).thenReturn(Mono.just(List.of(C71)));
         when(mappingContext.findMapping(C71)).thenReturn(Mono.just(Mapping.of(C71, "Condition", "code")
                 .appendAttributeMapping(AttributeMapping.coding(VERIFICATION_STATUS, "verification-status"))));
 
         var criteria = Criterion.of(Concept.of(C71)).appendAttributeFilter(AttributeFilter.ofConcept(
-                VERIFICATION_STATUS, CONFIRMED)).expand(mappingContext);
+                VERIFICATION_STATUS, CONFIRMED)).expand(mappingContext).block();
 
-        StepVerifier.create(criteria)
-                .expectNext(ExpandedCriterion.of("Condition", "code", C71)
-                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)))
-                .expectComplete()
-                .verify();
+        assertThat(criteria).containsExactly(ExpandedCriterion.of("Condition", "code", C71)
+                .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)));
     }
 
     @Test
     void expand_OneConceptExpansion_OneAttributeFilter_TwoConcepts() {
-        when(mappingContext.expandConcept(Concept.of(C71))).thenReturn(Flux.just(C71));
+        when(mappingContext.expandConcept(Concept.of(C71))).thenReturn(Mono.just(List.of(C71)));
         when(mappingContext.findMapping(C71)).thenReturn(Mono.just(Mapping.of(C71, "Condition", "code")
                 .appendAttributeMapping(AttributeMapping.coding(VERIFICATION_STATUS, "verification-status"))));
 
         var criteria = Criterion.of(Concept.of(C71)).appendAttributeFilter(AttributeFilter.ofConcept(
-                VERIFICATION_STATUS, CONFIRMED, UNCONFIRMED)).expand(mappingContext);
+                VERIFICATION_STATUS, CONFIRMED, UNCONFIRMED)).expand(mappingContext).block();
 
-        StepVerifier.create(criteria)
-                .expectNext(ExpandedCriterion.of("Condition", "code", C71)
-                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)))
-                .expectNext(ExpandedCriterion.of("Condition", "code", C71)
-                        .appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED)))
-                .expectComplete()
-                .verify();
+        assertThat(criteria).containsExactly(
+                ExpandedCriterion.of("Condition", "code", C71)
+                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)),
+                ExpandedCriterion.of("Condition", "code", C71)
+                        .appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED)));
     }
 
     @Test
     void expand_TwoConceptExpansions_OneAttributeFilter_TwoConcepts() {
-        when(mappingContext.expandConcept(Concept.of(C71))).thenReturn(Flux.just(C71_1, C71_2));
+        when(mappingContext.expandConcept(Concept.of(C71))).thenReturn(Mono.just(List.of(C71_1, C71_2)));
         when(mappingContext.findMapping(C71_1)).thenReturn(Mono.just(Mapping.of(C71_1, "Condition", "code")
                 .appendAttributeMapping(AttributeMapping.coding(VERIFICATION_STATUS, "verification-status"))));
         when(mappingContext.findMapping(C71_2)).thenReturn(Mono.just(Mapping.of(C71_2, "Condition", "code")
                 .appendAttributeMapping(AttributeMapping.coding(VERIFICATION_STATUS, "verification-status"))));
 
         var criteria = Criterion.of(Concept.of(C71)).appendAttributeFilter(AttributeFilter.ofConcept(
-                VERIFICATION_STATUS, CONFIRMED, UNCONFIRMED)).expand(mappingContext);
+                VERIFICATION_STATUS, CONFIRMED, UNCONFIRMED)).expand(mappingContext).block();
 
-        StepVerifier.create(criteria)
-                .expectNext(ExpandedCriterion.of("Condition", "code", C71_1)
-                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)))
-                .expectNext(ExpandedCriterion.of("Condition", "code", C71_1)
-                        .appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED)))
-                .expectNext(ExpandedCriterion.of("Condition", "code", C71_2)
-                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)))
-                .expectNext(ExpandedCriterion.of("Condition", "code", C71_2)
-                        .appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED)))
-                .expectComplete()
-                .verify();
+        assertThat(criteria).containsExactly(
+                ExpandedCriterion.of("Condition", "code", C71_1)
+                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)),
+                ExpandedCriterion.of("Condition", "code", C71_1)
+                        .appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED)),
+                ExpandedCriterion.of("Condition", "code", C71_2)
+                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)),
+                ExpandedCriterion.of("Condition", "code", C71_2)
+                        .appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED)));
     }
 }

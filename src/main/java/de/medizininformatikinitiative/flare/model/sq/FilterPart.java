@@ -4,8 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import de.medizininformatikinitiative.flare.model.mapping.FilterMapping;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
-import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.stream.StreamSupport;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -51,5 +52,5 @@ public interface FilterPart {
         };
     }
 
-    Flux<ExpandedFilter> expand(FilterMapping filterMapping);
+    Mono<List<ExpandedFilter>> expand(FilterMapping filterMapping);
 }

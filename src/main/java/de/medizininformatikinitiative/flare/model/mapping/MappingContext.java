@@ -2,9 +2,9 @@ package de.medizininformatikinitiative.flare.model.mapping;
 
 import de.medizininformatikinitiative.flare.model.sq.Concept;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Map;
 
 import static java.util.Objects.requireNonNull;
@@ -47,13 +47,13 @@ public class MappingContext {
     }
 
     /**
-     * Expands {@code concept} into a stream of {@link TermCode TermCodes}.
+     * Expands {@code concept} into a {@link Mono mono} of {@link TermCode term codes}.
      *
      * @param concept the concept to expand
-     * @return the stream of TermCodes
+     * @return the mono of term codes
      */
-    public Flux<TermCode> expandConcept(Concept concept) {
-        return Flux.fromStream(concept.termCodes().stream().flatMap(conceptTree::expand))
-                .switchIfEmpty(Mono.error(new ConceptNotExpandableException(concept)));
+    public Mono<List<TermCode>> expandConcept(Concept concept) {
+        var termCodes = concept.termCodes().stream().flatMap(conceptTree::expand).toList();
+        return termCodes.isEmpty() ? Mono.error(new ConceptNotExpandableException(concept)) : Mono.just(termCodes);
     }
 }

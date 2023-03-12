@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import de.medizininformatikinitiative.flare.Util;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCriterion;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
-import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -62,26 +63,41 @@ public record Criterion(Concept concept, List<Filter> filters, TimeRestriction t
     }
 
     /**
-     * Expands this criterion into a {@link Flux flux} of {@link ExpandedCriterion expanded criteria}.
+     * Expands this criterion into a {@link Mono mono} of {@link ExpandedCriterion expanded criteria}.
      *
      * @param mappingContext contains the mappings needed to create the expanded criteria
-     * @return a {@link Flux flux} of {@link ExpandedCriterion expanded criteria}
+     * @return a mono of expanded criteria
      */
-    public Flux<ExpandedCriterion> expand(MappingContext mappingContext) {
-        return mappingContext.expandConcept(concept).flatMap(termCode -> expandTermCode(mappingContext, termCode));
+    public Mono<List<ExpandedCriterion>> expand(MappingContext mappingContext) {
+        return mappingContext.expandConcept(concept)
+                .flatMap(termCodes -> termCodes.stream()
+                        .map(termCode -> expandTermCode(mappingContext, termCode))
+                        .reduce(Mono.just(List.of()), Util::concat));
     }
 
-    private Flux<ExpandedCriterion> expandTermCode(MappingContext mappingContext, TermCode termCode) {
-        return mappingContext.findMapping(termCode).flux()
-                .flatMap(mapping -> Flux.fromIterable(filters)
-                        .flatMap(filter -> filter.expand(mapping)
-                                .map(expandedFilter -> expandedCriterion(mapping, termCode, List.of(expandedFilter))))
-                        .defaultIfEmpty(expandedCriterion(mapping, termCode, List.of())));
+    private Mono<List<ExpandedCriterion>> expandTermCode(MappingContext mappingContext, TermCode termCode) {
+        return mappingContext.findMapping(termCode)
+                .flatMap(mapping -> expandFilters(mapping)
+                        .map(Util::cartesianProduct)
+                        .map(expandedFilterMatrix -> expandedFilterMatrix.isEmpty()
+                                ? List.of(expandedCriterion(mapping, termCode))
+                                : expandedFilterMatrix.stream()
+                                .map(expandedFilters -> expandedCriterion(mapping, termCode, expandedFilters))
+                                .toList()));
+    }
+
+    private Mono<List<List<ExpandedFilter>>> expandFilters(Mapping mapping) {
+        return filters.stream()
+                .map(filter -> filter.expand(mapping))
+                .reduce(Mono.just(List.of()), Util::add, Util::concat);
+    }
+
+    private static ExpandedCriterion expandedCriterion(Mapping mapping, TermCode termCode) {
+        return ExpandedCriterion.of(mapping.resourceType(), mapping.termCodeSearchParameter(), termCode);
     }
 
     private static ExpandedCriterion expandedCriterion(Mapping mapping, TermCode termCode,
-                                                       List<ExpandedFilter> attributeFilters) {
-        return new ExpandedCriterion(mapping.resourceType(), mapping.termCodeSearchParameter(), termCode,
-                attributeFilters);
+                                                       List<ExpandedFilter> filters) {
+        return new ExpandedCriterion(mapping.resourceType(), mapping.termCodeSearchParameter(), termCode, filters);
     }
 }

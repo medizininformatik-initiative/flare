@@ -2,7 +2,9 @@ package de.medizininformatikinitiative.flare.model.sq;
 
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
-import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 public interface Filter {
 
@@ -15,5 +17,5 @@ public interface Filter {
      * @param mapping the mapping to use for expansion
      * @return possibly multiple expanded filters
      */
-    Flux<ExpandedFilter> expand(Mapping mapping);
+    Mono<List<ExpandedFilter>> expand(Mapping mapping);
 }
