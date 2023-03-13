@@ -28,7 +28,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -116,7 +115,7 @@ class StructuredQueryServiceIT {
 
     @Test
     void execute_Criterion() {
-        var query = StructuredQuery.of(List.of(List.of(Criterion.of(Concept.of(I08)))));
+        var query = StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(Concept.of(I08)))));
 
         var result = service.execute(query).block();
 
@@ -125,7 +124,7 @@ class StructuredQueryServiceIT {
 
     @Test
     void execute_Criterion_WithValueFilter() {
-        var query = StructuredQuery.of(List.of(List.of(Criterion.of(Concept.of(COVID), ValueFilter.ofConcept(INVALID)))));
+        var query = StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(Concept.of(COVID), ValueFilter.ofConcept(INVALID)))));
 
         var result = service.execute(query).block();
 
