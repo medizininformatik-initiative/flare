@@ -12,24 +12,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ExpandedCriterionTest {
 
+    public static final TermCode UNIT = new TermCode("http://loinc.org", "ug/dL", "ug/dL");
     static final TermCode C71_1 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "C71.1",
             "Frontallappen");
     static final TermCode CONFIRMED = TermCode.of("http://terminology.hl7.org/CodeSystem/condition-ver-status",
             "confirmed", "Confirmed");
     static final TermCode SEVERE = TermCode.of("http://snomed.info/sct",
             "24484000", "Severe");
-    public static final TermCode UNIT = new TermCode("http://loinc.org", "ug/dL", "ug/dL");
-
     static final TermCode CORTISOL = TermCode.of("http://loinc.org", "2143-6", "Cortisol");
+    static final String VALE_FILTER_SEARCH_PARAMETER = "value-quantity";
+    static final Comparator FIRST_COMPARATOR_FILTER_COMPARATOR = Comparator.GREATER_THAN;
+    static final BigDecimal FIRST_COMPARATOR_FILTER_VALUE = BigDecimal.valueOf(7.3);
     public static final ExpandedComparatorFilter FIRST_COMPARATOR_FILTER = new ExpandedComparatorFilter(
-            "value-quantity", Comparator.GREATER_THAN, BigDecimal.valueOf(7.3), UNIT);
+            VALE_FILTER_SEARCH_PARAMETER, FIRST_COMPARATOR_FILTER_COMPARATOR, FIRST_COMPARATOR_FILTER_VALUE, UNIT);
+    static final Comparator SECOND_COMPARATOR_FILTER_COMPARATOR = Comparator.GREATER_THAN;
+    static final BigDecimal SECOND_COMPARATOR_FILTER_VALUE = BigDecimal.valueOf(10);
     public static final ExpandedComparatorFilter SECOND_COMPARATOR_FILTER = new ExpandedComparatorFilter(
-            "value-quantity", Comparator.LESS_EQUAL, BigDecimal.valueOf(10), UNIT);
-
-    public static final ExpandedRangeFilter FIRST_RANGE_FILTER = new ExpandedRangeFilter("value-quantity",
-            BigDecimal.valueOf(17.9), BigDecimal.valueOf(22), UNIT);
-    public static final ExpandedRangeFilter SECOND_RANGE_FILTER = new ExpandedRangeFilter("value-quantity",
-            BigDecimal.valueOf(30), BigDecimal.valueOf(43.5), UNIT);
+            VALE_FILTER_SEARCH_PARAMETER, SECOND_COMPARATOR_FILTER_COMPARATOR, SECOND_COMPARATOR_FILTER_VALUE, UNIT);
+    static final BigDecimal FIRST_RANGE_FILTER_LOWER_BOUND = BigDecimal.valueOf(17.9);
+    static final BigDecimal FIRST_RANGE_FILTER_UPPER_BOUND = BigDecimal.valueOf(22);
+    public static final ExpandedRangeFilter FIRST_RANGE_FILTER = new ExpandedRangeFilter(VALE_FILTER_SEARCH_PARAMETER,
+            FIRST_RANGE_FILTER_LOWER_BOUND, FIRST_RANGE_FILTER_UPPER_BOUND, UNIT);
+    static final BigDecimal SECOND_RANGE_FILTER_LOWER_BOUND = BigDecimal.valueOf(30);
+    static final BigDecimal SECOND_RANGE_FILTER_UPPER_BOUND = BigDecimal.valueOf(43.5);
+    public static final ExpandedRangeFilter SECOND_RANGE_FILTER = new ExpandedRangeFilter(VALE_FILTER_SEARCH_PARAMETER,
+            SECOND_RANGE_FILTER_LOWER_BOUND, SECOND_RANGE_FILTER_UPPER_BOUND, UNIT);
 
     @Test
     void toQuery() {
@@ -67,7 +74,7 @@ class ExpandedCriterionTest {
     }
 
     @Test
-    void toQuery_withOneComparatorFilter(){
+    void toQuery_withOneComparatorFilter() {
         var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
                 .appendFilter(FIRST_COMPARATOR_FILTER);
 
@@ -75,13 +82,13 @@ class ExpandedCriterionTest {
 
         assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
                 .appendParam("code", CORTISOL)
-                .appendParam(FIRST_COMPARATOR_FILTER.searchParameter(),
-                        FIRST_COMPARATOR_FILTER.comparator().toString() + FIRST_COMPARATOR_FILTER.value()
-                                + unitAttachment(UNIT))));
+                .appendParam(VALE_FILTER_SEARCH_PARAMETER,
+                        FIRST_COMPARATOR_FILTER_COMPARATOR, FIRST_COMPARATOR_FILTER_VALUE,
+                        UNIT)));
     }
 
     @Test
-    void toQuery_withTwoComparatorFilters(){
+    void toQuery_withTwoComparatorFilters() {
         var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
                 .appendFilter(FIRST_COMPARATOR_FILTER)
                 .appendFilter(SECOND_COMPARATOR_FILTER);
@@ -90,18 +97,18 @@ class ExpandedCriterionTest {
 
         assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
                 .appendParam("code", CORTISOL)
-                .appendParam(FIRST_COMPARATOR_FILTER.searchParameter(),
-                        FIRST_COMPARATOR_FILTER.comparator().toString() + FIRST_COMPARATOR_FILTER.value()
-                                + unitAttachment(UNIT))
-                .appendParam(FIRST_COMPARATOR_FILTER.searchParameter(),
-                        FIRST_COMPARATOR_FILTER.comparator().toString() + SECOND_COMPARATOR_FILTER.value()
-                                + unitAttachment(UNIT))));
+                .appendParam(VALE_FILTER_SEARCH_PARAMETER,
+                        FIRST_COMPARATOR_FILTER_COMPARATOR, FIRST_COMPARATOR_FILTER_VALUE
+                        , UNIT)
+                .appendParam(VALE_FILTER_SEARCH_PARAMETER,
+                        FIRST_COMPARATOR_FILTER_COMPARATOR, SECOND_COMPARATOR_FILTER_VALUE
+                        , UNIT)));
 
     }
 
 
     @Test
-    void toQuery_withOneRangeFilter(){
+    void toQuery_withOneRangeFilter() {
         var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
                 .appendFilter(FIRST_RANGE_FILTER);
 
@@ -109,17 +116,17 @@ class ExpandedCriterionTest {
 
         assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
                 .appendParam("code", CORTISOL)
-                .appendParam(FIRST_RANGE_FILTER.searchParameter(),
-                        Comparator.GREATER_EQUAL.toString() + FIRST_RANGE_FILTER.lowerBound()
-                                + unitAttachment(UNIT))
-                .appendParam(FIRST_RANGE_FILTER.searchParameter(),
-                        Comparator.LESS_EQUAL.toString() + FIRST_RANGE_FILTER.lowerBound()
-                                + unitAttachment(UNIT))));
+                .appendParam(VALE_FILTER_SEARCH_PARAMETER,
+                        Comparator.GREATER_EQUAL, FIRST_RANGE_FILTER_LOWER_BOUND,
+                        UNIT)
+                .appendParam(VALE_FILTER_SEARCH_PARAMETER,
+                        Comparator.LESS_EQUAL, FIRST_RANGE_FILTER_UPPER_BOUND
+                        , UNIT)));
     }
 
 
     @Test
-    void toQuery_withTowRangeFilters(){
+    void toQuery_withTowRangeFilters() {
         var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
                 .appendFilter(FIRST_RANGE_FILTER)
                 .appendFilter(SECOND_RANGE_FILTER);
@@ -128,21 +135,18 @@ class ExpandedCriterionTest {
 
         assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
                 .appendParam("code", CORTISOL)
-                .appendParam(FIRST_RANGE_FILTER.searchParameter(),
-                        Comparator.GREATER_EQUAL.toString() + FIRST_RANGE_FILTER.lowerBound()
-                                + unitAttachment(UNIT))
-                .appendParam(FIRST_RANGE_FILTER.searchParameter(),
-                        Comparator.LESS_EQUAL.toString() + FIRST_RANGE_FILTER.lowerBound()
-                                + unitAttachment(UNIT))
-                .appendParam(SECOND_RANGE_FILTER.searchParameter(),
-                        Comparator.GREATER_EQUAL.toString() + SECOND_RANGE_FILTER.lowerBound()
-                                + unitAttachment(UNIT))
-                .appendParam(SECOND_RANGE_FILTER.searchParameter(),
-                        Comparator.LESS_EQUAL.toString() + SECOND_RANGE_FILTER.lowerBound()
-                                + unitAttachment(UNIT))));
+                .appendParam(VALE_FILTER_SEARCH_PARAMETER,
+                        Comparator.GREATER_EQUAL, FIRST_RANGE_FILTER_LOWER_BOUND
+                        , UNIT)
+                .appendParam(VALE_FILTER_SEARCH_PARAMETER,
+                        Comparator.LESS_EQUAL, FIRST_RANGE_FILTER_UPPER_BOUND,
+                        UNIT)
+                .appendParam(VALE_FILTER_SEARCH_PARAMETER,
+                        Comparator.GREATER_EQUAL, SECOND_RANGE_FILTER_LOWER_BOUND
+                        , UNIT)
+                .appendParam(VALE_FILTER_SEARCH_PARAMETER,
+                        Comparator.LESS_EQUAL, SECOND_RANGE_FILTER_UPPER_BOUND
+                        , UNIT)));
     }
 
-    private String unitAttachment(TermCode unit){
-        return "|" + unit.system() + "|" + unit.code();
-    }
 }

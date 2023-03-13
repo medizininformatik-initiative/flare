@@ -12,13 +12,13 @@ public record ExpandedComparatorFilter(String searchParameter, Comparator compar
     @Override
     public QueryParams toParams() {
         var paramValue = comparator.toString() + value.toString();
-        if(unit != null){
+        if (unit != null) {
             paramValue += unitAttachment();
         }
-        return QueryParams.of(searchParameter, paramValue );
+        return QueryParams.of(searchParameter, paramValue);
     }
 
-    String unitAttachment(){
+    String unitAttachment() {
         return "|" + unit.system() + "|" + unit.code();
     }
 }

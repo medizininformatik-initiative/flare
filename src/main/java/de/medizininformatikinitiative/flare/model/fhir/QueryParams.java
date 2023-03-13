@@ -1,7 +1,9 @@
 package de.medizininformatikinitiative.flare.model.fhir;
 
+import de.medizininformatikinitiative.flare.model.sq.Comparator;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,6 +58,20 @@ public record QueryParams(List<Param> params) {
     }
 
     /**
+     * Appends a param with {@code name} and a value that the resources should be compared with in the end.
+     * <p>
+     *
+     * @param name       the name of the query parameter
+     * @param comparator the {@link Comparator} to use as comparator
+     * @param value      the value that should be compared
+     * @param unit       the unit of the {@code value}
+     * @return the {@code QueryParams} resulting in appending the param
+     */
+    public QueryParams appendParam(String name, Comparator comparator, BigDecimal value, TermCode unit) {
+        return appendParam(name, comparator.toString() + value + unitAttachment(unit));
+    }
+
+    /**
      * Appends a params by calling the function {@code appendTo}.
      *
      * @param params a function that takes a {@code QueryParams}, appends some params returning the resulting {@code QueryParams}
@@ -65,6 +81,10 @@ public record QueryParams(List<Param> params) {
         var sb = new LinkedList<>(this.params);
         sb.addAll(params.params);
         return new QueryParams(sb);
+    }
+
+    private String unitAttachment(TermCode unit) {
+        return "|" + unit.system() + "|" + unit.code();
     }
 
     @Override
