@@ -7,6 +7,8 @@ import de.medizininformatikinitiative.flare.model.sq.Concept;
 import de.medizininformatikinitiative.flare.model.sq.Criterion;
 import de.medizininformatikinitiative.flare.model.sq.StructuredQuery;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
+import de.medizininformatikinitiative.flare.model.translate.Operator;
+import de.medizininformatikinitiative.flare.model.translate.QueryExpression;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -97,7 +99,7 @@ class StructuredQueryServiceTest {
 
         var result = service.translate(query).block();
 
-        assertThat(result).containsExactly(List.of(CONCEPT_QUERY));
+        assertThat(result).isEqualTo(Operator.intersection(Operator.union(new QueryExpression(CONCEPT_QUERY))));
     }
 
     @Test
@@ -119,7 +121,8 @@ class StructuredQueryServiceTest {
 
         var result = service.translate(query).block();
 
-        assertThat(result).containsExactly(List.of(CONCEPT_QUERY_1, CONCEPT_QUERY_2));
+        assertThat(result).isEqualTo(Operator.intersection(Operator.union(new QueryExpression(CONCEPT_QUERY_1),
+                new QueryExpression(CONCEPT_QUERY_2))));
     }
 
     @Test
@@ -159,6 +162,19 @@ class StructuredQueryServiceTest {
     }
 
     @Test
+    void translate_singleIncludeConceptCriterion_singleExcludeConceptCriterion() {
+        var query = StructuredQuery.of(List.of(List.of(CONCEPT_CRITERION_1)), List.of(List.of(CONCEPT_CRITERION_2)));
+        when(translator.toQuery(CONCEPT_CRITERION_1)).thenReturn(Mono.just(List.of(CONCEPT_QUERY_1)));
+        when(translator.toQuery(CONCEPT_CRITERION_2)).thenReturn(Mono.just(List.of(CONCEPT_QUERY_2)));
+
+        var result = service.translate(query).block();
+
+        assertThat(result).isEqualTo(Operator.difference(Operator.intersection(Operator.union(
+                new QueryExpression(CONCEPT_QUERY_1))), Operator.union(Operator.intersection(Operator.union(
+                new QueryExpression(CONCEPT_QUERY_2))))));
+    }
+
+    @Test
     void execute_twoIncludeConceptCriteria_orLevel() {
         var query = StructuredQuery.of(List.of(List.of(CONCEPT_CRITERION_1, CONCEPT_CRITERION_2)));
         when(translator.toQuery(CONCEPT_CRITERION_1)).thenReturn(Mono.just(List.of(CONCEPT_QUERY_1)));
@@ -179,7 +195,8 @@ class StructuredQueryServiceTest {
 
         var result = service.translate(query).block();
 
-        assertThat(result).containsExactly(List.of(CONCEPT_QUERY_1, CONCEPT_QUERY_2));
+        assertThat(result).isEqualTo(Operator.intersection(Operator.union(new QueryExpression(CONCEPT_QUERY_1),
+                new QueryExpression(CONCEPT_QUERY_2))));
     }
 
     @Test
@@ -203,7 +220,8 @@ class StructuredQueryServiceTest {
 
         var result = service.translate(query).block();
 
-        assertThat(result).containsExactly(List.of(CONCEPT_QUERY_1), List.of(CONCEPT_QUERY_2));
+        assertThat(result).isEqualTo(Operator.intersection(Operator.union(new QueryExpression(CONCEPT_QUERY_1)),
+                Operator.union(new QueryExpression(CONCEPT_QUERY_2))));
     }
 
     @Test

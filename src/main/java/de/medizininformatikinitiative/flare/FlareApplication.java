@@ -48,9 +48,9 @@ public class FlareApplication {
     @Bean
     public MappingContext mappingContext() throws Exception {
         var mapper = new ObjectMapper();
-        var mappings = Arrays.stream(mapper.readValue(slurp("synthea-mapping.json"), Mapping[].class))
+        var mappings = Arrays.stream(mapper.readValue(slurp("codex-term-code-mapping.json"), Mapping[].class))
                 .collect(Collectors.toMap(Mapping::key, identity()));
-        var conceptTree = mapper.readValue(slurp("synthea-tree.json"), TermCodeNode.class);
+        var conceptTree = mapper.readValue(slurp("codex-code-tree.json"), TermCodeNode.class);
         return MappingContext.of(mappings, conceptTree);
     }
 

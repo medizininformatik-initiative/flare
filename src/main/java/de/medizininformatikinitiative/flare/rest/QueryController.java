@@ -1,6 +1,5 @@
 package de.medizininformatikinitiative.flare.rest;
 
-import de.medizininformatikinitiative.flare.model.fhir.Query;
 import de.medizininformatikinitiative.flare.model.sq.StructuredQuery;
 import de.medizininformatikinitiative.flare.service.StructuredQueryService;
 import org.slf4j.Logger;
@@ -13,7 +12,6 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
 import java.util.Objects;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
@@ -51,10 +49,6 @@ public class QueryController {
         logger.debug("Translate query");
         return request.bodyToMono(StructuredQuery.class)
                 .flatMap(queryService::translate)
-                .flatMap(queries -> ok().bodyValue(render(queries)));
-    }
-
-    private List<List<String>> render(List<List<Query>> queries) {
-        return queries.stream().map(qs -> qs.stream().map(Query::toString).toList()).toList();
+                .flatMap(queryExpression -> ok().bodyValue(queryExpression));
     }
 }

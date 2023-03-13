@@ -2,8 +2,10 @@ package de.medizininformatikinitiative.flare;
 
 import reactor.core.publisher.Mono;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public interface Util {
 
@@ -72,5 +74,23 @@ public interface Util {
 
     static <T> Mono<List<T>> concat(Mono<List<T>> mA, Mono<List<T>> mB) {
         return mA.flatMap(a -> mB.map(b -> Util.concat(a, b)));
+    }
+
+    static Set<String> intersection(Set<String> a, Set<String> b) {
+        var ret = new HashSet<>(a);
+        ret.retainAll(b);
+        return Set.copyOf(ret);
+    }
+
+    static Set<String> union(Set<String> a, Set<String> b) {
+        var ret = new HashSet<>(a);
+        ret.addAll(b);
+        return Set.copyOf(ret);
+    }
+
+    static Set<String> difference(Set<String> a, Set<String> b) {
+        var ret = new HashSet<>(a);
+        ret.removeAll(b);
+        return Set.copyOf(ret);
     }
 }

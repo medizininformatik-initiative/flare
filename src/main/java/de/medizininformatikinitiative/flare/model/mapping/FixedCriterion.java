@@ -29,7 +29,7 @@ public record FixedCriterion(FilterType type, String searchParameter, List<TermC
     }
 
     public List<ExpandedFilter> expand() {
-        return concepts.stream().map(concept -> switch(type) {
+        return concepts.stream().map(concept -> switch (type) {
             case CODING -> (ExpandedFilter) new ExpandedConceptFilter(searchParameter, concept);
             case CODE -> new ExpandedCodeFilter(searchParameter, concept.code());
         }).toList();

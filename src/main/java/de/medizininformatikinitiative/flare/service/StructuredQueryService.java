@@ -1,9 +1,10 @@
 package de.medizininformatikinitiative.flare.service;
 
 import de.medizininformatikinitiative.flare.Util;
-import de.medizininformatikinitiative.flare.model.fhir.Query;
 import de.medizininformatikinitiative.flare.model.sq.Criterion;
 import de.medizininformatikinitiative.flare.model.sq.StructuredQuery;
+import de.medizininformatikinitiative.flare.model.translate.Operator;
+import de.medizininformatikinitiative.flare.model.translate.QueryExpression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,10 +12,11 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
+import static de.medizininformatikinitiative.flare.model.translate.Operator.Name.UNION;
 
 @Service
 public class StructuredQueryService {
@@ -42,7 +44,7 @@ public class StructuredQueryService {
         var excludedPatients = executeConjunctiveNormalFormOr(expandExclusionCriteria(query.exclusionCriteria()))
                 .defaultIfEmpty(Set.of());
         return includedPatients
-                .flatMap(i -> excludedPatients.map(e -> difference(i, e)))
+                .flatMap(i -> excludedPatients.map(e -> Util.difference(i, e)))
                 .map(Set::size);
     }
 
@@ -56,7 +58,7 @@ public class StructuredQueryService {
     private Mono<Set<String>> executeConjunctiveNormalForm(List<List<Criterion>> criteria) {
         return Flux.fromIterable(criteria)
                 .flatMap(this::executeOr)
-                .reduce(StructuredQueryService::intersection);
+                .reduce(Util::intersection);
     }
 
     /**
@@ -69,7 +71,7 @@ public class StructuredQueryService {
     private Mono<Set<String>> executeOr(List<Criterion> criteria) {
         return Flux.fromIterable(criteria)
                 .flatMap(this::executeSingle)
-                .reduce(StructuredQueryService::union);
+                .reduce(Util::union);
     }
 
     /**
@@ -82,7 +84,7 @@ public class StructuredQueryService {
     private Mono<Set<String>> executeConjunctiveNormalFormOr(List<List<List<Criterion>>> criteria) {
         return Flux.fromIterable(criteria)
                 .flatMap(this::executeConjunctiveNormalForm)
-                .reduce(StructuredQueryService::union);
+                .reduce(Util::union);
     }
 
     private Flux<Set<String>> executeSingle(Criterion criterion) {
@@ -98,42 +100,33 @@ public class StructuredQueryService {
                 .toList();
     }
 
-    private static Set<String> intersection(Set<String> a, Set<String> b) {
-        var ret = new HashSet<>(a);
-        ret.retainAll(b);
-        return Set.copyOf(ret);
+    public Mono<Operator> translate(StructuredQuery query) {
+        var inclusions = translateConjunctiveNormalForm(query.inclusionCriteria());
+        var exclusions = translateConjunctiveNormalFormOr(expandExclusionCriteria(query.exclusionCriteria()));
+        return inclusions.flatMap(i -> exclusions.map(e -> e.isEmpty() ? i : Operator.difference(i, e)));
     }
 
-    private static Set<String> union(Set<String> a, Set<String> b) {
-        var ret = new HashSet<>(a);
-        ret.addAll(b);
-        return Set.copyOf(ret);
-    }
-
-    private static Set<String> difference(Set<String> a, Set<String> b) {
-        var ret = new HashSet<>(a);
-        ret.removeAll(b);
-        return Set.copyOf(ret);
-    }
-
-    public Mono<List<List<Query>>> translate(StructuredQuery query) {
-        return translateConjunctiveNormalForm(query.inclusionCriteria());
-    }
-
-    private Mono<List<List<Query>>> translateConjunctiveNormalForm(List<List<Criterion>> criteria) {
+    private Mono<Operator> translateConjunctiveNormalForm(List<List<Criterion>> criteria) {
         return Flux.fromIterable(criteria)
                 .flatMap(this::translateOr)
-                .reduce(List.of(), Util::add);
+                .reduce(Operator.intersection(), Operator::add);
     }
 
-    private Mono<List<Query>> translateOr(List<Criterion> criteria) {
+    private Mono<Operator> translateOr(List<Criterion> criteria) {
         return Flux.fromIterable(criteria)
                 .flatMap(this::translateSingle)
-                .reduce(Util::concat);
+                .reduce(Operator::concat);
     }
 
-    private Mono<List<Query>> translateSingle(Criterion criterion) {
+    private Mono<Operator> translateConjunctiveNormalFormOr(List<List<List<Criterion>>> criteria) {
+        return Flux.fromIterable(criteria)
+                .flatMap(this::translateConjunctiveNormalForm)
+                .reduce(Operator.union(), Operator::add);
+    }
+
+    private Mono<Operator> translateSingle(Criterion criterion) {
         logger.debug("translate single criterion {}", criterion);
-        return translator.toQuery(criterion);
+        return translator.toQuery(criterion).map(queries ->
+                new Operator(UNION, queries.stream().map(QueryExpression::new).toList()));
     }
 }
