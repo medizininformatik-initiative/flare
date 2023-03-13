@@ -7,6 +7,7 @@ import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -36,17 +37,27 @@ public interface FilterPart {
                 var comparator = Comparator.fromJson(node.get("comparator").asText());
                 var value = node.get("value").decimalValue();
                 var unit = node.get("unit");
-                yield unit == null
-                        ? ComparatorFilterPart.of(comparator, value)
-                        : ComparatorFilterPart.of(comparator, value, unit.get("code").asText());
+                if(unit == null){
+                    yield ComparatorFilterPart.of(comparator, value);
+                }else{
+                    var system = unit.get("system") == null ? "http://unitsofmeasure.org" :
+                                                                    unit.get("system").asText();
+                    yield ComparatorFilterPart.of(comparator, value, new TermCode(system, unit.get("code").asText(),
+                                                unit.get("display").asText())) ;
+                }
             }
             case "quantity-range" -> {
                 var lowerBound = node.get("minValue").decimalValue();
                 var upperBound = node.get("maxValue").decimalValue();
                 var unit = node.get("unit");
-                yield unit == null
-                        ? RangeFilterPart.of(lowerBound, upperBound)
-                        : RangeFilterPart.of(lowerBound, upperBound, unit.get("code").asText());
+                if(unit == null){
+                    yield RangeFilterPart.of(lowerBound, upperBound);
+                }else{
+                    var system = unit.get("system") == null ? "http://unitsofmeasure.org" :
+                            unit.get("system").asText();
+                    yield RangeFilterPart.of(lowerBound, upperBound, new TermCode(system, unit.get("code").asText(),
+                                                                                    unit.get("display").asText()));
+                }
             }
             default -> throw new IllegalArgumentException("unknown filterPart type: " + type);
         };

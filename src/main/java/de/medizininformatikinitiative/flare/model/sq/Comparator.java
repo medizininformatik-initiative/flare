@@ -7,11 +7,11 @@ import static java.util.Objects.requireNonNull;
  */
 public enum Comparator {
 
-    EQUAL("="),
-    LESS_EQUAL("<="),
-    LESS_THAN("<"),
-    GREATER_EQUAL(">="),
-    GREATER_THAN(">");
+    EQUAL("eq"),
+    LESS_EQUAL("le"),
+    LESS_THAN("lt"),
+    GREATER_EQUAL("ge"),
+    GREATER_THAN("gt");
 
     private final String s;
 
