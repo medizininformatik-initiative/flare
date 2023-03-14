@@ -59,16 +59,15 @@ public record QueryParams(List<Param> params) {
 
     /**
      * Appends a param with {@code name} and a value that the resources should be compared with in the end.
-     * <p>
      *
      * @param name       the name of the query parameter
-     * @param comparator the {@link Comparator} to use as comparator
+     * @param comparator the {@link Comparator} to use as prefix
      * @param value      the value that should be compared
      * @param unit       the unit of the {@code value}
      * @return the {@code QueryParams} resulting in appending the param
      */
     public QueryParams appendParam(String name, Comparator comparator, BigDecimal value, TermCode unit) {
-        return appendParam(name, comparator.toString() + value + unitAttachment(unit));
+        return appendParam(name, comparator.toString() + value + "|" + unit.system() + "|" + unit.code());
     }
 
     /**
@@ -81,10 +80,6 @@ public record QueryParams(List<Param> params) {
         var sb = new LinkedList<>(this.params);
         sb.addAll(params.params);
         return new QueryParams(sb);
-    }
-
-    private String unitAttachment(TermCode unit) {
-        return "|" + unit.system() + "|" + unit.code();
     }
 
     @Override

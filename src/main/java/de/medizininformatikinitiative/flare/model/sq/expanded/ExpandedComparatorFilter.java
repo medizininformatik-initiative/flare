@@ -11,14 +11,6 @@ public record ExpandedComparatorFilter(String searchParameter, Comparator compar
 
     @Override
     public QueryParams toParams() {
-        var paramValue = comparator.toString() + value.toString();
-        if (unit != null) {
-            paramValue += unitAttachment();
-        }
-        return QueryParams.of(searchParameter, paramValue);
-    }
-
-    String unitAttachment() {
-        return "|" + unit.system() + "|" + unit.code();
+        return QueryParams.EMPTY.appendParam(searchParameter, comparator, value, unit);
     }
 }

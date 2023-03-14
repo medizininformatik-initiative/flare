@@ -11,16 +11,7 @@ public record ExpandedRangeFilter(String searchParameter, BigDecimal lowerBound,
 
     @Override
     public QueryParams toParams() {
-        var lowerBoundParam = Comparator.GREATER_EQUAL + lowerBound.toString();
-        if (unit != null) lowerBoundParam += unitAttachment();
-
-        var upperBoundParam = Comparator.LESS_EQUAL + upperBound.toString();
-        if (unit != null) upperBoundParam += unitAttachment();
-
-        return QueryParams.of(searchParameter, lowerBoundParam).appendParam(searchParameter, upperBoundParam);
-    }
-
-    String unitAttachment() {
-        return "|" + unit.system() + "|" + unit.code();
+        return QueryParams.EMPTY.appendParam(searchParameter, Comparator.GREATER_EQUAL, lowerBound, unit)
+                                .appendParam(searchParameter, Comparator.LESS_EQUAL, upperBound, unit);
     }
 }

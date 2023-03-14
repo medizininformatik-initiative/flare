@@ -11,16 +11,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class QueryParamsTest {
 
+    public static final String UCUM_SYSTEM = "http://unitsofmeasure.org/";
+    public static final String UNIT_CODE = "ug/dL";
+    public static final TermCode UNIT = new TermCode(UCUM_SYSTEM, UNIT_CODE, "ug/dL");
+
     @Test
-    void appendParam_withValue() {
-        var name = "value-quantity";
-        var comparator = Comparator.GREATER_THAN;
-        var value = BigDecimal.valueOf(20.1);
-        var unit = new TermCode("http://loinc.org", "ug/dL", "ug/dL");
+    void appendParam_withQuantityValue() {
 
-        QueryParams queryParams = QueryParams.EMPTY.appendParam(name, comparator, value, unit);
+        QueryParams queryParams = QueryParams.EMPTY.appendParam("value-quantity", Comparator.GREATER_THAN,
+                                                                BigDecimal.valueOf(20.1), UNIT);
 
-        assertThat(queryParams.toString()).isEqualTo(name + "=" + comparator + value + "|" + unit.system()
-                + "|" + unit.code());
+        assertThat(queryParams.toString()).isEqualTo("value-quantity" + "=" + Comparator.GREATER_THAN
+                                                             + BigDecimal.valueOf(20.1) + "|" + UCUM_SYSTEM + "|"
+                                                             + UNIT_CODE);
     }
 }
