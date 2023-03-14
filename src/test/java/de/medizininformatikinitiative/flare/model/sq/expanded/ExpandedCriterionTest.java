@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.stream.Stream;
 
 import static de.medizininformatikinitiative.flare.model.sq.Comparator.GREATER_EQUAL;
@@ -33,6 +34,9 @@ class ExpandedCriterionTest {
     static final BigDecimal DECIMAL_UB_2 = BigDecimal.valueOf(43.5);
     static final BigDecimal DECIMAL_1 = BigDecimal.valueOf(7.3);
     static final BigDecimal DECIMAL_2 = BigDecimal.valueOf(10);
+    static final LocalDate LOCAL_DATE = LocalDate.of(1990, 10, 2);
+    static final LocalDate LOCAL_DATE_1 = LocalDate.of(1990, 10, 2);
+    static final LocalDate LOCAL_DATE_2 = LocalDate.of(2004, 4, 30);
 
     @Test
     void toQuery() {
@@ -136,7 +140,6 @@ class ExpandedCriterionTest {
                 .appendParam("value-quantity", LESS_EQUAL, DECIMAL_UB, null)));
     }
 
-
     @Test
     void toQuery_withTowRangeFilters() {
         var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
@@ -151,6 +154,43 @@ class ExpandedCriterionTest {
                 .appendParam("value-quantity", LESS_EQUAL, DECIMAL_UB_1, UNIT)
                 .appendParam("value-quantity", GREATER_EQUAL, DECIMAL_LB_2, UNIT)
                 .appendParam("value-quantity", LESS_EQUAL, DECIMAL_UB_2, UNIT)));
+    }
+
+    @ParameterizedTest
+    @EnumSource
+    void toQuery_WithDateComparator(Comparator comparator) {
+        var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
+                .appendFilter(new ExpandedDateComparatorFilter("birthDate", comparator, LOCAL_DATE));
+
+        var query = criterion.toQuery();
+
+        assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
+                .appendParam("code", CORTISOL)
+                .appendParam("birthDate", comparator, LOCAL_DATE)));
+    }
+
+    @Test
+    void toQuery_WithDateRange() {
+        var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
+                .appendFilter(new ExpandedDateRangeFilter("birthDate", LOCAL_DATE_1, LOCAL_DATE_2));
+
+        var query = criterion.toQuery();
+
+        assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
+                .appendParam("code", CORTISOL)
+                .appendParam("birthDate", GREATER_EQUAL, LOCAL_DATE_1)
+                .appendParam("birthDate", LESS_EQUAL, LOCAL_DATE_2)));
+    }
+
+    @Test
+    void toQuery_Patient_Gender() {
+        var criterion = ExpandedCriterion.of("Patient")
+                .appendFilter(new ExpandedCodeFilter("gender", "female"));
+
+        var query = criterion.toQuery();
+
+        assertThat(query).isEqualTo(Query.of("Patient", QueryParams.EMPTY
+                .appendParam("gender", "female")));
     }
 
     static Stream<Arguments> arityTwoComparatorArgumentProvider() {

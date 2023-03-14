@@ -28,20 +28,45 @@ public final class Mapping {
                     Map<TermCode, AttributeMapping> attributeMappings, String timeRestrictionPath) {
         this.key = requireNonNull(key);
         this.resourceType = requireNonNull(resourceType);
-        this.termCodeSearchParameter = requireNonNull(termCodeSearchParameter);
+        this.termCodeSearchParameter = termCodeSearchParameter;
         this.valueFilterMapping = valueFilterMapping;
         this.fixedCriteria = List.copyOf(fixedCriteria);
         this.attributeMappings = Map.copyOf(attributeMappings);
         this.timeRestrictionPath = timeRestrictionPath;
     }
 
-    public static Mapping of(TermCode concept, String resourceType, String termCodeSearchParameter) {
-        return new Mapping(concept, resourceType, termCodeSearchParameter, null, List.of(), Map.of(), null);
+    public static Mapping of(TermCode concept, String resourceType) {
+        return new Mapping(concept, resourceType, null, null, List.of(), Map.of(), null);
     }
 
-    public Mapping withValueSearchParameter(String valueSearchParameter) {
+    public static Mapping of(TermCode concept, String resourceType, String termCodeSearchParameter) {
+        return new Mapping(concept, resourceType, requireNonNull(termCodeSearchParameter), null, List.of(), Map.of(),
+                null);
+    }
+
+    @JsonCreator
+    public static Mapping of(@JsonProperty("key") TermCode key,
+                             @JsonProperty("fhirResourceType") String resourceType,
+                             @JsonProperty("termCodeSearchParameter") String termCodeSearchParameter,
+                             @JsonProperty("valueSearchParameter") String valueSearchParameter,
+                             @JsonProperty("valueTypeFhir") FilterType valueTypeFhir,
+                             @JsonProperty("fixedCriteria") List<FixedCriterion> fixedCriteria,
+                             @JsonProperty("attributeSearchParameters") List<AttributeMapping> attributeMappings,
+                             @JsonProperty("timeRestrictionPath") String timeRestrictionPath) {
         return new Mapping(key, resourceType, termCodeSearchParameter,
-                new ValueFilterMapping(FilterType.CODING, valueSearchParameter),
+                valueSearchParameter == null
+                        ? null
+                        : new ValueFilterMapping(valueTypeFhir == null ? FilterType.CODING : valueTypeFhir,
+                        valueSearchParameter, key),
+                fixedCriteria == null ? List.of() : List.copyOf(fixedCriteria),
+                (attributeMappings == null ? Map.of() : attributeMappings.stream()
+                        .collect(Collectors.toMap(AttributeMapping::key, Function.identity()))),
+                timeRestrictionPath);
+    }
+
+    public Mapping withValueFilterMapping(FilterType type, String searchParameter) {
+        return new Mapping(key, resourceType, termCodeSearchParameter,
+                new ValueFilterMapping(type, searchParameter, key),
                 fixedCriteria, attributeMappings, timeRestrictionPath);
     }
 
@@ -57,26 +82,6 @@ public final class Mapping {
         attributeMappings.put(attributeMapping.key(), attributeMapping);
         return new Mapping(key, resourceType, termCodeSearchParameter, valueFilterMapping,
                 fixedCriteria, attributeMappings, timeRestrictionPath);
-    }
-
-    @JsonCreator
-    public static Mapping of(@JsonProperty("key") TermCode key,
-                             @JsonProperty("fhirResourceType") String resourceType,
-                             @JsonProperty("termCodeSearchParameter") String termCodeSearchParameter,
-                             @JsonProperty("valueSearchParameter") String valueSearchParameter,
-                             @JsonProperty("valueTypeFhir") FilterType valueTypeFhir,
-                             @JsonProperty("fixedCriteria") List<FixedCriterion> fixedCriteria,
-                             @JsonProperty("attributeSearchParameters") List<AttributeMapping> attributeMappings,
-                             @JsonProperty("timeRestrictionPath") String timeRestrictionPath) {
-        return new Mapping(key, resourceType, termCodeSearchParameter == null ? "code" : termCodeSearchParameter,
-                valueSearchParameter == null
-                        ? null
-                        : new ValueFilterMapping(valueTypeFhir == null ? FilterType.CODING : valueTypeFhir,
-                        valueSearchParameter),
-                fixedCriteria == null ? List.of() : List.copyOf(fixedCriteria),
-                (attributeMappings == null ? Map.of() : attributeMappings.stream()
-                        .collect(Collectors.toMap(AttributeMapping::key, Function.identity()))),
-                timeRestrictionPath);
     }
 
     public TermCode key() {
@@ -104,11 +109,19 @@ public final class Mapping {
         return mapping == null ? Mono.error(new AttributeMappingNotFoundException(key, code)) : Mono.just(mapping);
     }
 
-    private record ValueFilterMapping(FilterType type, String searchParameter) implements FilterMapping {
+    private record ValueFilterMapping(FilterType type, String searchParameter, TermCode key) implements FilterMapping {
+
+        private static final TermCode AGE = TermCode.of("http://snomed.info/sct", "424144002", "age");
 
         private ValueFilterMapping {
             requireNonNull(type);
             requireNonNull(searchParameter);
+            requireNonNull(key);
+        }
+
+        @Override
+        public boolean isAge() {
+            return key.equals(AGE);
         }
     }
 }

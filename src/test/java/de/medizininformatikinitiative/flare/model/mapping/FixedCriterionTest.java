@@ -14,7 +14,7 @@ class FixedCriterionTest {
     void fromJson() throws Exception {
         var mapper = new ObjectMapper();
 
-        var criterion = (FixedCriterion) mapper.readValue("""
+        var criterion = mapper.readValue("""
                 {
                     "fhirPath": "status",
                     "searchParameter": "status",

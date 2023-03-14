@@ -6,6 +6,7 @@ import de.medizininformatikinitiative.flare.model.mapping.FilterMapping;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
@@ -61,5 +62,5 @@ public interface FilterPart {
         return new TermCode(system, unit.get("code").asText(), unit.get("display").asText());
     }
 
-    Mono<List<ExpandedFilter>> expand(FilterMapping filterMapping);
+    Mono<List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping);
 }

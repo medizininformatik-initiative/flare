@@ -1,9 +1,7 @@
 package de.medizininformatikinitiative.flare.model.sq;
 
 import de.medizininformatikinitiative.flare.model.mapping.*;
-import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCodeFilter;
-import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedConceptFilter;
-import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCriterion;
+import de.medizininformatikinitiative.flare.model.sq.expanded.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -11,8 +9,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
+import static de.medizininformatikinitiative.flare.model.mapping.FilterType.CODE;
+import static de.medizininformatikinitiative.flare.model.mapping.FilterType.CODING;
+import static de.medizininformatikinitiative.flare.model.sq.Comparator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -38,6 +41,19 @@ class CriterionTest {
     static final TermCode FEMALE = TermCode.of("http://hl7.org/fhir/administrative-gender", "female", "Female");
     static final TermCode OBSERVATION_STATUS = TermCode.of("http://hl7.org/fhir", "observation-status", "Observation Status");
     static final TermCode FINAL = TermCode.of("http://hl7.org/fhir/observation-status", "final", "Final");
+    static final TermCode AGE = TermCode.of("http://snomed.info/sct", "424144002", "Gegenwärtiges chronologisches Alter");
+    static final TermCode YEAR_UNIT = new TermCode("someSystem", "a", "a");
+    static final BigDecimal AGE_OF_5 = BigDecimal.valueOf(5);
+    static final BigDecimal DECIMAL = BigDecimal.valueOf(5);
+    static final BigDecimal DECIMAL_1 = BigDecimal.valueOf(5);
+    static final BigDecimal DECIMAL_2 = BigDecimal.valueOf(10);
+    static final TermCode GRAM_PER_DECILITER = new TermCode("http://unitsofmeasure.org", "g/dL", "g/dL");
+    static final LocalDate YEAR_2000 = LocalDate.of(2000, 1, 1);
+    static final LocalDate YEAR_1990 = LocalDate.of(1990, 1, 1);
+    static final LocalDate YEAR_1995 = LocalDate.of(1995, 1, 1);
+    static final LocalDate YEAR_1994 = LocalDate.of(1994, 1, 1);
+    static final BigDecimal AGE_OF_10 = BigDecimal.valueOf(10);
+    static final TermCode GENDER = new TermCode("http://snomed.info/sct", "263495000", "Geschlecht");
 
     @Mock
     MappingContext mappingContext;
@@ -89,7 +105,7 @@ class CriterionTest {
     void toQuery_OneConceptExpansion_OneValueFilter_OneConcept() {
         when(mappingContext.expandConcept(Concept.of(COVID))).thenReturn(Mono.just(List.of(COVID)));
         when(mappingContext.findMapping(COVID)).thenReturn(Mono.just(Mapping.of(COVID, "Observation", "code")
-                .withValueSearchParameter("value-concept")));
+                .withValueFilterMapping(CODING, "value-concept")));
 
         var criteria = Criterion.of(Concept.of(COVID), ValueFilter.ofConcept(POSITIVE)).expand(mappingContext).block();
 
@@ -101,7 +117,7 @@ class CriterionTest {
     void toQuery_OneConceptExpansion_OneValueFilter_OneConcept_OneAttributeFilter_OneConcept() {
         when(mappingContext.expandConcept(Concept.of(COVID))).thenReturn(Mono.just(List.of(COVID)));
         when(mappingContext.findMapping(COVID)).thenReturn(Mono.just(Mapping.of(COVID, "Observation", "code")
-                .withValueSearchParameter("value-concept")
+                .withValueFilterMapping(CODING, "value-concept")
                 .appendAttributeMapping(AttributeMapping.code(OBSERVATION_STATUS, "status"))));
 
         var criteria = Criterion.of(Concept.of(COVID), ValueFilter.ofConcept(POSITIVE))
@@ -117,7 +133,7 @@ class CriterionTest {
     void toQuery_OneConceptExpansion_OneValueFilter_TwoConcepts() {
         when(mappingContext.expandConcept(Concept.of(SEX))).thenReturn(Mono.just(List.of(SEX)));
         when(mappingContext.findMapping(SEX)).thenReturn(Mono.just(Mapping.of(SEX, "Observation", "code")
-                .withValueSearchParameter("value-concept")));
+                .withValueFilterMapping(CODING, "value-concept")));
 
         var criteria = Criterion.of(Concept.of(SEX), ValueFilter.ofConcept(MALE, FEMALE)).expand(mappingContext).block();
 
@@ -183,7 +199,7 @@ class CriterionTest {
     void expand_OneConceptExpansion_OneFixedCriteria_OneConcept() {
         when(mappingContext.expandConcept(Concept.of(C71))).thenReturn(Mono.just(List.of(C71)));
         when(mappingContext.findMapping(C71)).thenReturn(Mono.just(Mapping.of(C71, "Condition", "code")
-                .withFixedCriteria(new FixedCriterion(FilterType.CODING, "verification-status", List.of(CONFIRMED)))));
+                .withFixedCriteria(new FixedCriterion(CODING, "verification-status", List.of(CONFIRMED)))));
 
         var criteria = Criterion.of(Concept.of(C71)).expand(mappingContext).block();
 
@@ -195,7 +211,7 @@ class CriterionTest {
     void expand_OneConceptExpansion_OneFixedCriteria_TwoConcepts() {
         when(mappingContext.expandConcept(Concept.of(C71))).thenReturn(Mono.just(List.of(C71)));
         when(mappingContext.findMapping(C71)).thenReturn(Mono.just(Mapping.of(C71, "Condition", "code")
-                .withFixedCriteria(new FixedCriterion(FilterType.CODING, "verification-status", List.of(CONFIRMED,
+                .withFixedCriteria(new FixedCriterion(CODING, "verification-status", List.of(CONFIRMED,
                         UNCONFIRMED)))));
 
         var criteria = Criterion.of(Concept.of(C71)).expand(mappingContext).block();
@@ -210,7 +226,7 @@ class CriterionTest {
     void toQuery_OneConceptExpansion_OneValueFilter_TwoConcepts_OneFixedCriteria_OneConcept() {
         when(mappingContext.expandConcept(Concept.of(SEX))).thenReturn(Mono.just(List.of(SEX)));
         when(mappingContext.findMapping(SEX)).thenReturn(Mono.just(Mapping.of(SEX, "Observation", "code")
-                .withValueSearchParameter("value-concept")
+                .withValueFilterMapping(CODING, "value-concept")
                 .withFixedCriteria(new FixedCriterion(FilterType.CODE, "status", List.of(FINAL)))));
 
         var criteria = Criterion.of(Concept.of(SEX), ValueFilter.ofConcept(MALE, FEMALE)).expand(mappingContext).block();
@@ -222,5 +238,119 @@ class CriterionTest {
                 ExpandedCriterion.of("Observation", "code", SEX)
                         .appendFilter(new ExpandedCodeFilter("status", "final"))
                         .appendFilter(new ExpandedConceptFilter("value-concept", FEMALE)));
+    }
+
+    @Test
+    void toQuery_OneComparatorFilter() {
+        when(mappingContext.expandConcept(Concept.of(SEX))).thenReturn(Mono.just(List.of(SEX)));
+        when(mappingContext.findMapping(SEX)).thenReturn(Mono.just(Mapping.of(SEX, "Observation", "code")
+                .withValueFilterMapping(CODING, "value-quantity")));
+
+        var criteria = Criterion.of(Concept.of(SEX), ValueFilter.ofComparator(LESS_THAN, DECIMAL, GRAM_PER_DECILITER))
+                .expand(mappingContext).block();
+
+        assertThat(criteria).containsExactly(
+                ExpandedCriterion.of("Observation", "code", SEX)
+                        .appendFilter(new ExpandedComparatorFilter("value-quantity", LESS_THAN, DECIMAL,
+                                GRAM_PER_DECILITER)));
+    }
+
+    @Test
+    void toQuery_OneRangeFilter() {
+        when(mappingContext.expandConcept(Concept.of(SEX))).thenReturn(Mono.just(List.of(SEX)));
+        when(mappingContext.findMapping(SEX)).thenReturn(Mono.just(Mapping.of(SEX, "Observation", "code")
+                .withValueFilterMapping(CODING, "value-quantity")));
+
+        var criteria = Criterion.of(Concept.of(SEX), ValueFilter.ofRange(DECIMAL_1, DECIMAL_2, GRAM_PER_DECILITER))
+                .expand(mappingContext).block();
+
+        assertThat(criteria).containsExactly(
+                ExpandedCriterion.of("Observation", "code", SEX)
+                        .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_1, DECIMAL_2,
+                                GRAM_PER_DECILITER)));
+    }
+
+
+    @Test
+    void toQuery_Age_ComparatorEqual() {
+        when(mappingContext.expandConcept(Concept.of(AGE))).thenReturn(Mono.just(List.of(AGE)));
+        when(mappingContext.findMapping(AGE)).thenReturn(Mono.just(Mapping.of(AGE, "Patient")
+                .withValueFilterMapping(CODING, "birthDate")));
+        when(mappingContext.today()).thenReturn(YEAR_2000);
+
+        var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofComparator(EQUAL, AGE_OF_5, YEAR_UNIT))
+                .expand(mappingContext).block();
+
+        assertThat(criterion).containsExactly(
+                ExpandedCriterion.of("Patient")
+                        .appendFilter(new ExpandedDateRangeFilter("birthDate", YEAR_1994.plusDays(1), YEAR_1995)));
+    }
+
+    @Test
+    void toQuery_Age_ComparatorOther() {
+        when(mappingContext.expandConcept(Concept.of(AGE))).thenReturn(Mono.just(List.of(AGE)));
+        when(mappingContext.findMapping(AGE)).thenReturn(Mono.just(Mapping.of(AGE, "Patient")
+                .withValueFilterMapping(CODING, "birthDate")));
+        when(mappingContext.today()).thenReturn(YEAR_2000);
+
+        var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofComparator(GREATER_THAN, AGE_OF_5,
+                YEAR_UNIT)).expand(mappingContext).block();
+
+        assertThat(criterion).containsExactly(
+                ExpandedCriterion.of("Patient")
+                        .appendFilter(new ExpandedDateComparatorFilter("birthDate", LESS_THAN, YEAR_1995)));
+    }
+
+    @Test
+    void toQuery_Age_Comparator_UnknownUnit() {
+        when(mappingContext.expandConcept(Concept.of(AGE))).thenReturn(Mono.just(List.of(AGE)));
+        when(mappingContext.findMapping(AGE)).thenReturn(Mono.just(Mapping.of(AGE, "Patient")
+                .withValueFilterMapping(CODING, "birthDate")));
+        when(mappingContext.today()).thenReturn(YEAR_2000);
+
+        var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofComparator(GREATER_THAN, AGE_OF_5,
+                GRAM_PER_DECILITER)).expand(mappingContext);
+
+        StepVerifier.create(criterion).expectError(CalculationException.class).verify();
+    }
+
+    @Test
+    void toQuery_Age_Comparator_WithoutUnit() {
+        when(mappingContext.expandConcept(Concept.of(AGE))).thenReturn(Mono.just(List.of(AGE)));
+        when(mappingContext.findMapping(AGE)).thenReturn(Mono.just(Mapping.of(AGE, "Patient")
+                .withValueFilterMapping(CODING, "birthDate")));
+
+        var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofComparator(GREATER_THAN, AGE_OF_5))
+                .expand(mappingContext);
+
+        StepVerifier.create(criterion).expectError(CalculationException.class).verify();
+    }
+
+    @Test
+    void toQuery_AgeRange() {
+        when(mappingContext.expandConcept(Concept.of(AGE))).thenReturn(Mono.just(List.of(AGE)));
+        when(mappingContext.findMapping(AGE)).thenReturn(Mono.just(Mapping.of(AGE, "Patient")
+                .withValueFilterMapping(CODING, "birthDate")));
+        when(mappingContext.today()).thenReturn(YEAR_2000);
+
+        var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofRange(AGE_OF_5, AGE_OF_10, YEAR_UNIT))
+                .expand(mappingContext).block();
+
+        assertThat(criterion).containsExactly(
+                ExpandedCriterion.of("Patient")
+                        .appendFilter(new ExpandedDateRangeFilter("birthDate", YEAR_1990, YEAR_1995)));
+    }
+
+    @Test
+    void toQuery_Patient_Gender() {
+        when(mappingContext.expandConcept(Concept.of(GENDER))).thenReturn(Mono.just(List.of(GENDER)));
+        when(mappingContext.findMapping(GENDER)).thenReturn(Mono.just(Mapping.of(GENDER, "Patient")
+                .withValueFilterMapping(CODE, "gender")));
+
+        var criterion = Criterion.of(Concept.of(GENDER), ValueFilter.ofConcept(MALE)).expand(mappingContext).block();
+
+        assertThat(criterion).containsExactly(
+                ExpandedCriterion.of("Patient")
+                        .appendFilter(new ExpandedCodeFilter("gender", "male")));
     }
 }

@@ -4,6 +4,8 @@ import de.medizininformatikinitiative.flare.model.sq.Concept;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
 import reactor.core.publisher.Mono;
 
+import java.time.Clock;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +13,8 @@ import static java.util.Objects.requireNonNull;
 
 /**
  * A context holding information to facilitate the mapping process.
+ * <p>
+ * Uses the default system clock to private the current instant for date/time calculations.
  *
  * @author Alexander Kiel
  */
@@ -18,10 +22,12 @@ public class MappingContext {
 
     private final Map<TermCode, Mapping> mappings;
     private final TermCodeNode conceptTree;
+    private final Clock clock;
 
-    private MappingContext(Map<TermCode, Mapping> mappings, TermCodeNode conceptTree) {
+    private MappingContext(Map<TermCode, Mapping> mappings, TermCodeNode conceptTree, Clock clock) {
         this.mappings = Map.copyOf(mappings);
         this.conceptTree = requireNonNull(conceptTree);
+        this.clock = requireNonNull(clock);
     }
 
     /**
@@ -32,7 +38,7 @@ public class MappingContext {
      * @return the mapping context
      */
     public static MappingContext of(Map<TermCode, Mapping> mappings, TermCodeNode conceptTree) {
-        return new MappingContext(mappings, conceptTree);
+        return new MappingContext(mappings, conceptTree, Clock.systemDefaultZone());
     }
 
     /**
@@ -55,5 +61,14 @@ public class MappingContext {
     public Mono<List<TermCode>> expandConcept(Concept concept) {
         var termCodes = concept.termCodes().stream().flatMap(conceptTree::expand).toList();
         return termCodes.isEmpty() ? Mono.error(new ConceptNotExpandableException(concept)) : Mono.just(termCodes);
+    }
+
+    /**
+     * Returns the current day according to the clock of this mapping context.
+     *
+     * @return the current day
+     */
+    public LocalDate today() {
+        return LocalDate.now(clock);
     }
 }

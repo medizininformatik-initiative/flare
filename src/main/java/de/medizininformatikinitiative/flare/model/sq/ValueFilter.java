@@ -7,6 +7,8 @@ import de.medizininformatikinitiative.flare.model.mapping.ValueMappingNotFoundEx
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
 import reactor.core.publisher.Mono;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import static java.util.Objects.requireNonNull;
@@ -26,6 +28,18 @@ public record ValueFilter(FilterPart filterPart) implements Filter {
         return new ValueFilter(filterPart);
     }
 
+    public static ValueFilter ofComparator(Comparator comparator, BigDecimal value) {
+        return new ValueFilter(ComparatorFilterPart.of(comparator, value));
+    }
+
+    public static ValueFilter ofComparator(Comparator comparator, BigDecimal value, TermCode unit) {
+        return new ValueFilter(ComparatorFilterPart.of(comparator, value, unit));
+    }
+
+    public static ValueFilter ofRange(BigDecimal lowerBound, BigDecimal upperBound, TermCode unit) {
+        return new ValueFilter(RangeFilterPart.of(lowerBound, upperBound, unit));
+    }
+
     /**
      * Parses an attribute filterPart.
      *
@@ -38,9 +52,9 @@ public record ValueFilter(FilterPart filterPart) implements Filter {
     }
 
     @Override
-    public Mono<List<ExpandedFilter>> expand(Mapping mapping) {
+    public Mono<List<ExpandedFilter>> expand(LocalDate today, Mapping mapping) {
         return mapping.valueFilterMapping()
-                .map(filterPart::expand)
+                .map(filterMapping -> filterPart.expand(today, filterMapping))
                 .orElseGet(() -> Mono.error(new ValueMappingNotFoundException(mapping.key())));
     }
 }
