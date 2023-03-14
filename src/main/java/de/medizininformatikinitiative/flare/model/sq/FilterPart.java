@@ -29,27 +29,36 @@ public interface FilterPart {
                     throw new IllegalArgumentException("empty selectedConcepts");
                 } else {
                     yield new ConceptFilterPart(StreamSupport.stream(selectedConcepts.spliterator(), false)
-                            .map(TermCode::fromJsonNode).toList());
+                                                        .map(TermCode::fromJsonNode).toList());
                 }
             }
             case "quantity-comparator" -> {
                 var comparator = Comparator.fromJson(node.get("comparator").asText());
                 var value = node.get("value").decimalValue();
                 var unit = node.get("unit");
-                yield unit == null
-                        ? ComparatorFilterPart.of(comparator, value)
-                        : ComparatorFilterPart.of(comparator, value, unit.get("code").asText());
+                if (unit == null) {
+                    yield ComparatorFilterPart.of(comparator, value);
+                } else {
+                    yield ComparatorFilterPart.of(comparator, value, getUnitDetails(unit));
+                }
             }
             case "quantity-range" -> {
                 var lowerBound = node.get("minValue").decimalValue();
                 var upperBound = node.get("maxValue").decimalValue();
                 var unit = node.get("unit");
-                yield unit == null
-                        ? RangeFilterPart.of(lowerBound, upperBound)
-                        : RangeFilterPart.of(lowerBound, upperBound, unit.get("code").asText());
+                if (unit == null) {
+                    yield RangeFilterPart.of(lowerBound, upperBound);
+                } else {
+                    yield RangeFilterPart.of(lowerBound, upperBound, getUnitDetails(unit));
+                }
             }
             default -> throw new IllegalArgumentException("unknown filterPart type: " + type);
         };
+    }
+
+    private static TermCode getUnitDetails(JsonNode unit) {
+        var system = unit.get("system") == null ? "http://unitsofmeasure.org" : unit.get("system").asText();
+        return new TermCode(system, unit.get("code").asText(), unit.get("display").asText());
     }
 
     Mono<List<ExpandedFilter>> expand(FilterMapping filterMapping);

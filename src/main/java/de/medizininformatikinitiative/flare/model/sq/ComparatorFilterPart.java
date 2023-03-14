@@ -1,6 +1,7 @@
 package de.medizininformatikinitiative.flare.model.sq;
 
 import de.medizininformatikinitiative.flare.model.mapping.FilterMapping;
+import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedComparatorFilter;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
 import reactor.core.publisher.Mono;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 
-public record ComparatorFilterPart(Comparator comparator, BigDecimal value, String unit) implements FilterPart {
+public record ComparatorFilterPart(Comparator comparator, BigDecimal value, TermCode unit) implements FilterPart {
 
     public ComparatorFilterPart {
         requireNonNull(comparator);
@@ -35,12 +36,12 @@ public record ComparatorFilterPart(Comparator comparator, BigDecimal value, Stri
      * @param unit       the unit of the value
      * @return the comparator filterPart
      */
-    public static ComparatorFilterPart of(Comparator comparator, BigDecimal value, String unit) {
+    public static ComparatorFilterPart of(Comparator comparator, BigDecimal value, TermCode unit) {
         return new ComparatorFilterPart(comparator, value, requireNonNull(unit));
     }
 
     @Override
     public Mono<List<ExpandedFilter>> expand(FilterMapping filterMapping) {
-        return Mono.just(List.of());
+        return Mono.just(List.of(new ExpandedComparatorFilter(filterMapping.searchParameter(), comparator, value, unit)));
     }
 }
