@@ -21,7 +21,7 @@ class QueryParamsTest {
         QueryParams queryParams = QueryParams.EMPTY.appendParam("value-quantity", Comparator.GREATER_THAN,
                                                                 BigDecimal.valueOf(20.1), UNIT);
 
-        assertThat(queryParams.toString()).isEqualTo("value-quantity" + "=" + Comparator.GREATER_THAN
+        assertThat(queryParams.toString()).hasToString("value-quantity" + "=" + Comparator.GREATER_THAN
                                                              + BigDecimal.valueOf(20.1) + "|" + UCUM_SYSTEM + "|"
                                                              + UNIT_CODE);
     }
