@@ -73,16 +73,26 @@ class ExpandedCriterionTest {
     @EnumSource
     void toQuery_withOneComparatorFilter(Comparator comparator) {
         var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
-                .appendFilter(new ExpandedComparatorFilter(
-                        "value-quantity", comparator, DECIMAL_1,
-                        UNIT));
+                .appendFilter(new ExpandedComparatorFilter("value-quantity", comparator, DECIMAL_1, UNIT));
 
         var query = criterion.toQuery();
 
         assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
                 .appendParam("code", CORTISOL)
-                .appendParam("value-quantity", comparator,
-                        DECIMAL_1, UNIT)));
+                .appendParam("value-quantity", comparator, DECIMAL_1, UNIT)));
+    }
+
+    @ParameterizedTest
+    @EnumSource
+    void toQuery_withOneComparatorFilter_withoutUnit(Comparator comparator) {
+        var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
+                .appendFilter(new ExpandedComparatorFilter("value-quantity", comparator, DECIMAL_1, null));
+
+        var query = criterion.toQuery();
+
+        assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
+                .appendParam("code", CORTISOL)
+                .appendParam("value-quantity", comparator, DECIMAL_1, null)));
     }
 
     @ParameterizedTest
@@ -98,7 +108,6 @@ class ExpandedCriterionTest {
                 .appendParam("code", CORTISOL)
                 .appendParam("value-quantity", comparator1, DECIMAL_1, UNIT)
                 .appendParam("value-quantity", comparator2, DECIMAL_2, UNIT)));
-
     }
 
     @Test
@@ -112,6 +121,19 @@ class ExpandedCriterionTest {
                 .appendParam("code", CORTISOL)
                 .appendParam("value-quantity", GREATER_EQUAL, DECIMAL_LB, UNIT)
                 .appendParam("value-quantity", LESS_EQUAL, DECIMAL_UB, UNIT)));
+    }
+
+    @Test
+    void toQuery_withOneRangeFilter_withoutUnit() {
+        var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
+                .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_LB, DECIMAL_UB, null));
+
+        var query = criterion.toQuery();
+
+        assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
+                .appendParam("code", CORTISOL)
+                .appendParam("value-quantity", GREATER_EQUAL, DECIMAL_LB, null)
+                .appendParam("value-quantity", LESS_EQUAL, DECIMAL_UB, null)));
     }
 
 

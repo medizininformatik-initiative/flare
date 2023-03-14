@@ -22,4 +22,11 @@ class QueryParamsTest {
         assertThat(queryParams)
                 .hasToString("value-quantity=" + GREATER_THAN + VALUE + "|" + UCUM_SYSTEM + "|" + UNIT_CODE);
     }
+
+    @Test
+    void appendParam_withQuantityValue_withoutUnit() {
+        var queryParams = QueryParams.EMPTY.appendParam("value-quantity", GREATER_THAN, VALUE, null);
+
+        assertThat(queryParams).hasToString("value-quantity=" + GREATER_THAN + VALUE);
+    }
 }
