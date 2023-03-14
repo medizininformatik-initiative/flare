@@ -39,7 +39,7 @@ public interface FilterPart {
                 if (unit == null) {
                     yield ComparatorFilterPart.of(comparator, value);
                 } else {
-                    yield ComparatorFilterPart.of(comparator, value, getUnitDetails(unit));
+                    yield ComparatorFilterPart.of(comparator, value, ucumTermCode(unit));
                 }
             }
             case "quantity-range" -> {
@@ -49,14 +49,14 @@ public interface FilterPart {
                 if (unit == null) {
                     yield RangeFilterPart.of(lowerBound, upperBound);
                 } else {
-                    yield RangeFilterPart.of(lowerBound, upperBound, getUnitDetails(unit));
+                    yield RangeFilterPart.of(lowerBound, upperBound, ucumTermCode(unit));
                 }
             }
             default -> throw new IllegalArgumentException("unknown filterPart type: " + type);
         };
     }
 
-    private static TermCode getUnitDetails(JsonNode unit) {
+    private static TermCode ucumTermCode(JsonNode unit) {
         var system = unit.get("system") == null ? "http://unitsofmeasure.org" : unit.get("system").asText();
         return new TermCode(system, unit.get("code").asText(), unit.get("display").asText());
     }

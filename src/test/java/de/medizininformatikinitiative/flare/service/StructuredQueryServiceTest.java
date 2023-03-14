@@ -24,21 +24,21 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class StructuredQueryServiceTest {
 
-    private static final TermCode C71 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "C71",
+    static final TermCode C71 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "C71",
             "Malignant neoplasm of brain");
-    private static final TermCode C72 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "C72",
+    static final TermCode C72 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "C72",
             "Malignant neoplasm of brain");
-    private static final TermCode C73 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "C73",
+    static final TermCode C73 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "C73",
             "Malignant neoplasm of brain");
-    public static final Criterion CONCEPT_CRITERION = Criterion.of(Concept.of(C71));
-    public static final Criterion CONCEPT_CRITERION_1 = Criterion.of(Concept.of(C72));
-    public static final Criterion CONCEPT_CRITERION_2 = Criterion.of(Concept.of(C73));
-    private static final String PATIENT_ID = "patient-id-140857";
-    private static final String PATIENT_ID_1 = "patient-id-144725";
-    private static final String PATIENT_ID_2 = "patient-id-144727";
-    public static final Query CONCEPT_QUERY = Query.of("Condition", QueryParams.of("code", C71));
-    public static final Query CONCEPT_QUERY_1 = Query.of("Condition", QueryParams.of("code", C72));
-    public static final Query CONCEPT_QUERY_2 = Query.of("Condition", QueryParams.of("code", C73));
+    static final Criterion CONCEPT_CRITERION = Criterion.of(Concept.of(C71));
+    static final Criterion CONCEPT_CRITERION_1 = Criterion.of(Concept.of(C72));
+    static final Criterion CONCEPT_CRITERION_2 = Criterion.of(Concept.of(C73));
+    static final String PATIENT_ID = "patient-id-140857";
+    static final String PATIENT_ID_1 = "patient-id-144725";
+    static final String PATIENT_ID_2 = "patient-id-144727";
+    static final Query CONCEPT_QUERY = Query.of("Condition", QueryParams.of("code", C71));
+    static final Query CONCEPT_QUERY_1 = Query.of("Condition", QueryParams.of("code", C72));
+    static final Query CONCEPT_QUERY_2 = Query.of("Condition", QueryParams.of("code", C73));
 
     @Mock
     private FhirQueryService fhirQueryService;

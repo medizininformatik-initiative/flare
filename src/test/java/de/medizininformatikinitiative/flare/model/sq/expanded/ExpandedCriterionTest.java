@@ -5,33 +5,34 @@ import de.medizininformatikinitiative.flare.model.fhir.QueryParams;
 import de.medizininformatikinitiative.flare.model.sq.Comparator;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
+import java.util.stream.Stream;
 
-import static de.medizininformatikinitiative.flare.model.sq.Comparator.*;
+import static de.medizininformatikinitiative.flare.model.sq.Comparator.GREATER_EQUAL;
+import static de.medizininformatikinitiative.flare.model.sq.Comparator.LESS_EQUAL;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ExpandedCriterionTest {
 
-    public static final TermCode UNIT = new TermCode("http://loinc.org", "ug/dL", "ug/dL");
-    static final TermCode C71_1 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "C71.1",
-                                              "Frontallappen");
+    static final TermCode UNIT = new TermCode("http://unitsofmeasure.org", "ug/dL", "ug/dL");
+    static final TermCode C71_1 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "C71.1", "Frontallappen");
     static final TermCode CONFIRMED = TermCode.of("http://terminology.hl7.org/CodeSystem/condition-ver-status",
-                                                  "confirmed", "Confirmed");
-    static final TermCode SEVERE = TermCode.of("http://snomed.info/sct",
-                                               "24484000", "Severe");
+            "confirmed", "Confirmed");
+    static final TermCode SEVERE = TermCode.of("http://snomed.info/sct", "24484000", "Severe");
     static final TermCode CORTISOL = TermCode.of("http://loinc.org", "2143-6", "Cortisol");
-    static final String VALE_FILTER_SEARCH_PARAMETER = "value-quantity";
-    static final Comparator FIRST_COMPARATOR_FILTER_COMPARATOR = GREATER_THAN;
-    static final BigDecimal FIRST_COMPARATOR_FILTER_VALUE = BigDecimal.valueOf(7.3);
-    static final Comparator SECOND_COMPARATOR_FILTER_COMPARATOR = GREATER_THAN;
-    static final BigDecimal SECOND_COMPARATOR_FILTER_VALUE = BigDecimal.valueOf(10);
-    public static final ExpandedComparatorFilter SECOND_COMPARATOR_FILTER = new ExpandedComparatorFilter(
-            VALE_FILTER_SEARCH_PARAMETER, SECOND_COMPARATOR_FILTER_COMPARATOR, SECOND_COMPARATOR_FILTER_VALUE, UNIT);
-    static final BigDecimal FIRST_RANGE_FILTER_LOWER_BOUND = BigDecimal.valueOf(17.9);
-    static final BigDecimal FIRST_RANGE_FILTER_UPPER_BOUND = BigDecimal.valueOf(22);
-    static final BigDecimal SECOND_RANGE_FILTER_LOWER_BOUND = BigDecimal.valueOf(30);
-    static final BigDecimal SECOND_RANGE_FILTER_UPPER_BOUND = BigDecimal.valueOf(43.5);
+    static final BigDecimal DECIMAL_LB = BigDecimal.valueOf(17.9);
+    static final BigDecimal DECIMAL_UB = BigDecimal.valueOf(22);
+    static final BigDecimal DECIMAL_LB_1 = BigDecimal.valueOf(23);
+    static final BigDecimal DECIMAL_UB_1 = BigDecimal.valueOf(42);
+    static final BigDecimal DECIMAL_LB_2 = BigDecimal.valueOf(30);
+    static final BigDecimal DECIMAL_UB_2 = BigDecimal.valueOf(43.5);
+    static final BigDecimal DECIMAL_1 = BigDecimal.valueOf(7.3);
+    static final BigDecimal DECIMAL_2 = BigDecimal.valueOf(10);
 
     @Test
     void toQuery() {
@@ -68,72 +69,75 @@ class ExpandedCriterionTest {
                 .appendParam("severity", SEVERE)));
     }
 
-    @Test
-    void toQuery_withOneComparatorFilter() {
+    @ParameterizedTest
+    @EnumSource
+    void toQuery_withOneComparatorFilter(Comparator comparator) {
         var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
                 .appendFilter(new ExpandedComparatorFilter(
-                        VALE_FILTER_SEARCH_PARAMETER, FIRST_COMPARATOR_FILTER_COMPARATOR, FIRST_COMPARATOR_FILTER_VALUE,
+                        "value-quantity", comparator, DECIMAL_1,
                         UNIT));
 
         var query = criterion.toQuery();
 
         assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
                 .appendParam("code", CORTISOL)
-                .appendParam(VALE_FILTER_SEARCH_PARAMETER, FIRST_COMPARATOR_FILTER_COMPARATOR,
-                             FIRST_COMPARATOR_FILTER_VALUE, UNIT)));
+                .appendParam("value-quantity", comparator,
+                        DECIMAL_1, UNIT)));
     }
 
-    @Test
-    void toQuery_withTwoComparatorFilters() {
+    @ParameterizedTest
+    @MethodSource("arityTwoComparatorArgumentProvider")
+    void toQuery_withTwoComparatorFilters(Comparator comparator1, Comparator comparator2) {
         var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
-                .appendFilter(new ExpandedComparatorFilter(
-                        VALE_FILTER_SEARCH_PARAMETER, FIRST_COMPARATOR_FILTER_COMPARATOR, FIRST_COMPARATOR_FILTER_VALUE,
-                        UNIT))
-                .appendFilter(SECOND_COMPARATOR_FILTER);
+                .appendFilter(new ExpandedComparatorFilter("value-quantity", comparator1, DECIMAL_1, UNIT))
+                .appendFilter(new ExpandedComparatorFilter("value-quantity", comparator2, DECIMAL_2, UNIT));
 
         var query = criterion.toQuery();
 
         assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
                 .appendParam("code", CORTISOL)
-                .appendParam(VALE_FILTER_SEARCH_PARAMETER, FIRST_COMPARATOR_FILTER_COMPARATOR,
-                             FIRST_COMPARATOR_FILTER_VALUE, UNIT)
-                .appendParam(VALE_FILTER_SEARCH_PARAMETER, FIRST_COMPARATOR_FILTER_COMPARATOR,
-                             SECOND_COMPARATOR_FILTER_VALUE, UNIT)));
+                .appendParam("value-quantity", comparator1, DECIMAL_1, UNIT)
+                .appendParam("value-quantity", comparator2, DECIMAL_2, UNIT)));
 
     }
-
 
     @Test
     void toQuery_withOneRangeFilter() {
         var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
-                .appendFilter(new ExpandedRangeFilter(VALE_FILTER_SEARCH_PARAMETER, FIRST_RANGE_FILTER_LOWER_BOUND,
-                                                      FIRST_RANGE_FILTER_UPPER_BOUND, UNIT));
+                .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_LB, DECIMAL_UB, UNIT));
 
         var query = criterion.toQuery();
 
         assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
                 .appendParam("code", CORTISOL)
-                .appendParam(VALE_FILTER_SEARCH_PARAMETER, GREATER_EQUAL, FIRST_RANGE_FILTER_LOWER_BOUND, UNIT)
-                .appendParam(VALE_FILTER_SEARCH_PARAMETER, LESS_EQUAL, FIRST_RANGE_FILTER_UPPER_BOUND, UNIT)));
+                .appendParam("value-quantity", GREATER_EQUAL, DECIMAL_LB, UNIT)
+                .appendParam("value-quantity", LESS_EQUAL, DECIMAL_UB, UNIT)));
     }
 
 
     @Test
     void toQuery_withTowRangeFilters() {
         var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
-                .appendFilter(new ExpandedRangeFilter(VALE_FILTER_SEARCH_PARAMETER, FIRST_RANGE_FILTER_LOWER_BOUND,
-                                                      FIRST_RANGE_FILTER_UPPER_BOUND, UNIT))
-                .appendFilter(new ExpandedRangeFilter(VALE_FILTER_SEARCH_PARAMETER, SECOND_RANGE_FILTER_LOWER_BOUND,
-                                                      SECOND_RANGE_FILTER_UPPER_BOUND, UNIT));
+                .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_LB_1, DECIMAL_UB_1, UNIT))
+                .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_LB_2, DECIMAL_UB_2, UNIT));
 
         var query = criterion.toQuery();
 
         assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
                 .appendParam("code", CORTISOL)
-                .appendParam(VALE_FILTER_SEARCH_PARAMETER, GREATER_EQUAL, FIRST_RANGE_FILTER_LOWER_BOUND, UNIT)
-                .appendParam(VALE_FILTER_SEARCH_PARAMETER, LESS_EQUAL, FIRST_RANGE_FILTER_UPPER_BOUND, UNIT)
-                .appendParam(VALE_FILTER_SEARCH_PARAMETER, GREATER_EQUAL, SECOND_RANGE_FILTER_LOWER_BOUND, UNIT)
-                .appendParam(VALE_FILTER_SEARCH_PARAMETER, LESS_EQUAL, SECOND_RANGE_FILTER_UPPER_BOUND, UNIT)));
+                .appendParam("value-quantity", GREATER_EQUAL, DECIMAL_LB_1, UNIT)
+                .appendParam("value-quantity", LESS_EQUAL, DECIMAL_UB_1, UNIT)
+                .appendParam("value-quantity", GREATER_EQUAL, DECIMAL_LB_2, UNIT)
+                .appendParam("value-quantity", LESS_EQUAL, DECIMAL_UB_2, UNIT)));
     }
 
+    static Stream<Arguments> arityTwoComparatorArgumentProvider() {
+        Stream.Builder<Arguments> argumentBuilder = Stream.builder();
+        for (Comparator c1 : Comparator.values()) {
+            for (Comparator c2 : Comparator.values()) {
+                argumentBuilder.add(Arguments.of(c1, c2));
+            }
+        }
+        return argumentBuilder.build();
+    }
 }
