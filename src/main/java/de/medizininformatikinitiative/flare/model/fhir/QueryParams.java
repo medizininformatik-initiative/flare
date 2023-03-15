@@ -67,7 +67,8 @@ public record QueryParams(List<Param> params) {
      * @return the {@code QueryParams} resulting in appending the param
      */
     public QueryParams appendParam(String name, Comparator comparator, BigDecimal value, TermCode unit) {
-        return appendParam(name, comparator.toString() + value + "|" + unit.system() + "|" + unit.code());
+        String unitAttachment = unit == null ? "" :  "|" + unit.system() + "|" + unit.code();
+        return appendParam(name, comparator.toString() + value + unitAttachment);
     }
 
     /**
