@@ -33,7 +33,7 @@ jobs:
           key: ${{ hashFiles('pom.xml') }}
 
       - name: Build
-        run: mvn -B verify
+        run: MAVEN_OPTS="-Xmx4g" mvn -B verify
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
