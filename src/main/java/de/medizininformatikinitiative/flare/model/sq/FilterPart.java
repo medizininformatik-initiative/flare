@@ -29,7 +29,7 @@ public interface FilterPart {
                     throw new IllegalArgumentException("empty selectedConcepts");
                 } else {
                     yield new ConceptFilterPart(StreamSupport.stream(selectedConcepts.spliterator(), false)
-                                                        .map(TermCode::fromJsonNode).toList());
+                            .map(TermCode::fromJsonNode).toList());
                 }
             }
             case "quantity-comparator" -> {

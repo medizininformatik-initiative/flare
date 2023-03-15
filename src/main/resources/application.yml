@@ -1,4 +1,12 @@
-app:
-  dataStore:
-    baseUrl: 'http://localhost:8082/fhir'
+flare:
+  fhir:
+    server: 'http://localhost:8082/fhir'
+    user: ''
+    password: ''
     pageCount: 1000
+  cache:
+    memSizeMB: 1024
+    memExpiryHours: 48
+    memRefreshHours: 24
+    diskPath: 'cache'
+    diskTtlHours: 168

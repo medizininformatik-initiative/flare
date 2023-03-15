@@ -4,6 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
 import de.medizininformatikinitiative.flare.model.mapping.TermCodeNode;
+import de.medizininformatikinitiative.flare.service.DiskCachingFhirQueryService;
+import de.medizininformatikinitiative.flare.service.FhirQueryService;
+import de.medizininformatikinitiative.flare.service.MemCachingFhirQueryService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,8 +20,10 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 import static java.util.function.Function.identity;
@@ -32,7 +38,7 @@ public class FlareApplication {
     }
 
     @Bean
-    public WebClient dataStoreClient(@Value("${app.dataStore.baseUrl}") String baseUrl, ObjectMapper mapper) {
+    public WebClient dataStoreClient(@Value("${flare.fhir.server}") String baseUrl, ObjectMapper mapper) {
         return WebClient.builder()
                 .baseUrl(baseUrl)
                 .defaultHeader("Accept", "application/fhir+json")
@@ -52,6 +58,25 @@ public class FlareApplication {
                 .collect(Collectors.toMap(Mapping::key, identity()));
         var conceptTree = mapper.readValue(slurp("codex-code-tree.json"), TermCodeNode.class);
         return MappingContext.of(mappings, conceptTree);
+    }
+
+    @Bean
+    public MemCachingFhirQueryService memCachingFhirQueryService(
+            @Qualifier("diskCachingFhirQueryService") FhirQueryService fhirQueryService,
+            @Value("${flare.cache.memSizeMB}") int sizeMB,
+            @Value("${flare.cache.memExpiryHours}") int expiryHours,
+            @Value("${flare.cache.memRefreshHours}") int refreshHours) {
+        return new MemCachingFhirQueryService(fhirQueryService, new MemCachingFhirQueryService.Config(
+                ((long) sizeMB) * 1024 * 1024, Duration.ofHours(expiryHours), Duration.ofHours(refreshHours)));
+    }
+
+    @Bean
+    public DiskCachingFhirQueryService diskCachingFhirQueryService(
+            @Qualifier("dataStore") FhirQueryService fhirQueryService,
+            @Value("${flare.cache.diskPath}") String path,
+            @Value("${flare.cache.diskTtlHours}") int ttlHours) {
+        return new DiskCachingFhirQueryService(fhirQueryService, new DiskCachingFhirQueryService.Config(path,
+                Duration.ofHours(ttlHours)), Executors.newFixedThreadPool(4));
     }
 
     private static String slurp(String name) throws Exception {

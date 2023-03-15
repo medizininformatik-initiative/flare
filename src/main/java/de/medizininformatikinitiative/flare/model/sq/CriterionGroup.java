@@ -1,6 +1,6 @@
 package de.medizininformatikinitiative.flare.model.sq;
 
-import de.medizininformatikinitiative.flare.Util;
+import de.medizininformatikinitiative.flare.model.Population;
 import de.medizininformatikinitiative.flare.model.translate.Expression;
 import de.medizininformatikinitiative.flare.model.translate.Operator;
 import org.reactivestreams.Publisher;
@@ -8,7 +8,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.Set;
 import java.util.function.Function;
 
 /**
@@ -50,18 +49,18 @@ public record CriterionGroup<T>(List<T> criteria) {
 
     /**
      * Executes all {@code criteria} of this group using the {@code executor} and performs a set
-     * {@link Util#intersection(Set, Set) intersection} on the results.
+     * {@link Population#intersection(Population) intersection} on the results.
      */
-    public Mono<Set<String>> executeAndIntersection(Function<T, Publisher<? extends Set<String>>> executor) {
-        return Flux.fromIterable(criteria).flatMap(executor).reduce(Util::intersection);
+    public Mono<Population> executeAndIntersection(Function<T, Publisher<? extends Population>> executor) {
+        return Flux.fromIterable(criteria).flatMap(executor).reduce(Population::intersection);
     }
 
     /**
      * Executes all {@code criteria} of this group using the {@code executor} and performs a set
-     * {@link Util#union(Set, Set) union} on the results.
+     * {@link Population#union(Population) union} on the results.
      */
-    public Mono<Set<String>> executeAndUnion(Function<T, Publisher<? extends Set<String>>> executor) {
-        return Flux.fromIterable(criteria).flatMap(executor).reduce(Util::union);
+    public Mono<Population> executeAndUnion(Function<T, Publisher<? extends Population>> executor) {
+        return Flux.fromIterable(criteria).flatMap(executor).reduce(Population::union);
     }
 
     /**

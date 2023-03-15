@@ -1,6 +1,6 @@
 package de.medizininformatikinitiative.flare.service;
 
-import de.medizininformatikinitiative.flare.Util;
+import de.medizininformatikinitiative.flare.model.Population;
 import de.medizininformatikinitiative.flare.model.sq.Criterion;
 import de.medizininformatikinitiative.flare.model.sq.CriterionGroup;
 import de.medizininformatikinitiative.flare.model.sq.StructuredQuery;
@@ -27,7 +27,7 @@ public class StructuredQueryService {
     private final FhirQueryService fhirQueryService;
     private final Translator translator;
 
-    public StructuredQueryService(@Qualifier("cachingFhirQueryService") FhirQueryService fhirQueryService,
+    public StructuredQueryService(@Qualifier("memCachingFhirQueryService") FhirQueryService fhirQueryService,
                                   Translator translator) {
         this.fhirQueryService = requireNonNull(fhirQueryService);
         this.translator = requireNonNull(translator);
@@ -41,22 +41,22 @@ public class StructuredQueryService {
      */
     public Mono<Integer> execute(StructuredQuery query) {
         var includedPatients = query.inclusionCriteria().executeAndIntersection(this::executeUnionGroup)
-                .defaultIfEmpty(Set.of());
+                .defaultIfEmpty(Population.of());
         var excludedPatients = query.exclusionCriteria()
                 .map(CriterionGroup::wrapCriteria)
                 .executeAndUnion(group -> group.executeAndUnion(this::executeUnionGroup))
-                .defaultIfEmpty(Set.of());
+                .defaultIfEmpty(Population.of());
         return includedPatients
-                .flatMap(i -> excludedPatients.map(e -> Util.difference(i, e)))
+                .flatMap(i -> excludedPatients.map(i::difference))
                 .map(Set::size);
     }
 
-    private Mono<Set<String>> executeUnionGroup(CriterionGroup<Criterion> group) {
+    private Mono<Population> executeUnionGroup(CriterionGroup<Criterion> group) {
         return group.executeAndUnion(this::executeSingle);
     }
 
-    private Flux<Set<String>> executeSingle(Criterion criterion) {
-        logger.debug("execute single criterion {}", criterion);
+    private Flux<Population> executeSingle(Criterion criterion) {
+        logger.trace("Execute single criterion {}", criterion);
         return translator.toQuery(criterion).flux()
                 .flatMap(Flux::fromIterable)
                 .flatMap(query -> Mono.fromFuture(fhirQueryService.execute(query)));
@@ -81,7 +81,7 @@ public class StructuredQueryService {
     }
 
     private Mono<Operator> translateSingle(Criterion criterion) {
-        logger.debug("translate single criterion {}", criterion);
+        logger.trace("Translate single criterion {}", criterion);
         return translator.toQuery(criterion).map(queries -> new Operator(UNION, queries.stream()
                 .map(QueryExpression::new).toList()));
     }

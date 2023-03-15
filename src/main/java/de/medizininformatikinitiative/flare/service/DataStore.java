@@ -1,5 +1,6 @@
 package de.medizininformatikinitiative.flare.service;
 
+import de.medizininformatikinitiative.flare.model.Population;
 import de.medizininformatikinitiative.flare.model.fhir.Bundle;
 import de.medizininformatikinitiative.flare.model.fhir.Query;
 import de.medizininformatikinitiative.flare.model.fhir.QueryParams;
@@ -13,7 +14,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Objects;
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -28,12 +28,12 @@ public class DataStore implements FhirQueryService {
     private final int pageCount;
 
     public DataStore(@Qualifier("dataStoreClient") WebClient client,
-                     @Value("${app.dataStore.pageCount}") int pageCount) {
+                     @Value("${flare.fhir.pageCount}") int pageCount) {
         this.client = Objects.requireNonNull(client);
         this.pageCount = pageCount;
     }
 
-    public CompletableFuture<Set<String>> execute(Query query) {
+    public CompletableFuture<Population> execute(Query query, boolean ignoreCache) {
         logger.debug("execute search: {}?{}", query.type(), query.params());
         return client.post()
                 .uri("/{type}/_search", query.type())
@@ -46,6 +46,7 @@ public class DataStore implements FhirQueryService {
                         .orElse(Mono.empty()))
                 .flatMap(bundle -> Flux.fromStream(bundle.entry().stream().map(e -> e.resource().patientId())))
                 .collect(Collectors.toSet())
+                .map(Population::copyOf)
                 .toFuture();
     }
 
