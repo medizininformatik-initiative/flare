@@ -71,7 +71,7 @@ class DataStoreIT {
 
         var result = dataStore.execute(Query.ofType("Observation")).join();
 
-        assertThat(result).containsExactly("0");
+        assertThat(result).containsOnly("0");
     }
 
     @Test
@@ -83,7 +83,7 @@ class DataStoreIT {
 
         var result = dataStore.execute(Query.ofType("Observation")).join();
 
-        assertThat(result).containsExactly("0", "1");
+        assertThat(result).containsOnly("0", "1");
     }
 
     private void createPatient(String id) {

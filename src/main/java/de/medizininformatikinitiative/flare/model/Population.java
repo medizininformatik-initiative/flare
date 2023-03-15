@@ -3,7 +3,10 @@ package de.medizininformatikinitiative.flare.model;
 import de.medizininformatikinitiative.flare.service.SerializerException;
 
 import java.nio.ByteBuffer;
-import java.util.*;
+import java.util.AbstractSet;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import static java.nio.charset.StandardCharsets.US_ASCII;
 
@@ -18,10 +21,10 @@ public final class Population extends AbstractSet<String> {
 
     private static final Population EMPTY = new Population(Set.of());
 
-    private final List<String> patientIds;
+    private final Set<String> patientIds;
 
     private Population(Set<String> patientIds) {
-        this.patientIds = List.copyOf(patientIds);
+        this.patientIds = Set.copyOf(patientIds);
     }
 
     public static Population of() {
@@ -87,10 +90,8 @@ public final class Population extends AbstractSet<String> {
         if (o == this)
             return true;
 
-        if (!(o instanceof Set))
+        if (!(o instanceof Population p))
             return false;
-
-        Population p = (Population) o;
 
         return patientIds.equals(p.patientIds);
     }
@@ -100,8 +101,13 @@ public final class Population extends AbstractSet<String> {
         return patientIds.hashCode();
     }
 
-    public byte[] toByteArray() {
-        ByteBuffer byteBuffer = ByteBuffer.allocate(serializedSize());
+    @Override
+    public String toString() {
+        return "Population[size=" + size() + "]";
+    }
+
+    public ByteBuffer toByteBuffer() {
+        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(serializedSize());
         byteBuffer.put((byte) 0); //version byte
 
         for (String id : patientIds) {
@@ -110,7 +116,7 @@ public final class Population extends AbstractSet<String> {
             byteBuffer.put(bytes);
         }
 
-        return byteBuffer.array();
+        return byteBuffer.flip();
     }
 
     private int serializedSize() {
