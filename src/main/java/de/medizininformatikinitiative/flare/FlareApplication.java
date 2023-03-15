@@ -14,15 +14,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.http.codec.json.Jackson2JsonEncoder;
+import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.File;
 import java.time.Duration;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
@@ -38,10 +35,16 @@ public class FlareApplication {
     }
 
     @Bean
-    public WebClient dataStoreClient(@Value("${flare.fhir.server}") String baseUrl, ObjectMapper mapper) {
-        return WebClient.builder()
+    public WebClient dataStoreClient(@Value("${flare.fhir.server}") String baseUrl,
+                                     @Value("${flare.fhir.user}") String user,
+                                     @Value("${flare.fhir.password}") String password, ObjectMapper mapper) {
+        WebClient.Builder builder = WebClient.builder()
                 .baseUrl(baseUrl)
-                .defaultHeader("Accept", "application/fhir+json")
+                .defaultHeader("Accept", "application/fhir+json");
+        if (!user.isEmpty() && !password.isEmpty()) {
+            builder = builder.filter(ExchangeFilterFunctions.basicAuthentication(user, password));
+        }
+        return builder
                 .codecs(configurer -> {
                     var codecs = configurer.defaultCodecs();
                     codecs.maxInMemorySize(TWO_MEGA_BYTE);
@@ -52,11 +55,12 @@ public class FlareApplication {
     }
 
     @Bean
-    public MappingContext mappingContext() throws Exception {
+    public MappingContext mappingContext(@Value("${flare.mapping.mappingsFile}") String mappingsFile,
+                                         @Value("${flare.mapping.conceptTreeFile}") String conceptTreeFile) throws Exception {
         var mapper = new ObjectMapper();
-        var mappings = Arrays.stream(mapper.readValue(slurp("codex-term-code-mapping.json"), Mapping[].class))
+        var mappings = Arrays.stream(mapper.readValue(new File(mappingsFile), Mapping[].class))
                 .collect(Collectors.toMap(Mapping::key, identity()));
-        var conceptTree = mapper.readValue(slurp("codex-code-tree.json"), TermCodeNode.class);
+        var conceptTree = mapper.readValue(new File(conceptTreeFile), TermCodeNode.class);
         return MappingContext.of(mappings, conceptTree);
     }
 
@@ -77,13 +81,5 @@ public class FlareApplication {
             @Value("${flare.cache.diskExpiryHours}") int ttlHours) {
         return new DiskCachingFhirQueryService(fhirQueryService, new DiskCachingFhirQueryService.Config(path,
                 Duration.ofHours(ttlHours)), Executors.newFixedThreadPool(4));
-    }
-
-    private static String slurp(String name) throws Exception {
-        return Files.readString(resourcePath(name));
-    }
-
-    private static Path resourcePath(String name) throws URISyntaxException {
-        return Paths.get(Objects.requireNonNull(FlareApplication.class.getResource(name)).toURI());
     }
 }

@@ -1,0 +1,83 @@
+name: Build
+
+on:
+  push:
+    branches:
+    - main
+    - develop
+    tags:
+    - '*.*.*'
+  pull_request:
+    branches:
+    - main
+    - develop
+  schedule:
+  - cron: '0 1 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Cache Local Maven Repo
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ hashFiles('pom.xml') }}
+
+      - name: Build
+        run: mvn -B verify
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and Export to Docker
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          tags: flare:latest
+          outputs: type=docker,dest=/tmp/flare.tar
+
+      - name: Upload flare Image
+        uses: actions/upload-artifact@v3
+        with:
+          name: flare-image
+          path: /tmp/flare.tar
+
+  image-scan:
+    needs: build
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Download Flare Image
+        uses: actions/download-artifact@v3
+        with:
+          name: flare-image
+          path: /tmp
+
+      - name: Load Flare Image
+        run: docker load --input /tmp/flare.tar
+
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+
+      - name: Run Trivy Vulnerability Scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: flare:latest
+          format: sarif
+          output: trivy-results.sarif
+          severity: 'CRITICAL,HIGH'
+          timeout: '15m0s'
+
+      - name: Upload Trivy Scan Results to GitHub Security Tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: trivy-results.sarif

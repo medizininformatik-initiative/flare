@@ -56,27 +56,29 @@ class DiskCachingFhirQueryServiceTest {
     }
 
     @Test
-    void execute_miss() {
+    void execute_miss() throws Exception {
         when(queryService.execute(QUERY, false)).thenReturn(CompletableFuture.completedFuture(Population.of()));
 
         var result = service.execute(QUERY);
 
+        Thread.sleep(100);
         assertThat(result).isCompletedWithValue(Population.of());
         assertThat(service.stats()).isEqualTo(new CachingService.CacheStats(0, 0, 1));
     }
 
     @Test
-    void execute_hit() throws InterruptedException {
+    void execute_hit() throws Exception {
         ensureCacheContains(QUERY, Population.of());
 
         var result = service.execute(QUERY);
 
+        Thread.sleep(100);
         assertThat(result).isCompletedWithValue(Population.of());
         assertThat(service.stats()).isEqualTo(new CachingService.CacheStats(0, 1, 1));
     }
 
     @Test
-    void execute_ignoringCache() throws InterruptedException {
+    void execute_ignoringCache() throws Exception {
         ensureCacheContains(QUERY, Population.of());
         when(queryService.execute(QUERY, true)).thenReturn(CompletableFuture.completedFuture(Population.of(PATIENT_ID)));
 

@@ -10,3 +10,9 @@ flare:
     memRefreshHours: 24
     diskPath: 'cache'
     diskExpiryHours: 168
+  mapping:
+    mappingsFile: 'ontology/codex-term-code-mapping.json'
+    conceptTreeFile: 'ontology/codex-code-tree.json'
+
+server:
+  port: 8080

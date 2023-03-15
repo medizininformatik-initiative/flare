@@ -22,6 +22,7 @@ import org.testcontainers.images.PullPolicy;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -70,9 +71,9 @@ class StructuredQueryServiceIT {
         @Bean
         public MappingContext mappingContext() throws Exception {
             var mapper = new ObjectMapper();
-            var mappings = Arrays.stream(mapper.readValue(slurp("codex-term-code-mapping.json"), Mapping[].class))
+            var mappings = Arrays.stream(mapper.readValue(new File("ontology/codex-term-code-mapping.json"), Mapping[].class))
                     .collect(Collectors.toMap(Mapping::key, identity()));
-            var conceptTree = mapper.readValue(slurp("codex-code-tree.json"), TermCodeNode.class);
+            var conceptTree = mapper.readValue(new File("ontology/codex-code-tree.json"), TermCodeNode.class);
             return MappingContext.of(mappings, conceptTree);
         }
 
