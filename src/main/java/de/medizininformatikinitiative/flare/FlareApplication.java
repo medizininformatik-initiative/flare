@@ -74,7 +74,7 @@ public class FlareApplication {
     public DiskCachingFhirQueryService diskCachingFhirQueryService(
             @Qualifier("dataStore") FhirQueryService fhirQueryService,
             @Value("${flare.cache.diskPath}") String path,
-            @Value("${flare.cache.diskTtlHours}") int ttlHours) {
+            @Value("${flare.cache.diskExpiryHours}") int ttlHours) {
         return new DiskCachingFhirQueryService(fhirQueryService, new DiskCachingFhirQueryService.Config(path,
                 Duration.ofHours(ttlHours)), Executors.newFixedThreadPool(4));
     }

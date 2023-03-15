@@ -9,4 +9,4 @@ flare:
     memExpiryHours: 48
     memRefreshHours: 24
     diskPath: 'cache'
-    diskTtlHours: 168
+    diskExpiryHours: 168
