@@ -21,18 +21,18 @@ public final class Mapping {
     private final ValueFilterMapping valueFilterMapping;
     private final List<FixedCriterion> fixedCriteria;
     private final Map<TermCode, AttributeMapping> attributeMappings;
-    private final String timeRestrictionPath;
+    private final String timeRestrictionParameter;
 
     private Mapping(TermCode key, String resourceType, String termCodeSearchParameter,
                     ValueFilterMapping valueFilterMapping, List<FixedCriterion> fixedCriteria,
-                    Map<TermCode, AttributeMapping> attributeMappings, String timeRestrictionPath) {
+                    Map<TermCode, AttributeMapping> attributeMappings, String timeRestrictionParameter) {
         this.key = requireNonNull(key);
         this.resourceType = requireNonNull(resourceType);
         this.termCodeSearchParameter = termCodeSearchParameter;
         this.valueFilterMapping = valueFilterMapping;
         this.fixedCriteria = List.copyOf(fixedCriteria);
         this.attributeMappings = Map.copyOf(attributeMappings);
-        this.timeRestrictionPath = timeRestrictionPath;
+        this.timeRestrictionParameter = timeRestrictionParameter;
     }
 
     public static Mapping of(TermCode concept, String resourceType) {
@@ -52,7 +52,7 @@ public final class Mapping {
                              @JsonProperty("valueTypeFhir") FilterType valueTypeFhir,
                              @JsonProperty("fixedCriteria") List<FixedCriterion> fixedCriteria,
                              @JsonProperty("attributeSearchParameters") List<AttributeMapping> attributeMappings,
-                             @JsonProperty("timeRestrictionPath") String timeRestrictionPath) {
+                             @JsonProperty("timeRestrictionParameter") String timeRestrictionParameter) {
         return new Mapping(key, resourceType, termCodeSearchParameter,
                 valueSearchParameter == null
                         ? null
@@ -61,27 +61,32 @@ public final class Mapping {
                 fixedCriteria == null ? List.of() : List.copyOf(fixedCriteria),
                 (attributeMappings == null ? Map.of() : attributeMappings.stream()
                         .collect(Collectors.toMap(AttributeMapping::key, Function.identity()))),
-                timeRestrictionPath);
+                timeRestrictionParameter);
     }
 
     public Mapping withValueFilterMapping(FilterType type, String searchParameter) {
         return new Mapping(key, resourceType, termCodeSearchParameter,
                 new ValueFilterMapping(type, searchParameter, key),
-                fixedCriteria, attributeMappings, timeRestrictionPath);
+                fixedCriteria, attributeMappings, timeRestrictionParameter);
     }
 
     public Mapping withFixedCriteria(FixedCriterion fixedCriterion) {
         var fixedCriteria = new LinkedList<>(this.fixedCriteria);
         fixedCriteria.add(fixedCriterion);
         return new Mapping(key, resourceType, termCodeSearchParameter, valueFilterMapping,
-                fixedCriteria, attributeMappings, timeRestrictionPath);
+                fixedCriteria, attributeMappings, timeRestrictionParameter);
     }
 
     public Mapping appendAttributeMapping(AttributeMapping attributeMapping) {
         var attributeMappings = new HashMap<>(this.attributeMappings);
         attributeMappings.put(attributeMapping.key(), attributeMapping);
         return new Mapping(key, resourceType, termCodeSearchParameter, valueFilterMapping,
-                fixedCriteria, attributeMappings, timeRestrictionPath);
+                fixedCriteria, attributeMappings, timeRestrictionParameter);
+    }
+
+    public Mapping withTimeRestrictionParameter(String timeRestrictionParameter) {
+        return new Mapping(key, resourceType, termCodeSearchParameter, valueFilterMapping,
+                fixedCriteria, attributeMappings, requireNonNull(timeRestrictionParameter));
     }
 
     public TermCode key() {
@@ -107,6 +112,10 @@ public final class Mapping {
     public Mono<AttributeMapping> findAttributeMapping(TermCode code) {
         AttributeMapping mapping = attributeMappings.get(code);
         return mapping == null ? Mono.error(new AttributeMappingNotFoundException(key, code)) : Mono.just(mapping);
+    }
+
+    public String timeRestrictionParameter() {
+        return timeRestrictionParameter;
     }
 
     private record ValueFilterMapping(FilterType type, String searchParameter, TermCode key) implements FilterMapping {

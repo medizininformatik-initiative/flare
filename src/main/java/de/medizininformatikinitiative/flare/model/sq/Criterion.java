@@ -25,7 +25,7 @@ import static java.util.Objects.requireNonNull;
  * @param filters the filters applied to entities of {@code concept}
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record Criterion(Concept concept, List<Filter> filters, TimeRestriction timeRestriction) {
+public record Criterion(Concept concept, List<Filter> filters) {
 
     public Criterion {
         requireNonNull(concept);
@@ -33,18 +33,18 @@ public record Criterion(Concept concept, List<Filter> filters, TimeRestriction t
     }
 
     public static Criterion of(Concept concept) {
-        return new Criterion(concept, List.of(), null);
+        return new Criterion(concept, List.of());
     }
 
     public static Criterion of(Concept concept, ValueFilter valueFilter) {
-        return new Criterion(concept, List.of(valueFilter), null);
+        return new Criterion(concept, List.of(valueFilter));
     }
 
     @JsonCreator
-    static Criterion create(@JsonProperty("termCodes") List<TermCode> termCodes,
-                            @JsonProperty("valueFilter") ObjectNode valueFilter,
-                            @JsonProperty("timeRestriction") TimeRestriction timeRestriction,
-                            @JsonProperty("attributeFilters") List<ObjectNode> attributeFilters) {
+    static Criterion fromJson(@JsonProperty("termCodes") List<TermCode> termCodes,
+                              @JsonProperty("valueFilter") ObjectNode valueFilter,
+                              @JsonProperty("attributeFilters") List<ObjectNode> attributeFilters,
+                              @JsonProperty("timeRestriction") TimeRestriction timeRestriction) {
         var concept = Concept.of(requireNonNull(termCodes, "missing JSON property: termCodes"));
 
         var filters = new LinkedList<Filter>();
@@ -54,14 +54,23 @@ public record Criterion(Concept concept, List<Filter> filters, TimeRestriction t
         for (ObjectNode attributeFilter : (attributeFilters == null ? List.<ObjectNode>of() : attributeFilters)) {
             filters.add(AttributeFilter.fromJsonNode(attributeFilter));
         }
+        if (timeRestriction != null) {
+            filters.add(timeRestriction);
+        }
 
-        return new Criterion(concept, filters, timeRestriction);
+        return new Criterion(concept, filters);
     }
 
     Criterion appendAttributeFilter(AttributeFilter attributeFilter) {
         var filters = new LinkedList<>(this.filters);
         filters.add(attributeFilter);
-        return new Criterion(concept, filters, timeRestriction);
+        return new Criterion(concept, filters);
+    }
+
+    Criterion appendTimeRestrictionFilter(TimeRestriction timeRestrictionFilter) {
+        var filters = new LinkedList<>(this.filters);
+        filters.add(timeRestrictionFilter);
+        return new Criterion(concept, filters);
     }
 
     /**

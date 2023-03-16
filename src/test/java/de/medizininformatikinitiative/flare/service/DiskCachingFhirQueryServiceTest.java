@@ -99,6 +99,7 @@ class DiskCachingFhirQueryServiceTest {
 
         var result = service.execute(QUERY);
 
+        Thread.sleep(100);
         assertThat(result).isCompletedWithValue(population);
         assertThat(service.stats()).isEqualTo(new CachingService.CacheStats(0, 1, 1));
     }

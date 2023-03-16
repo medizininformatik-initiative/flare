@@ -172,14 +172,14 @@ class ExpandedCriterionTest {
     @Test
     void toQuery_WithDateRange() {
         var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
-                .appendFilter(new ExpandedDateRangeFilter("birthDate", LOCAL_DATE_1, LOCAL_DATE_2));
+                .appendFilter(new ExpandedDateRangeFilter("birthdate", LOCAL_DATE_1, LOCAL_DATE_2));
 
         var query = criterion.toQuery();
 
         assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
                 .appendParam("code", CORTISOL)
-                .appendParam("birthDate", GREATER_EQUAL, LOCAL_DATE_1)
-                .appendParam("birthDate", LESS_EQUAL, LOCAL_DATE_2)));
+                .appendParam("birthdate", GREATER_EQUAL, LOCAL_DATE_1)
+                .appendParam("birthdate", LESS_EQUAL, LOCAL_DATE_2)));
     }
 
     @Test
