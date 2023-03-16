@@ -4,9 +4,12 @@ import de.medizininformatikinitiative.flare.model.sq.Comparator;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * An immutable list of query params.
@@ -27,7 +30,7 @@ public record QueryParams(List<Param> params) {
     }
 
     public static QueryParams of(String name, TermCode termCode) {
-        return EMPTY.appendParam(name, termCode);
+        return EMPTY.appendParam(requireNonNull(name), requireNonNull(termCode));
     }
 
     /**
@@ -68,7 +71,19 @@ public record QueryParams(List<Param> params) {
      */
     public QueryParams appendParam(String name, Comparator comparator, BigDecimal value, TermCode unit) {
         String unitAttachment = unit == null ? "" : "|" + unit.system() + "|" + unit.code();
-        return appendParam(name, comparator.toString() + value + unitAttachment);
+        return appendParam(name, comparator.toString() + requireNonNull(value) + unitAttachment);
+    }
+
+    /**
+     * Appends a param with {@code name} and a date value that the resources should be compared with in the end.
+     *
+     * @param name       the name of the query parameter
+     * @param comparator the {@link Comparator} to use as prefix
+     * @param value      the date that should be compared
+     * @return the {@code QueryParams} resulting in appending the param
+     */
+    public QueryParams appendParam(String name, Comparator comparator, LocalDate value) {
+        return appendParam(name, comparator.toString() + requireNonNull(value));
     }
 
     /**

@@ -28,9 +28,11 @@ public record ExpandedCriterion(String resourceType, String searchParameter, Ter
 
     public ExpandedCriterion {
         requireNonNull(resourceType);
-        requireNonNull(searchParameter);
-        requireNonNull(code);
         filters = List.copyOf(filters);
+    }
+
+    public static ExpandedCriterion of(String resourceType) {
+        return new ExpandedCriterion(resourceType, null, null, List.of());
     }
 
     public static ExpandedCriterion of(String resourceType, String searchParameter, TermCode termCode) {
@@ -44,6 +46,10 @@ public record ExpandedCriterion(String resourceType, String searchParameter, Ter
     }
 
     public Query toQuery() {
-        return new Query(resourceType, QueryParams.of(searchParameter, code).appendParams(toParams(filters)));
+        return new Query(resourceType, startQueryParams().appendParams(toParams(filters)));
+    }
+
+    private QueryParams startQueryParams() {
+        return searchParameter == null || code == null ? QueryParams.EMPTY : QueryParams.of(searchParameter, code);
     }
 }

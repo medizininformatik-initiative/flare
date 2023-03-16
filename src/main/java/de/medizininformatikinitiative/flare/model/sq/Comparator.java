@@ -30,6 +30,16 @@ public enum Comparator {
         };
     }
 
+    public Comparator reverse() {
+        return switch (this) {
+            case GREATER_THAN -> LESS_THAN;
+            case LESS_THAN -> GREATER_THAN;
+            case GREATER_EQUAL -> LESS_EQUAL;
+            case LESS_EQUAL -> GREATER_EQUAL;
+            default -> EQUAL;
+        };
+    }
+
     public String toString() {
         return s;
     }

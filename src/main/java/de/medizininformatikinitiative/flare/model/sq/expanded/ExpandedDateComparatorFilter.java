@@ -2,23 +2,22 @@ package de.medizininformatikinitiative.flare.model.sq.expanded;
 
 import de.medizininformatikinitiative.flare.model.fhir.QueryParams;
 import de.medizininformatikinitiative.flare.model.sq.Comparator;
-import de.medizininformatikinitiative.flare.model.sq.TermCode;
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import static java.util.Objects.requireNonNull;
 
-public record ExpandedComparatorFilter(String searchParameter, Comparator comparator, BigDecimal value, TermCode unit)
+public record ExpandedDateComparatorFilter(String searchParameter, Comparator comparator, LocalDate date)
         implements ExpandedFilter {
 
-    public ExpandedComparatorFilter {
+    public ExpandedDateComparatorFilter {
         requireNonNull(searchParameter);
         requireNonNull(comparator);
-        requireNonNull(value);
+        requireNonNull(date);
     }
 
     @Override
     public QueryParams toParams() {
-        return QueryParams.EMPTY.appendParam(searchParameter, comparator, value, unit);
+        return QueryParams.EMPTY.appendParam(searchParameter, comparator, date);
     }
 }

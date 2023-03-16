@@ -33,4 +33,9 @@ public record AttributeMapping(FilterType type, TermCode key, String searchParam
     public static AttributeMapping coding(TermCode key, String searchParameter) {
         return new AttributeMapping(CODING, key, searchParameter);
     }
+
+    @Override
+    public boolean isAge() {
+        return false;
+    }
 }
