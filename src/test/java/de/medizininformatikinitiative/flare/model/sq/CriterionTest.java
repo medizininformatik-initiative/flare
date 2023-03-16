@@ -433,7 +433,7 @@ class CriterionTest {
                 static final LocalDate YEAR_1994 = LocalDate.of(1994, 1, 1);
                 static final BigDecimal AGE_OF_10 = BigDecimal.valueOf(10);
 
-                Mapping mapping = Mapping.of(AGE, "Patient").withValueFilterMapping(CODING, "birthDate");
+                Mapping mapping = Mapping.of(AGE, "Patient").withValueFilterMapping(CODING, "birthdate");
 
                 @BeforeEach
                 void setUp() {
@@ -450,7 +450,7 @@ class CriterionTest {
                             .expand(mappingContext).block();
 
                     assertThat(criterion).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateRangeFilter("birthDate", YEAR_1994.plusDays(1), YEAR_1995)));
+                            .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1994.plusDays(1), YEAR_1995)));
                 }
 
                 @ParameterizedTest
@@ -464,7 +464,7 @@ class CriterionTest {
                             .expand(mappingContext).block();
 
                     assertThat(criterion).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateComparatorFilter("birthDate", comparator.reverse(), YEAR_1995)));
+                            .appendFilter(new ExpandedDateComparatorFilter("birthdate", comparator.reverse(), YEAR_1995)));
                 }
 
                 @Test
@@ -500,7 +500,7 @@ class CriterionTest {
                             .expand(mappingContext).block();
 
                     assertThat(criterion).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateRangeFilter("birthDate", YEAR_1990, YEAR_1995)));
+                            .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1990, YEAR_1995)));
                 }
             }
 

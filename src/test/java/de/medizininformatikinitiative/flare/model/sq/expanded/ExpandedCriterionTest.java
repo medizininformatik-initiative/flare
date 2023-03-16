@@ -160,13 +160,13 @@ class ExpandedCriterionTest {
     @EnumSource
     void toQuery_WithDateComparator(Comparator comparator) {
         var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
-                .appendFilter(new ExpandedDateComparatorFilter("birthDate", comparator, LOCAL_DATE));
+                .appendFilter(new ExpandedDateComparatorFilter("birthdate", comparator, LOCAL_DATE));
 
         var query = criterion.toQuery();
 
         assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
                 .appendParam("code", CORTISOL)
-                .appendParam("birthDate", comparator, LOCAL_DATE)));
+                .appendParam("birthdate", comparator, LOCAL_DATE)));
     }
 
     @Test
