@@ -34,8 +34,6 @@ jobs:
 
       - name: Build
         run: mvn -B verify
-        env:
-          MAVEN_OPTS: "-Xmx4g"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2

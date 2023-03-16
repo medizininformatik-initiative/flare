@@ -4,10 +4,7 @@ import de.medizininformatikinitiative.flare.model.Population;
 import de.medizininformatikinitiative.flare.model.fhir.Query;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import org.rocksdb.Options;
-import org.rocksdb.RocksDB;
-import org.rocksdb.RocksDBException;
-import org.rocksdb.TtlDB;
+import org.rocksdb.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +17,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
+import static org.rocksdb.CompressionType.LZ4_COMPRESSION;
+import static org.rocksdb.CompressionType.ZSTD_COMPRESSION;
 
 public class DiskCachingFhirQueryService implements CachingService, FhirQueryService {
 
@@ -43,6 +42,10 @@ public class DiskCachingFhirQueryService implements CachingService, FhirQuerySer
     public void init() throws RocksDBException {
         options = new Options();
         options.setCreateIfMissing(true);
+        options.setCompressionType(LZ4_COMPRESSION);
+        options.setBottommostCompressionType(ZSTD_COMPRESSION);
+        options.setWriteBufferSize(256 << 20);
+        options.setTableFormatConfig(new BlockBasedTableConfig().setBlockSize(16384));
         db = TtlDB.open(options, config.path, (int) config.expireDuration.toSeconds(), false);
     }
 
@@ -85,7 +88,7 @@ public class DiskCachingFhirQueryService implements CachingService, FhirQuerySer
     private void internalPut(Query query, Population population) {
         try {
             logger.trace("Store result of size {} for query: {}", population.size(), query);
-            db.put(serializeQuery(query), population.toByteArray());
+            db.put(new WriteOptions(), serializeQueryBuffer(query), population.toByteBuffer());
             missCount.incrementAndGet();
         } catch (RocksDBException e) {
             logger.warn("Skip caching population because of: {}", e.getMessage());
@@ -94,6 +97,13 @@ public class DiskCachingFhirQueryService implements CachingService, FhirQuerySer
 
     private static byte[] serializeQuery(Query query) {
         return query.toString().getBytes(UTF_8);
+    }
+
+    private static ByteBuffer serializeQueryBuffer(Query query) {
+        byte[] bytes = serializeQuery(query);
+        ByteBuffer buffer = ByteBuffer.allocateDirect(bytes.length);
+        buffer.put(bytes);
+        return buffer.flip();
     }
 
     @PreDestroy

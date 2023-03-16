@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.testcontainers.shaded.com.google.common.hash.Hashing;
 
 import java.nio.file.Files;
 import java.time.Duration;
@@ -18,6 +19,7 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -25,7 +27,7 @@ import static org.mockito.Mockito.when;
 class DiskCachingFhirQueryServiceTest {
 
     static final Query QUERY = Query.ofType("foo");
-    public static final String PATIENT_ID = "patient-id-113617";
+    static final String PATIENT_ID = "patient-id-113617";
 
     @Mock
     private FhirQueryService queryService;
@@ -104,10 +106,13 @@ class DiskCachingFhirQueryServiceTest {
     private void ensureCacheContains(Query query, Population population) throws InterruptedException {
         when(queryService.execute(query, false)).thenReturn(CompletableFuture.completedFuture(population));
         service.execute(query);
-        Thread.sleep(100);
+        Thread.sleep(1000);
     }
 
     private static Population populationOfSize(int n) {
-        return Population.copyOf(IntStream.range(0, n).mapToObj("patient-id-%d"::formatted).collect(Collectors.toSet()));
+        return Population.copyOf(IntStream.range(0, n)
+                .mapToObj("patient-id-%d"::formatted)
+                .map(s -> Hashing.sha256().newHasher().putString(s, UTF_8).hash().toString())
+                .collect(Collectors.toSet()));
     }
 }
