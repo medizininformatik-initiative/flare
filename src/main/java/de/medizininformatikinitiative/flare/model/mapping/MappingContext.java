@@ -42,6 +42,18 @@ public class MappingContext {
     }
 
     /**
+     * Returns a mapping context.
+     *
+     * @param mappings    the mappings keyed by their term code
+     * @param conceptTree a tree of concepts to expand (can be null)
+     * @param clock       a clock that is used for time-related calculations
+     * @return the mapping context
+     */
+    public static MappingContext of(Map<TermCode, Mapping> mappings, TermCodeNode conceptTree, Clock clock) {
+        return new MappingContext(mappings, conceptTree, clock);
+    }
+
+    /**
      * Tries to find the {@link Mapping} with the given {@code key}.
      *
      * @param key the TermCode of the mapping

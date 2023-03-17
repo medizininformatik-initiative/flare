@@ -41,16 +41,16 @@ public class AgeUtils {
         if (comparator.equals(Comparator.EQUAL)) {
             return equalCaseLowerDate(today, age, unit)
                     .flatMap(lowerBound -> equalCaseUpperDate(today, age, unit)
-                            .map(upperBound -> List.of(new ExpandedDateRangeFilter("birthDate", lowerBound, upperBound))));
+                            .map(upperBound -> List.of(new ExpandedDateRangeFilter("birthdate", lowerBound, upperBound))));
         } else {
             return birthDate(today, age, unit).map(birthDate ->
-                    List.of(new ExpandedDateComparatorFilter("birthDate", comparator.reverse(), birthDate)));
+                    List.of(new ExpandedDateComparatorFilter("birthdate", comparator.reverse(), birthDate)));
         }
     }
 
     public static Mono<List<ExpandedFilter>> expandedAgeFilterFromRange(LocalDate today, BigDecimal ageLowerBound,
                                                                         BigDecimal ageUpperBound, TermCode unit) {
         return birthDate(today, ageLowerBound, unit).flatMap(upperBoundDate -> birthDate(today, ageUpperBound, unit)
-                .map(lowerBoundDate -> List.of(new ExpandedDateRangeFilter("birthDate", lowerBoundDate, upperBoundDate))));
+                .map(lowerBoundDate -> List.of(new ExpandedDateRangeFilter("birthdate", lowerBoundDate, upperBoundDate))));
     }
 }

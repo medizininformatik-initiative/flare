@@ -1,0 +1,27 @@
+{
+    "inclusionCriteria": [
+        [
+            {
+                "attributeFilters": [],
+                "termCodes": [
+                    {
+                        "code": "263495000",
+                        "display": "Geschlecht",
+                        "system": "http://snomed.info/sct"
+                    }
+                ],
+                "valueFilter": {
+                    "selectedConcepts": [
+                        {
+                            "code": "other",
+                            "display": "",
+                            "system": "http://hl7.org/fhir/administrative-gender"
+                        }
+                    ],
+                    "type": "concept"
+                }
+            }
+        ]
+    ],
+    "version": ""
+}
