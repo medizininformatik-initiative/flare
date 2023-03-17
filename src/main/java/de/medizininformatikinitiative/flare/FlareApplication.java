@@ -68,21 +68,21 @@ public class FlareApplication {
     @Bean
     public MemCachingFhirQueryService memCachingFhirQueryService(
             @Qualifier("diskCachingFhirQueryService") FhirQueryService fhirQueryService,
-            @Value("${flare.cache.memSizeMB}") int sizeMB,
-            @Value("${flare.cache.memExpiryHours}") int expiryHours,
-            @Value("${flare.cache.memRefreshHours}") int refreshHours) {
+            @Value("${flare.cache.mem.sizeMB}") int sizeMB,
+            @Value("${flare.cache.mem.expire}") Duration expire,
+            @Value("${flare.cache.mem.refresh}") Duration refresh) {
         return new MemCachingFhirQueryService(fhirQueryService, new MemCachingFhirQueryService.Config(
-                ((long) sizeMB) * 1024 * 1024, Duration.ofHours(expiryHours), Duration.ofHours(refreshHours)));
+                ((long) sizeMB) * 1024 * 1024, expire, refresh));
     }
 
     @Bean
     public DiskCachingFhirQueryService diskCachingFhirQueryService(
             @Qualifier("dataStore") FhirQueryService fhirQueryService,
             @Qualifier("systemDefaultZone") Clock clock,
-            @Value("${flare.cache.diskPath}") String path,
-            @Value("${flare.cache.diskExpiryHours}") int ttlHours) {
-        return new DiskCachingFhirQueryService(fhirQueryService, new DiskCachingFhirQueryService.Config(path,
-                Duration.ofHours(ttlHours)), Executors.newFixedThreadPool(4), clock);
+            @Value("${flare.cache.disk.path}") String path,
+            @Value("${flare.cache.disk.expire}") Duration expire) {
+        return new DiskCachingFhirQueryService(fhirQueryService, new DiskCachingFhirQueryService.Config(path, expire),
+                Executors.newFixedThreadPool(4), clock);
     }
 
     @Bean

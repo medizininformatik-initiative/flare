@@ -45,13 +45,14 @@ public class DiskCachingFhirQueryService implements CachingService, FhirQuerySer
 
     @PostConstruct
     public void init() throws RocksDBException {
+        logger.info("Starting DiskCachingFhirQueryService with: {}", config);
         options = new Options();
         options.setCreateIfMissing(true);
         options.setCompressionType(LZ4_COMPRESSION);
         options.setBottommostCompressionType(ZSTD_COMPRESSION);
         options.setWriteBufferSize(256 << 20);
         options.setTableFormatConfig(new BlockBasedTableConfig().setBlockSize(16384));
-        db = TtlDB.open(options, config.path, (int) config.expireDuration.toSeconds(), false);
+        db = TtlDB.open(options, config.path, (int) config.expire.toSeconds(), false);
     }
 
     public CompletableFuture<Population> execute(Query query, boolean ignoreCache) {
@@ -93,7 +94,7 @@ public class DiskCachingFhirQueryService implements CachingService, FhirQuerySer
     }
 
     private boolean isExpired(Population p) {
-        return p.created().plus(config.expireDuration).isBefore(clock.instant());
+        return p.created().plus(config.expire).isBefore(clock.instant());
     }
 
     private void put(Query query, Population population) {
@@ -129,6 +130,6 @@ public class DiskCachingFhirQueryService implements CachingService, FhirQuerySer
         logger.info("Finished shutting down the Disk Cache.");
     }
 
-    public record Config(String path, Duration expireDuration) {
+    public record Config(String path, Duration expire) {
     }
 }

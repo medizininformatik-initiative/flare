@@ -25,6 +25,13 @@
         "code": "72166-2",
         "display": "Tobacco smoking status NHIS"
       }
+    },
+    {
+      "termCode": {
+        "system": "http://loinc.org",
+        "code": "17861-6",
+        "display": "Calcium [Mass/volume] in Serum or Plasma"
+      }
     }
   ]
 }

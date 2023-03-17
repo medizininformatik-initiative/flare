@@ -7,8 +7,7 @@
       "display": "Acute bronchitis (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date",
-    "timeRestrictionPath": "onset"
+    "timeRestrictionParameter": "recorded-date"
   },
   {
     "fhirResourceType": "Condition",
@@ -18,8 +17,7 @@
       "display": "Body mass index 30+ - obesity (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date",
-    "timeRestrictionPath": "onset"
+    "timeRestrictionParameter": "recorded-date"
   },
   {
     "fhirResourceType": "Observation",
@@ -30,7 +28,17 @@
     },
     "termCodeSearchParameter": "code",
     "valueSearchParameter": "value-concept",
-    "timeRestrictionParameter": "recorded-date",
-    "timeRestrictionPath": "onset"
+    "timeRestrictionParameter": "date"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "17861-6",
+      "display": "Calcium [Mass/volume] in Serum or Plasma"
+    },
+    "termCodeSearchParameter": "code",
+    "valueSearchParameter": "value-quantity",
+    "timeRestrictionParameter": "date"
   }
 ]

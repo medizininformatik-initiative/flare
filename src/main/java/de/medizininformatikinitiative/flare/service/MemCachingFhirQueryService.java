@@ -6,6 +6,9 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.Weigher;
 import de.medizininformatikinitiative.flare.model.Population;
 import de.medizininformatikinitiative.flare.model.fhir.Query;
+import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
@@ -15,19 +18,28 @@ import static java.util.Objects.requireNonNull;
 
 public class MemCachingFhirQueryService implements CachingService, FhirQueryService {
 
+    private static final Logger logger = LoggerFactory.getLogger(MemCachingFhirQueryService.class);
+
     private static final Weigher<Query, Population> WEIGHER = (key, value) ->
             key.toString().length() + value.memSize();
 
     private final FhirQueryService fhirQueryService;
-    private final AsyncLoadingCache<Query, Population> cache;
+    private final Config config;
+    private AsyncLoadingCache<Query, Population> cache;
 
     public MemCachingFhirQueryService(FhirQueryService fhirQueryService, Config config) {
         this.fhirQueryService = requireNonNull(fhirQueryService);
+        this.config = requireNonNull(config);
+    }
+
+    @PostConstruct
+    public void init() {
+        logger.info("Starting MemCachingFhirQueryService with: {}", config);
         cache = Caffeine.newBuilder()
                 .weigher(WEIGHER)
                 .maximumWeight(config.sizeInBytes)
-                .expireAfterWrite(config.expireDuration)
-                .refreshAfterWrite(config.refreshDuration)
+                .expireAfterWrite(config.expire)
+                .refreshAfterWrite(config.refresh)
                 .recordStats()
                 .buildAsync(new CacheLoader());
     }
@@ -43,7 +55,7 @@ public class MemCachingFhirQueryService implements CachingService, FhirQueryServ
                 syncCache.stats().missCount());
     }
 
-    public record Config(long sizeInBytes, Duration expireDuration, Duration refreshDuration) {
+    public record Config(long sizeInBytes, Duration expire, Duration refresh) {
     }
 
     private class CacheLoader implements AsyncCacheLoader<Query, Population> {

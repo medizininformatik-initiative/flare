@@ -29,6 +29,7 @@ class MemCachingFhirQueryServiceTest {
     void setUp() {
         service = new MemCachingFhirQueryService(queryService, new MemCachingFhirQueryService.Config(1024,
                 Duration.ofMinutes(1), Duration.ofMinutes(1)));
+        service.init();
     }
 
     @Test
@@ -53,6 +54,7 @@ class MemCachingFhirQueryServiceTest {
     void refresh() throws InterruptedException {
         service = new MemCachingFhirQueryService(queryService, new MemCachingFhirQueryService.Config(1024,
                 Duration.ofMinutes(1), Duration.ofMillis(100)));
+        service.init();
         when(queryService.execute(QUERY)).thenReturn(CompletableFuture.completedFuture(Population.of()));
         service.execute(QUERY);
         when(queryService.execute(QUERY, true)).thenReturn(CompletableFuture.completedFuture(Population.of(PATIENT_ID)));
