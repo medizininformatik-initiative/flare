@@ -12,6 +12,7 @@ flare:
     disk:
       path: 'cache'
       expire: 'P7D'
+      threads: 4
   mapping:
     mappingsFile: 'ontology/codex-term-code-mapping.json'
     conceptTreeFile: 'ontology/codex-code-tree.json'
