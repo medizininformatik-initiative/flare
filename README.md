@@ -41,10 +41,10 @@ docker run -p 8080:8080 ghcr.io/medizininformatik-initiative/flare:main
 | FLARE_FHIR_PASSWORD           |                                       | The password to use for HTTP Basic Authentication.                                               |
 | FLARE_FHIR_PAGE_COUNT         | 1000                                  | The number of resources per page to request from the FHIR server.                                |
 | FLARE_CACHE_MEM_SIZE_MB       | 1024                                  | The size of the in-memory cache in mebibytes.                                                    |
-| FLARE_CACHE_MEM_EXPIRE        | PT48H                                 | The duration after which in-memory cache entries should expire in [ISO_8601 durations][1].       |
-| FLARE_CACHE_MEM_REFRESH       | PT24H                                 | The duration after which in-memory cache entries should be refreshed in [ISO_8601 durations][1]. |
+| FLARE_CACHE_MEM_EXPIRE        | PT48H                                 | The duration after which in-memory cache entries should expire in [ISO 8601 durations][1].       |
+| FLARE_CACHE_MEM_REFRESH       | PT24H                                 | The duration after which in-memory cache entries should be refreshed in [ISO 8601 durations][1]. |
 | FLARE_CACHE_DISK_PATH         | cache                                 | The name of the directory in which the on-disk cache should be written.                          |
-| FLARE_CACHE_DISK_EXPIRE       | P7D                                   | The duration after which on-disk cache entries should expire in [ISO_8601 durations][1].         |
+| FLARE_CACHE_DISK_EXPIRE       | P7D                                   | The duration after which on-disk cache entries should expire in [ISO 8601 durations][1].         |
 | FLARE_MAPPING_MAPPINGSFILE    | ontology/codex-term-code-mapping.json |                                                                                                  |
 | FLARE_MAPPING_CONCEPTTREEFILE | ontology/codex-code-tree.json         |                                                                                                  |
 | SERVER_PORT                   | 8080                                  | The port at which Flare provides its REST API.                                                   |

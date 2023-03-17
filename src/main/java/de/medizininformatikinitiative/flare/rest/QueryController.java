@@ -1,5 +1,6 @@
 package de.medizininformatikinitiative.flare.rest;
 
+import de.medizininformatikinitiative.flare.model.mapping.MappingException;
 import de.medizininformatikinitiative.flare.model.sq.StructuredQuery;
 import de.medizininformatikinitiative.flare.service.StructuredQueryService;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import java.util.Objects;
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
+import static org.springframework.web.reactive.function.server.ServerResponse.badRequest;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
 @Component
@@ -42,13 +44,18 @@ public class QueryController {
         logger.debug("Execute query");
         return request.bodyToMono(StructuredQuery.class)
                 .flatMap(queryService::execute)
-                .flatMap(count -> ok().bodyValue(count));
+                .flatMap(count -> ok().bodyValue(count))
+                .onErrorResume(MappingException.class, e -> badRequest().bodyValue(new Error(e.getMessage())));
     }
 
     public Mono<ServerResponse> translate(ServerRequest request) {
         logger.debug("Translate query");
         return request.bodyToMono(StructuredQuery.class)
                 .flatMap(queryService::translate)
-                .flatMap(queryExpression -> ok().bodyValue(queryExpression));
+                .flatMap(queryExpression -> ok().bodyValue(queryExpression))
+                .onErrorResume(MappingException.class, e -> badRequest().bodyValue(new Error(e.getMessage())));
+    }
+
+    public record Error(String error) {
     }
 }
