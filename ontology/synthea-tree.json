@@ -7,6 +7,48 @@
   "children": [
     {
       "termCode": {
+        "code": "444814009",
+        "system": "http://snomed.info/sct",
+        "display": "Viral sinusitis (disorder)"
+      }
+    },
+    {
+      "termCode": {
+        "code": "840544004",
+        "system": "http://snomed.info/sct",
+        "display": "Suspected COVID-19"
+      }
+    },
+    {
+      "termCode": {
+        "code": "840539006",
+        "system": "http://snomed.info/sct",
+        "display": "COVID-19"
+      }
+    },
+    {
+      "termCode": {
+        "code": "386661006",
+        "system": "http://snomed.info/sct",
+        "display": "Fever (finding)"
+      }
+    },
+    {
+      "termCode": {
+        "code": "195662009",
+        "system": "http://snomed.info/sct",
+        "display": "Acute viral pharyngitis (disorder)"
+      }
+    },
+    {
+      "termCode": {
+        "code": "49727002",
+        "system": "http://snomed.info/sct",
+        "display": "Cough (finding)"
+      }
+    },
+    {
+      "termCode": {
         "code": "10509002",
         "system": "http://snomed.info/sct",
         "display": "Acute bronchitis (disorder)"
@@ -14,9 +56,58 @@
     },
     {
       "termCode": {
+        "code": "36955009",
+        "system": "http://snomed.info/sct",
+        "display": "Loss of taste (finding)"
+      }
+    },
+    {
+      "termCode": {
         "system": "http://snomed.info/sct",
         "code": "162864005",
         "display": "Body mass index 30+ - obesity (finding)"
+      }
+    },
+    {
+      "termCode": {
+        "system": "http://snomed.info/sct",
+        "code": "84229001",
+        "display": "Fatigue (finding)"
+      }
+    },
+    {
+      "termCode": {
+        "system": "http://snomed.info/sct",
+        "code": "248595008",
+        "display": "Sputum finding (finding)"
+      }
+    },
+    {
+      "termCode": {
+        "system": "http://snomed.info/sct",
+        "code": "15777000",
+        "display": "Prediabetes"
+      }
+    },
+    {
+      "termCode": {
+        "system": "http://snomed.info/sct",
+        "code": "271737000",
+        "display": "Anemia (disorder)"
+      }
+    },
+    {
+      "termCode": {
+        "system": "http://snomed.info/sct",
+        "code": "59621000",
+        "display": "Hypertension"
+      }
+    },
+    {
+      "termCode": {
+        "system": "http://snomed.info/sct",
+        "code": "40055000",
+        "display": "Chronic sinusitis (disorder)"
       }
     },
     {
