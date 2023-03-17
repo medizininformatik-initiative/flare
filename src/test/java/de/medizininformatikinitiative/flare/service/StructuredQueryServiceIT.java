@@ -28,6 +28,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Clock;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -79,7 +80,7 @@ class StructuredQueryServiceIT {
 
         @Bean
         public FhirQueryService fhirQueryService(WebClient dataStoreClient) {
-            return new DataStore(dataStoreClient, 1);
+            return new DataStore(dataStoreClient, Clock.systemDefaultZone(), 1);
         }
 
         @Bean

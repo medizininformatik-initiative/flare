@@ -13,6 +13,10 @@ import org.testcontainers.images.PullPolicy;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneOffset;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
@@ -20,6 +24,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 class DataStoreIT {
 
     private static final Logger logger = LoggerFactory.getLogger(DataStoreIT.class);
+
+    static final Instant FIXED_INSTANT = Instant.ofEpochSecond(104152);
 
     @Container
     @SuppressWarnings("resource")
@@ -43,7 +49,7 @@ class DataStoreIT {
                 .defaultHeader("Accept", "application/fhir+json")
                 .defaultHeader("X-Forwarded-Host", host)
                 .build();
-        dataStore = new DataStore(client, 1);
+        dataStore = new DataStore(client, Clock.fixed(FIXED_INSTANT, ZoneOffset.UTC), 1);
     }
 
     @Test
@@ -51,6 +57,7 @@ class DataStoreIT {
         var result = dataStore.execute(Query.ofType("Observation")).join();
 
         assertThat(result).isEmpty();
+        assertThat(result.created()).isEqualTo(FIXED_INSTANT);
     }
 
     @Test
@@ -61,6 +68,7 @@ class DataStoreIT {
         var result = dataStore.execute(Query.ofType("Observation")).join();
 
         assertThat(result).containsExactly("0");
+        assertThat(result.created()).isEqualTo(FIXED_INSTANT);
     }
 
     @Test
@@ -72,6 +80,7 @@ class DataStoreIT {
         var result = dataStore.execute(Query.ofType("Observation")).join();
 
         assertThat(result).containsOnly("0");
+        assertThat(result.created()).isEqualTo(FIXED_INSTANT);
     }
 
     @Test
@@ -84,6 +93,7 @@ class DataStoreIT {
         var result = dataStore.execute(Query.ofType("Observation")).join();
 
         assertThat(result).containsOnly("0", "1");
+        assertThat(result.created()).isEqualTo(FIXED_INSTANT);
     }
 
     private void createPatient(String id) {

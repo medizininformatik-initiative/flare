@@ -18,6 +18,7 @@ import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.File;
+import java.time.Clock;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.concurrent.Executors;
@@ -77,9 +78,15 @@ public class FlareApplication {
     @Bean
     public DiskCachingFhirQueryService diskCachingFhirQueryService(
             @Qualifier("dataStore") FhirQueryService fhirQueryService,
+            @Qualifier("systemDefaultZone") Clock clock,
             @Value("${flare.cache.diskPath}") String path,
             @Value("${flare.cache.diskExpiryHours}") int ttlHours) {
         return new DiskCachingFhirQueryService(fhirQueryService, new DiskCachingFhirQueryService.Config(path,
-                Duration.ofHours(ttlHours)), Executors.newFixedThreadPool(4));
+                Duration.ofHours(ttlHours)), Executors.newFixedThreadPool(4), clock);
+    }
+
+    @Bean
+    public Clock systemDefaultZone() {
+        return Clock.systemDefaultZone();
     }
 }
