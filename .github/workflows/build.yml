@@ -35,6 +35,12 @@ jobs:
       - name: Build
         run: mvn -B verify
 
+      - name: Upload Flare Jar
+        uses: actions/upload-artifact@v3
+        with:
+          name: flare-jar
+          path: target/flare.jar
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -81,3 +87,63 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: trivy-results.sarif
+
+  push-image:
+    needs:
+      - build
+      - image-scan
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+
+      - name: Download Flare Jar
+        uses: actions/download-artifact@v3
+        with:
+          name: flare-jar
+          path: target
+
+      - name: Download Flare Image
+        uses: actions/download-artifact@v3
+        with:
+          name: flare-image
+          path: /tmp
+
+      - name: Load Flare Image
+        run: docker load --input /tmp/flare.tar
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker meta
+        id: docker-meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ghcr.io/medizininformatik-initiative/flare
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.docker-meta.outputs.tags }}
+          labels: ${{ steps.docker-meta.outputs.labels }}
