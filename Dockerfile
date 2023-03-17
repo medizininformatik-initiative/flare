@@ -14,7 +14,5 @@ WORKDIR /app
 USER 1001
 
 ENV FLARE_CACHE_DISK_PATH="/app/cache"
-ENV FLARE_MAPPING_MAPPINGS_FILE="/app/ontology/codex-term-code-mapping.json"
-ENV FLARE_MAPPING_CONCEPT_TREE_FILE="/app/ontology/codex-code-tree.json"
 
 CMD ["java", "-jar", "flare.jar"]
