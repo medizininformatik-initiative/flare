@@ -53,6 +53,16 @@ class PopulationTest {
     }
 
     @Test
+    void union_identical_populations() {
+        var population1 = Population.of(PATIENT_ID_1);
+        var population2 = Population.of(PATIENT_ID_1);
+
+        var result = population1.union(population2);
+
+        assertThat(result).containsOnly(PATIENT_ID_1);
+    }
+
+    @Test
     @DisplayName("the oldest create instant is transferred to the union result")
     void union_created() {
         var population1 = Population.of(PATIENT_ID_1).withCreated(Instant.EPOCH.plusSeconds(2));

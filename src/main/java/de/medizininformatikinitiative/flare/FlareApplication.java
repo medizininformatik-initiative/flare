@@ -22,8 +22,11 @@ import java.time.Clock;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.requireNonNull;
 import static java.util.function.Function.identity;
 
 @SpringBootApplication
@@ -80,13 +83,28 @@ public class FlareApplication {
             @Qualifier("dataStore") FhirQueryService fhirQueryService,
             @Qualifier("systemDefaultZone") Clock clock,
             @Value("${flare.cache.disk.path}") String path,
-            @Value("${flare.cache.disk.expire}") Duration expire) {
+            @Value("${flare.cache.disk.expire}") Duration expire,
+            @Value("${flare.cache.disk.threads}") int numThreads) {
         return new DiskCachingFhirQueryService(fhirQueryService, new DiskCachingFhirQueryService.Config(path, expire),
-                Executors.newFixedThreadPool(4), clock);
+                Executors.newFixedThreadPool(numThreads, new NamedThreadFactory("disk-cache")), clock);
     }
 
     @Bean
     public Clock systemDefaultZone() {
         return Clock.systemDefaultZone();
+    }
+
+    private static class NamedThreadFactory implements ThreadFactory {
+
+        private final String namePrefix;
+        private final AtomicInteger threadNumber = new AtomicInteger(1);
+
+        private NamedThreadFactory(String namePrefix) {
+            this.namePrefix = requireNonNull(namePrefix);
+        }
+
+        public Thread newThread(Runnable runnable) {
+            return new Thread(runnable, namePrefix + "-" + threadNumber.getAndIncrement());
+        }
     }
 }

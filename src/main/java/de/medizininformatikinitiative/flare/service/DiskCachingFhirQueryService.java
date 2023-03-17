@@ -56,12 +56,21 @@ public class DiskCachingFhirQueryService implements CachingService, FhirQuerySer
     }
 
     public CompletableFuture<Population> execute(Query query, boolean ignoreCache) {
-        return (ignoreCache ? Optional.<Population>empty() : internalGet(query)).map(CompletableFuture::completedFuture)
-                .orElseGet(() -> fhirQueryService.execute(query, ignoreCache).whenComplete((population, e) -> {
-                    if (population != null) {
-                        put(query, population);
-                    }
-                }));
+        if (ignoreCache) {
+            return executeQuery(query, true);
+        } else {
+            return internalGet(query).thenCompose(result -> result
+                    .map(CompletableFuture::completedFuture)
+                    .orElseGet(() -> executeQuery(query, false)));
+        }
+    }
+
+    private CompletableFuture<Population> executeQuery(Query query, boolean ignoreCache) {
+        return fhirQueryService.execute(query, ignoreCache).whenComplete((population, e) -> {
+            if (population != null) {
+                put(query, population);
+            }
+        });
     }
 
     @Override
@@ -69,7 +78,12 @@ public class DiskCachingFhirQueryService implements CachingService, FhirQuerySer
         return new CacheStats(0, hitCount.get(), missCount.get());
     }
 
-    private Optional<Population> internalGet(Query query) {
+    private CompletableFuture<Optional<Population>> internalGet(Query query) {
+        return CompletableFuture.supplyAsync(() -> internalBlockingGet(query), executor);
+    }
+
+    private Optional<Population> internalBlockingGet(Query query) {
+        logger.trace("Try loading population for query {} from disk.", query);
         try {
             return Optional.ofNullable(db.get(serializeQuery(query)))
                     .flatMap(this::deserializePopulation)
