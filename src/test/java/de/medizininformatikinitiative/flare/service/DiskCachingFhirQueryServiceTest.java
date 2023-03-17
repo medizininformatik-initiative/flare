@@ -4,6 +4,7 @@ import de.medizininformatikinitiative.flare.model.Population;
 import de.medizininformatikinitiative.flare.model.fhir.Query;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,13 +14,17 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.testcontainers.shaded.com.google.common.hash.Hashing;
 
 import java.nio.file.Files;
+import java.time.Clock;
 import java.time.Duration;
+import java.time.Instant;
+import java.time.ZoneOffset;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.time.temporal.ChronoUnit.MINUTES;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -38,7 +43,7 @@ class DiskCachingFhirQueryServiceTest {
     void setUp() throws Exception {
         var path = Files.createTempDirectory("tmpDirPrefix").toFile().getAbsolutePath();
         service = new DiskCachingFhirQueryService(queryService, new DiskCachingFhirQueryService.Config(path,
-                Duration.ofMinutes(1)), Executors.newFixedThreadPool(1));
+                Duration.ofMinutes(1)), Executors.newFixedThreadPool(1), Clock.fixed(Instant.EPOCH, ZoneOffset.UTC));
         service.init();
     }
 
@@ -91,6 +96,19 @@ class DiskCachingFhirQueryServiceTest {
         assertThat(service.stats()).isEqualTo(new CachingService.CacheStats(0, 0, 2));
     }
 
+    @Test
+    @DisplayName("expired populations will not be returned as hit")
+    void execute_expiredHit() throws Exception {
+        ensureCacheContains(QUERY, Population.of().withCreated(Instant.EPOCH.minus(2, MINUTES)));
+        when(queryService.execute(QUERY, false)).thenReturn(CompletableFuture.completedFuture(Population.of(PATIENT_ID)));
+
+        var result = service.execute(QUERY, false);
+
+        Thread.sleep(100);
+        assertThat(result).isCompletedWithValue(Population.of(PATIENT_ID));
+        assertThat(service.stats()).isEqualTo(new CachingService.CacheStats(0, 0, 2));
+    }
+
     @ParameterizedTest
     @ValueSource(ints = {1_000, 10_000, 100_000, 1_000_000})
     void execute_hit_largePopulation(int n) throws InterruptedException {
@@ -104,10 +122,8 @@ class DiskCachingFhirQueryServiceTest {
         assertThat(service.stats()).isEqualTo(new CachingService.CacheStats(0, 1, 1));
     }
 
-    private void ensureCacheContains(Query query, Population population) throws InterruptedException {
-        when(queryService.execute(query, false)).thenReturn(CompletableFuture.completedFuture(population));
-        service.execute(query);
-        Thread.sleep(1000);
+    private void ensureCacheContains(Query query, Population population) {
+        service.internalPut(query, population);
     }
 
     private static Population populationOfSize(int n) {

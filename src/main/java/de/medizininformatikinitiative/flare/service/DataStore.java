@@ -13,6 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Clock;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -25,11 +26,13 @@ public class DataStore implements FhirQueryService {
     private static final Logger logger = LoggerFactory.getLogger(DataStore.class);
 
     private final WebClient client;
+    private final Clock clock;
     private final int pageCount;
 
     public DataStore(@Qualifier("dataStoreClient") WebClient client,
-                     @Value("${flare.fhir.pageCount}") int pageCount) {
+                     @Qualifier("systemDefaultZone") Clock clock, @Value("${flare.fhir.pageCount}") int pageCount) {
         this.client = Objects.requireNonNull(client);
+        this.clock = clock;
         this.pageCount = pageCount;
     }
 
@@ -46,7 +49,7 @@ public class DataStore implements FhirQueryService {
                         .orElse(Mono.empty()))
                 .flatMap(bundle -> Flux.fromStream(bundle.entry().stream().map(e -> e.resource().patientId())))
                 .collect(Collectors.toSet())
-                .map(Population::copyOf)
+                .map(patientIds -> Population.copyOf(patientIds).withCreated(clock.instant()))
                 .toFuture();
     }
 
