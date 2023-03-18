@@ -6,6 +6,9 @@ import de.medizininformatikinitiative.flare.model.translate.Operator;
 import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.publisher.ParallelFlux;
+import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.List;
 import java.util.function.Function;
@@ -17,6 +20,8 @@ import java.util.function.Function;
  * @param <T>      the type of the criterion that can be either {@link Criterion} itself or an additional layer of groups
  */
 public record CriterionGroup<T>(List<T> criteria) {
+
+    private static final Scheduler SCHEDULER = Schedulers.parallel();
 
     public CriterionGroup {
         criteria = List.copyOf(criteria);
@@ -52,7 +57,7 @@ public record CriterionGroup<T>(List<T> criteria) {
      * {@link Population#intersection(Population) intersection} on the results.
      */
     public Mono<Population> executeAndIntersection(Function<T, Publisher<? extends Population>> executor) {
-        return Flux.fromIterable(criteria).flatMap(executor).reduce(Population::intersection);
+        return parallelCriteriaFlux().flatMap(executor).reduce(Population::intersection);
     }
 
     /**
@@ -60,7 +65,7 @@ public record CriterionGroup<T>(List<T> criteria) {
      * {@link Population#union(Population) union} on the results.
      */
     public Mono<Population> executeAndUnion(Function<T, Publisher<? extends Population>> executor) {
-        return Flux.fromIterable(criteria).flatMap(executor).reduce(Population::union);
+        return parallelCriteriaFlux().flatMap(executor).reduce(Population::union);
     }
 
     /**
@@ -85,5 +90,9 @@ public record CriterionGroup<T>(List<T> criteria) {
      */
     public Mono<Operator> translateAndConcat(Function<T, Mono<Operator>> translator) {
         return Flux.fromIterable(criteria).flatMap(translator).reduce(Operator::concat);
+    }
+
+    private ParallelFlux<T> parallelCriteriaFlux() {
+        return Flux.fromIterable(criteria).parallel().runOn(SCHEDULER);
     }
 }

@@ -7,18 +7,16 @@ import jakarta.annotation.PreDestroy;
 import org.rocksdb.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Scheduler;
 
 import java.nio.ByteBuffer;
 import java.time.Clock;
 import java.time.Duration;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
-import static java.util.function.Predicate.not;
 import static org.rocksdb.CompressionType.LZ4_COMPRESSION;
 import static org.rocksdb.CompressionType.ZSTD_COMPRESSION;
 
@@ -28,18 +26,18 @@ public class DiskCachingFhirQueryService implements CachingService, FhirQuerySer
 
     private final FhirQueryService fhirQueryService;
     private final Config config;
-    private final Executor executor;
+    private final Scheduler scheduler;
     private final Clock clock;
     private Options options;
     private RocksDB db;
     private final AtomicLong hitCount = new AtomicLong();
     private final AtomicLong missCount = new AtomicLong();
 
-    public DiskCachingFhirQueryService(FhirQueryService fhirQueryService, Config config, Executor executor,
+    public DiskCachingFhirQueryService(FhirQueryService fhirQueryService, Config config, Scheduler scheduler,
                                        Clock clock) {
         this.fhirQueryService = requireNonNull(fhirQueryService);
         this.config = requireNonNull(config);
-        this.executor = requireNonNull(executor);
+        this.scheduler = requireNonNull(scheduler);
         this.clock = requireNonNull(clock);
     }
 
@@ -55,55 +53,51 @@ public class DiskCachingFhirQueryService implements CachingService, FhirQuerySer
         db = TtlDB.open(options, config.path, (int) config.expire.toSeconds(), false);
     }
 
-    public CompletableFuture<Population> execute(Query query, boolean ignoreCache) {
+    public Mono<Population> execute(Query query, boolean ignoreCache) {
         if (ignoreCache) {
             return executeQuery(query, true);
         } else {
-            return internalGet(query).thenCompose(result -> result
-                    .map(CompletableFuture::completedFuture)
-                    .orElseGet(() -> executeQuery(query, false)));
+            return internalGet(query).switchIfEmpty(Mono.defer(() -> executeQuery(query, false)));
         }
     }
 
-    private CompletableFuture<Population> executeQuery(Query query, boolean ignoreCache) {
-        return fhirQueryService.execute(query, ignoreCache).whenComplete((population, e) -> {
-            if (population != null) {
-                put(query, population);
-            }
-        });
+    private Mono<Population> executeQuery(Query query, boolean ignoreCache) {
+        return fhirQueryService.execute(query, ignoreCache).doOnNext(population -> put(query, population));
     }
 
-    @Override
-    public CacheStats stats() {
-        return new CacheStats(0, hitCount.get(), missCount.get());
+    private Mono<Population> internalGet(Query query) {
+        return Mono.fromSupplier(() -> internalBlockingGet(query)).publishOn(scheduler);
     }
 
-    private CompletableFuture<Optional<Population>> internalGet(Query query) {
-        return CompletableFuture.supplyAsync(() -> internalBlockingGet(query), executor);
+    private Population internalBlockingGet(Query query) {
+        logger.trace("Try loading population for query `{}` from disk.", query);
+        byte[] value = internalGetValue(serializeQuery(query));
+        if (value == null) {
+            return null;
+        }
+        var population = deserializePopulation(value);
+        if (population == null || isExpired(population)) {
+            return null;
+        }
+        hitCount.incrementAndGet();
+        return population;
     }
 
-    private Optional<Population> internalBlockingGet(Query query) {
-        logger.trace("Try loading population for query {} from disk.", query);
+    private byte[] internalGetValue(byte[] key) {
         try {
-            return Optional.ofNullable(db.get(serializeQuery(query)))
-                    .flatMap(this::deserializePopulation)
-                    .filter(not(this::isExpired))
-                    .map(p -> {
-                        hitCount.incrementAndGet();
-                        return p;
-                    });
+            return db.get(key);
         } catch (RocksDBException e) {
             logger.warn("Skip loading population because of: {}", e.getMessage());
-            return Optional.empty();
+            return null;
         }
     }
 
-    private Optional<Population> deserializePopulation(byte[] bytes) {
+    private Population deserializePopulation(byte[] bytes) {
         try {
-            return Optional.of(Population.fromByteBuffer(ByteBuffer.wrap(bytes)));
+            return Population.fromByteBuffer(ByteBuffer.wrap(bytes));
         } catch (SerializerException e) {
             logger.warn("Skip loading population because of: {}", e.getMessage());
-            return Optional.empty();
+            return null;
         }
     }
 
@@ -111,8 +105,13 @@ public class DiskCachingFhirQueryService implements CachingService, FhirQuerySer
         return p.created().plus(config.expire).isBefore(clock.instant());
     }
 
+    @Override
+    public CacheStats stats() {
+        return new CacheStats(0, hitCount.get(), missCount.get());
+    }
+
     private void put(Query query, Population population) {
-        executor.execute(() -> internalPut(query, population));
+        scheduler.schedule(() -> internalPut(query, population));
     }
 
     void internalPut(Query query, Population population) {

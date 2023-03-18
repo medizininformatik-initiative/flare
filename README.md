@@ -39,6 +39,7 @@ docker run -p 8080:8080 ghcr.io/medizininformatik-initiative/flare:main
 | FLARE_FHIR_SERVER             | http://localhost:8082/fhir            | The base URL of the FHIR server to use.                                                          |
 | FLARE_FHIR_USER               |                                       | The username to use for HTTP Basic Authentication.                                               |
 | FLARE_FHIR_PASSWORD           |                                       | The password to use for HTTP Basic Authentication.                                               |
+| FLARE_FHIR_MAXCONNECTIONS     | 32                                    | The maximum number of connections Flare opens towards the FHIR server.                           |
 | FLARE_FHIR_PAGE_COUNT         | 1000                                  | The number of resources per page to request from the FHIR server.                                |
 | FLARE_CACHE_MEM_SIZE_MB       | 1024                                  | The size of the in-memory cache in mebibytes.                                                    |
 | FLARE_CACHE_MEM_EXPIRE        | PT48H                                 | The duration after which in-memory cache entries should expire in [ISO 8601 durations][1].       |

@@ -7,30 +7,34 @@ import de.medizininformatikinitiative.flare.model.mapping.TermCodeNode;
 import de.medizininformatikinitiative.flare.service.DiskCachingFhirQueryService;
 import de.medizininformatikinitiative.flare.service.FhirQueryService;
 import de.medizininformatikinitiative.flare.service.MemCachingFhirQueryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.http.codec.json.Jackson2JsonEncoder;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.scheduler.Schedulers;
+import reactor.netty.http.client.HttpClient;
+import reactor.netty.resources.ConnectionProvider;
 
 import java.io.File;
 import java.time.Clock;
 import java.time.Duration;
 import java.util.Arrays;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import static java.util.Objects.requireNonNull;
 import static java.util.function.Function.identity;
 
 @SpringBootApplication
 public class FlareApplication {
+
+    private static final Logger logger = LoggerFactory.getLogger(FlareApplication.class);
 
     private static final int TWO_MEGA_BYTE = 2 * 1024 * 1024;
 
@@ -41,9 +45,18 @@ public class FlareApplication {
     @Bean
     public WebClient dataStoreClient(@Value("${flare.fhir.server}") String baseUrl,
                                      @Value("${flare.fhir.user}") String user,
-                                     @Value("${flare.fhir.password}") String password, ObjectMapper mapper) {
+                                     @Value("${flare.fhir.password}") String password,
+                                     @Value("${flare.fhir.maxConnections}") int maxConnections,
+                                     ObjectMapper mapper) {
+        logger.info("Create a HTTP connection pool to {} with a maximum of {} connections.", baseUrl, maxConnections);
+        ConnectionProvider provider = ConnectionProvider.builder("data-store")
+                .maxConnections(maxConnections)
+                .pendingAcquireMaxCount(500)
+                .build();
+        HttpClient httpClient = HttpClient.create(provider);
         WebClient.Builder builder = WebClient.builder()
                 .baseUrl(baseUrl)
+                .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .defaultHeader("Accept", "application/fhir+json");
         if (!user.isEmpty() && !password.isEmpty()) {
             builder = builder.filter(ExchangeFilterFunctions.basicAuthentication(user, password));
@@ -86,25 +99,11 @@ public class FlareApplication {
             @Value("${flare.cache.disk.expire}") Duration expire,
             @Value("${flare.cache.disk.threads}") int numThreads) {
         return new DiskCachingFhirQueryService(fhirQueryService, new DiskCachingFhirQueryService.Config(path, expire),
-                Executors.newFixedThreadPool(numThreads, new NamedThreadFactory("disk-cache")), clock);
+                Schedulers.newParallel("disk-cache", numThreads), clock);
     }
 
     @Bean
     public Clock systemDefaultZone() {
         return Clock.systemDefaultZone();
-    }
-
-    private static class NamedThreadFactory implements ThreadFactory {
-
-        private final String namePrefix;
-        private final AtomicInteger threadNumber = new AtomicInteger(1);
-
-        private NamedThreadFactory(String namePrefix) {
-            this.namePrefix = requireNonNull(namePrefix);
-        }
-
-        public Thread newThread(Runnable runnable) {
-            return new Thread(runnable, namePrefix + "-" + threadNumber.getAndIncrement());
-        }
     }
 }

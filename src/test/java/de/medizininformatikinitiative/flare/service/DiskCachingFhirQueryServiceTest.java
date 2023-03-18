@@ -12,16 +12,16 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.testcontainers.shaded.com.google.common.hash.Hashing;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
+import reactor.test.StepVerifier;
 
 import java.nio.file.Files;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneOffset;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -35,12 +35,14 @@ class DiskCachingFhirQueryServiceTest {
 
     static final Query QUERY = Query.ofType("foo");
     static final String PATIENT_ID = "patient-id-113617";
-    public static final Duration READ_TIMEOUT = Duration.ofSeconds(1);
+    static final String PATIENT_ID_1 = "patient-id-1-103010";
+    static final String PATIENT_ID_2 = "patient-id-2-103014";
+    static final String ERROR_MSG = "error-msg-102646";
 
     @Mock
     private FhirQueryService queryService;
 
-    private final ExecutorService executor = Executors.newFixedThreadPool(2);
+    private final Scheduler scheduler = Schedulers.newParallel("foo", 2);
 
     private DiskCachingFhirQueryService service;
 
@@ -48,7 +50,7 @@ class DiskCachingFhirQueryServiceTest {
     void setUp() throws Exception {
         var path = Files.createTempDirectory("tmpDirPrefix").toFile().getAbsolutePath();
         service = new DiskCachingFhirQueryService(queryService, new DiskCachingFhirQueryService.Config(path,
-                Duration.ofMinutes(1)), executor, Clock.fixed(Instant.EPOCH, ZoneOffset.UTC));
+                Duration.ofMinutes(1)), scheduler, Clock.fixed(Instant.EPOCH, ZoneOffset.UTC));
         service.init();
     }
 
@@ -58,72 +60,72 @@ class DiskCachingFhirQueryServiceTest {
     }
 
     @Test
-    void execute_error() throws InterruptedException {
-        when(queryService.execute(QUERY, false)).thenReturn(CompletableFuture.failedFuture(new Exception()));
+    void execute_error() {
+        when(queryService.execute(QUERY, false)).thenReturn(Mono.error(new Exception(ERROR_MSG)));
 
         var result = service.execute(QUERY);
 
-        assertThat(result).failsWithin(READ_TIMEOUT);
+        StepVerifier.create(result).verifyErrorMessage(ERROR_MSG);
         waitForTasksToFinish();
         assertThat(service.stats()).isEqualTo(new CachingService.CacheStats(0, 0, 0));
     }
 
     @Test
-    void execute_miss() throws InterruptedException {
-        when(queryService.execute(QUERY, false)).thenReturn(CompletableFuture.completedFuture(Population.of()));
+    void execute_miss() {
+        when(queryService.execute(QUERY, false)).thenReturn(Mono.just(Population.of(PATIENT_ID)));
 
         var result = service.execute(QUERY);
 
-        assertThat(result).succeedsWithin(READ_TIMEOUT).isEqualTo(Population.of());
+        StepVerifier.create(result).expectNext(Population.of(PATIENT_ID)).verifyComplete();
         waitForTasksToFinish();
         assertThat(service.stats()).isEqualTo(new CachingService.CacheStats(0, 0, 1));
     }
 
     @Test
-    void execute_hit() throws InterruptedException {
-        ensureCacheContains(QUERY, Population.of());
+    void execute_hit() {
+        ensureCacheContains(QUERY, Population.of(PATIENT_ID));
 
         var result = service.execute(QUERY);
 
-        assertThat(result).succeedsWithin(READ_TIMEOUT).isEqualTo(Population.of());
+        StepVerifier.create(result).expectNext(Population.of(PATIENT_ID)).verifyComplete();
         waitForTasksToFinish();
         assertThat(service.stats()).isEqualTo(new CachingService.CacheStats(0, 1, 1));
     }
 
     @Test
-    void execute_ignoringCache() throws InterruptedException {
-        ensureCacheContains(QUERY, Population.of());
-        when(queryService.execute(QUERY, true)).thenReturn(CompletableFuture.completedFuture(Population.of(PATIENT_ID)));
+    void execute_ignoringCache() {
+        ensureCacheContains(QUERY, Population.of(PATIENT_ID_1));
+        when(queryService.execute(QUERY, true)).thenReturn(Mono.just(Population.of(PATIENT_ID_2)));
 
         var result = service.execute(QUERY, true);
 
-        assertThat(result).succeedsWithin(READ_TIMEOUT).isEqualTo(Population.of(PATIENT_ID));
+        StepVerifier.create(result).expectNext(Population.of(PATIENT_ID_2)).verifyComplete();
         waitForTasksToFinish();
         assertThat(service.stats()).isEqualTo(new CachingService.CacheStats(0, 0, 2));
     }
 
     @Test
     @DisplayName("expired populations will not be returned as hit")
-    void execute_expiredHit() throws InterruptedException {
-        ensureCacheContains(QUERY, Population.of().withCreated(Instant.EPOCH.minus(2, MINUTES)));
-        when(queryService.execute(QUERY, false)).thenReturn(CompletableFuture.completedFuture(Population.of(PATIENT_ID)));
+    void execute_expiredHit() {
+        ensureCacheContains(QUERY, Population.of(PATIENT_ID_1).withCreated(Instant.EPOCH.minus(2, MINUTES)));
+        when(queryService.execute(QUERY, false)).thenReturn(Mono.just(Population.of(PATIENT_ID_2)));
 
         var result = service.execute(QUERY, false);
 
-        assertThat(result).succeedsWithin(READ_TIMEOUT).isEqualTo(Population.of(PATIENT_ID));
+        StepVerifier.create(result).expectNext(Population.of(PATIENT_ID_2)).verifyComplete();
         waitForTasksToFinish();
         assertThat(service.stats()).isEqualTo(new CachingService.CacheStats(0, 0, 2));
     }
 
     @ParameterizedTest
     @ValueSource(ints = {1_000, 10_000, 100_000, 1_000_000})
-    void execute_hit_largePopulation(int n) throws InterruptedException {
+    void execute_hit_largePopulation(int n) {
         var population = populationOfSize(n);
         ensureCacheContains(QUERY, population);
 
         var result = service.execute(QUERY);
 
-        assertThat(result).succeedsWithin(READ_TIMEOUT).isEqualTo(population);
+        StepVerifier.create(result).expectNext(population).verifyComplete();
         waitForTasksToFinish();
         assertThat(service.stats()).isEqualTo(new CachingService.CacheStats(0, 1, 1));
     }
@@ -139,8 +141,7 @@ class DiskCachingFhirQueryServiceTest {
                 .collect(Collectors.toSet()));
     }
 
-    private void waitForTasksToFinish() throws InterruptedException {
-        executor.shutdown();
-        executor.awaitTermination(1, TimeUnit.SECONDS);
+    private void waitForTasksToFinish() {
+        StepVerifier.create(scheduler.disposeGracefully()).verifyComplete();
     }
 }

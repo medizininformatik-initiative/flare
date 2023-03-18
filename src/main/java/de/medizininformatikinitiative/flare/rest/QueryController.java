@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClientRequestException;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -18,8 +19,7 @@ import java.util.Objects;
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
-import static org.springframework.web.reactive.function.server.ServerResponse.badRequest;
-import static org.springframework.web.reactive.function.server.ServerResponse.ok;
+import static org.springframework.web.reactive.function.server.ServerResponse.*;
 
 @Component
 public class QueryController {
@@ -45,7 +45,14 @@ public class QueryController {
         return request.bodyToMono(StructuredQuery.class)
                 .flatMap(queryService::execute)
                 .flatMap(count -> ok().bodyValue(count))
-                .onErrorResume(MappingException.class, e -> badRequest().bodyValue(new Error(e.getMessage())));
+                .onErrorResume(MappingException.class, e -> {
+                    logger.warn("Mapping error: {}", e.getMessage());
+                    return badRequest().bodyValue(new Error(e.getMessage()));
+                })
+                .onErrorResume(WebClientRequestException.class, e -> {
+                    logger.error("Service not available because of downstream web client errors: {}", e.getMessage());
+                    return status(503).bodyValue(new Error(e.getMessage()));
+                });
     }
 
     public Mono<ServerResponse> translate(ServerRequest request) {

@@ -3,6 +3,7 @@ flare:
     server: 'http://localhost:8082/fhir'
     user: ''
     password: ''
+    maxConnections: 32
     pageCount: 1000
   cache:
     mem:
@@ -19,3 +20,10 @@ flare:
 
 server:
   port: 8080
+
+logging:
+  level:
+    com:
+      github:
+        benmanes:
+          caffeine: 'error'
