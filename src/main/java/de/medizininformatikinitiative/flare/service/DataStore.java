@@ -47,7 +47,7 @@ public class DataStore implements FhirQueryService {
                         .map(link -> fetchPage(link.url()))
                         .orElse(Mono.empty()))
                 .flatMap(bundle -> Flux.fromStream(bundle.entry().stream().map(e -> e.resource().patientId())))
-                .collect(Collectors.toSet())
+                .collectList()
                 .map(patientIds -> Population.copyOf(patientIds).withCreated(clock.instant()));
     }
 

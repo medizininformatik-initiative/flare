@@ -8,11 +8,13 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PopulationTest {
@@ -20,6 +22,48 @@ class PopulationTest {
     static final String PATIENT_ID = "patient-id-211701";
     static final String PATIENT_ID_1 = "patient-id-1-131300";
     static final String PATIENT_ID_2 = "patient-id-2-131309";
+
+    @Test
+    void of_onePatientId() {
+        var population = Population.of(PATIENT_ID);
+
+        assertThat(population).containsOnly(PATIENT_ID);
+    }
+
+    @Test
+    void of_twoDifferentPatientIds() {
+        var population = Population.of(PATIENT_ID_1, PATIENT_ID_2);
+
+        assertThat(population).containsOnly(PATIENT_ID_1, PATIENT_ID_2);
+    }
+
+    @Test
+    void of_twoSamePatientIds() {
+        assertThatThrownBy(() -> Population.of(PATIENT_ID, PATIENT_ID))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("duplicate element: " + PATIENT_ID);
+    }
+
+    @Test
+    void copyOf_onePatientId() {
+        var population = Population.copyOf(List.of(PATIENT_ID));
+
+        assertThat(population).containsOnly(PATIENT_ID);
+    }
+
+    @Test
+    void copyOf_twoDifferentPatientIds() {
+        var population = Population.copyOf(List.of(PATIENT_ID_1, PATIENT_ID_2));
+
+        assertThat(population).containsOnly(PATIENT_ID_1, PATIENT_ID_2);
+    }
+
+    @Test
+    void copyOf_twoSamePatientIds() {
+        var population = Population.copyOf(List.of(PATIENT_ID, PATIENT_ID));
+
+        assertThat(population).containsOnly(PATIENT_ID);
+    }
 
     @Test
     void intersection() {

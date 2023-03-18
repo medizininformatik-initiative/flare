@@ -13,19 +13,17 @@ import static java.util.Objects.requireNonNull;
  * A Population is an immutable set of patient ids.
  * <p>
  * Patient ids can have a maximum length of 64 chars.
- * <p>
- * This implementation uses a list as storage to safe some memory.
  */
 public final class Population extends AbstractSet<String> {
 
-    private static final Population EMPTY = new Population(Set.of(), Instant.EPOCH);
+    private static final Population EMPTY = new Population(new HashSet<>(0), Instant.EPOCH);
 
     private final Set<String> patientIds;
     private final Instant created;
 
     private Population(Set<String> patientIds, Instant created) {
-        this.patientIds = Set.copyOf(patientIds);
-        this.created = requireNonNull(created);
+        this.patientIds = patientIds;
+        this.created = created;
     }
 
     public static Population of() {
@@ -34,20 +32,20 @@ public final class Population extends AbstractSet<String> {
 
     public static Population of(String patientId1) {
         checkPatientId(patientId1);
-        return new Population(Set.of(patientId1), Instant.EPOCH);
+        return new Population(Set.of(patientId1.intern()), Instant.EPOCH);
     }
 
     public static Population of(String patientId1, String patientId2) {
         checkPatientId(patientId1);
         checkPatientId(patientId2);
-        return new Population(Set.of(patientId1, patientId2), Instant.EPOCH);
+        return new Population(Set.of(patientId1.intern(), patientId2.intern()), Instant.EPOCH);
     }
 
-    public static Population copyOf(Set<String> patientIds) {
+    public static Population copyOf(Collection<String> patientIds) {
         for (String id : patientIds) {
             checkPatientId(id);
         }
-        return new Population(patientIds, Instant.EPOCH);
+        return new Population(Set.copyOf(patientIds.stream().map(String::intern).toList()), Instant.EPOCH);
     }
 
     /**
@@ -68,7 +66,7 @@ public final class Population extends AbstractSet<String> {
      * @return a new population with {@code created} set to the given value
      */
     public Population withCreated(Instant created) {
-        return new Population(patientIds, created);
+        return new Population(patientIds, requireNonNull(created));
     }
 
     public boolean isEmpty() {
@@ -85,8 +83,21 @@ public final class Population extends AbstractSet<String> {
         return patientIds.size();
     }
 
+    /**
+     * Returns the size of this population in memory.
+     * <p>
+     * The calculation assumes that an {@link Set#of immutable set} is used to tore the patient ids internally. In
+     * addition it assumes that alle patient ids are {@link String#intern() interned}. Such sets use an array of double
+     * the size of the set to store entries. Each entry is a reference to a string. References have a size of 4 bytes.
+     * <p>
+     * So the memory size is 24 bytes for the population class, 24 bytes for the instant, 24 bytes for the immutable set
+     * and 8 times the size of the immutable set for the object array holding the string references. The strings itself
+     * do not count, because they are interned.
+     *
+     * @return the size of this population in memory
+     */
     public int memSize() {
-        return patientIds.stream().mapToInt(s -> 40 + s.length()).sum();
+        return 72 + patientIds.size() * 8;
     }
 
     public Population intersection(Population other) {
@@ -103,7 +114,7 @@ public final class Population extends AbstractSet<String> {
 
     public Population difference(Population other) {
         var ret = new HashSet<>(patientIds);
-        other.patientIds.forEach(ret::remove);
+        ret.removeAll(other.patientIds);
         return new Population(ret, created.isBefore(other.created) ? created : other.created);
     }
 
@@ -159,13 +170,13 @@ public final class Population extends AbstractSet<String> {
 
         var created = Instant.ofEpochSecond(byteBuffer.getLong());
 
-        Set<String> patientIds = new HashSet<>();
+        var patientIds = new ArrayList<String>();
         while (byteBuffer.remaining() > 0) {
             byte[] idBytes = new byte[byteBuffer.get()];
             byteBuffer.get(idBytes);
-            patientIds.add(new String(idBytes, US_ASCII));
+            patientIds.add(new String(idBytes, US_ASCII).intern());
         }
-        return new Population(patientIds, created);
+        return new Population(Set.copyOf(patientIds), created);
     }
 
     private static void checkPatientId(String patientId1) {
