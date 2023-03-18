@@ -9,6 +9,7 @@ import de.medizininformatikinitiative.flare.model.fhir.Query;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
@@ -44,8 +45,9 @@ public class MemCachingFhirQueryService implements CachingService, FhirQueryServ
                 .buildAsync(new CacheLoader());
     }
 
-    public CompletableFuture<Population> execute(Query query, boolean ignoreCache) {
-        return cache.get(query);
+    public Mono<Population> execute(Query query, boolean ignoreCache) {
+        logger.trace("Try loading population for query `{}` from memory.", query);
+        return Mono.fromFuture(cache.get(query));
     }
 
     public CacheStats stats() {
@@ -61,13 +63,13 @@ public class MemCachingFhirQueryService implements CachingService, FhirQueryServ
     private class CacheLoader implements AsyncCacheLoader<Query, Population> {
 
         @Override
-        public CompletableFuture<? extends Population> asyncLoad(Query query, Executor executor) {
-            return fhirQueryService.execute(query);
+        public CompletableFuture<Population> asyncLoad(Query query, Executor executor) {
+            return fhirQueryService.execute(query).toFuture();
         }
 
         @Override
-        public CompletableFuture<? extends Population> asyncReload(Query query, Population oldValue, Executor executor) {
-            return fhirQueryService.execute(query, true);
+        public CompletableFuture<Population> asyncReload(Query query, Population oldValue, Executor executor) {
+            return fhirQueryService.execute(query, true).toFuture();
         }
     }
 }

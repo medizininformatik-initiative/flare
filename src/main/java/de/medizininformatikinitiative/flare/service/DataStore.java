@@ -15,7 +15,6 @@ import reactor.core.publisher.Mono;
 
 import java.time.Clock;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
@@ -36,8 +35,8 @@ public class DataStore implements FhirQueryService {
         this.pageCount = pageCount;
     }
 
-    public CompletableFuture<Population> execute(Query query, boolean ignoreCache) {
-        logger.debug("execute search: {}?{}", query.type(), query.params());
+    public Mono<Population> execute(Query query, boolean ignoreCache) {
+        logger.debug("Execute query: {}", query);
         return client.post()
                 .uri("/{type}/_search", query.type())
                 .contentType(APPLICATION_FORM_URLENCODED)
@@ -49,8 +48,7 @@ public class DataStore implements FhirQueryService {
                         .orElse(Mono.empty()))
                 .flatMap(bundle -> Flux.fromStream(bundle.entry().stream().map(e -> e.resource().patientId())))
                 .collect(Collectors.toSet())
-                .map(patientIds -> Population.copyOf(patientIds).withCreated(clock.instant()))
-                .toFuture();
+                .map(patientIds -> Population.copyOf(patientIds).withCreated(clock.instant()));
     }
 
     private Mono<Bundle> fetchPage(String url) {

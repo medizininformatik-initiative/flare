@@ -59,7 +59,7 @@ public class StructuredQueryService {
         logger.trace("Execute single criterion {}", criterion);
         return translator.toQuery(criterion).flux()
                 .flatMap(Flux::fromIterable)
-                .flatMap(query -> Mono.fromFuture(fhirQueryService.execute(query)));
+                .flatMap(fhirQueryService::execute);
     }
 
     /**
