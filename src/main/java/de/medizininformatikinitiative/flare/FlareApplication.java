@@ -40,6 +40,8 @@ public class FlareApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(FlareApplication.class, args);
+        logger.info("Maximum available memory: {} MiB", Runtime.getRuntime().maxMemory() / 1024 / 1024);
+        logger.info("Number of available processors: {}", Runtime.getRuntime().availableProcessors());
     }
 
     @Bean

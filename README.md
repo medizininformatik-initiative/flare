@@ -50,6 +50,22 @@ docker run -p 8080:8080 ghcr.io/medizininformatik-initiative/flare:main
 | FLARE_MAPPING_MAPPINGSFILE    | ontology/codex-term-code-mapping.json |                                                                                                  |
 | FLARE_MAPPING_CONCEPTTREEFILE | ontology/codex-code-tree.json         |                                                                                                  |
 | SERVER_PORT                   | 8080                                  | The port at which Flare provides its REST API.                                                   |
+| JAVA_TOOL_OPTIONS             | -Xmx4g                                | JVM options \(Docker only\)                                                                      |
+
+## Default Configuration
+
+The default configuration assumes the following:
+
+* there is about 8 GiB od memory available for Flare 
+  * 4 GiB Java heap including 1 GiB in-memory Cache
+  * about 1 GiB Java off-heap memory especially for the disk-based cache
+  * about 3 GiB for page cache and the rest of the operating system
+* there is plenty of disk space
+  * the disk space used by the disk-based cache is not constrained right now
+  * cache entries life for at least 7 days per default
+  * disk space is only reclaimed on a best-effort base
+* the FHIR endpoint is capable of handling 32 requests in parallel
+* the FHIR endpoint is capable of returning pages of size 1000 or constrain the page size itself
 
 ## License
 
