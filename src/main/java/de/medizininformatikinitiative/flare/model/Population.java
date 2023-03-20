@@ -69,6 +69,7 @@ public final class Population extends AbstractSet<String> {
         return new Population(patientIds, requireNonNull(created));
     }
 
+    @Override
     public boolean isEmpty() {
         return patientIds.isEmpty();
     }

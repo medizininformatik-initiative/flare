@@ -53,6 +53,7 @@ public class DiskCachingFhirQueryService implements CachingService, FhirQuerySer
         db = TtlDB.open(options, config.path, (int) config.expire.toSeconds(), false);
     }
 
+    @Override
     public Mono<Population> execute(Query query, boolean ignoreCache) {
         if (ignoreCache) {
             return executeQuery(query, true);
@@ -92,7 +93,7 @@ public class DiskCachingFhirQueryService implements CachingService, FhirQuerySer
         }
     }
 
-    private Population deserializePopulation(byte[] bytes) {
+    private static Population deserializePopulation(byte[] bytes) {
         try {
             return Population.fromByteBuffer(ByteBuffer.wrap(bytes));
         } catch (SerializerException e) {
