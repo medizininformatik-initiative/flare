@@ -15,7 +15,6 @@ import reactor.core.publisher.Mono;
 
 import java.time.Clock;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
 
@@ -35,6 +34,7 @@ public class DataStore implements FhirQueryService {
         this.pageCount = pageCount;
     }
 
+    @Override
     public Mono<Population> execute(Query query, boolean ignoreCache) {
         logger.debug("Execute query: {}", query);
         return client.post()
@@ -67,7 +67,7 @@ public class DataStore implements FhirQueryService {
      * The elements the FHIR server should return in resources. For patients the id is sufficient and
      * for all other resource types, we need the subject reference.
      */
-    private String queryElements(String type) {
+    private static String queryElements(String type) {
         return switch (type) {
             case "Patient" -> "id";
             case "Immunization" -> "patient";

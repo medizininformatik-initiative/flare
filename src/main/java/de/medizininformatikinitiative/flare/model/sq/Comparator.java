@@ -40,6 +40,7 @@ public enum Comparator {
         };
     }
 
+    @Override
     public String toString() {
         return s;
     }

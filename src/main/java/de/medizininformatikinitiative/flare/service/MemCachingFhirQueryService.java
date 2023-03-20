@@ -45,11 +45,13 @@ public class MemCachingFhirQueryService implements CachingService, FhirQueryServ
                 .buildAsync(new CacheLoader());
     }
 
+    @Override
     public Mono<Population> execute(Query query, boolean ignoreCache) {
         logger.trace("Try loading population for query `{}` from memory.", query);
         return Mono.fromFuture(cache.get(query));
     }
 
+    @Override
     public CacheStats stats() {
         var syncCache = cache.synchronous();
         return new CacheStats(syncCache.estimatedSize(),

@@ -39,6 +39,7 @@ public record AttributeFilter(TermCode code, FilterPart filterPart) implements F
         return new AttributeFilter(code, FilterPart.fromJsonNode(node));
     }
 
+    @Override
     public Mono<List<ExpandedFilter>> expand(LocalDate today, Mapping mapping) {
         return mapping.findAttributeMapping(code).flatMap(filterMapping -> filterPart.expand(today, filterMapping));
     }

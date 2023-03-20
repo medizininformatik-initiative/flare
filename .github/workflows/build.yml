@@ -30,10 +30,19 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
-          key: ${{ hashFiles('pom.xml') }}
+          key: maven-${{ hashFiles('pom.xml') }}
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: java
+          queries: security-and-quality
 
       - name: Build
         run: mvn -B verify
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
 
       - name: Upload Flare Jar
         uses: actions/upload-artifact@v3

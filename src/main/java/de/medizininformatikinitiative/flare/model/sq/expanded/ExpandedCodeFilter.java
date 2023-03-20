@@ -10,6 +10,7 @@ import de.medizininformatikinitiative.flare.model.fhir.QueryParams;
  */
 public record ExpandedCodeFilter(String searchParameter, String code) implements ExpandedFilter {
 
+    @Override
     public QueryParams toParams() {
         return QueryParams.of(searchParameter, code);
     }

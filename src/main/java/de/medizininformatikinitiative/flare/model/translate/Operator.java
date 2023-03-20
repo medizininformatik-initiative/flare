@@ -58,6 +58,7 @@ public record Operator(Name name, List<? extends Expression> operands) implement
      *
      * @return {@code true} iff all {@code operands} are empty or there are no operands at all
      */
+    @Override
     public boolean isEmpty() {
         return operands.stream().allMatch(Expression::isEmpty);
     }
