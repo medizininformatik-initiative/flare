@@ -1,0 +1,114 @@
+{
+  "inclusionCriteria": [
+    [
+      {
+        "termCodes": [
+          {
+            "system": "http://snomed.info/sct",
+            "code": "444814009",
+            "display": "Viral sinusitis (disorder)"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "termCodes": [
+          {
+            "system": "http://snomed.info/sct",
+            "code": "840544004",
+            "display": "Suspected COVID-19"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "termCodes": [
+          {
+            "system": "http://snomed.info/sct",
+            "code": "840539006",
+            "display": "COVID-19"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "termCodes": [
+          {
+            "system": "http://snomed.info/sct",
+            "code": "386661006",
+            "display": "Fever (finding)"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "termCodes": [
+          {
+            "system": "http://snomed.info/sct",
+            "code": "195662009",
+            "display": "Acute viral pharyngitis (disorder)"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "termCodes": [
+          {
+            "system": "http://snomed.info/sct",
+            "code": "49727002",
+            "display": "Cough (finding)"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "termCodes": [
+          {
+            "system": "http://snomed.info/sct",
+            "code": "10509002",
+            "display": "Acute bronchitis (disorder)"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "termCodes": [
+          {
+            "system": "http://snomed.info/sct",
+            "code": "72892002",
+            "display": "Normal pregnancy"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "termCodes": [
+          {
+            "system": "http://snomed.info/sct",
+            "code": "36955009",
+            "display": "Loss of taste (finding)"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "termCodes": [
+          {
+            "system": "http://snomed.info/sct",
+            "code": "162864005",
+            "display": "Body mass index 30+ - obesity (finding)"
+          }
+        ]
+      }
+    ]
+  ]
+}

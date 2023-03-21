@@ -37,9 +37,13 @@ public class CacheController {
 
     public Mono<ServerResponse> handle(ServerRequest request) {
         logger.debug("Return cache infos");
-        return ok().bodyValue(new CacheStats(memCache.stats(), diskCache.stats()));
+        return ok().bodyValue(new CacheStats(Runtime.getRuntime().maxMemory() >> 20,
+                Runtime.getRuntime().totalMemory() >> 20,
+                Runtime.getRuntime().freeMemory() >> 20,
+                memCache.stats(), diskCache.stats()));
     }
 
-    public record CacheStats(CachingService.CacheStats memory, CachingService.CacheStats disk) {
+    public record CacheStats(long maxMemoryMib, long totalMemoryMib, long freeMemoryMib, CachingService.CacheStats memory,
+                             CachingService.CacheStats disk) {
     }
 }

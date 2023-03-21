@@ -108,7 +108,7 @@ public class DiskCachingFhirQueryService implements CachingService, FhirQuerySer
 
     @Override
     public CacheStats stats() {
-        return new CacheStats(0, hitCount.get(), missCount.get());
+        return new CacheStats(0, 0, 0, hitCount.get(), missCount.get(), 0);
     }
 
     private void put(Query query, Population population) {

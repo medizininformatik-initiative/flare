@@ -38,7 +38,7 @@ public class MemCachingFhirQueryService implements CachingService, FhirQueryServ
         logger.info("Starting MemCachingFhirQueryService with: {}", config);
         cache = Caffeine.newBuilder()
                 .weigher(WEIGHER)
-                .maximumWeight(config.sizeInBytes)
+                .maximumWeight(config.sizeInMebibytes << 20)
                 .expireAfterWrite(config.expire)
                 .refreshAfterWrite(config.refresh)
                 .recordStats()
@@ -55,11 +55,14 @@ public class MemCachingFhirQueryService implements CachingService, FhirQueryServ
     public CacheStats stats() {
         var syncCache = cache.synchronous();
         return new CacheStats(syncCache.estimatedSize(),
+                config.sizeInMebibytes,
+                syncCache.asMap().values().stream().mapToInt(Population::memSize).sum() >> 20,
                 syncCache.stats().hitCount(),
-                syncCache.stats().missCount());
+                syncCache.stats().missCount(),
+                syncCache.stats().evictionCount());
     }
 
-    public record Config(long sizeInBytes, Duration expire, Duration refresh) {
+    public record Config(long sizeInMebibytes, Duration expire, Duration refresh) {
     }
 
     private class CacheLoader implements AsyncCacheLoader<Query, Population> {

@@ -36,11 +36,11 @@ public class FlareApplication {
 
     private static final Logger logger = LoggerFactory.getLogger(FlareApplication.class);
 
-    private static final int TWO_MEGA_BYTE = 2 * 1024 * 1024;
+    private static final int TWO_MEGA_BYTE = 2 << 20;
 
     public static void main(String[] args) {
         SpringApplication.run(FlareApplication.class, args);
-        logger.info("Maximum available memory: {} MiB", Runtime.getRuntime().maxMemory() / 1024 / 1024);
+        logger.info("Maximum available memory: {} MiB", Runtime.getRuntime().maxMemory() >> 20);
         logger.info("Number of available processors: {}", Runtime.getRuntime().availableProcessors());
     }
 
@@ -86,11 +86,11 @@ public class FlareApplication {
     @Bean
     public MemCachingFhirQueryService memCachingFhirQueryService(
             @Qualifier("diskCachingFhirQueryService") FhirQueryService fhirQueryService,
-            @Value("${flare.cache.mem.sizeMB}") int sizeMB,
+            @Value("${flare.cache.mem.sizeMB}") int sizeInMebibytes,
             @Value("${flare.cache.mem.expire}") Duration expire,
             @Value("${flare.cache.mem.refresh}") Duration refresh) {
-        return new MemCachingFhirQueryService(fhirQueryService, new MemCachingFhirQueryService.Config(
-                ((long) sizeMB) * 1024 * 1024, expire, refresh));
+        return new MemCachingFhirQueryService(fhirQueryService, new MemCachingFhirQueryService.Config(sizeInMebibytes,
+                expire, refresh));
     }
 
     @Bean
