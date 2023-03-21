@@ -14,5 +14,6 @@ WORKDIR /app
 USER 1001
 
 ENV FLARE_CACHE_DISK_PATH="/app/cache"
+ENV JAVA_TOOL_OPTIONS="-Xmx4g"
 
 CMD ["java", "-jar", "flare.jar"]
