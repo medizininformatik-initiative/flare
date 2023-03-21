@@ -6,10 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.testcontainers.shaded.com.google.common.hash.Hashing;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -41,7 +42,7 @@ class PopulationTest {
     void of_twoSamePatientIds() {
         assertThatThrownBy(() -> Population.of(PATIENT_ID, PATIENT_ID))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("duplicate element: " + PATIENT_ID);
+                .hasMessage("duplicate patient id: " + PATIENT_ID);
     }
 
     @Test
@@ -62,17 +63,26 @@ class PopulationTest {
     void copyOf_twoSamePatientIds() {
         var population = Population.copyOf(List.of(PATIENT_ID, PATIENT_ID));
 
-        assertThat(population).containsOnly(PATIENT_ID);
+        assertThat(population).containsExactly(PATIENT_ID);
     }
 
-    @Test
-    void intersection() {
-        var population1 = Population.of(PATIENT_ID_1);
-        var population2 = Population.of(PATIENT_ID_2);
+    @ParameterizedTest
+    @MethodSource("patientIdsArgumentProvider")
+    void copyOf_more(List<String> patientIds) {
+        var population = Population.copyOf(patientIds);
+
+        assertThat(population).doesNotHaveDuplicates().hasSameElementsAs(patientIds);
+    }
+
+    @ParameterizedTest
+    @MethodSource("populationArgumentsProvider")
+    void intersection(Population population1, Population population2) {
+        var expected = new HashSet<>(population1);
+        expected.retainAll(population2);
 
         var result = population1.intersection(population2);
 
-        assertThat(result).isEmpty();
+        assertThat(result).doesNotHaveDuplicates().hasSameElementsAs(expected);
     }
 
     @Test
@@ -86,24 +96,18 @@ class PopulationTest {
         assertThat(result.created()).isEqualTo(Instant.EPOCH.plusSeconds(1));
     }
 
-    @Test
-    void union() {
-        var population1 = Population.of(PATIENT_ID_1);
-        var population2 = Population.of(PATIENT_ID_2);
+    @ParameterizedTest
+    @MethodSource("populationArgumentsProvider")
+    void union(Population population1, Population population2) {
+        var expected = new HashSet<>(population1);
+        expected.addAll(population2);
 
         var result = population1.union(population2);
 
-        assertThat(result).containsOnly(PATIENT_ID_1, PATIENT_ID_2);
-    }
-
-    @Test
-    void union_identical_populations() {
-        var population1 = Population.of(PATIENT_ID_1);
-        var population2 = Population.of(PATIENT_ID_1);
-
-        var result = population1.union(population2);
-
-        assertThat(result).containsOnly(PATIENT_ID_1);
+        assertThat(result)
+                .doesNotHaveDuplicates()
+                .hasSameElementsAs(expected)
+                .hasSizeBetween(Math.min(population1.size(), population2.size()), population1.size() + population2.size());
     }
 
     @Test
@@ -117,14 +121,15 @@ class PopulationTest {
         assertThat(result.created()).isEqualTo(Instant.EPOCH.plusSeconds(1));
     }
 
-    @Test
-    void difference() {
-        var population1 = Population.of(PATIENT_ID_1);
-        var population2 = Population.of(PATIENT_ID_2);
+    @ParameterizedTest
+    @MethodSource("populationArgumentsProvider")
+    void difference(Population population1, Population population2) {
+        var expected = new HashSet<>(population1);
+        expected.removeAll(population2);
 
         var result = population1.difference(population2);
 
-        assertThat(result).containsOnly(PATIENT_ID_1);
+        assertThat(result).doesNotHaveDuplicates().hasSameElementsAs(expected);
     }
 
     @Test
@@ -152,10 +157,11 @@ class PopulationTest {
 
         var byteBuffer = population.toByteBuffer();
 
-        assertEquals(9, byteBuffer.capacity());
-        assertEquals(9, byteBuffer.remaining(), "the buffer is ready to be read");
+        assertEquals(13, byteBuffer.capacity());
+        assertEquals(13, byteBuffer.remaining(), "the buffer is ready to be read");
         assertEquals(0, byteBuffer.get(), "version byte");
         assertEquals(0, byteBuffer.getLong(), "created instance");
+        assertEquals(0, byteBuffer.getInt(), "size");
     }
 
     @Test
@@ -164,10 +170,11 @@ class PopulationTest {
 
         var byteBuffer = population.toByteBuffer();
 
-        assertEquals(10 + PATIENT_ID.length(), byteBuffer.capacity());
-        assertEquals(10 + PATIENT_ID.length(), byteBuffer.remaining(), "the buffer is ready to be read");
+        assertEquals(14 + PATIENT_ID.length(), byteBuffer.capacity());
+        assertEquals(14 + PATIENT_ID.length(), byteBuffer.remaining(), "the buffer is ready to be read");
         assertEquals(0, byteBuffer.get(), "version byte");
         assertEquals(0, byteBuffer.getLong(), "created instance");
+        assertEquals(1, byteBuffer.getInt(), "size");
         assertEquals(PATIENT_ID.length(), byteBuffer.get(), "patient id length");
         assertEquals('p', byteBuffer.get(), "first patient id byte");
         assertEquals('a', byteBuffer.get(), "second patient id byte");
@@ -183,14 +190,42 @@ class PopulationTest {
     }
 
     private static Stream<Arguments> provideCacheValues() {
-        return IntStream.range(0, 12)
+        return IntStream.range(0, 11)
                 .map(n -> ((int) Math.pow(4, n)))
                 .mapToObj(PopulationTest::populationOfSize)
                 .map(Arguments::of);
     }
 
     private static Population populationOfSize(int n) {
-        return Population.copyOf(IntStream.range(0, n).mapToObj("patient-id-%d"::formatted).collect(Collectors.toSet()))
+        return Population.copyOf(patientIdsOfSize(n))
                 .withCreated(Instant.ofEpochSecond(n));
+    }
+
+    /**
+     * Returns a list of {@code n} patient ids were every two patient ids are identical.
+     *
+     * @param n the number of patient ids to generate
+     * @return a list of {@code n} patient ids
+     */
+    private static List<String> patientIdsOfSize(int n) {
+        return IntStream.range(0, n).mapToObj(i -> Hashing.sha256().newHasher().putInt(i / 2).hash().toString()).toList();
+    }
+
+    private static Stream<Arguments> populationArgumentsProvider() {
+        Stream.Builder<Arguments> argumentBuilder = Stream.builder();
+        for (Population p1 : populations()) {
+            for (Population p2 : populations()) {
+                argumentBuilder.add(Arguments.of(p1, p2));
+            }
+        }
+        return argumentBuilder.build();
+    }
+
+    private static Stream<List<String>> patientIdsArgumentProvider() {
+        return IntStream.range(0, 100).mapToObj(PopulationTest::patientIdsOfSize);
+    }
+
+    private static List<Population> populations() {
+        return IntStream.range(0, 100).mapToObj(PopulationTest::populationOfSize).toList();
     }
 }
