@@ -4,6 +4,6 @@ public interface CachingService {
 
     CacheStats stats();
 
-    record CacheStats(long estimatedSize, long hitCount, long missCount) {
+    record CacheStats(long estimatedEntryCount, long maxMemoryMiB, long usedMemoryMiB, long hitCount, long missCount, long evictionCount) {
     }
 }

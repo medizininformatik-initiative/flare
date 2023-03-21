@@ -1,0 +1,9 @@
+{
+  "method": "POST",
+  "url": "http://localhost:8080/query/execute",
+  "header": {
+    "Content-Type": [
+      "application/sq+json"
+    ]
+  }
+}

@@ -27,3 +27,6 @@ logging:
       github:
         benmanes:
           caffeine: 'error'
+    de:
+      medizininformatikinitiative:
+        flare: ${LOG_LEVEL:info}
