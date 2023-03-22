@@ -22,6 +22,6 @@ class QueryExpressionTest {
 
         var s = new ObjectMapper().writeValueAsString(expression);
 
-        assertThat(s).isEqualTo("\"Condition\"");
+        assertThat(s).isEqualTo("\"[base]/Condition\"");
     }
 }

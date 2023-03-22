@@ -33,6 +33,6 @@ public record QueryExpression(Query query) implements Expression {
      */
     @JsonValue
     public String toJson() {
-        return query.toString();
+        return "[base]/" + query.toString();
     }
 }
