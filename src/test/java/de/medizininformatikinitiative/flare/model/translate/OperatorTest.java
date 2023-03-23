@@ -44,6 +44,6 @@ class OperatorTest {
         var s = new ObjectMapper().writeValueAsString(operator);
 
         assertThat(s).isEqualTo("""
-                {"name":"union","operands":["Condition"]}""");
+                {"name":"union","operands":["[base]/Condition"]}""");
     }
 }
