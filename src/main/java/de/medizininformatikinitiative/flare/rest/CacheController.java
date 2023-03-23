@@ -1,9 +1,9 @@
 package de.medizininformatikinitiative.flare.rest;
 
-import de.medizininformatikinitiative.flare.service.CachingService;
+import de.medizininformatikinitiative.flare.service.DiskCachingFhirQueryService;
+import de.medizininformatikinitiative.flare.service.MemCachingFhirQueryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -21,11 +21,10 @@ public class CacheController {
 
     private static final Logger logger = LoggerFactory.getLogger(CacheController.class);
 
-    private final CachingService memCache;
-    private final CachingService diskCache;
+    private final MemCachingFhirQueryService memCache;
+    private final DiskCachingFhirQueryService diskCache;
 
-    public CacheController(@Qualifier("memCachingFhirQueryService") CachingService memCache,
-                           @Qualifier("diskCachingFhirQueryService") CachingService diskCache) {
+    public CacheController(MemCachingFhirQueryService memCache, DiskCachingFhirQueryService diskCache) {
         this.memCache = requireNonNull(memCache);
         this.diskCache = requireNonNull(diskCache);
     }
@@ -43,7 +42,8 @@ public class CacheController {
                 memCache.stats(), diskCache.stats()));
     }
 
-    public record CacheStats(long maxMemoryMib, long totalMemoryMib, long freeMemoryMib, CachingService.CacheStats memory,
-                             CachingService.CacheStats disk) {
+    public record CacheStats(long maxMemoryMib, long totalMemoryMib, long freeMemoryMib,
+                             MemCachingFhirQueryService.CacheStats memory,
+                             DiskCachingFhirQueryService.CacheStats disk) {
     }
 }

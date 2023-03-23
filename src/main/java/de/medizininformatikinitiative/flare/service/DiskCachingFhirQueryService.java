@@ -20,7 +20,7 @@ import static java.util.Objects.requireNonNull;
 import static org.rocksdb.CompressionType.LZ4_COMPRESSION;
 import static org.rocksdb.CompressionType.ZSTD_COMPRESSION;
 
-public class DiskCachingFhirQueryService implements CachingService, FhirQueryService {
+public class DiskCachingFhirQueryService implements FhirQueryService {
 
     private static final Logger logger = LoggerFactory.getLogger(DiskCachingFhirQueryService.class);
 
@@ -106,9 +106,8 @@ public class DiskCachingFhirQueryService implements CachingService, FhirQuerySer
         return p.created().plus(config.expire).isBefore(clock.instant());
     }
 
-    @Override
     public CacheStats stats() {
-        return new CacheStats(0, 0, 0, hitCount.get(), missCount.get(), 0);
+        return new CacheStats(hitCount.get(), missCount.get());
     }
 
     private void put(Query query, Population population) {
@@ -145,5 +144,8 @@ public class DiskCachingFhirQueryService implements CachingService, FhirQuerySer
     }
 
     public record Config(String path, Duration expire) {
+    }
+
+    public record CacheStats(long hitCount, long missCount) {
     }
 }
