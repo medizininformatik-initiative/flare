@@ -117,14 +117,14 @@ public final class Population extends AbstractSet<String> {
      * that all patient ids are {@link String#intern() interned}. Each entry is a reference to a string. References
      * have a size of 4 bytes.
      * <p>
-     * So the memory size is 24 bytes for the population class, 24 bytes for the instant, 16 bytes for the array and 4
+     * So the memory size is 24 bytes for the population class, 24 bytes for the instant, 20 bytes for the array and 4
      * times the size of the array for the array holding the string references. The strings itself do not count, because
      * they are interned.
      *
      * @return the size of this population in memory
      */
     public int memSize() {
-        return 64 + patientIds.length * 4;
+        return 68 + patientIds.length * 4;
     }
 
     public Population intersection(Population other) {
