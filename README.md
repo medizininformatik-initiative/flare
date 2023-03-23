@@ -47,8 +47,8 @@ docker run -p 8080:8080 ghcr.io/medizininformatik-initiative/flare:0.1
 | FLARE_CACHE_DISK_PATH         | cache                                 | The name of the directory in which the on-disk cache should be written.                          |
 | FLARE_CACHE_DISK_EXPIRE       | P7D                                   | The duration after which on-disk cache entries should expire in [ISO 8601 durations][1].         |
 | FLARE_CACHE_DISK_THREADS      | 4                                     | The number of threads the disk cache should use for reading and writing entries.                 |
-| FLARE_MAPPING_MAPPINGSFILE    | ontology/codex-term-code-mapping.json |                                                                                                  |
-| FLARE_MAPPING_CONCEPTTREEFILE | ontology/codex-code-tree.json         |                                                                                                  |
+| FLARE_MAPPING_MAPPINGSFILE    | ontology/codex-term-code-mapping.json | The mappings to use.                                                                             |
+| FLARE_MAPPING_CONCEPTTREEFILE | ontology/codex-code-tree.json         | The code tree to use.                                                                            |
 | SERVER_PORT                   | 8080                                  | The port at which Flare provides its REST API.                                                   |
 | JAVA_TOOL_OPTIONS             | -Xmx4g                                | JVM options \(Docker only\)                                                                      |
 | LOG_LEVEL                     | info                                  | one of trace, debug, info, warn or error                                                         |
