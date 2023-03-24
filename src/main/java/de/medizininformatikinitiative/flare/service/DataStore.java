@@ -36,6 +36,7 @@ public class DataStore implements FhirQueryService {
 
     @Override
     public Mono<Population> execute(Query query, boolean ignoreCache) {
+        var startNanoTime = System.nanoTime();
         logger.debug("Execute query: {}", query);
         return client.post()
                 .uri("/{type}/_search", query.type())
@@ -48,7 +49,10 @@ public class DataStore implements FhirQueryService {
                         .orElse(Mono.empty()))
                 .flatMap(bundle -> Flux.fromStream(bundle.entry().stream().map(e -> e.resource().patientId())))
                 .collectList()
-                .map(patientIds -> Population.copyOf(patientIds).withCreated(clock.instant()));
+                .map(patientIds -> Population.copyOf(patientIds).withCreated(clock.instant()))
+                .doOnNext(p -> logger.debug("Finished query `{}` returning {} patients in {} seconds.", query, p.size(),
+                        "%.1f".formatted(durationSecondsSince(startNanoTime))))
+                .doOnError(e -> logger.error("Error while executing query `{}`: {}", query, e.getMessage()));
     }
 
     private Mono<Bundle> fetchPage(String url) {
@@ -74,5 +78,9 @@ public class DataStore implements FhirQueryService {
             case "Consent" -> "patient";
             default -> "subject";
         };
+    }
+
+    private static double durationSecondsSince(long startNanoTime) {
+        return ((double) (System.nanoTime() - startNanoTime)) / 1e9;
     }
 }

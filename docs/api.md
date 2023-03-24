@@ -176,23 +176,22 @@ the result looks something like this:
 ```json
 {
   "maxMemoryMib": 4096,
-  "totalMemoryMib": 1994,
-  "freeMemoryMib": 1135,
+  "totalMemoryMib": 4096,
+  "freeMemoryMib": 1112,
   "memory": {
-    "estimatedEntryCount": 215,
+    "estimatedEntryCount": 3477,
     "maxMemoryMiB": 1024,
-    "usedMemoryMiB": 92,
-    "hitCount": 430,
-    "missCount": 215,
-    "evictionCount": 0
+    "usedMemoryMiB": 177,
+    "hitCount": 198,
+    "missCount": 5000,
+    "evictionCount": 0,
+    "loadSuccessCount": 3477,
+    "loadFailureCount": 0,
+    "totalLoadTimeNanos": 38937322417725
   },
   "disk": {
-    "estimatedEntryCount": 0,
-    "maxMemoryMiB": 0,
-    "usedMemSizeInMiB": 0,
-    "hitCount": 215,
-    "missCount": 0,
-    "evictionCount": 0
+    "hitCount": 3439,
+    "missCount": 633
   }
 }
 ```
@@ -210,9 +209,8 @@ In it the entries have the following meaning:
 | memory / hitCount            | The total count of hits in the in-memory cache since the start of Flare.                                           | 
 | memory / missCount           | The total count of misses in the in-memory cache since the start of Flare.                                         | 
 | memory / evictionCount       | The total count of evictions from the in-memory cache since the start of Flare.                                    | 
-| disk / estimatedEntryCount   | Not available.                                                                                                     | 
-| disk / maxMemoryMiB          | Not available.                                                                                                     | 
-| disk / usedMemoryMiB         | Not available.                                                                                                     | 
+| memory / loadSuccessCount    | The total count of successful loads of entries into the in-memory cache since the start of Flare.                  | 
+| memory / loadFailureCount    | The total count of failed loads of entries into the in-memory cache since the start of Flare.                      | 
+| memory / totalLoadTimeNanos  | The total number of nanoseconds used to load entries into the in-memory cache since the start of Flare.            | 
 | disk / hitCount              | The total count of hits in the disk-based cache since the start of Flare.                                          | 
 | disk / missCount             | The total count of misses in the disk-based cache since the start of Flare.                                        | 
-| disk / evictionCount         | Not available.                                                                                                     |
