@@ -7,7 +7,7 @@ flare:
     pageCount: 1000
   cache:
     mem:
-      sizeMB: 1024
+      sizeMB: ${FLARE_CACHE_MEM_SIZE_MB:1024}
       expire: 'PT48H'
       refresh: 'PT24H'
     disk:
