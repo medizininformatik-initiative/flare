@@ -1,0 +1,29 @@
+services:
+  data-store:
+    image: "samply/blaze:0.20"
+    environment:
+      BASE_URL: "http://data-store:8080"
+      JAVA_TOOL_OPTIONS: "-Xmx1g"
+      LOG_LEVEL: "debug"
+    ports:
+      - "8082:8080"
+    volumes:
+      - "data-store-data:/app/data"
+  flare:
+    image: "flare:latest"
+    environment:
+      JAVA_TOOL_OPTIONS: "-Xmx1g"
+      FLARE_FHIR_SERVER: "http://data-store:8080/fhir"
+      FLARE_MAPPING_MAPPING_FILE: "ontology/synthea-mapping.json"
+      FLARE_MAPPING_CONCEPT_TREE_FILE: "ontology/synthea-tree.json"
+      LOG_LEVEL: "debug"
+    ports:
+      - "8080:8080"
+    volumes:
+      - "flare-cache:/app/cache"
+      - "./../../ontology:/app/ontology"
+    depends_on:
+      - data-store
+volumes:
+  data-store-data:
+  flare-cache:

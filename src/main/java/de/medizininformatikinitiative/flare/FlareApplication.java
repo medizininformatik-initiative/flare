@@ -74,10 +74,10 @@ public class FlareApplication {
     }
 
     @Bean
-    public MappingContext mappingContext(@Value("${flare.mapping.mappingsFile}") String mappingsFile,
+    public MappingContext mappingContext(@Value("${flare.mapping.mappingFile}") String mappingFile,
                                          @Value("${flare.mapping.conceptTreeFile}") String conceptTreeFile) throws Exception {
         var mapper = new ObjectMapper();
-        var mappings = Arrays.stream(mapper.readValue(new File(mappingsFile), Mapping[].class))
+        var mappings = Arrays.stream(mapper.readValue(new File(mappingFile), Mapping[].class))
                 .collect(Collectors.toMap(Mapping::key, identity()));
         var conceptTree = mapper.readValue(new File(conceptTreeFile), TermCodeNode.class);
         return MappingContext.of(mappings, conceptTree);

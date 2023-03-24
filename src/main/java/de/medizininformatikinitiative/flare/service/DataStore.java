@@ -4,6 +4,7 @@ import de.medizininformatikinitiative.flare.model.Population;
 import de.medizininformatikinitiative.flare.model.fhir.Bundle;
 import de.medizininformatikinitiative.flare.model.fhir.Query;
 import de.medizininformatikinitiative.flare.model.fhir.QueryParams;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,11 +28,16 @@ public class DataStore implements FhirQueryService {
     private final Clock clock;
     private final int pageCount;
 
-    public DataStore(@Qualifier("dataStoreClient") WebClient client,
-                     @Qualifier("systemDefaultZone") Clock clock, @Value("${flare.fhir.pageCount}") int pageCount) {
+    public DataStore(@Qualifier("dataStoreClient") WebClient client, @Qualifier("systemDefaultZone") Clock clock,
+                     @Value("${flare.fhir.pageCount}") int pageCount) {
         this.client = Objects.requireNonNull(client);
         this.clock = clock;
         this.pageCount = pageCount;
+    }
+
+    @PostConstruct
+    public void init() {
+        logger.info("Start DataStore with pageCount: {}", pageCount);
     }
 
     @Override
