@@ -4,6 +4,7 @@ import de.medizininformatikinitiative.flare.model.Population;
 import de.medizininformatikinitiative.flare.model.fhir.Bundle;
 import de.medizininformatikinitiative.flare.model.fhir.Query;
 import de.medizininformatikinitiative.flare.model.fhir.QueryParams;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,15 +28,21 @@ public class DataStore implements FhirQueryService {
     private final Clock clock;
     private final int pageCount;
 
-    public DataStore(@Qualifier("dataStoreClient") WebClient client,
-                     @Qualifier("systemDefaultZone") Clock clock, @Value("${flare.fhir.pageCount}") int pageCount) {
+    public DataStore(@Qualifier("dataStoreClient") WebClient client, @Qualifier("systemDefaultZone") Clock clock,
+                     @Value("${flare.fhir.pageCount}") int pageCount) {
         this.client = Objects.requireNonNull(client);
         this.clock = clock;
         this.pageCount = pageCount;
     }
 
+    @PostConstruct
+    public void init() {
+        logger.info("Start DataStore with pageCount: {}", pageCount);
+    }
+
     @Override
     public Mono<Population> execute(Query query, boolean ignoreCache) {
+        var startNanoTime = System.nanoTime();
         logger.debug("Execute query: {}", query);
         return client.post()
                 .uri("/{type}/_search", query.type())
@@ -48,7 +55,10 @@ public class DataStore implements FhirQueryService {
                         .orElse(Mono.empty()))
                 .flatMap(bundle -> Flux.fromStream(bundle.entry().stream().map(e -> e.resource().patientId())))
                 .collectList()
-                .map(patientIds -> Population.copyOf(patientIds).withCreated(clock.instant()));
+                .map(patientIds -> Population.copyOf(patientIds).withCreated(clock.instant()))
+                .doOnNext(p -> logger.debug("Finished query `{}` returning {} patients in {} seconds.", query, p.size(),
+                        "%.1f".formatted(durationSecondsSince(startNanoTime))))
+                .doOnError(e -> logger.error("Error while executing query `{}`: {}", query, e.getMessage()));
     }
 
     private Mono<Bundle> fetchPage(String url) {
@@ -74,5 +84,9 @@ public class DataStore implements FhirQueryService {
             case "Consent" -> "patient";
             default -> "subject";
         };
+    }
+
+    private static double durationSecondsSince(long startNanoTime) {
+        return ((double) (System.nanoTime() - startNanoTime)) / 1e9;
     }
 }

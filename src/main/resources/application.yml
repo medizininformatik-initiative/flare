@@ -3,11 +3,11 @@ flare:
     server: 'http://localhost:8082/fhir'
     user: ''
     password: ''
-    maxConnections: 32
-    pageCount: 1000
+    maxConnections: ${FLARE_FHIR_MAX_CONNECTIONS:32}
+    pageCount: ${FLARE_FHIR_PAGE_COUNT:1000}
   cache:
     mem:
-      sizeMB: 1024
+      sizeMB: ${FLARE_CACHE_MEM_SIZE_MB:1024}
       expire: 'PT48H'
       refresh: 'PT24H'
     disk:
@@ -15,8 +15,8 @@ flare:
       expire: 'P7D'
       threads: 4
   mapping:
-    mappingsFile: 'ontology/codex-term-code-mapping.json'
-    conceptTreeFile: 'ontology/codex-code-tree.json'
+    mappingFile: ${FLARE_MAPPING_MAPPING_FILE:'ontology/codex-term-code-mapping.json'}
+    conceptTreeFile: ${FLARE_MAPPING_CONCEPT_TREE_FILE:'ontology/codex-code-tree.json'}
 
 server:
   port: 8080

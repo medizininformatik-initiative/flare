@@ -67,7 +67,7 @@ class DiskCachingFhirQueryServiceTest {
 
         StepVerifier.create(result).verifyErrorMessage(ERROR_MSG);
         waitForTasksToFinish();
-        assertThat(service.stats()).isEqualTo(new CachingService.CacheStats(0, 0, 0, 0, 0, 0));
+        assertThat(service.stats()).isEqualTo(new DiskCachingFhirQueryService.CacheStats(0, 0));
     }
 
     @Test
@@ -78,7 +78,7 @@ class DiskCachingFhirQueryServiceTest {
 
         StepVerifier.create(result).expectNext(Population.of(PATIENT_ID)).verifyComplete();
         waitForTasksToFinish();
-        assertThat(service.stats()).isEqualTo(new CachingService.CacheStats(0, 0, 0, 0, 1, 0));
+        assertThat(service.stats()).isEqualTo(new DiskCachingFhirQueryService.CacheStats(0, 1));
     }
 
     @Test
@@ -89,7 +89,7 @@ class DiskCachingFhirQueryServiceTest {
 
         StepVerifier.create(result).expectNext(Population.of(PATIENT_ID)).verifyComplete();
         waitForTasksToFinish();
-        assertThat(service.stats()).isEqualTo(new CachingService.CacheStats(0, 0, 0, 1, 1, 0));
+        assertThat(service.stats()).isEqualTo(new DiskCachingFhirQueryService.CacheStats(1, 1));
     }
 
     @Test
@@ -101,7 +101,7 @@ class DiskCachingFhirQueryServiceTest {
 
         StepVerifier.create(result).expectNext(Population.of(PATIENT_ID_2)).verifyComplete();
         waitForTasksToFinish();
-        assertThat(service.stats()).isEqualTo(new CachingService.CacheStats(0, 0, 0, 0, 2, 0));
+        assertThat(service.stats()).isEqualTo(new DiskCachingFhirQueryService.CacheStats(0, 2));
     }
 
     @Test
@@ -114,7 +114,7 @@ class DiskCachingFhirQueryServiceTest {
 
         StepVerifier.create(result).expectNext(Population.of(PATIENT_ID_2)).verifyComplete();
         waitForTasksToFinish();
-        assertThat(service.stats()).isEqualTo(new CachingService.CacheStats(0, 0, 0, 0, 2, 0));
+        assertThat(service.stats()).isEqualTo(new DiskCachingFhirQueryService.CacheStats(0, 2));
     }
 
     @ParameterizedTest
@@ -127,7 +127,7 @@ class DiskCachingFhirQueryServiceTest {
 
         StepVerifier.create(result).expectNext(population).verifyComplete();
         waitForTasksToFinish();
-        assertThat(service.stats()).isEqualTo(new CachingService.CacheStats(0, 0, 0, 1, 1, 0));
+        assertThat(service.stats()).isEqualTo(new DiskCachingFhirQueryService.CacheStats(1, 1));
     }
 
     private void ensureCacheContains(Query query, Population population) {

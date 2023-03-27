@@ -127,7 +127,7 @@ class QueryControllerTest {
                 .expectStatus().isOk()
                 .expectBody()
                 .jsonPath("$.name").isEqualTo("difference")
-                .jsonPath("$.operands[0]").isEqualTo("Condition");
+                .jsonPath("$.operands[0]").isEqualTo("[base]/Condition");
     }
 
     @Test

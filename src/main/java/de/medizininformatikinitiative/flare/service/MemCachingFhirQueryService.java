@@ -17,7 +17,7 @@ import java.util.concurrent.Executor;
 
 import static java.util.Objects.requireNonNull;
 
-public class MemCachingFhirQueryService implements CachingService, FhirQueryService {
+public class MemCachingFhirQueryService implements FhirQueryService {
 
     private static final Logger logger = LoggerFactory.getLogger(MemCachingFhirQueryService.class);
 
@@ -51,7 +51,6 @@ public class MemCachingFhirQueryService implements CachingService, FhirQueryServ
         return Mono.fromFuture(cache.get(query));
     }
 
-    @Override
     public CacheStats stats() {
         var syncCache = cache.synchronous();
         return new CacheStats(syncCache.estimatedSize(),
@@ -59,7 +58,10 @@ public class MemCachingFhirQueryService implements CachingService, FhirQueryServ
                 syncCache.asMap().values().stream().mapToInt(Population::memSize).sum() >> 20,
                 syncCache.stats().hitCount(),
                 syncCache.stats().missCount(),
-                syncCache.stats().evictionCount());
+                syncCache.stats().evictionCount(),
+                syncCache.stats().loadSuccessCount(),
+                syncCache.stats().loadFailureCount(),
+                syncCache.stats().totalLoadTime());
     }
 
     public record Config(long sizeInMebibytes, Duration expire, Duration refresh) {
@@ -76,5 +78,10 @@ public class MemCachingFhirQueryService implements CachingService, FhirQueryServ
         public CompletableFuture<Population> asyncReload(Query query, Population oldValue, Executor executor) {
             return fhirQueryService.execute(query, true).toFuture();
         }
+    }
+
+    public record CacheStats(long estimatedEntryCount, long maxMemoryMiB, long usedMemoryMiB, long hitCount,
+                             long missCount, long evictionCount, long loadSuccessCount, long loadFailureCount,
+                             long totalLoadTimeNanos) {
     }
 }

@@ -36,7 +36,7 @@ public class FlareApplication {
 
     private static final Logger logger = LoggerFactory.getLogger(FlareApplication.class);
 
-    private static final int TWO_MEGA_BYTE = 2 << 20;
+    private static final int EIGHT_MEGA_BYTE = 8 << 20;
 
     public static void main(String[] args) {
         SpringApplication.run(FlareApplication.class, args);
@@ -66,7 +66,7 @@ public class FlareApplication {
         return builder
                 .codecs(configurer -> {
                     var codecs = configurer.defaultCodecs();
-                    codecs.maxInMemorySize(TWO_MEGA_BYTE);
+                    codecs.maxInMemorySize(EIGHT_MEGA_BYTE);
                     codecs.jackson2JsonEncoder(new Jackson2JsonEncoder(mapper));
                     codecs.jackson2JsonDecoder(new Jackson2JsonDecoder(mapper));
                 })
@@ -74,10 +74,10 @@ public class FlareApplication {
     }
 
     @Bean
-    public MappingContext mappingContext(@Value("${flare.mapping.mappingsFile}") String mappingsFile,
+    public MappingContext mappingContext(@Value("${flare.mapping.mappingFile}") String mappingFile,
                                          @Value("${flare.mapping.conceptTreeFile}") String conceptTreeFile) throws Exception {
         var mapper = new ObjectMapper();
-        var mappings = Arrays.stream(mapper.readValue(new File(mappingsFile), Mapping[].class))
+        var mappings = Arrays.stream(mapper.readValue(new File(mappingFile), Mapping[].class))
                 .collect(Collectors.toMap(Mapping::key, identity()));
         var conceptTree = mapper.readValue(new File(conceptTreeFile), TermCodeNode.class);
         return MappingContext.of(mappings, conceptTree);
