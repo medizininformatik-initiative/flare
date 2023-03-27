@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.2.0
+
+### Bugfixes
+
+* Fix Env Var Naming ([#23](https://github.com/medizininformatik-initiative/flare/pull/23))
+
+### Security
+
+* Update Spring Boot to v3.0.5 ([#22](https://github.com/medizininformatik-initiative/flare/pull/22))
+
+The full changelog can be found [here](https://github.com/medizininformatik-initiative/flare/milestone/2?closed=1).
+
 ## v0.1.0
 
 Initial Version

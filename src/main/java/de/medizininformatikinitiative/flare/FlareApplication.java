@@ -36,7 +36,7 @@ public class FlareApplication {
 
     private static final Logger logger = LoggerFactory.getLogger(FlareApplication.class);
 
-    private static final int TWO_MEGA_BYTE = 2 << 20;
+    private static final int EIGHT_MEGA_BYTE = 8 << 20;
 
     public static void main(String[] args) {
         SpringApplication.run(FlareApplication.class, args);
@@ -66,7 +66,7 @@ public class FlareApplication {
         return builder
                 .codecs(configurer -> {
                     var codecs = configurer.defaultCodecs();
-                    codecs.maxInMemorySize(TWO_MEGA_BYTE);
+                    codecs.maxInMemorySize(EIGHT_MEGA_BYTE);
                     codecs.jackson2JsonEncoder(new Jackson2JsonEncoder(mapper));
                     codecs.jackson2JsonDecoder(new Jackson2JsonDecoder(mapper));
                 })
