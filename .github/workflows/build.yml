@@ -97,6 +97,29 @@ jobs:
         with:
           sarif_file: trivy-results.sarif
 
+  integration-test-default-config:
+    needs: build
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+
+      - name: Download Flare Image
+        uses: actions/download-artifact@v3
+        with:
+          name: flare-image
+          path: /tmp
+
+      - name: Load Flare Image
+        run: docker load --input /tmp/flare.tar
+
+      - name: Run Flare
+        run: docker run -p 8080:8080 -d flare:latest
+
+      - name: Wait for Flare
+        run: .github/scripts/wait-for-url.sh  http://localhost:8080/cache/stats
+
   integration-test:
     needs: build
     runs-on: ubuntu-22.04
@@ -117,7 +140,7 @@ jobs:
       - name: Load Flare Image
         run: docker load --input /tmp/flare.tar
 
-      - name: Run Blaze
+      - name: Run Flare and Blaze
         run: docker-compose -f .github/integration-test/docker-compose.yml up -d
 
       - name: Wait for Blaze
@@ -135,6 +158,7 @@ jobs:
   push-image:
     needs:
       - build
+      - integration-test-default-config
       - integration-test
       - image-scan
     runs-on: ubuntu-22.04
