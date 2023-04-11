@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.2.1
+
+### Bugfixes
+
+* Fix Mapping and Tree File Default Values ([#31](https://github.com/medizininformatik-initiative/flare/pull/31))
+
+The full changelog can be found [here](https://github.com/medizininformatik-initiative/flare/milestone/3?closed=1).
+
 ## v0.2.0
 
 ### Bugfixes
