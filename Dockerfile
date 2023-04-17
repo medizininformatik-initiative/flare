@@ -15,7 +15,6 @@ ENV JAVA_TOOL_OPTIONS="-Xmx4g"
 
 ENV CERTIFICATE_PATH=/app/certificates
 ENV TRUSTSTORE_PATH=/app/truststore
-
 ENV TRUSTSTORE_FILE=self-signed-truststore.jks
 
 RUN mkdir -p $CERTIFICATE_PATH $TRUSTSTORE_PATH
