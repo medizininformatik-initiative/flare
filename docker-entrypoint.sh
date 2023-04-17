@@ -1,4 +1,4 @@
-CERT_FILE="/app/certificates/self-signed-cert.crt"
+CERT_FILE=$SELF_SIGNED_CERT_FILE_PATH
 TRUSTSTORE_FILE="/app/truststore/self-signed-truststore.jks"
 
 if [[ -f "$CERT_FILE"  &&  -f "$TRUSTSTORE_FILE" ]]; then
