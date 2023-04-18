@@ -1,5 +1,6 @@
 package de.medizininformatikinitiative.flare.rest;
 
+import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.fhir.Query;
 import de.medizininformatikinitiative.flare.model.mapping.MappingNotFoundException;
 import de.medizininformatikinitiative.flare.model.sq.*;
@@ -101,7 +102,7 @@ class QueryControllerTest {
 
     @Test
     void translate() {
-        when(queryService.translate(STRUCTURED_QUERY)).thenReturn(Mono.just(Operator.difference(QUERY_EXPRESSION)));
+        when(queryService.translate(STRUCTURED_QUERY)).thenReturn(Either.right(Operator.union(QUERY_EXPRESSION)));
 
         client.post()
                 .uri("/query/translate")
@@ -126,13 +127,13 @@ class QueryControllerTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$.name").isEqualTo("difference")
+                .jsonPath("$.name").isEqualTo("union")
                 .jsonPath("$.operands[0]").isEqualTo("[base]/Condition");
     }
 
     @Test
     void translate_error() {
-        when(queryService.translate(STRUCTURED_QUERY)).thenReturn(Mono.error(new MappingNotFoundException(FEVER)));
+        when(queryService.translate(STRUCTURED_QUERY)).thenReturn(Either.left(new MappingNotFoundException(FEVER)));
 
         client.post()
                 .uri("/query/translate")

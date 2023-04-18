@@ -3,8 +3,8 @@ package de.medizininformatikinitiative.flare.model.mapping;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
-import reactor.core.publisher.Mono;
 
 import java.util.*;
 import java.util.function.Function;
@@ -109,9 +109,9 @@ public final class Mapping {
         return fixedCriteria;
     }
 
-    public Mono<AttributeMapping> findAttributeMapping(TermCode code) {
+    public Either<Exception, AttributeMapping> findAttributeMapping(TermCode code) {
         AttributeMapping mapping = attributeMappings.get(code);
-        return mapping == null ? Mono.error(new AttributeMappingNotFoundException(key, code)) : Mono.just(mapping);
+        return mapping == null ? Either.left(new AttributeMappingNotFoundException(key, code)) : Either.right(mapping);
     }
 
     public String timeRestrictionParameter() {

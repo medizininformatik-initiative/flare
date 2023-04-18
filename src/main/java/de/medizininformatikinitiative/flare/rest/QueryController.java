@@ -1,5 +1,6 @@
 package de.medizininformatikinitiative.flare.rest;
 
+import de.medizininformatikinitiative.Monos;
 import de.medizininformatikinitiative.flare.model.mapping.MappingException;
 import de.medizininformatikinitiative.flare.model.sq.StructuredQuery;
 import de.medizininformatikinitiative.flare.service.StructuredQueryService;
@@ -58,7 +59,8 @@ public class QueryController {
     public Mono<ServerResponse> translate(ServerRequest request) {
         logger.debug("Translate query");
         return request.bodyToMono(StructuredQuery.class)
-                .flatMap(queryService::translate)
+                .map(queryService::translate)
+                .flatMap(Monos::ofEither)
                 .flatMap(queryExpression -> ok().bodyValue(queryExpression))
                 .onErrorResume(MappingException.class, e -> badRequest().bodyValue(new Error(e.getMessage())));
     }
