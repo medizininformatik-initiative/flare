@@ -3,9 +3,10 @@ package de.medizininformatikinitiative.flare.model.translate;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
+import java.util.stream.Stream;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Operator expression that consists of a {@code name} and a list of {@code operands}.
@@ -17,66 +18,97 @@ import java.util.function.Function;
  * @param operands the operands which are itself expressions
  */
 @JsonIgnoreProperties({"empty"})
-public record Operator(Name name, List<? extends Expression> operands) implements Expression {
+public record Operator<T extends Expression>(Name name, List<? extends T> operands) implements Expression {
 
     public Operator {
+        requireNonNull(name);
+        if (operands.isEmpty()) {
+            throw new IllegalArgumentException("empty operands");
+        }
         operands = List.copyOf(operands);
     }
 
     /**
      * Creates a new {@code difference} operator.
      *
-     * @param operands the operands
+     * @param o1 the first operand
+     * @param o2 the second operand
      * @return the new difference operator
      */
-    public static Operator difference(Expression... operands) {
-        return new Operator(Name.DIFFERENCE, List.of(operands));
+    public static Operator<Expression> difference(Expression o1, Expression o2) {
+        return new Operator<>(Name.DIFFERENCE, List.of(o1, o2));
     }
 
     /**
      * Creates a new {@code intersection} operator.
      *
-     * @param operands the operands
+     * @param o1 the first operand
      * @return the new intersection operator
      */
-    public static Operator intersection(Expression... operands) {
-        return new Operator(Name.INTERSECTION, List.of(operands));
+    public static <T extends Expression> Operator<T> intersection(T o1) {
+        return new Operator<>(Name.INTERSECTION, List.of(o1));
+    }
+
+    /**
+     * Creates a new {@code intersection} operator.
+     *
+     * @param o1 the first operand
+     * @param o2 the second operand
+     * @return the new intersection operator
+     */
+    public static <T extends Expression> Operator<T> intersection(T o1, T o2) {
+        return new Operator<>(Name.INTERSECTION, List.of(o1, o2));
+    }
+
+    /**
+     * Creates a new {@code intersection} operator.
+     *
+     * @param firstOperand the first operand
+     * @param moreOperands more operands
+     * @return the new intersection operator
+     */
+    public static <T extends Expression> Operator<T> intersection(T firstOperand, List<? extends T> moreOperands) {
+        return new Operator<>(Name.INTERSECTION, Stream.concat(Stream.of(firstOperand), moreOperands.stream()).toList());
     }
 
     /**
      * Creates a new {@code union} operator.
      *
-     * @param operands the operands
+     * @param o1 the first operand
      * @return the new union operator
      */
-    public static Operator union(Expression... operands) {
-        return new Operator(Name.UNION, List.of(operands));
+    public static <T extends Expression> Operator<T> union(T o1) {
+        return new Operator<>(Name.UNION, List.of(o1));
     }
 
     /**
-     * Returns {@code true} iff all {@code operands} are empty or there are no operands at all.
+     * Creates a new {@code union} operator.
      *
-     * @return {@code true} iff all {@code operands} are empty or there are no operands at all
+     * @param o1 the first operand
+     * @param o2 the second operand
+     * @return the new union operator
      */
-    @Override
-    public boolean isEmpty() {
-        return operands.stream().allMatch(Expression::isEmpty);
+    public static <T extends Expression> Operator<T> union(T o1, T o2) {
+        return new Operator<>(Name.UNION, List.of(o1, o2));
     }
 
-    public Operator concat(Operator operator) {
-        var queries = new ArrayList<Expression>(this.operands);
-        queries.addAll(operator.operands);
-        return new Operator(this.name, queries);
+    /**
+     * Creates a new {@code union} operator.
+     *
+     * @param firstOperand the first operand
+     * @param moreOperands more operands
+     * @return the new union operator
+     */
+    public static <T extends Expression> Operator<T> union(T firstOperand, List<? extends T> moreOperands) {
+        return new Operator<>(Name.UNION, Stream.concat(Stream.of(firstOperand), moreOperands.stream()).toList());
     }
 
-    public Operator add(Expression element) {
-        var queries = new ArrayList<Expression>(this.operands);
-        queries.add(element);
-        return new Operator(name, queries);
+    public Operator<T> add(T operand) {
+        return new Operator<>(name, Stream.concat(this.operands.stream(), Stream.of(operand)).toList());
     }
 
-    public Operator map(Function<? super List<? extends Expression>, ? extends List<Expression>> mapper) {
-        return new Operator(name, mapper.apply(operands));
+    public Operator<T> addAll(List<? extends T> operands) {
+        return new Operator<>(name, Stream.concat(this.operands.stream(), operands.stream()).toList());
     }
 
     public enum Name {

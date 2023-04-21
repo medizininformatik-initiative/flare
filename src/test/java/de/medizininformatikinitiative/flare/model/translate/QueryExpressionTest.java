@@ -10,13 +10,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class QueryExpressionTest {
 
     @Test
-    void isNotEmpty() {
-        var expression = new QueryExpression(Query.ofType("Condition"));
-
-        assertThat(expression.isEmpty()).isFalse();
-    }
-
-    @Test
     void serializeJson() throws JsonProcessingException {
         var expression = new QueryExpression(Query.ofType("Condition"));
 

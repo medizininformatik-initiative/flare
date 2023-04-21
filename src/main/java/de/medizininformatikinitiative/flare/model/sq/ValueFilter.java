@@ -2,10 +2,10 @@ package de.medizininformatikinitiative.flare.model.sq;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
+import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.ValueMappingNotFoundException;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
-import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -52,9 +52,9 @@ public record ValueFilter(FilterPart filterPart) implements Filter {
     }
 
     @Override
-    public Mono<List<ExpandedFilter>> expand(LocalDate today, Mapping mapping) {
+    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, Mapping mapping) {
         return mapping.valueFilterMapping()
                 .map(filterMapping -> filterPart.expand(today, filterMapping))
-                .orElseGet(() -> Mono.error(new ValueMappingNotFoundException(mapping.key())));
+                .orElseGet(() -> Either.left(new ValueMappingNotFoundException(mapping.key())));
     }
 }

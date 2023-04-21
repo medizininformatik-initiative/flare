@@ -1,8 +1,8 @@
 package de.medizininformatikinitiative.flare.model.sq;
 
+import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
-import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,5 +19,5 @@ public interface Filter {
      * @param mapping the mapping to use for expansion
      * @return possibly multiple expanded filters
      */
-    Mono<List<ExpandedFilter>> expand(LocalDate today, Mapping mapping);
+    Either<Exception, List<ExpandedFilter>> expand(LocalDate today, Mapping mapping);
 }
