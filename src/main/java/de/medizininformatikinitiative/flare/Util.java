@@ -1,22 +1,12 @@
 package de.medizininformatikinitiative.flare;
 
-import reactor.core.publisher.Mono;
-
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public interface Util {
 
-    static <T> List<T> add(List<T> xs, T x) {
-        LinkedList<T> rs = new LinkedList<>(xs);
-        rs.add(x);
-        return List.copyOf(rs);
-    }
-
-    static <T> List<List<T>> add(List<List<T>> xs, List<T> x) {
-        LinkedList<List<T>> rs = new LinkedList<>(xs);
-        rs.add(x);
-        return List.copyOf(rs);
+    static <T, U extends T> List<T> add(List<T> xs, U x) {
+        return Stream.concat(xs.stream(), Stream.of(x)).toList();
     }
 
     /**
@@ -60,17 +50,7 @@ public interface Util {
         return newResult;
     }
 
-    static <T> List<T> concat(List<T> as, List<T> bs) {
-        LinkedList<T> rs = new LinkedList<>(as);
-        rs.addAll(bs);
-        return List.copyOf(rs);
-    }
-
-    static <T> Mono<List<List<T>>> add(Mono<List<List<T>>> monoR, Mono<List<T>> monoXs) {
-        return monoR.flatMap(r -> monoXs.map(xs -> Util.add(r, xs)));
-    }
-
-    static <T> Mono<List<T>> concat(Mono<List<T>> mA, Mono<List<T>> mB) {
-        return mA.flatMap(a -> mB.map(b -> Util.concat(a, b)));
+    static <T> List<T> concat(List<T> as, List<? extends T> bs) {
+        return Stream.concat(as.stream(), bs.stream()).toList();
     }
 }

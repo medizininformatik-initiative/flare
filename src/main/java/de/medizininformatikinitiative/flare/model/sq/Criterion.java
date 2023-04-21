@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.Util;
 import de.medizininformatikinitiative.flare.model.mapping.FixedCriterion;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
@@ -79,14 +80,14 @@ public record Criterion(Concept concept, List<Filter> filters) {
      * @param mappingContext contains the mappings needed to create the expanded criteria
      * @return a mono of expanded criteria
      */
-    public Mono<List<ExpandedCriterion>> expand(MappingContext mappingContext) {
+    public Either<Exception, List<ExpandedCriterion>> expand(MappingContext mappingContext) {
         return mappingContext.expandConcept(concept)
                 .flatMap(termCodes -> termCodes.stream()
                         .map(termCode -> expandTermCode(mappingContext, termCode))
-                        .reduce(Mono.just(List.of()), Util::concat));
+                        .reduce(Either.right(List.of()), Either.liftBinOp(Util::concat)));
     }
 
-    private Mono<List<ExpandedCriterion>> expandTermCode(MappingContext mappingContext, TermCode termCode) {
+    private Either<Exception, List<ExpandedCriterion>> expandTermCode(MappingContext mappingContext, TermCode termCode) {
         return mappingContext.findMapping(termCode)
                 .flatMap(mapping -> expandFilters(mappingContext.today(), mapping)
                         .map(Util::cartesianProduct)
@@ -97,13 +98,13 @@ public record Criterion(Concept concept, List<Filter> filters) {
                                 .toList()));
     }
 
-    private Mono<List<List<ExpandedFilter>>> expandFilters(LocalDate today, Mapping mapping) {
+    private Either<Exception, List<List<ExpandedFilter>>> expandFilters(LocalDate today, Mapping mapping) {
         return filters.stream()
                 .map(filter -> filter.expand(today, mapping))
-                .reduce(Mono.just(fixedCriterionFilters(mapping)), Util::add, Util::concat);
+                .reduce(Either.right(fixedCriterionFilters(mapping)), Either.lift2(Util::add), Either.liftBinOp(Util::concat));
     }
 
-    private List<List<ExpandedFilter>> fixedCriterionFilters(Mapping mapping) {
+    private static List<List<ExpandedFilter>> fixedCriterionFilters(Mapping mapping) {
         return mapping.fixedCriteria().stream().map(FixedCriterion::expand).toList();
     }
 

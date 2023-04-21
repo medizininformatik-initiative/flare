@@ -1,8 +1,8 @@
 package de.medizininformatikinitiative.flare.model.mapping;
 
+import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.sq.Concept;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
-import reactor.core.publisher.Mono;
 
 import java.time.Clock;
 import java.time.LocalDate;
@@ -59,20 +59,20 @@ public class MappingContext {
      * @param key the TermCode of the mapping
      * @return either the Mapping or {@code Optional#empty() nothing}
      */
-    public Mono<Mapping> findMapping(TermCode key) {
+    public Either<Exception, Mapping> findMapping(TermCode key) {
         var mapping = mappings.get(requireNonNull(key));
-        return mapping == null ? Mono.error(new MappingNotFoundException(key)) : Mono.just(mapping);
+        return mapping == null ? Either.left(new MappingNotFoundException(key)) : Either.right(mapping);
     }
 
     /**
-     * Expands {@code concept} into a {@link Mono mono} of {@link TermCode term codes}.
+     * Expands {@code concept} into a {@link Either either} of {@link TermCode term codes}.
      *
      * @param concept the concept to expand
      * @return the mono of term codes
      */
-    public Mono<List<TermCode>> expandConcept(Concept concept) {
+    public Either<Exception, List<TermCode>> expandConcept(Concept concept) {
         var termCodes = concept.termCodes().stream().flatMap(conceptTree::expand).toList();
-        return termCodes.isEmpty() ? Mono.error(new ConceptNotExpandableException(concept)) : Mono.just(termCodes);
+        return termCodes.isEmpty() ? Either.left(new ConceptNotExpandableException(concept)) : Either.right(termCodes);
     }
 
     /**

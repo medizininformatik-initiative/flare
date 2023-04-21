@@ -2,9 +2,9 @@ package de.medizininformatikinitiative.flare.model.sq;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
+import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.mapping.FilterMapping;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
-import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -62,5 +62,5 @@ public interface FilterPart {
         return new TermCode(system, unit.get("code").asText(), unit.get("display").asText());
     }
 
-    Mono<List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping);
+    Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping);
 }

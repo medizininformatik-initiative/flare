@@ -1,5 +1,6 @@
 package de.medizininformatikinitiative.flare.service;
 
+import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.Population;
 import de.medizininformatikinitiative.flare.model.sq.Criterion;
 import de.medizininformatikinitiative.flare.model.sq.CriterionGroup;
@@ -42,10 +43,10 @@ public class StructuredQueryService {
     public Mono<Integer> execute(StructuredQuery query) {
         var includedPatients = query.inclusionCriteria().executeAndIntersection(this::executeUnionGroup)
                 .defaultIfEmpty(Population.of());
-        var excludedPatients = query.exclusionCriteria()
-                .map(CriterionGroup::wrapCriteria)
-                .executeAndUnion(group -> group.executeAndUnion(this::executeUnionGroup))
-                .defaultIfEmpty(Population.of());
+        var excludedPatients = query.exclusionCriteria().map(c -> c.map(CriterionGroup::wrapCriteria)
+                        .executeAndUnion(group -> group.executeAndUnion(this::executeUnionGroup))
+                        .defaultIfEmpty(Population.of()))
+                .orElse(Mono.just(Population.of()));
         return includedPatients
                 .flatMap(i -> excludedPatients.map(i::difference))
                 .map(Set::size);
@@ -57,9 +58,8 @@ public class StructuredQueryService {
 
     private Flux<Population> executeSingle(Criterion criterion) {
         logger.trace("Execute single criterion {}", criterion);
-        return translator.toQuery(criterion).flux()
-                .flatMap(Flux::fromIterable)
-                .flatMap(fhirQueryService::execute);
+        return translator.toQuery(criterion)
+                .either(Flux::error, queries -> Flux.fromIterable(queries).flatMap(fhirQueryService::execute));
     }
 
     /**
@@ -68,21 +68,22 @@ public class StructuredQueryService {
      * @param query the query to translate
      * @return an {@link Expression expression} that explains the query execution
      */
-    public Mono<Expression> translate(StructuredQuery query) {
+    public Either<Exception, Expression> translate(StructuredQuery query) {
         var inclusions = query.inclusionCriteria().translateAndIntersection(this::translateUnionGroup);
-        var exclusions = query.exclusionCriteria()
-                .map(CriterionGroup::wrapCriteria)
-                .translateAndUnion(group -> group.translateAndIntersection(this::translateUnionGroup));
-        return inclusions.flatMap(i -> exclusions.map(e -> e.isEmpty() ? i : Operator.difference(i, e)));
+        var exclusions = query.exclusionCriteria().map(c -> c.map(CriterionGroup::wrapCriteria)
+                .translateAndUnion(group -> group.translateAndIntersection(this::translateUnionGroup)));
+        return exclusions
+                .map(me -> inclusions.flatMap(i -> me.map(e -> (Expression) Operator.difference(i, e))))
+                .orElse(inclusions);
     }
 
-    private Mono<Operator> translateUnionGroup(CriterionGroup<Criterion> group) {
+    private Either<Exception, Expression> translateUnionGroup(CriterionGroup<Criterion> group) {
         return group.translateAndConcat(this::translateSingle);
     }
 
-    private Mono<Operator> translateSingle(Criterion criterion) {
+    private Either<Exception, Operator<Expression>> translateSingle(Criterion criterion) {
         logger.trace("Translate single criterion {}", criterion);
-        return translator.toQuery(criterion).map(queries -> new Operator(UNION, queries.stream()
+        return translator.toQuery(criterion).map(queries -> new Operator<>(UNION, queries.stream()
                 .map(QueryExpression::new).toList()));
     }
 }

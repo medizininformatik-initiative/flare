@@ -1,10 +1,10 @@
 package de.medizininformatikinitiative.flare.model.sq;
 
+import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.mapping.FilterMapping;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCodeFilter;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedConceptFilter;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
-import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -34,8 +34,8 @@ public record ConceptFilterPart(List<TermCode> concepts) implements FilterPart {
     }
 
     @Override
-    public Mono<List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping) {
-        return Mono.just(concepts.stream()
+    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping) {
+        return Either.right(concepts.stream()
                 .map(concept -> switch (filterMapping.type()) {
                     case CODE -> (ExpandedFilter) new ExpandedCodeFilter(filterMapping.searchParameter(),
                             concept.code());

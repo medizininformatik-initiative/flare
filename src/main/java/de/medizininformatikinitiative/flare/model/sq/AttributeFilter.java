@@ -2,9 +2,9 @@ package de.medizininformatikinitiative.flare.model.sq;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
+import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
-import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -40,7 +40,7 @@ public record AttributeFilter(TermCode code, FilterPart filterPart) implements F
     }
 
     @Override
-    public Mono<List<ExpandedFilter>> expand(LocalDate today, Mapping mapping) {
+    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, Mapping mapping) {
         return mapping.findAttributeMapping(code).flatMap(filterMapping -> filterPart.expand(today, filterMapping));
     }
 }

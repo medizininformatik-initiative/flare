@@ -1,5 +1,7 @@
 package de.medizininformatikinitiative.flare.model.sq;
 
+import de.medizininformatikinitiative.flare.Either;
+import de.medizininformatikinitiative.flare.Util;
 import de.medizininformatikinitiative.flare.model.Population;
 import de.medizininformatikinitiative.flare.model.translate.Expression;
 import de.medizininformatikinitiative.flare.model.translate.Operator;
@@ -12,24 +14,33 @@ import reactor.core.scheduler.Schedulers;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Stream;
+
+import static java.util.Objects.requireNonNull;
 
 /**
- * A group of {@link Criterion criterion} providing operations to execute and translate them.
+ * A non-empty group of {@link Criterion criteria} providing operations to execute and translate them.
  *
- * @param criteria a list of criterion
- * @param <T>      the type of the criterion that can be either {@link Criterion} itself or an additional layer of groups
+ * @param firstCriterion the first criterion
+ * @param moreCriteria   a list of more criteria
+ * @param <T>            the type of the criteria that can be either {@link Criterion} itself or an additional layer of
+ *                       groups
  */
-public record CriterionGroup<T>(List<T> criteria) {
+public record CriterionGroup<T>(T firstCriterion, List<T> moreCriteria) {
 
     private static final Scheduler SCHEDULER = Schedulers.parallel();
 
     public CriterionGroup {
-        criteria = List.copyOf(criteria);
+        requireNonNull(firstCriterion);
+        moreCriteria = List.copyOf(moreCriteria);
     }
 
-    @SafeVarargs
-    public static <T> CriterionGroup<T> of(T... criteria) {
-        return new CriterionGroup<>(List.of(criteria));
+    public static <T> CriterionGroup<T> of(T c1) {
+        return new CriterionGroup<>(c1, List.of());
+    }
+
+    public static <T> CriterionGroup<T> of(T c1, T c2) {
+        return new CriterionGroup<>(c1, List.of(c2));
     }
 
     /**
@@ -40,7 +51,7 @@ public record CriterionGroup<T>(List<T> criteria) {
      * @return a group consisting of the results of applying the {@code mapper} to its {@code criteria}
      */
     public <R> CriterionGroup<R> map(Function<? super T, R> mapper) {
-        return new CriterionGroup<>(criteria.stream().map(mapper).toList());
+        return new CriterionGroup<>(mapper.apply(firstCriterion), moreCriteria.stream().map(mapper).toList());
     }
 
     /**
@@ -70,29 +81,49 @@ public record CriterionGroup<T>(List<T> criteria) {
 
     /**
      * Translates all {@code criteria} of this group using the {@code translator} and wraps all resulting expressions
-     * into an {@link Operator#intersection(Expression...) intersection} operator.
+     * into an {@link Operator#intersection(Expression) intersection} operator.
      */
-    public Mono<Operator> translateAndIntersection(Function<T, Mono<? extends Expression>> translator) {
-        return Flux.fromIterable(criteria).flatMap(translator).reduce(Operator.intersection(), Operator::add);
+    public Either<Exception, Expression> translateAndIntersection(Function<T, Either<Exception, Expression>> translator) {
+        return translator.apply(firstCriterion)
+                .flatMap(firstOperand -> translateMoreCriteria(translator)
+                        .map(moreOperands -> Operator.intersection(firstOperand, moreOperands)));
+    }
+
+    private Either<Exception, List<Expression>> translateMoreCriteria(Function<T, Either<Exception, Expression>> translator) {
+        return moreCriteria.stream().map(translator).reduce(Either.right(List.of()), Either.lift2(Util::add),
+                Either.liftBinOp(Util::concat));
     }
 
     /**
      * Translates all {@code criteria} of this group using the {@code translator} and wraps all resulting expressions
-     * into an {@link Operator#union(Expression...) union} operator.
+     * into an {@link Operator#union(Expression) union} operator.
      */
-    public Mono<Operator> translateAndUnion(Function<T, Mono<? extends Expression>> translator) {
-        return Flux.fromIterable(criteria).flatMap(translator).reduce(Operator.union(), Operator::add);
+    public Either<Exception, Expression> translateAndUnion(Function<T, Either<Exception, Expression>> translator) {
+        return translator.apply(firstCriterion)
+                .flatMap(firstOperand -> translateMoreCriteria(translator)
+                        .map(moreOperands -> Operator.union(firstOperand, moreOperands)));
     }
 
     /**
-     * Translates all {@code criteria} of this group using the {@code translator} and {@link Operator#concat(Operator)
-     * concats} all resulting expressions together.
+     * Translates all {@code criteria} of this group using the {@code translator} and adds all resulting operands to
+     * the first operator.
      */
-    public Mono<Operator> translateAndConcat(Function<T, Mono<Operator>> translator) {
-        return Flux.fromIterable(criteria).flatMap(translator).reduce(Operator::concat);
+    public Either<Exception, Expression> translateAndConcat(Function<T, Either<Exception, Operator<Expression>>> translator) {
+        return translator.apply(firstCriterion)
+                .flatMap(firstOperand -> translateMoreCriteriaFlatten(translator)
+                        .map(firstOperand::addAll));
+    }
+
+    private Either<Exception, List<Expression>> translateMoreCriteriaFlatten(Function<T, Either<Exception, Operator<Expression>>> translator) {
+        return moreCriteria.stream().map(translator).reduce(Either.right(List.of()), Either.lift2((list, operator) -> Util.concat(list, operator.operands())),
+                Either.liftBinOp(Util::concat));
     }
 
     private ParallelFlux<T> parallelCriteriaFlux() {
-        return Flux.fromIterable(criteria).parallel().runOn(SCHEDULER);
+        return Flux.fromStream(stream()).parallel().runOn(SCHEDULER);
+    }
+
+    private Stream<T> stream() {
+        return Stream.concat(Stream.of(firstCriterion), moreCriteria.stream());
     }
 }

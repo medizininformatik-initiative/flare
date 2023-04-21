@@ -17,16 +17,6 @@ public record QueryExpression(Query query) implements Expression {
     }
 
     /**
-     * Returns always {@code false}, because query expressions are never empty.
-     *
-     * @return always {@code false}
-     */
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    /**
      * The JSON value of a query expression is just the query string.
      *
      * @return a string representation of this query expression.

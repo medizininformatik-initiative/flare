@@ -2,6 +2,7 @@ package de.medizininformatikinitiative.flare.model.sq;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.mapping.*;
 import de.medizininformatikinitiative.flare.model.sq.expanded.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,8 +16,6 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import reactor.core.publisher.Mono;
-import reactor.test.StepVerifier;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -24,6 +23,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static de.medizininformatikinitiative.flare.Assertions.assertThat;
 import static de.medizininformatikinitiative.flare.model.mapping.FilterType.CODE;
 import static de.medizininformatikinitiative.flare.model.mapping.FilterType.CODING;
 import static de.medizininformatikinitiative.flare.model.sq.Comparator.*;
@@ -124,23 +124,23 @@ class CriterionTest {
         @Test
         @DisplayName("not expandable")
         void notExpandable() {
-            when(mappingContext.expandConcept(Concept.of(TERM_CODE))).thenReturn(Mono.error(new ConceptNotExpandableException(
-                    Concept.of(TERM_CODE))));
+            when(mappingContext.expandConcept(Concept.of(TERM_CODE))).thenReturn(Either.left(
+                    new ConceptNotExpandableException(Concept.of(TERM_CODE))));
 
             var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext);
 
-            StepVerifier.create(criteria).expectError(ConceptNotExpandableException.class).verify();
+            assertThat(criteria).isLeftInstanceOf(ConceptNotExpandableException.class);
         }
 
         @Test
         @DisplayName("mapping not found")
         void mappingNotFound() {
-            when(mappingContext.expandConcept(Concept.of(TERM_CODE))).thenReturn(Mono.just(List.of(TERM_CODE)));
-            when(mappingContext.findMapping(TERM_CODE)).thenReturn(Mono.error(new MappingNotFoundException(TERM_CODE)));
+            when(mappingContext.expandConcept(Concept.of(TERM_CODE))).thenReturn(Either.right(List.of(TERM_CODE)));
+            when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.left(new MappingNotFoundException(TERM_CODE)));
 
             var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext);
 
-            StepVerifier.create(criteria).expectError(MappingNotFoundException.class).verify();
+            assertThat(criteria).isLeftInstanceOf(MappingNotFoundException.class);
         }
 
         @Nested
@@ -155,201 +155,201 @@ class CriterionTest {
 
             @BeforeEach
             void setUp() {
-                when(mappingContext.expandConcept(Concept.of(TERM_CODE))).thenReturn(Mono.just(List.of(TERM_CODE)));
+                when(mappingContext.expandConcept(Concept.of(TERM_CODE))).thenReturn(Either.right(List.of(TERM_CODE)));
             }
 
             @Test
             @DisplayName("concept only")
             void conceptOnly() {
-                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Mono.just(mapping));
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping));
 
-                var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext).block();
+                var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext);
 
-                assertThat(criteria).containsExactly(expandedCriterion);
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion));
             }
 
             @Test
             @DisplayName("one value filter with one concept")
             void oneValueFilter_OneConcept() {
-                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Mono.just(mapping
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
                         .withValueFilterMapping(CODING, "value-concept")));
 
                 var criteria = Criterion.of(Concept.of(TERM_CODE), ValueFilter.ofConcept(POSITIVE))
-                        .expand(mappingContext).block();
+                        .expand(mappingContext);
 
-                assertThat(criteria).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE)));
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE))));
             }
 
             @Test
             @DisplayName("one value filter with one concept and one attribute filter with one concept")
             void oneValueFilter_OneConcept_OneAttributeFilter_OneConcept() {
-                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Mono.just(mapping
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
                         .withValueFilterMapping(CODING, "value-concept")
                         .appendAttributeMapping(AttributeMapping.code(OBSERVATION_STATUS, "status"))));
 
                 var criteria = Criterion.of(Concept.of(TERM_CODE), ValueFilter.ofConcept(POSITIVE))
                         .appendAttributeFilter(AttributeFilter.ofConcept(OBSERVATION_STATUS, FINAL))
-                        .expand(mappingContext).block();
+                        .expand(mappingContext);
 
-                assertThat(criteria).containsExactly(expandedCriterion
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
                         .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE))
-                        .appendFilter(new ExpandedCodeFilter("status", "final")));
+                        .appendFilter(new ExpandedCodeFilter("status", "final"))));
             }
 
             @Test
             @DisplayName("one value filter with two concepts")
             void oneValueFilter_TwoConcepts() {
-                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Mono.just(mapping
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
                         .withValueFilterMapping(CODING, "value-concept")));
 
                 var criteria = Criterion.of(Concept.of(TERM_CODE), ValueFilter.ofConcept(MALE, FEMALE))
-                        .expand(mappingContext).block();
+                        .expand(mappingContext);
 
-                assertThat(criteria).containsExactly(
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
                         expandedCriterion.appendFilter(new ExpandedConceptFilter("value-concept", MALE)),
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("value-concept", FEMALE)));
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("value-concept", FEMALE))));
             }
 
             @Test
             @DisplayName("one value filter with two concepts and one fixed criteria")
             void oneValueFilter_TwoConcepts_OneFixedCriteria_OneConcept() {
-                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Mono.just(mapping
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
                         .withValueFilterMapping(CODING, "value-concept")
                         .withFixedCriteria(new FixedCriterion(FilterType.CODE, "status", List.of(FINAL)))));
 
-                var criteria = Criterion.of(Concept.of(TERM_CODE), ValueFilter.ofConcept(MALE, FEMALE)).expand(mappingContext).block();
+                var criteria = Criterion.of(Concept.of(TERM_CODE), ValueFilter.ofConcept(MALE, FEMALE)).expand(mappingContext);
 
-                assertThat(criteria).containsExactly(
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
                         expandedCriterion
                                 .appendFilter(new ExpandedCodeFilter("status", "final"))
                                 .appendFilter(new ExpandedConceptFilter("value-concept", MALE)),
                         expandedCriterion
                                 .appendFilter(new ExpandedCodeFilter("status", "final"))
-                                .appendFilter(new ExpandedConceptFilter("value-concept", FEMALE)));
+                                .appendFilter(new ExpandedConceptFilter("value-concept", FEMALE))));
             }
 
             @Test
             @DisplayName("one comparator value filter")
             void oneComparatorValueFilter() {
-                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Mono.just(mapping
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
                         .withValueFilterMapping(CODING, "value-quantity")));
 
                 var criteria = Criterion.of(Concept.of(TERM_CODE), ValueFilter.ofComparator(LESS_THAN, DECIMAL, GRAM_PER_DECILITER))
-                        .expand(mappingContext).block();
+                        .expand(mappingContext);
 
-                assertThat(criteria).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedComparatorFilter("value-quantity", LESS_THAN, DECIMAL, GRAM_PER_DECILITER)));
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedComparatorFilter("value-quantity", LESS_THAN, DECIMAL, GRAM_PER_DECILITER))));
             }
 
             @Test
             @DisplayName("one range value filter")
             void oneRangeValueFilter() {
-                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Mono.just(mapping
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
                         .withValueFilterMapping(CODING, "value-quantity")));
 
                 var criteria = Criterion.of(Concept.of(TERM_CODE), ValueFilter.ofRange(DECIMAL_1, DECIMAL_2, GRAM_PER_DECILITER))
-                        .expand(mappingContext).block();
+                        .expand(mappingContext);
 
-                assertThat(criteria).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_1, DECIMAL_2, GRAM_PER_DECILITER)));
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_1, DECIMAL_2, GRAM_PER_DECILITER))));
             }
 
             @Test
             @DisplayName("one attribute filter with one concept")
             void oneAttributeFilter_OneConcept() {
-                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Mono.just(mapping
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
                         .appendAttributeMapping(AttributeMapping.coding(VERIFICATION_STATUS, "verification-status"))));
 
                 var criteria = Criterion.of(Concept.of(TERM_CODE)).appendAttributeFilter(AttributeFilter.ofConcept(
-                        VERIFICATION_STATUS, CONFIRMED)).expand(mappingContext).block();
+                        VERIFICATION_STATUS, CONFIRMED)).expand(mappingContext);
 
-                assertThat(criteria).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)));
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED))));
             }
 
             @Test
             @DisplayName("one attribute filter with two concepts")
             void oneAttributeFilter_TwoConcepts() {
-                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Mono.just(mapping
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
                         .appendAttributeMapping(AttributeMapping.coding(VERIFICATION_STATUS, "verification-status"))));
 
                 var criteria = Criterion.of(Concept.of(TERM_CODE)).appendAttributeFilter(AttributeFilter.ofConcept(
-                        VERIFICATION_STATUS, CONFIRMED, UNCONFIRMED)).expand(mappingContext).block();
+                        VERIFICATION_STATUS, CONFIRMED, UNCONFIRMED)).expand(mappingContext);
 
-                assertThat(criteria).containsExactly(
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
                         expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)),
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED)));
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED))));
             }
 
             @Test
             @DisplayName("one fixed criteria with one concept")
             void oneFixedCriteria_OneConcept() {
-                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Mono.just(mapping
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
                         .withFixedCriteria(new FixedCriterion(CODING, "verification-status", List.of(CONFIRMED)))));
 
-                var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext).block();
+                var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext);
 
-                assertThat(criteria).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)));
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED))));
             }
 
             @Test
             @DisplayName("one fixed criteria with two concepts")
             void oneFixedCriteria_TwoConcepts() {
-                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Mono.just(mapping
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
                         .withFixedCriteria(new FixedCriterion(CODING, "verification-status", List.of(CONFIRMED, UNCONFIRMED)))));
 
-                var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext).block();
+                var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext);
 
-                assertThat(criteria).containsExactly(
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
                         expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)),
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED)));
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED))));
             }
 
             @ParameterizedTest(name = "({0}]")
             @MethodSource("localDates")
             @DisplayName("one time restriction with open start point")
             void oneTimeRestriction_openStart(LocalDate end) {
-                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Mono.just(mapping
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
                         .withTimeRestrictionParameter("time-restriction")));
 
                 var criteria = Criterion.of(Concept.of(TERM_CODE))
                         .appendTimeRestrictionFilter(new TimeRestriction.OpenStart(end))
-                        .expand(mappingContext).block();
+                        .expand(mappingContext);
 
-                assertThat(criteria).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedDateComparatorFilter("time-restriction", LESS_EQUAL, end)));
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedDateComparatorFilter("time-restriction", LESS_EQUAL, end))));
             }
 
             @ParameterizedTest(name = "[{0})")
             @MethodSource("localDates")
             @DisplayName("one time restriction with open end point")
             void oneTimeRestriction_openEnd(LocalDate start) {
-                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Mono.just(mapping
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
                         .withTimeRestrictionParameter("time-restriction")));
 
                 var criteria = Criterion.of(Concept.of(TERM_CODE))
                         .appendTimeRestrictionFilter(new TimeRestriction.OpenEnd(start))
-                        .expand(mappingContext).block();
+                        .expand(mappingContext);
 
-                assertThat(criteria).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedDateComparatorFilter("time-restriction", GREATER_EQUAL, start)));
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedDateComparatorFilter("time-restriction", GREATER_EQUAL, start))));
             }
 
             @ParameterizedTest(name = "[{0}, {1}]")
             @MethodSource("localDateIntervals")
             @DisplayName("one time restriction with start and end point")
             void oneTimeRestriction_openEnd(LocalDate start, LocalDate end) {
-                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Mono.just(mapping
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
                         .withTimeRestrictionParameter("time-restriction")));
 
                 var criteria = Criterion.of(Concept.of(TERM_CODE))
                         .appendTimeRestrictionFilter(new TimeRestriction.Interval(start, end))
-                        .expand(mappingContext).block();
+                        .expand(mappingContext);
 
-                assertThat(criteria).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedDateRangeFilter("time-restriction", start, end)));
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedDateRangeFilter("time-restriction", start, end))));
             }
 
             static Stream<LocalDate> localDates() {
@@ -381,37 +381,70 @@ class CriterionTest {
 
             @BeforeEach
             void setUp() {
-                when(mappingContext.expandConcept(Concept.of(TERM_CODE))).thenReturn(Mono.just(List.of(TERM_CODE_1,
+                when(mappingContext.expandConcept(Concept.of(TERM_CODE))).thenReturn(Either.right(List.of(TERM_CODE_1,
                         TERM_CODE_2)));
             }
 
             @Test
             @DisplayName("concept only")
             void conceptOnly() {
-                when(mappingContext.findMapping(TERM_CODE_1)).thenReturn(Mono.just(mapping1));
-                when(mappingContext.findMapping(TERM_CODE_2)).thenReturn(Mono.just(mapping2));
+                when(mappingContext.findMapping(TERM_CODE_1)).thenReturn(Either.right(mapping1));
+                when(mappingContext.findMapping(TERM_CODE_2)).thenReturn(Either.right(mapping2));
 
-                var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext).block();
+                var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext);
 
-                assertThat(criteria).containsExactly(expandedCriterion1, expandedCriterion2);
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion1, expandedCriterion2));
             }
 
             @Test
             @DisplayName("one attribute filter with two concepts")
             void oneAttributeFilter_TwoConcepts() {
-                when(mappingContext.findMapping(TERM_CODE_1)).thenReturn(Mono.just(mapping1
+                when(mappingContext.findMapping(TERM_CODE_1)).thenReturn(Either.right(mapping1
                         .appendAttributeMapping(AttributeMapping.coding(VERIFICATION_STATUS, "verification-status"))));
-                when(mappingContext.findMapping(TERM_CODE_2)).thenReturn(Mono.just(mapping2
+                when(mappingContext.findMapping(TERM_CODE_2)).thenReturn(Either.right(mapping2
                         .appendAttributeMapping(AttributeMapping.coding(VERIFICATION_STATUS, "verification-status"))));
 
                 var criteria = Criterion.of(Concept.of(TERM_CODE)).appendAttributeFilter(AttributeFilter.ofConcept(
-                        VERIFICATION_STATUS, CONFIRMED, UNCONFIRMED)).expand(mappingContext).block();
+                        VERIFICATION_STATUS, CONFIRMED, UNCONFIRMED)).expand(mappingContext);
 
-                assertThat(criteria).containsExactly(
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
                         expandedCriterion1.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)),
                         expandedCriterion1.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED)),
                         expandedCriterion2.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)),
-                        expandedCriterion2.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED)));
+                        expandedCriterion2.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED))));
+            }
+        }
+
+        @Nested
+        @DisplayName("large mount of concept expansions")
+        class LargeAmountOfConceptExpansions {
+
+            static final int NUM_CODES = 1000;
+            static final List<TermCode> TERM_CODES = IntStream.range(0, NUM_CODES)
+                    .mapToObj(i -> TermCode.of("foo", "%d".formatted(i), "bar"))
+                    .toList();
+
+            List<Mapping> mappings = TERM_CODES.stream()
+                    .map(termCode -> Mapping.of(termCode, "Condition", "code"))
+                    .toList();
+            List<ExpandedCriterion> expandedCriteria = TERM_CODES.stream()
+                    .map(termCode -> ExpandedCriterion.of("Condition", "code", termCode))
+                    .toList();
+
+            @BeforeEach
+            void setUp() {
+                when(mappingContext.expandConcept(Concept.of(TERM_CODE))).thenReturn(Either.right(TERM_CODES));
+            }
+
+            @Test
+            @DisplayName("concept only")
+            void conceptOnly() {
+                IntStream.range(0, NUM_CODES).forEach(i -> when(mappingContext.findMapping(TERM_CODES.get(i)))
+                        .thenReturn(Either.right(mappings.get(i))));
+
+                var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext);
+
+                assertThat(criteria).isRightEqualTo(expandedCriteria);
             }
         }
 
@@ -437,83 +470,83 @@ class CriterionTest {
 
                 @BeforeEach
                 void setUp() {
-                    when(mappingContext.expandConcept(Concept.of(AGE))).thenReturn(Mono.just(List.of(AGE)));
+                    when(mappingContext.expandConcept(Concept.of(AGE))).thenReturn(Either.right(List.of(AGE)));
                 }
 
                 @Test
                 @DisplayName("with comparator equal")
                 void age_withComparatorEqual() {
-                    when(mappingContext.findMapping(AGE)).thenReturn(Mono.just(mapping));
+                    when(mappingContext.findMapping(AGE)).thenReturn(Either.right(mapping));
                     when(mappingContext.today()).thenReturn(YEAR_2000);
 
                     var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofComparator(EQUAL, AGE_OF_5, YEAR_UNIT))
-                            .expand(mappingContext).block();
+                            .expand(mappingContext);
 
-                    assertThat(criterion).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1994.plusDays(1), YEAR_1995)));
+                    assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                            .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1994.plusDays(1), YEAR_1995))));
                 }
 
                 @ParameterizedTest
                 @EnumSource(names = {"EQUAL"}, mode = EXCLUDE)
                 @DisplayName("with other comparator")
                 void age_withOtherComparator(Comparator comparator) {
-                    when(mappingContext.findMapping(AGE)).thenReturn(Mono.just(mapping));
+                    when(mappingContext.findMapping(AGE)).thenReturn(Either.right(mapping));
                     when(mappingContext.today()).thenReturn(YEAR_2000);
 
                     var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofComparator(comparator, AGE_OF_5, YEAR_UNIT))
-                            .expand(mappingContext).block();
+                            .expand(mappingContext);
 
-                    assertThat(criterion).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateComparatorFilter("birthdate", comparator.reverse(), YEAR_1995)));
+                    assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                            .appendFilter(new ExpandedDateComparatorFilter("birthdate", comparator.reverse(), YEAR_1995))));
                 }
 
                 @Test
                 @DisplayName("with comparator and unknown unit")
                 void age_withComparator_UnknownUnit() {
-                    when(mappingContext.findMapping(AGE)).thenReturn(Mono.just(mapping));
+                    when(mappingContext.findMapping(AGE)).thenReturn(Either.right(mapping));
                     when(mappingContext.today()).thenReturn(YEAR_2000);
 
                     var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofComparator(GREATER_THAN, AGE_OF_5,
                             GRAM_PER_DECILITER)).expand(mappingContext);
 
-                    StepVerifier.create(criterion).expectError(CalculationException.class).verify();
+                    assertThat(criterion).isLeftInstanceOf(CalculationException.class);
                 }
 
                 @Test
                 @DisplayName("with comparator and without unit")
                 void age_withComparator_WithoutUnit() {
-                    when(mappingContext.findMapping(AGE)).thenReturn(Mono.just(mapping));
+                    when(mappingContext.findMapping(AGE)).thenReturn(Either.right(mapping));
 
                     var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofComparator(GREATER_THAN, AGE_OF_5))
                             .expand(mappingContext);
 
-                    StepVerifier.create(criterion).expectError(CalculationException.class).verify();
+                    assertThat(criterion).isLeftInstanceOf(CalculationException.class);
                 }
 
                 @Test
                 @DisplayName("with range")
                 void age_withRange() {
-                    when(mappingContext.findMapping(AGE)).thenReturn(Mono.just(mapping));
+                    when(mappingContext.findMapping(AGE)).thenReturn(Either.right(mapping));
                     when(mappingContext.today()).thenReturn(YEAR_2000);
 
                     var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofRange(AGE_OF_5, AGE_OF_10, YEAR_UNIT))
-                            .expand(mappingContext).block();
+                            .expand(mappingContext);
 
-                    assertThat(criterion).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1990, YEAR_1995)));
+                    assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                            .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1990, YEAR_1995))));
                 }
             }
 
             @Test
             void gender() {
-                when(mappingContext.expandConcept(Concept.of(GENDER))).thenReturn(Mono.just(List.of(GENDER)));
-                when(mappingContext.findMapping(GENDER)).thenReturn(Mono.just(Mapping.of(GENDER, "Patient")
+                when(mappingContext.expandConcept(Concept.of(GENDER))).thenReturn(Either.right(List.of(GENDER)));
+                when(mappingContext.findMapping(GENDER)).thenReturn(Either.right(Mapping.of(GENDER, "Patient")
                         .withValueFilterMapping(CODE, "gender")));
 
-                var criterion = Criterion.of(Concept.of(GENDER), ValueFilter.ofConcept(MALE)).expand(mappingContext).block();
+                var criterion = Criterion.of(Concept.of(GENDER), ValueFilter.ofConcept(MALE)).expand(mappingContext);
 
-                assertThat(criterion).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedCodeFilter("gender", "male")));
+                assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedCodeFilter("gender", "male"))));
             }
         }
     }
