@@ -103,6 +103,29 @@ class DataStoreIT {
     }
 
     @Test
+    @DisplayName("A single Resource without a Reference to a Patient is invalid and should not be counted")
+    void execute_OneObsWithoutReference_FromOnePat(){
+        createObservation_withoutReference();
+
+        var result = dataStore.execute(Query.ofType("Observation"));
+
+        StepVerifier.create(result).expectNext(Population.of().withCreated(FIXED_INSTANT)).verifyComplete();
+    }
+
+    @Test
+    @DisplayName("There is one Resource with a valid and one with an invalid Reference. Only the one with the valid" +
+                " Reference should be counted")
+    void execute_OneObsWithoutReferenceOneObsWithReference_FromTwoPats(){
+        createPatient("1");
+        createObservation_withoutReference();
+        createObservation("1");
+
+        var result = dataStore.execute(Query.ofType("Observation"));
+
+        StepVerifier.create(result).expectNext(Population.of("1").withCreated(FIXED_INSTANT)).verifyComplete();
+    }
+
+    @Test
     @DisplayName("1000 concurrent requests will fill up the pending acquire queue because of constraint max connections")
     void pendingAcquireQueueReachedMaximum() {
         createPatient("0");
@@ -135,6 +158,20 @@ class DataStoreIT {
                           "subject": { "reference": "Patient/%s" }
                         }
                         """.formatted(patientId))
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+    }
+
+    private void createObservation_withoutReference() {
+        client.post()
+                .uri("/Observation")
+                .contentType(APPLICATION_JSON)
+                .bodyValue("""
+                        { "resourceType": "Observation",
+                          "subject": {}
+                        }
+                        """)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();

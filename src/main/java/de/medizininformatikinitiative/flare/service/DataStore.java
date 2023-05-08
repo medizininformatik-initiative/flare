@@ -53,7 +53,7 @@ public class DataStore implements FhirQueryService {
                 .expand(bundle -> bundle.linkWithRel("next")
                         .map(link -> fetchPage(link.url()))
                         .orElse(Mono.empty()))
-                .flatMap(bundle -> Flux.fromStream(bundle.entry().stream().map(e -> e.resource().patientId())))
+                .flatMap(bundle -> Flux.fromStream(bundle.entry().stream().flatMap(e -> e.resource().patientId().stream())))
                 .collectList()
                 .map(patientIds -> Population.copyOf(patientIds).withCreated(clock.instant()))
                 .doOnNext(p -> logger.debug("Finished query `{}` returning {} patients in {} seconds.", query, p.size(),
