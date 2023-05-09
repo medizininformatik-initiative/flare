@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.2.3
+
+### Bugfixes
+
+* Fix Reference Nullpointerexception ([#40](https://github.com/medizininformatik-initiative/flare/pull/40))
+
+The full changelog can be found [here](https://github.com/medizininformatik-initiative/flare/milestone/6?closed=1).
+
 ## v0.2.2
 
 ### Bugfixes
