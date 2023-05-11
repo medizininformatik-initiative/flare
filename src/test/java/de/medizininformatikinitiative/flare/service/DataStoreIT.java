@@ -31,7 +31,7 @@ class DataStoreIT {
 
     private static final Logger logger = LoggerFactory.getLogger(DataStoreIT.class);
 
-    static final Instant FIXED_INSTANT = Instant.ofEpochSecond(104152);
+    private static final Instant FIXED_INSTANT = Instant.ofEpochSecond(104152);
 
     @Container
     @SuppressWarnings("resource")
@@ -104,7 +104,7 @@ class DataStoreIT {
 
     @Test
     @DisplayName("A single Resource without a Reference to a Patient is invalid and should not be counted")
-    void execute_OneObsWithoutReference_FromOnePat(){
+    void execute_OneObsWithoutReference_FromOnePat() {
         createObservation_withoutReference();
 
         var result = dataStore.execute(Query.ofType("Observation"));
@@ -114,8 +114,8 @@ class DataStoreIT {
 
     @Test
     @DisplayName("There is one Resource with a valid and one with an invalid Reference. Only the one with the valid" +
-                " Reference should be counted")
-    void execute_OneObsWithoutReferenceOneObsWithReference_FromTwoPats(){
+            " Reference should be counted")
+    void execute_OneObsWithoutReferenceOneObsWithReference_FromTwoPats() {
         createPatient("1");
         createObservation_withoutReference();
         createObservation("1");
