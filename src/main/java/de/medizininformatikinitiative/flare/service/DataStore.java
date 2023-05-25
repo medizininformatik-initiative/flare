@@ -11,10 +11,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
 
 import java.time.Clock;
+import java.time.Duration;
 import java.util.Objects;
 
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
@@ -53,6 +56,9 @@ public class DataStore implements FhirQueryService {
                 .expand(bundle -> bundle.linkWithRel("next")
                         .map(link -> fetchPage(link.url()))
                         .orElse(Mono.empty()))
+                .retryWhen(Retry.backoff(3, Duration.ofSeconds(1))
+                        .filter(e -> e instanceof WebClientResponseException &&
+                                ((WebClientResponseException) e).getStatusCode().is5xxServerError()))
                 .flatMap(bundle -> Flux.fromStream(bundle.entry().stream().flatMap(e -> e.resource().patientId().stream())))
                 .collectList()
                 .map(patientIds -> Population.copyOf(patientIds).withCreated(clock.instant()))
