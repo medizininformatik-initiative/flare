@@ -45,7 +45,7 @@ class DataStoreTest {
 
     @ParameterizedTest
     @DisplayName("retires the request")
-    @ValueSource(ints = {500, 503, 504})
+    @ValueSource(ints = {404, 500, 503, 504})
     void execute_retry(int statusCode) {
         mockStore.enqueue(new MockResponse().setResponseCode(statusCode));
         mockStore.enqueue(new MockResponse().setResponseCode(200));

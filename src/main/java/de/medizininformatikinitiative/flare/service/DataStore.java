@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -58,13 +59,17 @@ public class DataStore implements FhirQueryService {
                         .orElse(Mono.empty()))
                 .retryWhen(Retry.backoff(3, Duration.ofSeconds(1))
                         .filter(e -> e instanceof WebClientResponseException &&
-                                ((WebClientResponseException) e).getStatusCode().is5xxServerError()))
+                                shouldRetry(((WebClientResponseException) e).getStatusCode())))
                 .flatMap(bundle -> Flux.fromStream(bundle.entry().stream().flatMap(e -> e.resource().patientId().stream())))
                 .collectList()
                 .map(patientIds -> Population.copyOf(patientIds).withCreated(clock.instant()))
                 .doOnNext(p -> logger.debug("Finished query `{}` returning {} patients in {} seconds.", query, p.size(),
                         "%.1f".formatted(durationSecondsSince(startNanoTime))))
                 .doOnError(e -> logger.error("Error while executing query `{}`: {}", query, e.getMessage()));
+    }
+
+    private static boolean shouldRetry(HttpStatusCode code) {
+        return code.is5xxServerError() || code.value() == 404;
     }
 
     private Mono<Bundle> fetchPage(String url) {
