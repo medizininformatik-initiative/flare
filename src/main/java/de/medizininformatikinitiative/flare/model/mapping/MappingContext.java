@@ -57,7 +57,7 @@ public class MappingContext {
      * Tries to find the {@link Mapping} with the given {@code key}.
      *
      * @param key the TermCode of the mapping
-     * @return either the Mapping or {@code Optional#empty() nothing}
+     * @return either the Mapping or an exception
      */
     public Either<Exception, Mapping> findMapping(TermCode key) {
         var mapping = mappings.get(requireNonNull(key));
@@ -65,10 +65,10 @@ public class MappingContext {
     }
 
     /**
-     * Expands {@code concept} into a {@link Either either} of {@link TermCode term codes}.
+     * Expands {@code concept} into an {@link Either either} of {@link TermCode term codes}.
      *
      * @param concept the concept to expand
-     * @return the mono of term codes
+     * @return either a list of term codes or an exception
      */
     public Either<Exception, List<TermCode>> expandConcept(Concept concept) {
         var termCodes = concept.termCodes().stream().flatMap(conceptTree::expand).toList();
