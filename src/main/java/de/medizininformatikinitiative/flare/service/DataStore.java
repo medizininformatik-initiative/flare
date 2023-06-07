@@ -20,6 +20,7 @@ import reactor.util.retry.Retry;
 import java.time.Clock;
 import java.time.Duration;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
 
@@ -61,7 +62,7 @@ public class DataStore implements FhirQueryService {
                         .filter(e -> e instanceof WebClientResponseException &&
                                 shouldRetry(((WebClientResponseException) e).getStatusCode())))
                 .flatMap(bundle -> Flux.fromStream(bundle.entry().stream().flatMap(e -> e.resource().patientId().stream())))
-                .collectList()
+                .collect(Collectors.toSet())
                 .map(patientIds -> Population.copyOf(patientIds).withCreated(clock.instant()))
                 .doOnNext(p -> logger.debug("Finished query `{}` returning {} patients in {} seconds.", query, p.size(),
                         "%.1f".formatted(durationSecondsSince(startNanoTime))))
