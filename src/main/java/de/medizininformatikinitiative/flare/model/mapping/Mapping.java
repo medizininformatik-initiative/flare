@@ -118,6 +118,7 @@ public final class Mapping {
         return timeRestrictionParameter;
     }
 
+    //TODO: type is not the common FilterType
     private record ValueFilterMapping(FilterType type, String searchParameter, TermCode key) implements FilterMapping {
 
         private static final TermCode AGE = TermCode.of("http://snomed.info/sct", "424144002", "age");
@@ -126,6 +127,11 @@ public final class Mapping {
             requireNonNull(type);
             requireNonNull(searchParameter);
             requireNonNull(key);
+        }
+
+        @Override
+        public Optional<TermCode> compositeCode() {
+            return Optional.empty();
         }
 
         @Override

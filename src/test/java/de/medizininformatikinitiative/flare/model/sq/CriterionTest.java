@@ -50,6 +50,9 @@ class CriterionTest {
     static final BigDecimal AGE_OF_5 = BigDecimal.valueOf(5);
     static final BigDecimal DECIMAL = BigDecimal.valueOf(5);
     static final TermCode GRAM_PER_DECILITER = new TermCode("http://unitsofmeasure.org", "g/dL", "g/dL");
+    static final TermCode COMPOSITE_CODE = new TermCode("http://loing.org", "8480-6", "Sistolic Bloodpressure");
+    static final TermCode BLOOD_PRESSURE = new TermCode("http://loing.org", "8480-6", "Systolischer Blutdruck");
+    public static final String COMPONENT_CODE_VALUE_QUANTITY = "component-code-value-quantity";
 
     @Mock
     MappingContext mappingContext;
@@ -216,7 +219,7 @@ class CriterionTest {
             void oneValueFilter_TwoConcepts_OneFixedCriteria_OneConcept() {
                 when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
                         .withValueFilterMapping(CODING, "value-concept")
-                        .withFixedCriteria(new FixedCriterion(FilterType.CODE, "status", List.of(FINAL)))));
+                        .withFixedCriteria(new FixedCriterion(FilterType.CODE, "status", List.of(FINAL), null))));
 
                 var criteria = Criterion.of(Concept.of(TERM_CODE), ValueFilter.ofConcept(MALE, FEMALE)).expand(mappingContext);
 
@@ -235,11 +238,12 @@ class CriterionTest {
                 when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
                         .withValueFilterMapping(CODING, "value-quantity")));
 
-                var criteria = Criterion.of(Concept.of(TERM_CODE), ValueFilter.ofComparator(LESS_THAN, DECIMAL, GRAM_PER_DECILITER))
-                        .expand(mappingContext);
+                var criteria = Criterion.of(Concept.of(TERM_CODE), ValueFilter.ofComparator(LESS_THAN,
+                                Quantity.of(DECIMAL, GRAM_PER_DECILITER))).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedComparatorFilter("value-quantity", LESS_THAN, DECIMAL, GRAM_PER_DECILITER))));
+                        .appendFilter(new ExpandedQuantityComparatorFilter("value-quantity", LESS_THAN,
+                                Quantity.of(DECIMAL, GRAM_PER_DECILITER)))));
             }
 
             @Test
@@ -248,11 +252,13 @@ class CriterionTest {
                 when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
                         .withValueFilterMapping(CODING, "value-quantity")));
 
-                var criteria = Criterion.of(Concept.of(TERM_CODE), ValueFilter.ofRange(DECIMAL_1, DECIMAL_2, GRAM_PER_DECILITER))
+                var criteria = Criterion.of(Concept.of(TERM_CODE), ValueFilter.ofRange(Quantity.of(DECIMAL_1,
+                                GRAM_PER_DECILITER), Quantity.of(DECIMAL_2, GRAM_PER_DECILITER)))
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_1, DECIMAL_2, GRAM_PER_DECILITER))));
+                        .appendFilter(new ExpandedQuantityRangeFilter("value-quantity", Quantity.of(DECIMAL_1,
+                                GRAM_PER_DECILITER), Quantity.of(DECIMAL_2, GRAM_PER_DECILITER)))));
             }
 
             @Test
@@ -286,7 +292,7 @@ class CriterionTest {
             @DisplayName("one fixed criteria with one concept")
             void oneFixedCriteria_OneConcept() {
                 when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
-                        .withFixedCriteria(new FixedCriterion(CODING, "verification-status", List.of(CONFIRMED)))));
+                        .withFixedCriteria(new FixedCriterion(CODING, "verification-status", List.of(CONFIRMED), null))));
 
                 var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext);
 
@@ -298,13 +304,70 @@ class CriterionTest {
             @DisplayName("one fixed criteria with two concepts")
             void oneFixedCriteria_TwoConcepts() {
                 when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
-                        .withFixedCriteria(new FixedCriterion(CODING, "verification-status", List.of(CONFIRMED, UNCONFIRMED)))));
+                        .withFixedCriteria(new FixedCriterion(CODING, "verification-status", List.of(CONFIRMED, UNCONFIRMED), null))));
 
                 var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
                         expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)),
                         expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED))));
+            }
+
+            @Test
+            @DisplayName("one composite-comparator filter")
+            void oneCompositeComparatorFilter() {
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
+                        .appendAttributeMapping(AttributeMapping.compositeComparator(BLOOD_PRESSURE,
+                                COMPONENT_CODE_VALUE_QUANTITY, COMPOSITE_CODE))));
+                var criteria = Criterion.of(Concept.of(TERM_CODE)).appendAttributeFilter(new AttributeFilter(
+                        BLOOD_PRESSURE, new QuantityComparatorFilterPart(GREATER_THAN, Quantity.of(DECIMAL,
+                        GRAM_PER_DECILITER)))).expand(mappingContext);
+
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedCompositeQuantityComparatorFilter(COMPONENT_CODE_VALUE_QUANTITY,
+                                COMPOSITE_CODE, GREATER_THAN, Quantity.of(DECIMAL, GRAM_PER_DECILITER)))));
+            }
+
+            @Test
+            @DisplayName("one composite-range filter")
+            void oneCompositeRangeFilter() {
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
+                        .appendAttributeMapping(AttributeMapping.compositeRange(BLOOD_PRESSURE,
+                                COMPONENT_CODE_VALUE_QUANTITY, COMPOSITE_CODE))));
+                var criteria = Criterion.of(Concept.of(TERM_CODE)).appendAttributeFilter(new AttributeFilter(
+                        BLOOD_PRESSURE, new QuantityRangeFilterPart(Quantity.of(DECIMAL_1, GRAM_PER_DECILITER),
+                        Quantity.of(DECIMAL_2, GRAM_PER_DECILITER)))).expand(mappingContext);
+
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedCompositeQuantityRangeFilter(COMPONENT_CODE_VALUE_QUANTITY,
+                                COMPOSITE_CODE, Quantity.of(DECIMAL_1, GRAM_PER_DECILITER), Quantity.of(DECIMAL_2,
+                                GRAM_PER_DECILITER)))));
+            }
+
+            @Test
+            @DisplayName("one composite-concept filter")
+            void oneCompositeConceptFilter() {
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
+                        .appendAttributeMapping(AttributeMapping.compositeConcept(BLOOD_PRESSURE,
+                                COMPONENT_CODE_VALUE_QUANTITY, COMPOSITE_CODE))));
+                var criteria = Criterion.of(Concept.of(TERM_CODE)).appendAttributeFilter(new AttributeFilter(
+                        BLOOD_PRESSURE, new ConceptFilterPart(List.of(TERM_CODE)))).expand(mappingContext);
+
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedCompositeConceptFilter(COMPONENT_CODE_VALUE_QUANTITY, COMPOSITE_CODE,
+                                TERM_CODE))));
+            }
+
+            @Test
+            @DisplayName("one composite-concept filter with wrong filter type in mapping")
+            void oneCompositeConceptFilter_WithWrongFilterType() {
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
+                        .appendAttributeMapping(AttributeMapping.compositeComparator(BLOOD_PRESSURE,
+                                COMPONENT_CODE_VALUE_QUANTITY, COMPOSITE_CODE))));
+                var criteria = Criterion.of(Concept.of(TERM_CODE)).appendAttributeFilter(new AttributeFilter(
+                        BLOOD_PRESSURE, new ConceptFilterPart(List.of(TERM_CODE)))).expand(mappingContext);
+
+                assertThat(criteria).isLeftInstanceOf(ConceptFilterTypeNotExpandableException.class);
             }
 
             @ParameterizedTest(name = "({0}]")
@@ -479,8 +542,8 @@ class CriterionTest {
                     when(mappingContext.findMapping(AGE)).thenReturn(Either.right(mapping));
                     when(mappingContext.today()).thenReturn(YEAR_2000);
 
-                    var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofComparator(EQUAL, AGE_OF_5, YEAR_UNIT))
-                            .expand(mappingContext);
+                    var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofComparator(EQUAL, Quantity.of(AGE_OF_5,
+                                    YEAR_UNIT))).expand(mappingContext);
 
                     assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
                             .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1994.plusDays(1), YEAR_1995))));
@@ -493,8 +556,8 @@ class CriterionTest {
                     when(mappingContext.findMapping(AGE)).thenReturn(Either.right(mapping));
                     when(mappingContext.today()).thenReturn(YEAR_2000);
 
-                    var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofComparator(comparator, AGE_OF_5, YEAR_UNIT))
-                            .expand(mappingContext);
+                    var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofComparator(comparator,
+                                    Quantity.of(AGE_OF_5, YEAR_UNIT))).expand(mappingContext);
 
                     assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
                             .appendFilter(new ExpandedDateComparatorFilter("birthdate", comparator.reverse(), YEAR_1995))));
@@ -506,8 +569,8 @@ class CriterionTest {
                     when(mappingContext.findMapping(AGE)).thenReturn(Either.right(mapping));
                     when(mappingContext.today()).thenReturn(YEAR_2000);
 
-                    var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofComparator(GREATER_THAN, AGE_OF_5,
-                            GRAM_PER_DECILITER)).expand(mappingContext);
+                    var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofComparator(GREATER_THAN,
+                            Quantity.of(AGE_OF_5, GRAM_PER_DECILITER))).expand(mappingContext);
 
                     assertThat(criterion).isLeftInstanceOf(CalculationException.class);
                 }
@@ -517,7 +580,7 @@ class CriterionTest {
                 void age_withComparator_WithoutUnit() {
                     when(mappingContext.findMapping(AGE)).thenReturn(Either.right(mapping));
 
-                    var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofComparator(GREATER_THAN, AGE_OF_5))
+                    var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofComparator(GREATER_THAN, Quantity.of(AGE_OF_5)))
                             .expand(mappingContext);
 
                     assertThat(criterion).isLeftInstanceOf(CalculationException.class);
@@ -529,7 +592,8 @@ class CriterionTest {
                     when(mappingContext.findMapping(AGE)).thenReturn(Either.right(mapping));
                     when(mappingContext.today()).thenReturn(YEAR_2000);
 
-                    var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofRange(AGE_OF_5, AGE_OF_10, YEAR_UNIT))
+                    var criterion = Criterion.of(Concept.of(AGE), ValueFilter.ofRange(Quantity.of(AGE_OF_5, YEAR_UNIT),
+                                    Quantity.of(AGE_OF_10, YEAR_UNIT)))
                             .expand(mappingContext);
 
                     assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
