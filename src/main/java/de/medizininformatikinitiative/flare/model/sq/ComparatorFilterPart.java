@@ -10,9 +10,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import static de.medizininformatikinitiative.flare.model.mapping.FilterType.COMPOSITE_QUANTITY_COMPARATOR;
 import static java.util.Objects.requireNonNull;
 
-public record ComparatorFilterPart(Comparator comparator, BigDecimal value, TermCode unit) implements FilterPart {
+public record ComparatorFilterPart(Comparator comparator, BigDecimal value, TermCode unit, TermCode attributeCode) implements FilterPart {
 
     public ComparatorFilterPart {
         requireNonNull(comparator);
@@ -27,7 +28,7 @@ public record ComparatorFilterPart(Comparator comparator, BigDecimal value, Term
      * @return the comparator filterPart
      */
     public static ComparatorFilterPart of(Comparator comparator, BigDecimal value) {
-        return new ComparatorFilterPart(comparator, value, null);
+        return new ComparatorFilterPart(comparator, value, null, null);
     }
 
     /**
@@ -39,7 +40,7 @@ public record ComparatorFilterPart(Comparator comparator, BigDecimal value, Term
      * @return the comparator filterPart
      */
     public static ComparatorFilterPart of(Comparator comparator, BigDecimal value, TermCode unit) {
-        return new ComparatorFilterPart(comparator, value, requireNonNull(unit));
+        return new ComparatorFilterPart(comparator, value, requireNonNull(unit), null);
     }
 
     @Override
@@ -49,6 +50,7 @@ public record ComparatorFilterPart(Comparator comparator, BigDecimal value, Term
                     ? Either.left(new CalculationException("Missing unit in age calculation."))
                     : AgeUtils.expandedAgeFilterFromComparator(today, comparator, value, unit);
         }
-        return Either.right(List.of(new ExpandedComparatorFilter(filterMapping.searchParameter(), comparator, value, unit)));
+        TermCode compositeCode = filterMapping.type() == COMPOSITE_QUANTITY_COMPARATOR ? filterMapping.compositeCode() : null;
+        return Either.right(List.of(new ExpandedComparatorFilter(filterMapping.searchParameter(), comparator, value, unit, compositeCode)));
     }
 }

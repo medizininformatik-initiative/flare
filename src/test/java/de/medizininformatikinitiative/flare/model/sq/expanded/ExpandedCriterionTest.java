@@ -37,6 +37,9 @@ class ExpandedCriterionTest {
     static final LocalDate LOCAL_DATE = LocalDate.of(1990, 10, 2);
     static final LocalDate LOCAL_DATE_1 = LocalDate.of(1990, 10, 2);
     static final LocalDate LOCAL_DATE_2 = LocalDate.of(2004, 4, 30);
+    static final TermCode COMPOSITE_CODE = new TermCode("http://loing.org", "8480-6", "Sistolic Bloodpressure");
+    public static final String COMPONENT_CODE_VALUE_QUANTITY = "component-code-value-quantity";
+    public static final String COMPONENT_CODE_VALUE_CONCEPT = "component-code-value-concept";
 
     @Test
     void toQuery() {
@@ -50,7 +53,7 @@ class ExpandedCriterionTest {
     @Test
     void toQuery_withOneConceptFilter() {
         var criterion = ExpandedCriterion.of("Condition", "code", C71_1)
-                .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED));
+                .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null));
 
         var query = criterion.toQuery();
 
@@ -62,8 +65,8 @@ class ExpandedCriterionTest {
     @Test
     void toQuery_withTwoConceptFilters() {
         var criterion = ExpandedCriterion.of("Condition", "code", C71_1)
-                .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED))
-                .appendFilter(new ExpandedConceptFilter("severity", SEVERE));
+                .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null))
+                .appendFilter(new ExpandedConceptFilter("severity", SEVERE, null));
 
         var query = criterion.toQuery();
 
@@ -77,83 +80,150 @@ class ExpandedCriterionTest {
     @EnumSource
     void toQuery_withOneComparatorFilter(Comparator comparator) {
         var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
-                .appendFilter(new ExpandedComparatorFilter("value-quantity", comparator, DECIMAL_1, UNIT));
+                .appendFilter(new ExpandedComparatorFilter("value-quantity", comparator, DECIMAL_1, UNIT, null));
 
         var query = criterion.toQuery();
 
         assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
                 .appendParam("code", CORTISOL)
-                .appendParam("value-quantity", comparator, DECIMAL_1, UNIT)));
+                .appendParam("value-quantity", comparator, DECIMAL_1, UNIT, null)));
     }
 
     @ParameterizedTest
     @EnumSource
     void toQuery_withOneComparatorFilter_withoutUnit(Comparator comparator) {
         var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
-                .appendFilter(new ExpandedComparatorFilter("value-quantity", comparator, DECIMAL_1, null));
+                .appendFilter(new ExpandedComparatorFilter("value-quantity", comparator, DECIMAL_1, null, null));
 
         var query = criterion.toQuery();
 
         assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
                 .appendParam("code", CORTISOL)
-                .appendParam("value-quantity", comparator, DECIMAL_1, null)));
+                .appendParam("value-quantity", comparator, DECIMAL_1, null, null)));
     }
 
     @ParameterizedTest
     @MethodSource("arityTwoComparatorArgumentProvider")
     void toQuery_withTwoComparatorFilters(Comparator comparator1, Comparator comparator2) {
         var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
-                .appendFilter(new ExpandedComparatorFilter("value-quantity", comparator1, DECIMAL_1, UNIT))
-                .appendFilter(new ExpandedComparatorFilter("value-quantity", comparator2, DECIMAL_2, UNIT));
+                .appendFilter(new ExpandedComparatorFilter("value-quantity", comparator1, DECIMAL_1, UNIT, null))
+                .appendFilter(new ExpandedComparatorFilter("value-quantity", comparator2, DECIMAL_2, UNIT, null));
 
         var query = criterion.toQuery();
 
         assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
                 .appendParam("code", CORTISOL)
-                .appendParam("value-quantity", comparator1, DECIMAL_1, UNIT)
-                .appendParam("value-quantity", comparator2, DECIMAL_2, UNIT)));
+                .appendParam("value-quantity", comparator1, DECIMAL_1, UNIT, null)
+                .appendParam("value-quantity", comparator2, DECIMAL_2, UNIT, null)));
     }
 
     @Test
     void toQuery_withOneRangeFilter() {
         var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
-                .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_LB, DECIMAL_UB, UNIT));
+                .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_LB, DECIMAL_UB, UNIT, null));
 
         var query = criterion.toQuery();
 
         assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
                 .appendParam("code", CORTISOL)
-                .appendParam("value-quantity", GREATER_EQUAL, DECIMAL_LB, UNIT)
-                .appendParam("value-quantity", LESS_EQUAL, DECIMAL_UB, UNIT)));
+                .appendParam("value-quantity", GREATER_EQUAL, DECIMAL_LB, UNIT, null)
+                .appendParam("value-quantity", LESS_EQUAL, DECIMAL_UB, UNIT, null)));
     }
 
     @Test
     void toQuery_withOneRangeFilter_withoutUnit() {
         var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
-                .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_LB, DECIMAL_UB, null));
+                .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_LB, DECIMAL_UB, null, null));
 
         var query = criterion.toQuery();
 
         assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
                 .appendParam("code", CORTISOL)
-                .appendParam("value-quantity", GREATER_EQUAL, DECIMAL_LB, null)
-                .appendParam("value-quantity", LESS_EQUAL, DECIMAL_UB, null)));
+                .appendParam("value-quantity", GREATER_EQUAL, DECIMAL_LB, null, null)
+                .appendParam("value-quantity", LESS_EQUAL, DECIMAL_UB, null, null)));
     }
 
     @Test
     void toQuery_withTowRangeFilters() {
         var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
-                .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_LB_1, DECIMAL_UB_1, UNIT))
-                .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_LB_2, DECIMAL_UB_2, UNIT));
+                .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_LB_1, DECIMAL_UB_1, UNIT, null))
+                .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_LB_2, DECIMAL_UB_2, UNIT, null));
 
         var query = criterion.toQuery();
 
         assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
                 .appendParam("code", CORTISOL)
-                .appendParam("value-quantity", GREATER_EQUAL, DECIMAL_LB_1, UNIT)
-                .appendParam("value-quantity", LESS_EQUAL, DECIMAL_UB_1, UNIT)
-                .appendParam("value-quantity", GREATER_EQUAL, DECIMAL_LB_2, UNIT)
-                .appendParam("value-quantity", LESS_EQUAL, DECIMAL_UB_2, UNIT)));
+                .appendParam("value-quantity", GREATER_EQUAL, DECIMAL_LB_1, UNIT, null)
+                .appendParam("value-quantity", LESS_EQUAL, DECIMAL_UB_1, UNIT, null)
+                .appendParam("value-quantity", GREATER_EQUAL, DECIMAL_LB_2, UNIT, null)
+                .appendParam("value-quantity", LESS_EQUAL, DECIMAL_UB_2, UNIT, null)));
+    }
+
+    @ParameterizedTest
+    @EnumSource
+    void toQuery_withOneCompositeComparatorFilter(Comparator comparator) {
+        var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
+                .appendFilter(new ExpandedComparatorFilter(COMPONENT_CODE_VALUE_QUANTITY, comparator, DECIMAL_1, UNIT, COMPOSITE_CODE));
+
+        var query = criterion.toQuery();
+
+        assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
+                .appendParam("code", CORTISOL)
+                .appendParam(COMPONENT_CODE_VALUE_QUANTITY, comparator, DECIMAL_1, UNIT, COMPOSITE_CODE)));
+    }
+
+    @ParameterizedTest
+    @EnumSource
+    void toQuery_withTwoCompositeComparatorFilters(Comparator comparator) {
+        var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
+                .appendFilter(new ExpandedComparatorFilter(COMPONENT_CODE_VALUE_QUANTITY, comparator, DECIMAL_1, UNIT, COMPOSITE_CODE))
+                .appendFilter(new ExpandedComparatorFilter(COMPONENT_CODE_VALUE_QUANTITY, comparator, DECIMAL_2, UNIT, COMPOSITE_CODE));
+
+        var query = criterion.toQuery();
+
+        assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
+                .appendParam("code", CORTISOL)
+                .appendParam(COMPONENT_CODE_VALUE_QUANTITY, comparator, DECIMAL_1, UNIT, COMPOSITE_CODE)
+                .appendParam(COMPONENT_CODE_VALUE_QUANTITY, comparator, DECIMAL_2, UNIT, COMPOSITE_CODE)));
+    }
+
+    @Test
+    void toQuery_withOneCompositeRangeFilter() {
+        var criterion = ExpandedCriterion.of("Observation", "code", CORTISOL)
+                .appendFilter(new ExpandedRangeFilter(COMPONENT_CODE_VALUE_QUANTITY, DECIMAL_1, DECIMAL_2, UNIT, COMPOSITE_CODE));
+
+        var query = criterion.toQuery();
+
+        assertThat(query).isEqualTo(Query.of("Observation", QueryParams.EMPTY
+                .appendParam("code", CORTISOL)
+                .appendParam(COMPONENT_CODE_VALUE_QUANTITY, GREATER_EQUAL, DECIMAL_1, UNIT, COMPOSITE_CODE)
+                .appendParam(COMPONENT_CODE_VALUE_QUANTITY, LESS_EQUAL, DECIMAL_2, UNIT, COMPOSITE_CODE)));
+    }
+
+    @Test
+    void toQuery_withOneCompositeConceptFilter(){
+        var criterion = ExpandedCriterion.of("Condition", "code", C71_1)
+                .appendFilter(new ExpandedConceptFilter(COMPONENT_CODE_VALUE_CONCEPT, CONFIRMED, COMPOSITE_CODE));
+
+        var query = criterion.toQuery();
+
+        assertThat(query).isEqualTo(Query.of("Condition", QueryParams.EMPTY
+                .appendParam("code", C71_1)
+                .appendParam(COMPONENT_CODE_VALUE_CONCEPT, CONFIRMED, COMPOSITE_CODE)));
+    }
+
+    @Test
+    void toQuery_withTwoCompositeConceptFilters(){
+        var criterion = ExpandedCriterion.of("Condition", "code", C71_1)
+                .appendFilter(new ExpandedConceptFilter(COMPONENT_CODE_VALUE_CONCEPT, CONFIRMED, COMPOSITE_CODE))
+                .appendFilter(new ExpandedConceptFilter(COMPONENT_CODE_VALUE_CONCEPT, SEVERE, COMPOSITE_CODE));
+
+        var query = criterion.toQuery();
+
+        assertThat(query).isEqualTo(Query.of("Condition", QueryParams.EMPTY
+                .appendParam("code", C71_1)
+                .appendParam(COMPONENT_CODE_VALUE_CONCEPT, CONFIRMED, COMPOSITE_CODE)
+                .appendParam(COMPONENT_CODE_VALUE_CONCEPT, SEVERE, COMPOSITE_CODE)));
     }
 
     @ParameterizedTest

@@ -33,6 +33,10 @@ public record QueryParams(List<Param> params) {
         return EMPTY.appendParam(requireNonNull(name), requireNonNull(termCode));
     }
 
+    public static QueryParams of(String name, TermCode termCode,TermCode compositeCode) {
+        return EMPTY.appendParam(requireNonNull(name), requireNonNull(termCode), compositeCode);
+    }
+
     /**
      * Appends a param with {@code name} and {@code value}.
      *
@@ -44,6 +48,19 @@ public record QueryParams(List<Param> params) {
         var sb = new LinkedList<>(this.params);
         sb.add(new Param(name, value));
         return new QueryParams(sb);
+    }
+
+    /**
+     * Appends a param with {@code name} and {@code value}.
+     *
+     * @param name          the name of the query parameter
+     * @param value         the value of the query parameter
+     * @param compositeCode the compositeCode that should be prepended to the query
+     * @return the {@code QueryParams} resulting in appending the param
+     */
+    public QueryParams appendParam(String name, String value, TermCode compositeCode) {
+        String compCodeAttachment = compositeCode == null ? "" : compositeCode.system() + "|" + compositeCode.code() + "$";
+        return appendParam(name, compCodeAttachment + value);
     }
 
     /**
@@ -61,17 +78,33 @@ public record QueryParams(List<Param> params) {
     }
 
     /**
-     * Appends a param with {@code name} and a value that the resources should be compared with in the end.
+     * Appends a param with {@code name} and a token generated from {@code termCode}.
+     * <p>
+     * The token is build by joining the {@link TermCode#system() system} and the {@link TermCode#code() code} from
+     * {@code termCode} with a {@code |} character.
      *
-     * @param name       the name of the query parameter
-     * @param comparator the {@link Comparator} to use as prefix
-     * @param value      the value that should be compared
-     * @param unit       the unit of the {@code value}
+     * @param name          the name of the query parameter
+     * @param termCode      the {@link TermCode} to use as value of the query parameter
+     * @param compositeCode the Composite Code that should be prepended to the query
      * @return the {@code QueryParams} resulting in appending the param
      */
-    public QueryParams appendParam(String name, Comparator comparator, BigDecimal value, TermCode unit) {
+    public QueryParams appendParam(String name, TermCode termCode, TermCode compositeCode) {
+        return appendParam(name, termCode.system() + "|" + termCode.code(), compositeCode);
+    }
+
+    /**
+     * Appends a param with {@code name} and a value that the resources should be compared with in the end.
+     *
+     * @param name          the name of the query parameter
+     * @param comparator    the {@link Comparator} to use as prefix
+     * @param value         the value that should be compared
+     * @param unit          the unit of the {@code value}
+     * @param compositeCode the Composite Code that should be prepended to the query
+     * @return the {@code QueryParams} resulting in appending the param
+     */
+    public QueryParams appendParam(String name, Comparator comparator, BigDecimal value, TermCode unit, TermCode compositeCode) {
         String unitAttachment = unit == null ? "" : "|" + unit.system() + "|" + unit.code();
-        return appendParam(name, comparator.toString() + requireNonNull(value) + unitAttachment);
+        return appendParam(name, comparator.toString() + requireNonNull(value) + unitAttachment, compositeCode);
     }
 
     /**
@@ -103,7 +136,7 @@ public record QueryParams(List<Param> params) {
         return params.stream().map(Param::toString).collect(Collectors.joining("&"));
     }
 
-    private record Param(String name, String value) {
+    public record Param(String name, String value) {
 
         @Override
         public String toString() {

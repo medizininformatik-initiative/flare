@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import static de.medizininformatikinitiative.flare.model.mapping.FilterType.COMPOSITE_QUANTITY_COMPARATOR;
+import static de.medizininformatikinitiative.flare.model.mapping.FilterType.COMPOSITE_QUANTITY_RANGE;
 import static java.util.Objects.requireNonNull;
 
 public record RangeFilterPart(BigDecimal lowerBound, BigDecimal upperBound, TermCode unit) implements FilterPart {
@@ -32,6 +34,7 @@ public record RangeFilterPart(BigDecimal lowerBound, BigDecimal upperBound, Term
         if (filterMapping.isAge()) {
             return AgeUtils.expandedAgeFilterFromRange(today, lowerBound, upperBound, unit);
         }
-        return Either.right(List.of(new ExpandedRangeFilter(filterMapping.searchParameter(), lowerBound, upperBound, unit)));
+        TermCode compositeCode = filterMapping.type() == COMPOSITE_QUANTITY_RANGE ? filterMapping.compositeCode() : null;
+        return Either.right(List.of(new ExpandedRangeFilter(filterMapping.searchParameter(), lowerBound, upperBound, unit, compositeCode)));
     }
 }

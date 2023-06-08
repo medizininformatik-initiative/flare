@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 import static java.util.Objects.requireNonNull;
 
-public record ExpandedComparatorFilter(String searchParameter, Comparator comparator, BigDecimal value, TermCode unit)
+public record ExpandedComparatorFilter(String searchParameter, Comparator comparator, BigDecimal value, TermCode unit, TermCode compositeCode)
         implements ExpandedFilter {
 
     public ExpandedComparatorFilter {
@@ -19,6 +19,6 @@ public record ExpandedComparatorFilter(String searchParameter, Comparator compar
 
     @Override
     public QueryParams toParams() {
-        return QueryParams.EMPTY.appendParam(searchParameter, comparator, value, unit);
+        return QueryParams.EMPTY.appendParam(searchParameter, comparator, value, unit, compositeCode);
     }
 }

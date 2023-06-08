@@ -50,6 +50,9 @@ class CriterionTest {
     static final BigDecimal AGE_OF_5 = BigDecimal.valueOf(5);
     static final BigDecimal DECIMAL = BigDecimal.valueOf(5);
     static final TermCode GRAM_PER_DECILITER = new TermCode("http://unitsofmeasure.org", "g/dL", "g/dL");
+    static final TermCode COMPOSITE_CODE = new TermCode("http://loing.org", "8480-6", "Sistolic Bloodpressure");
+    static final TermCode BLOOD_PRESSURE = new TermCode("http://loing.org", "8480-6", "Systolischer Blutdruck");
+    public static final String COMPONENT_CODE_VALUE_QUANTITY = "component-code-value-quantity";
 
     @Mock
     MappingContext mappingContext;
@@ -178,7 +181,7 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE))));
+                        .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE, null))));
             }
 
             @Test
@@ -193,7 +196,7 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE))
+                        .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE, null))
                         .appendFilter(new ExpandedCodeFilter("status", "final"))));
             }
 
@@ -207,8 +210,8 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("value-concept", MALE)),
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("value-concept", FEMALE))));
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("value-concept", MALE, null)),
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("value-concept", FEMALE, null))));
             }
 
             @Test
@@ -216,17 +219,17 @@ class CriterionTest {
             void oneValueFilter_TwoConcepts_OneFixedCriteria_OneConcept() {
                 when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
                         .withValueFilterMapping(CODING, "value-concept")
-                        .withFixedCriteria(new FixedCriterion(FilterType.CODE, "status", List.of(FINAL)))));
+                        .withFixedCriteria(new FixedCriterion(FilterType.CODE, "status", List.of(FINAL), null))));
 
                 var criteria = Criterion.of(Concept.of(TERM_CODE), ValueFilter.ofConcept(MALE, FEMALE)).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
                         expandedCriterion
                                 .appendFilter(new ExpandedCodeFilter("status", "final"))
-                                .appendFilter(new ExpandedConceptFilter("value-concept", MALE)),
+                                .appendFilter(new ExpandedConceptFilter("value-concept", MALE, null)),
                         expandedCriterion
                                 .appendFilter(new ExpandedCodeFilter("status", "final"))
-                                .appendFilter(new ExpandedConceptFilter("value-concept", FEMALE))));
+                                .appendFilter(new ExpandedConceptFilter("value-concept", FEMALE, null))));
             }
 
             @Test
@@ -239,7 +242,7 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedComparatorFilter("value-quantity", LESS_THAN, DECIMAL, GRAM_PER_DECILITER))));
+                        .appendFilter(new ExpandedComparatorFilter("value-quantity", LESS_THAN, DECIMAL, GRAM_PER_DECILITER, null))));
             }
 
             @Test
@@ -252,7 +255,7 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_1, DECIMAL_2, GRAM_PER_DECILITER))));
+                        .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_1, DECIMAL_2, GRAM_PER_DECILITER, null))));
             }
 
             @Test
@@ -265,7 +268,7 @@ class CriterionTest {
                         VERIFICATION_STATUS, CONFIRMED)).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED))));
+                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null))));
             }
 
             @Test
@@ -278,33 +281,84 @@ class CriterionTest {
                         VERIFICATION_STATUS, CONFIRMED, UNCONFIRMED)).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)),
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED))));
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null)),
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED, null))));
             }
 
             @Test
             @DisplayName("one fixed criteria with one concept")
             void oneFixedCriteria_OneConcept() {
                 when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
-                        .withFixedCriteria(new FixedCriterion(CODING, "verification-status", List.of(CONFIRMED)))));
+                        .withFixedCriteria(new FixedCriterion(CODING, "verification-status", List.of(CONFIRMED), null))));
 
                 var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED))));
+                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null))));
             }
 
             @Test
             @DisplayName("one fixed criteria with two concepts")
             void oneFixedCriteria_TwoConcepts() {
                 when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
-                        .withFixedCriteria(new FixedCriterion(CODING, "verification-status", List.of(CONFIRMED, UNCONFIRMED)))));
+                        .withFixedCriteria(new FixedCriterion(CODING, "verification-status", List.of(CONFIRMED, UNCONFIRMED), null))));
 
                 var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)),
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED))));
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null)),
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED, null))));
+            }
+
+            @Test
+            @DisplayName("one composite-comparator filter")
+            void oneCompositeComparatorFilter() {
+               when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
+                       .appendAttributeMapping(AttributeMapping.compositeComparator(BLOOD_PRESSURE, COMPONENT_CODE_VALUE_QUANTITY,
+                                                                                   COMPOSITE_CODE))));
+                var criteria = Criterion.of(Concept.of(TERM_CODE)).appendAttributeFilter(new AttributeFilter(BLOOD_PRESSURE,
+                        new ComparatorFilterPart(GREATER_THAN, DECIMAL, GRAM_PER_DECILITER, BLOOD_PRESSURE))).expand(mappingContext);
+
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedComparatorFilter(COMPONENT_CODE_VALUE_QUANTITY, GREATER_THAN, DECIMAL, GRAM_PER_DECILITER, COMPOSITE_CODE))));
+            }
+
+            @Test
+            @DisplayName("one composite-range filter")
+            void oneCompositeRangeFilter() {
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
+                        .appendAttributeMapping(AttributeMapping.compositeRange(BLOOD_PRESSURE, COMPONENT_CODE_VALUE_QUANTITY,
+                                COMPOSITE_CODE))));
+                var criteria = Criterion.of(Concept.of(TERM_CODE)).appendAttributeFilter(new AttributeFilter(BLOOD_PRESSURE,
+                        new RangeFilterPart(DECIMAL_1, DECIMAL_2, GRAM_PER_DECILITER))).expand(mappingContext);
+
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedRangeFilter(COMPONENT_CODE_VALUE_QUANTITY, DECIMAL_1, DECIMAL_2, GRAM_PER_DECILITER, COMPOSITE_CODE))));
+            }
+
+            @Test
+            @DisplayName("one composite-concept filter")
+            void oneCompositeConceptFilter() {
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
+                        .appendAttributeMapping(AttributeMapping.compositeConcept(BLOOD_PRESSURE, COMPONENT_CODE_VALUE_QUANTITY,
+                                COMPOSITE_CODE))));
+                var criteria = Criterion.of(Concept.of(TERM_CODE)).appendAttributeFilter(new AttributeFilter(BLOOD_PRESSURE,
+                        new ConceptFilterPart(List.of(TERM_CODE)))).expand(mappingContext);
+
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedConceptFilter(COMPONENT_CODE_VALUE_QUANTITY, TERM_CODE, COMPOSITE_CODE))));
+            }
+
+            @Test
+            @DisplayName("one composite-concept filter with wrong filter type in mapping")
+            void oneCompositeConceptFilter_WithWrongFilterType() {
+                when(mappingContext.findMapping(TERM_CODE)).thenReturn(Either.right(mapping
+                        .appendAttributeMapping(AttributeMapping.compositeComparator(BLOOD_PRESSURE, COMPONENT_CODE_VALUE_QUANTITY,
+                                COMPOSITE_CODE))));
+                var criteria = Criterion.of(Concept.of(TERM_CODE)).appendAttributeFilter(new AttributeFilter(BLOOD_PRESSURE,
+                        new ConceptFilterPart(List.of(TERM_CODE)))).expand(mappingContext);
+
+                assertThat(criteria).isLeftInstanceOf(ConceptFilterTypeNotExpandableException.class);
             }
 
             @ParameterizedTest(name = "({0}]")
@@ -408,10 +462,10 @@ class CriterionTest {
                         VERIFICATION_STATUS, CONFIRMED, UNCONFIRMED)).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
-                        expandedCriterion1.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)),
-                        expandedCriterion1.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED)),
-                        expandedCriterion2.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)),
-                        expandedCriterion2.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED))));
+                        expandedCriterion1.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null)),
+                        expandedCriterion1.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED, null)),
+                        expandedCriterion2.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null)),
+                        expandedCriterion2.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED, null))));
             }
         }
 
