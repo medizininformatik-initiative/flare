@@ -8,7 +8,8 @@ import java.time.LocalDate;
 import static de.medizininformatikinitiative.flare.model.fhir.QueryParams.dateValue;
 import static java.util.Objects.requireNonNull;
 
-public record ExpandedDateComparatorFilter(String searchParameter, Comparator comparator, LocalDate value)
+public record ExpandedDateComparatorFilter(String searchParameter, Comparator comparator, LocalDate value,
+                                           String referenceSearchParam)
         implements ExpandedFilter {
 
     public ExpandedDateComparatorFilter {
@@ -19,6 +20,6 @@ public record ExpandedDateComparatorFilter(String searchParameter, Comparator co
 
     @Override
     public QueryParams toParams() {
-        return QueryParams.EMPTY.appendParam(searchParameter, dateValue(comparator, value));
+        return QueryParams.EMPTY.appendParam(searchParameter, dateValue(comparator, value), referenceSearchParam);
     }
 }

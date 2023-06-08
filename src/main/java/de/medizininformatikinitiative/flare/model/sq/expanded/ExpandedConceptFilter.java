@@ -12,7 +12,8 @@ import static java.util.Objects.requireNonNull;
  * @param searchParameter the FHIR search parameter code to use for the value
  * @param value           the concept to search for
  */
-public record ExpandedConceptFilter(String searchParameter, TermCode value) implements ExpandedFilter {
+public record ExpandedConceptFilter(String searchParameter, TermCode value,
+                                    String referenceSearchParam) implements ExpandedFilter {
 
     public ExpandedConceptFilter {
         requireNonNull(searchParameter);
@@ -21,6 +22,6 @@ public record ExpandedConceptFilter(String searchParameter, TermCode value) impl
 
     @Override
     public QueryParams toParams() {
-        return QueryParams.of(searchParameter, conceptValue(value));
+        return QueryParams.of(searchParameter, conceptValue(value), referenceSearchParam);
     }
 }

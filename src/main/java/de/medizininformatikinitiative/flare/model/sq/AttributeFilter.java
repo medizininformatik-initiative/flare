@@ -40,7 +40,7 @@ public record AttributeFilter(TermCode code, FilterPart filterPart) implements F
     }
 
     @Override
-    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, Mapping mapping) {
-        return mapping.findAttributeMapping(code).flatMap(filterMapping -> filterPart.expand(today, filterMapping));
+    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, Mapping mapping, String referenceSearchParam) {
+        return mapping.findAttributeMapping(code).flatMap(filterMapping -> filterPart.expand(today, filterMapping, referenceSearchParam));
     }
 }

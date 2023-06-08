@@ -47,9 +47,9 @@ public record ValueFilter(FilterPart filterPart) implements Filter {
     }
 
     @Override
-    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, Mapping mapping) {
+    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, Mapping mapping, String referenceSearchParam) {
         return mapping.valueFilterMapping()
-                .map(filterMapping -> filterPart.expand(today, filterMapping))
+                .map(filterMapping -> filterPart.expand(today, filterMapping, referenceSearchParam))
                 .orElseGet(() -> Either.left(new ValueMappingNotFoundException(mapping.key())));
     }
 }

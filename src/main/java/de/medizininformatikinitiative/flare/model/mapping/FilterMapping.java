@@ -29,30 +29,30 @@ public interface FilterMapping {
      */
     boolean isAge();
 
-    Either<Exception, ExpandedFilter> expandConcept(TermCode concept);
+    Either<Exception, ExpandedFilter> expandConcept(TermCode concept, String referenceSearchParameter);
 
-    default Either<Exception, List<ExpandedFilter>> expandComparatorFilterPart(LocalDate today, Comparator comparator, Quantity value) {
+    default Either<Exception, List<ExpandedFilter>> expandComparatorFilterPart(LocalDate today, Comparator comparator, Quantity value, String referenceSearchParameter) {
         if (isAge()) {
             return (value instanceof Quantity.Unitless)
                     ? Either.left(new CalculationException("Missing unit in age calculation."))
-                    : AgeUtils.expandedAgeFilterFromComparator(today, comparator, (Quantity.WithUnit) value);
+                    : AgeUtils.expandedAgeFilterFromComparator(today, comparator, (Quantity.WithUnit) value, referenceSearchParameter);
         }
         return Either.right(List.of(compositeCode()
                 .map(compositeCode -> (ExpandedFilter) new ExpandedCompositeQuantityComparatorFilter(
-                        searchParameter(), compositeCode, comparator, value))
-                .orElse(new ExpandedQuantityComparatorFilter(searchParameter(), comparator, value))));
+                        searchParameter(), compositeCode, comparator, value, referenceSearchParameter))
+                .orElse(new ExpandedQuantityComparatorFilter(searchParameter(), comparator, value, referenceSearchParameter))));
     }
 
-    default Either<Exception, List<ExpandedFilter>> expandRangeFilterPart(LocalDate today, Quantity lowerBound, Quantity upperBound) {
+    default Either<Exception, List<ExpandedFilter>> expandRangeFilterPart(LocalDate today, Quantity lowerBound, Quantity upperBound, String referenceSearchParameter) {
         if (isAge()) {
             return (lowerBound instanceof Quantity.Unitless || upperBound instanceof Quantity.Unitless)
                     ? Either.left(new CalculationException("Missing unit in age calculation."))
                     : AgeUtils.expandedAgeFilterFromRange(today, (Quantity.WithUnit) lowerBound,
-                    (Quantity.WithUnit) upperBound);
+                    (Quantity.WithUnit) upperBound, referenceSearchParameter);
         }
         return Either.right(List.of(compositeCode()
                 .map(compositeCode -> (ExpandedFilter) new ExpandedCompositeQuantityRangeFilter(
-                        searchParameter(), compositeCode, lowerBound, upperBound))
-                .orElse(new ExpandedQuantityRangeFilter(searchParameter(), lowerBound, upperBound))));
+                        searchParameter(), compositeCode, lowerBound, upperBound, referenceSearchParameter))
+                .orElse(new ExpandedQuantityRangeFilter(searchParameter(), lowerBound, upperBound, referenceSearchParameter))));
     }
 }

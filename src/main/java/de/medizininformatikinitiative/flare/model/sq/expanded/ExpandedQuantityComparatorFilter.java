@@ -7,7 +7,8 @@ import de.medizininformatikinitiative.flare.model.sq.Quantity;
 import static de.medizininformatikinitiative.flare.model.fhir.QueryParams.quantityValue;
 import static java.util.Objects.requireNonNull;
 
-public record ExpandedQuantityComparatorFilter(String searchParameter, Comparator comparator, Quantity value)
+public record ExpandedQuantityComparatorFilter(String searchParameter, Comparator comparator, Quantity value,
+                                               String referenceSearchParam)
         implements ExpandedFilter {
 
     public ExpandedQuantityComparatorFilter {
@@ -18,6 +19,6 @@ public record ExpandedQuantityComparatorFilter(String searchParameter, Comparato
 
     @Override
     public QueryParams toParams() {
-        return QueryParams.EMPTY.appendParam(searchParameter, quantityValue(comparator, value));
+        return QueryParams.EMPTY.appendParam(searchParameter, quantityValue(comparator, value), referenceSearchParam);
     }
 }

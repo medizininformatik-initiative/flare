@@ -15,9 +15,10 @@ public interface Filter {
      * Filter expansion creates one expanded filter for each concept of a {@link ConceptFilterPart concept filter part}.
      * Filters with other filter parts expand to one expanded filter.
      *
-     * @param today   the current day used for date/time calculations
-     * @param mapping the mapping to use for expansion
+     * @param today                the current day used for date/time calculations
+     * @param mapping              the mapping to use for expansion
+     * @param referenceSearchParam the referenceSearchParam when the Filter comes from a Reference Criterion
      * @return possibly multiple expanded filters
      */
-    Either<Exception, List<ExpandedFilter>> expand(LocalDate today, Mapping mapping);
+    Either<Exception, List<ExpandedFilter>> expand(LocalDate today, Mapping mapping, String referenceSearchParam);
 }

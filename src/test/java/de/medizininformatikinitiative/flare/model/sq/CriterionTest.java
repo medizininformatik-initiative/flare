@@ -64,6 +64,10 @@ class CriterionTest {
         static final TermCode C71 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "C71",
                 "Malignant neoplasm of brain");
 
+        static Criterion parse(String s) throws JsonProcessingException {
+            return new ObjectMapper().readValue(s, Criterion.class);
+        }
+
         @Test
         @DisplayName("concept only")
         void conceptOnly() throws Exception {
@@ -104,10 +108,6 @@ class CriterionTest {
             assertThat(criterion).isEqualTo(Criterion.of(Concept.of(C71))
                     .appendTimeRestrictionFilter(new TimeRestriction.Interval(LocalDate.of(2021, 9, 9),
                             LocalDate.of(2021, 10, 9))));
-        }
-
-        static Criterion parse(String s) throws JsonProcessingException {
-            return new ObjectMapper().readValue(s, Criterion.class);
         }
     }
 
@@ -188,7 +188,7 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE))));
+                        .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE, null))));
             }
 
             @Test
@@ -203,8 +203,8 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE))
-                        .appendFilter(new ExpandedCodeFilter("status", "final"))));
+                        .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE, null))
+                        .appendFilter(new ExpandedCodeFilter("status", "final", null))));
             }
 
             @Test
@@ -217,8 +217,8 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("value-concept", MALE)),
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("value-concept", FEMALE))));
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("value-concept", MALE, null)),
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("value-concept", FEMALE, null))));
             }
 
             @Test
@@ -232,11 +232,11 @@ class CriterionTest {
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
                         expandedCriterion
-                                .appendFilter(new ExpandedCodeFilter("status", "final"))
-                                .appendFilter(new ExpandedConceptFilter("value-concept", MALE)),
+                                .appendFilter(new ExpandedCodeFilter("status", "final", null))
+                                .appendFilter(new ExpandedConceptFilter("value-concept", MALE, null)),
                         expandedCriterion
-                                .appendFilter(new ExpandedCodeFilter("status", "final"))
-                                .appendFilter(new ExpandedConceptFilter("value-concept", FEMALE))));
+                                .appendFilter(new ExpandedCodeFilter("status", "final", null))
+                                .appendFilter(new ExpandedConceptFilter("value-concept", FEMALE, null))));
             }
 
             @Test
@@ -250,7 +250,7 @@ class CriterionTest {
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
                         .appendFilter(new ExpandedQuantityComparatorFilter("value-quantity", LESS_THAN,
-                                Quantity.of(DECIMAL, GRAM_PER_DECILITER)))));
+                                Quantity.of(DECIMAL, GRAM_PER_DECILITER), null))));
             }
 
             @Test
@@ -265,7 +265,7 @@ class CriterionTest {
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
                         .appendFilter(new ExpandedQuantityRangeFilter("value-quantity", Quantity.of(DECIMAL_1,
-                                GRAM_PER_DECILITER), Quantity.of(DECIMAL_2, GRAM_PER_DECILITER)))));
+                                GRAM_PER_DECILITER), Quantity.of(DECIMAL_2, GRAM_PER_DECILITER), null))));
             }
 
             @Test
@@ -278,7 +278,7 @@ class CriterionTest {
                         VERIFICATION_STATUS, CONFIRMED)).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED))));
+                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null))));
             }
 
             @Test
@@ -291,8 +291,8 @@ class CriterionTest {
                         VERIFICATION_STATUS, CONFIRMED, UNCONFIRMED)).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)),
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED))));
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null)),
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED, null))));
             }
 
             @Test
@@ -304,7 +304,7 @@ class CriterionTest {
                 var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED))));
+                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null))));
             }
 
             @Test
@@ -316,8 +316,8 @@ class CriterionTest {
                 var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)),
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED))));
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null)),
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED, null))));
             }
 
             @Test
@@ -329,7 +329,7 @@ class CriterionTest {
                 var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedCompositeConceptFilter("verification-status", COMPOSITE_CODE, CONFIRMED))));
+                        .appendFilter(new ExpandedCompositeConceptFilter("verification-status", COMPOSITE_CODE, CONFIRMED, null))));
             }
 
             @Test
@@ -345,7 +345,7 @@ class CriterionTest {
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
                         .appendFilter(new ExpandedCompositeQuantityComparatorFilter(COMPONENT_CODE_VALUE_QUANTITY,
-                                COMPOSITE_CODE, GREATER_THAN, Quantity.of(DECIMAL, GRAM_PER_DECILITER)))));
+                                COMPOSITE_CODE, GREATER_THAN, Quantity.of(DECIMAL, GRAM_PER_DECILITER), null))));
             }
 
             @Test
@@ -362,7 +362,7 @@ class CriterionTest {
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
                         .appendFilter(new ExpandedCompositeQuantityRangeFilter(COMPONENT_CODE_VALUE_QUANTITY,
                                 COMPOSITE_CODE, Quantity.of(DECIMAL_1, GRAM_PER_DECILITER), Quantity.of(DECIMAL_2,
-                                GRAM_PER_DECILITER)))));
+                                GRAM_PER_DECILITER), null))));
             }
 
             @Test
@@ -377,7 +377,7 @@ class CriterionTest {
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
                         .appendFilter(new ExpandedCompositeConceptFilter(COMPONENT_CODE_VALUE_QUANTITY, COMPOSITE_CODE,
-                                TERM_CODE))));
+                                TERM_CODE, null))));
             }
 
             @Test
@@ -405,7 +405,7 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedDateComparatorFilter("time-restriction", LESS_EQUAL, end))));
+                        .appendFilter(new ExpandedDateComparatorFilter("time-restriction", LESS_EQUAL, end, null))));
             }
 
             @ParameterizedTest(name = "[{0})")
@@ -420,7 +420,7 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedDateComparatorFilter("time-restriction", GREATER_EQUAL, start))));
+                        .appendFilter(new ExpandedDateComparatorFilter("time-restriction", GREATER_EQUAL, start, null))));
             }
 
             @ParameterizedTest(name = "[{0}, {1}]")
@@ -435,7 +435,7 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedDateRangeFilter("time-restriction", start, end))));
+                        .appendFilter(new ExpandedDateRangeFilter("time-restriction", start, end, null))));
             }
         }
 
@@ -480,10 +480,10 @@ class CriterionTest {
                         VERIFICATION_STATUS, CONFIRMED, UNCONFIRMED)).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
-                        expandedCriterion1.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)),
-                        expandedCriterion1.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED)),
-                        expandedCriterion2.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED)),
-                        expandedCriterion2.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED))));
+                        expandedCriterion1.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null)),
+                        expandedCriterion1.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED, null)),
+                        expandedCriterion2.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null)),
+                        expandedCriterion2.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED, null))));
             }
         }
 
@@ -521,6 +521,42 @@ class CriterionTest {
         }
 
         @Nested
+        @DisplayName("with reference filers")
+        class ReferenceFilters {
+            public static final String RESSOURCE_TYPE_1 = "ressourceType1";
+            public static final String TERM_CODE_SEARCHPARAM_1 = "term-code-searchparam-1";
+            public static final String REF_CODE_SEARCHPARAM_1 = "ref-code-searchparam-1";
+            public static final String TERM_CODE_SEARCHPARAM_2 = "term-code-searchparam-2";
+            static final TermCode TERM_CODE_1 = new TermCode("sys", "termcode1", "disp");
+            static final TermCode TERM_CODE_2 = new TermCode("sys", "termcode2", "disp");
+            static final TermCode REF_FILTER_CODE_1 = new TermCode("sys", "ref-filter-code-1", "dips");
+
+            @Test
+            @DisplayName("One Criterion with one TermCode and one referenced Criterion")
+            void singleParentCritTwoTermCodes_singleRefCritTwoTermCodes() {
+                when(mappingContext.expandConcept(Concept.of(TERM_CODE_1))).thenReturn(Either.right(List.of(TERM_CODE_1)));
+                when(mappingContext.expandConcept(Concept.of(TERM_CODE_2))).thenReturn(Either.right(List.of(TERM_CODE_2)));
+                when(mappingContext.findMapping(TERM_CODE_1)).thenReturn(Either.right(Mapping.of(TERM_CODE_1, RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1)
+                        .appendAttributeMapping(AttributeMapping.reference(REF_FILTER_CODE_1, REF_CODE_SEARCHPARAM_1))));
+                when(mappingContext.findMapping(TERM_CODE_2)).thenReturn(Either.right(Mapping.of(TERM_CODE_2, RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_2)));
+
+
+                var criteria = Criterion.of(Concept.of(TERM_CODE_1))
+                        .appendReferenceFiler(new ReferenceFilter(List.of(Criterion.of(Concept.of(TERM_CODE_2))), REF_FILTER_CODE_1))
+                        .expand(mappingContext);
+
+                var expandedCriteria = List.of(
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_2, TERM_CODE_2.code(), REF_CODE_SEARCHPARAM_1))));
+
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).hasSameElementsAs(expandedCriteria));
+            }
+
+
+        }
+
+
+        @Nested
         @DisplayName("special patient criteria")
         class PatientCriteria {
 
@@ -537,7 +573,7 @@ class CriterionTest {
                 var criterion = Criterion.of(Concept.of(GENDER), ValueFilter.ofConcept(MALE)).expand(mappingContext);
 
                 assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedCodeFilter("gender", "male"))));
+                        .appendFilter(new ExpandedCodeFilter("gender", "male", null))));
             }
 
             @Nested
@@ -567,7 +603,7 @@ class CriterionTest {
                             YEAR_UNIT))).expand(mappingContext);
 
                     assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1994.plusDays(1), YEAR_1995))));
+                            .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1994.plusDays(1), YEAR_1995, null))));
                 }
 
                 @ParameterizedTest
@@ -581,7 +617,7 @@ class CriterionTest {
                             Quantity.of(AGE_OF_5, YEAR_UNIT))).expand(mappingContext);
 
                     assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateComparatorFilter("birthdate", comparator.reverse(), YEAR_1995))));
+                            .appendFilter(new ExpandedDateComparatorFilter("birthdate", comparator.reverse(), YEAR_1995, null))));
                 }
 
                 @Test
@@ -594,7 +630,7 @@ class CriterionTest {
                             WEEK_UNIT))).expand(mappingContext);
 
                     assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateComparatorFilter("birthdate", LESS_THAN, YEAR_2000.minusWeeks(AGE_OF_5.longValue())))));
+                            .appendFilter(new ExpandedDateComparatorFilter("birthdate", LESS_THAN, YEAR_2000.minusWeeks(AGE_OF_5.longValue()), null))));
                 }
 
                 @Test
@@ -607,7 +643,7 @@ class CriterionTest {
                             MONTH_UNIT))).expand(mappingContext);
 
                     assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateComparatorFilter("birthdate", LESS_THAN, YEAR_2000.minusMonths(AGE_OF_5.longValue())))));
+                            .appendFilter(new ExpandedDateComparatorFilter("birthdate", LESS_THAN, YEAR_2000.minusMonths(AGE_OF_5.longValue()), null))));
                 }
 
                 @Test
@@ -668,7 +704,7 @@ class CriterionTest {
                             .expand(mappingContext);
 
                     assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1990, YEAR_1995))));
+                            .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1990, YEAR_1995, null))));
                 }
             }
         }

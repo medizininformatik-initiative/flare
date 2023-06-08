@@ -39,23 +39,25 @@ public class AgeUtils {
 
     public static Either<Exception, List<ExpandedFilter>> expandedAgeFilterFromComparator(LocalDate today,
                                                                                           Comparator comparator,
-                                                                                          Quantity.WithUnit age) {
+                                                                                          Quantity.WithUnit age,
+                                                                                          String referenceSearchParam) {
         if (comparator.equals(Comparator.EQUAL)) {
             return equalCaseLowerDate(today, age)
                     .flatMap(lowerBound -> equalCaseUpperDate(today, age)
-                            .map(upperBound -> List.of(new ExpandedDateRangeFilter("birthdate", lowerBound, upperBound))));
+                            .map(upperBound -> List.of(new ExpandedDateRangeFilter("birthdate", lowerBound, upperBound, referenceSearchParam))));
         } else {
             return birthDate(today, age).map(birthDate ->
-                    List.of(new ExpandedDateComparatorFilter("birthdate", comparator.reverse(), birthDate)));
+                    List.of(new ExpandedDateComparatorFilter("birthdate", comparator.reverse(), birthDate, referenceSearchParam)));
         }
     }
 
     public static Either<Exception, List<ExpandedFilter>> expandedAgeFilterFromRange(LocalDate today,
                                                                                      Quantity.WithUnit ageLowerBound,
-                                                                                     Quantity.WithUnit ageUpperBound) {
+                                                                                     Quantity.WithUnit ageUpperBound,
+                                                                                     String referenceSearchParam) {
         return birthDate(today, ageLowerBound)
                 .flatMap(upperBoundDate -> birthDate(today, ageUpperBound)
                         .map(lowerBoundDate -> List.of(new ExpandedDateRangeFilter("birthdate", lowerBoundDate,
-                                upperBoundDate))));
+                                upperBoundDate, referenceSearchParam))));
     }
 }

@@ -144,10 +144,12 @@ public final class Mapping {
         }
 
         @Override
-        public Either<Exception, ExpandedFilter> expandConcept(TermCode concept) {
+        public Either<Exception, ExpandedFilter> expandConcept(TermCode concept, String referenceSearchParameter) {
             return switch (type()) {
-                case CODE -> Either.right(new ExpandedCodeFilter(searchParameter(), concept.code()));
-                case CODING -> Either.right(new ExpandedConceptFilter(searchParameter(), concept));
+                case CODE ->
+                        Either.right(new ExpandedCodeFilter(searchParameter(), concept.code(), referenceSearchParameter));
+                case CODING ->
+                        Either.right(new ExpandedConceptFilter(searchParameter(), concept, referenceSearchParameter));
             };
         }
     }

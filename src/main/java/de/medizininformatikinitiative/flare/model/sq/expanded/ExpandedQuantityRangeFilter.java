@@ -8,7 +8,8 @@ import static de.medizininformatikinitiative.flare.model.sq.Comparator.GREATER_E
 import static de.medizininformatikinitiative.flare.model.sq.Comparator.LESS_EQUAL;
 import static java.util.Objects.requireNonNull;
 
-public record ExpandedQuantityRangeFilter(String searchParameter, Quantity lowerBound, Quantity upperBound)
+public record ExpandedQuantityRangeFilter(String searchParameter, Quantity lowerBound, Quantity upperBound,
+                                          String referenceSearchParameter)
         implements ExpandedFilter {
 
     public ExpandedQuantityRangeFilter {
@@ -19,7 +20,7 @@ public record ExpandedQuantityRangeFilter(String searchParameter, Quantity lower
 
     @Override
     public QueryParams toParams() {
-        return QueryParams.of(searchParameter, quantityValue(GREATER_EQUAL, lowerBound))
-                .appendParam(searchParameter, quantityValue(LESS_EQUAL, upperBound));
+        return QueryParams.of(searchParameter, quantityValue(GREATER_EQUAL, lowerBound), referenceSearchParameter)
+                .appendParam(searchParameter, quantityValue(LESS_EQUAL, upperBound), referenceSearchParameter);
     }
 }

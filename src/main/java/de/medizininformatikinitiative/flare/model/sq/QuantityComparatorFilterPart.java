@@ -28,7 +28,7 @@ public record QuantityComparatorFilterPart(Comparator comparator, Quantity value
     }
 
     @Override
-    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping) {
-        return filterMapping.expandComparatorFilterPart(today, comparator, value);
+    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping, String referenceSearchParameter) {
+        return filterMapping.expandComparatorFilterPart(today, comparator, value, referenceSearchParameter);
     }
 }

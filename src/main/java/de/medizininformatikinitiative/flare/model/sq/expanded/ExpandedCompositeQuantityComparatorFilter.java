@@ -9,7 +9,8 @@ import static de.medizininformatikinitiative.flare.model.fhir.QueryParams.compos
 import static java.util.Objects.requireNonNull;
 
 public record ExpandedCompositeQuantityComparatorFilter(String searchParameter, TermCode compositeCode,
-                                                        Comparator comparator, Quantity value)
+                                                        Comparator comparator, Quantity value,
+                                                        String referenceSearchParameter)
         implements ExpandedFilter {
 
     public ExpandedCompositeQuantityComparatorFilter {
@@ -22,6 +23,6 @@ public record ExpandedCompositeQuantityComparatorFilter(String searchParameter, 
     @Override
     public QueryParams toParams() {
         return QueryParams.EMPTY.appendParam(searchParameter, compositeQuantityValue(compositeCode,
-                comparator, value));
+                comparator, value), referenceSearchParameter);
     }
 }

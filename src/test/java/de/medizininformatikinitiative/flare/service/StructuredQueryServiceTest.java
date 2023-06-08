@@ -360,15 +360,15 @@ class StructuredQueryServiceTest {
 
     CriterionQuery whenCriterion(TermCode code) {
         var criterion = Criterion.of(Concept.of(code));
-        var query = Query.of("Condition", QueryParams.of("code", conceptValue(code)));
+        var query = Query.of("Condition", QueryParams.of("code", conceptValue(code), null));
         when(translator.toQuery(criterion)).thenReturn(Either.right(List.of(query)));
         return new CriterionQuery(criterion, query);
     }
 
     CriterionQuery2 whenCriterionExpand(TermCode code1, TermCode code2) {
         var criterion = Criterion.of(Concept.of(code1));
-        var query1 = Query.of("Condition", QueryParams.of("code", conceptValue(code1)));
-        var query2 = Query.of("Condition", QueryParams.of("code", conceptValue(code2)));
+        var query1 = Query.of("Condition", QueryParams.of("code", conceptValue(code1), null));
+        var query2 = Query.of("Condition", QueryParams.of("code", conceptValue(code2), null));
         when(translator.toQuery(criterion)).thenReturn(Either.right(List.of(query1, query2)));
         return new CriterionQuery2(criterion, query1, query2);
     }
@@ -445,6 +445,6 @@ class StructuredQueryServiceTest {
     }
 
     static QueryExpression queryExpr(TermCode code) {
-        return new QueryExpression(Query.of("Condition", QueryParams.of("code", conceptValue(code))));
+        return new QueryExpression(Query.of("Condition", QueryParams.of("code", conceptValue(code), null)));
     }
 }

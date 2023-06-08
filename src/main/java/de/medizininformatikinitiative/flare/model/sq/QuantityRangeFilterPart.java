@@ -21,7 +21,7 @@ public record QuantityRangeFilterPart(Quantity lowerBound, Quantity upperBound) 
     }
 
     @Override
-    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping) {
-        return filterMapping.expandRangeFilterPart(today, lowerBound, upperBound);
+    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping, String referenceSearchParameter) {
+        return filterMapping.expandRangeFilterPart(today, lowerBound, upperBound, referenceSearchParameter);
     }
 }

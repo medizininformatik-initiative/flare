@@ -33,8 +33,8 @@ public record ConceptFilterPart(List<TermCode> concepts) implements FilterPart {
     }
 
     @Override
-    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping) {
-        return concepts.stream().map(filterMapping::expandConcept)
+    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping, String referenceSearchParam) {
+        return concepts.stream().map(concept -> filterMapping.expandConcept(concept, referenceSearchParam))
                 .reduce(Either.right(List.of()), Either.lift2(Util::add), Either.liftBinOp(Util::concat));
     }
 }

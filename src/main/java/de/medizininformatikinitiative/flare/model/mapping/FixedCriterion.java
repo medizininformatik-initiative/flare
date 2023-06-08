@@ -38,9 +38,9 @@ public record FixedCriterion(FixedCriterionType type, String searchParameter, Li
 
     public List<ExpandedFilter> expand() {
         return concepts.stream().map(concept -> switch (type) {
-            case CODING -> (ExpandedFilter) new ExpandedConceptFilter(searchParameter, concept);
-            case CODE -> new ExpandedCodeFilter(searchParameter, concept.code());
-            case COMPOSITE_CONCEPT -> new ExpandedCompositeConceptFilter(searchParameter, compositeCode, concept);
+            case CODING -> (ExpandedFilter) new ExpandedConceptFilter(searchParameter, concept, null);
+            case CODE -> new ExpandedCodeFilter(searchParameter, concept.code(), null);
+            case COMPOSITE_CONCEPT -> new ExpandedCompositeConceptFilter(searchParameter, compositeCode, concept, null);
         }).toList();
     }
 }

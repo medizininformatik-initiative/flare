@@ -60,5 +60,5 @@ public interface FilterPart {
         return new TermCode(system, unit.get("code").asText(), unit.get("display").asText());
     }
 
-    Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping);
+    Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping, String referenceSearchParam);
 }

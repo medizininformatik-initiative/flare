@@ -11,7 +11,8 @@ import static java.util.Objects.requireNonNull;
  * @param searchParameter the FHIR search parameter code to use for the value
  * @param value           the code to search for
  */
-public record ExpandedCodeFilter(String searchParameter, String value) implements ExpandedFilter {
+public record ExpandedCodeFilter(String searchParameter, String value,
+                                 String referenceSearchParam) implements ExpandedFilter {
 
     public ExpandedCodeFilter {
         requireNonNull(searchParameter);
@@ -20,6 +21,6 @@ public record ExpandedCodeFilter(String searchParameter, String value) implement
 
     @Override
     public QueryParams toParams() {
-        return QueryParams.of(searchParameter, stringValue(value));
+        return QueryParams.of(searchParameter, stringValue(value), referenceSearchParam);
     }
 }
