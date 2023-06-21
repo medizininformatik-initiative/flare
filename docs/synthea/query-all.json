@@ -1,0 +1,33 @@
+{
+  "inclusionCriteria": [
+    [
+      {
+        "termCodes": [
+          {
+            "system": "flare",
+            "code": "all-conditions",
+            "display": ""
+          }
+        ]
+      },
+      {
+        "termCodes": [
+          {
+            "system": "flare",
+            "code": "all-procedures",
+            "display": ""
+          }
+        ]
+      },
+      {
+        "termCodes": [
+          {
+            "system": "flare",
+            "code": "all-observations",
+            "display": ""
+          }
+        ]
+      }
+    ]
+  ]
+}

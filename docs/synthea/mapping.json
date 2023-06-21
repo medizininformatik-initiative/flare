@@ -1,0 +1,6508 @@
+[
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "10509002",
+      "display": "Acute bronchitis (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "109838007",
+      "display": "Overlapping malignant neoplasm of colon"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "110030002",
+      "display": "Concussion injury of brain"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "110359009",
+      "display": "Intellectual disability (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "1121000119107",
+      "display": "Chronic neck pain (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "11218009",
+      "display": "Infection caused by Pseudomonas aeruginosa"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "124171000119105",
+      "display": "Chronic intractable migraine without aura"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "126906006",
+      "display": "Neoplasm of prostate"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "127013003",
+      "display": "Diabetic renal disease (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "127295002",
+      "display": "Traumatic brain injury (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "128188000",
+      "display": "Cerebral palsy (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "128613002",
+      "display": "Seizure disorder"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "132281000119108",
+      "display": "Acute deep venous thrombosis (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "14760008",
+      "display": "Constipation (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "1501000119109",
+      "display": "Proliferative diabetic retinopathy due to type II diabetes mellitus (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "1551000119108",
+      "display": "Nonproliferative diabetic retinopathy due to type 2 diabetes mellitus (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "156073000",
+      "display": "Fetus with unknown complication"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "157141000119108",
+      "display": "Proteinuria due to type 2 diabetes mellitus (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "15724005",
+      "display": "Fracture of vertebral column without spinal cord injury"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "157265008",
+      "display": "Dislocation of hip joint (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "15777000",
+      "display": "Prediabetes"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "15802004",
+      "display": "Dystonia (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "16114001",
+      "display": "Fracture of ankle"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "161622006",
+      "display": "History of lower limb amputation (situation)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "162573006",
+      "display": "Suspected lung cancer (situation)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "162864005",
+      "display": "Body mass index 30+ - obesity (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "171131006",
+      "display": "Meningocele (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "1734006",
+      "display": "Fracture of the vertebral column with spinal cord injury"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "185086009",
+      "display": "Chronic obstructive bronchitis (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "190905008",
+      "display": "Cystic Fibrosis"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "19169002",
+      "display": "Miscarriage in first trimester"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "192127007",
+      "display": "Child attention deficit disorder"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "195662009",
+      "display": "Acute viral pharyngitis (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "195967001",
+      "display": "Asthma"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "196416002",
+      "display": "Impacted molars"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "197927001",
+      "display": "Recurrent urinary tract infection"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "198992004",
+      "display": "Antepartum eclampsia"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "200936003",
+      "display": "Lupus erythematosus"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "201834006",
+      "display": "Localized, primary osteoarthritis of the hand"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "203082005",
+      "display": "Fibromyalgia (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "221360009",
+      "display": "Spasticity (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "22253000",
+      "display": "Pain (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "22298006",
+      "display": "Myocardial Infarction"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "225444004",
+      "display": "At risk for suicide (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "230265002",
+      "display": "Familial Alzheimer's disease of early onset (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "230690007",
+      "display": "Stroke"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "230745008",
+      "display": "Hydrocephalus (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "232353008",
+      "display": "Perennial allergic rhinitis with seasonal variation"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "233604007",
+      "display": "Pneumonia"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "233678006",
+      "display": "Childhood asthma"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "234466008",
+      "display": "Acquired coagulation disorder (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "235595009",
+      "display": "Gastroesophageal reflux disease (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "235919008",
+      "display": "Cholelithiasis"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "236077008",
+      "display": "Protracted diarrhea"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "237602007",
+      "display": "Metabolic syndrome X (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "239720000",
+      "display": "Tear of meniscus of knee"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "239872002",
+      "display": "Osteoarthritis of hip"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "239873007",
+      "display": "Osteoarthritis of knee"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "24079001",
+      "display": "Atopic dermatitis"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "241929008",
+      "display": "Acute allergic reaction"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "246677007",
+      "display": "Passive conjunctival congestion (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "248595008",
+      "display": "Sputum finding (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "249497008",
+      "display": "Vomiting symptom (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "25064002",
+      "display": "Headache (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "254632001",
+      "display": "Small cell carcinoma of lung (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "254637007",
+      "display": "Non-small cell lung cancer (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "254837009",
+      "display": "Malignant neoplasm of breast (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "262574004",
+      "display": "Bullet wound"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "263102004",
+      "display": "Fracture subluxation of wrist"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "267036007",
+      "display": "Dyspnea (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "267060006",
+      "display": "Diarrhea symptom (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "267064002",
+      "display": "Retention of urine (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "267102003",
+      "display": "Sore throat symptom (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "26929004",
+      "display": "Alzheimer's disease (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "271737000",
+      "display": "Anemia (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "271825005",
+      "display": "Respiratory distress (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "275272006",
+      "display": "Brain damage - traumatic"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "278860009",
+      "display": "Chronic low back pain (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "27942005",
+      "display": "Shock (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "283371005",
+      "display": "Laceration of forearm"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "283385000",
+      "display": "Laceration of thigh"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "284549007",
+      "display": "Laceration of hand"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "284551006",
+      "display": "Laceration of foot"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "287185009",
+      "display": "Attempted suicide - cut/stab"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "288959006",
+      "display": "Unable to swallow saliva (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "298382003",
+      "display": "Scoliosis deformity of spine (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "300916003",
+      "display": "Allergy to latex (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "301011002",
+      "display": "Escherichia coli urinary tract infection"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "302297009",
+      "display": "Congenital deformity of foot (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "302870006",
+      "display": "Hypertriglyceridemia (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "307731004",
+      "display": "Injury of tendon of the rotator cuff of shoulder"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "30832001",
+      "display": "Rupture of patellar tendon"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "314994000",
+      "display": "Metastasis from malignant tumor of prostate (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "33737001",
+      "display": "Fracture of rib"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "359817006",
+      "display": "Closed fracture of hip"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "35999006",
+      "display": "Blighted ovum"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "363406005",
+      "display": "Malignant tumor of colon"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "367498001",
+      "display": "Seasonal allergic rhinitis"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "368581000119106",
+      "display": "Neuropathy due to type 2 diabetes mellitus (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "36923009",
+      "display": "Major depression, single episode"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "36955009",
+      "display": "Loss of taste (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "36971009",
+      "display": "Sinusitis (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "370143000",
+      "display": "Major depression disorder"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "370247008",
+      "display": "Facial laceration"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "373587001",
+      "display": "Chiari malformation type II (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "386661006",
+      "display": "Fever (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "38822007",
+      "display": "Cystitis"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "389087006",
+      "display": "Hypoxemia (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "398152000",
+      "display": "Poor muscle tone (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "398254007",
+      "display": "Preeclampsia"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "39848009",
+      "display": "Whiplash injury to neck"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "399211009",
+      "display": "History of myocardial infarction (situation)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "399912005",
+      "display": "Pressure ulcer (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "40055000",
+      "display": "Chronic sinusitis (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "40095003",
+      "display": "Injury of kidney (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "40275004",
+      "display": "Contact dermatitis"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "403190006",
+      "display": "First degree burn"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "403191005",
+      "display": "Second degree burn"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "403192003",
+      "display": "Third degree burn"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "406602003",
+      "display": "Infection caused by Staphylococcus aureus"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "408512008",
+      "display": "Body mass index 40+ - severely obese (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "410429000",
+      "display": "Cardiac Arrest"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "414564002",
+      "display": "Kyphosis deformity of spine (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "414667000",
+      "display": "Meningomyelocele (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "422034002",
+      "display": "Diabetic retinopathy associated with type II diabetes mellitus (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "422587007",
+      "display": "Nausea (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "424132000",
+      "display": "Non-small cell carcinoma of lung, TNM stage 1 (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "427089005",
+      "display": "Diabetes from Cystic Fibrosis"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "427419006",
+      "display": "Transformed migraine (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "428251008",
+      "display": "History of appendectomy"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "429007001",
+      "display": "History of cardiac arrest (situation)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "429280009",
+      "display": "History of amputation of foot (situation)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "431855005",
+      "display": "Chronic kidney disease stage 1 (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "431856006",
+      "display": "Chronic kidney disease stage 2 (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "433144002",
+      "display": "Chronic kidney disease stage 3 (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "43724002",
+      "display": "Chill (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "43878008",
+      "display": "Streptococcal sore throat (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "44054006",
+      "display": "Diabetes"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "443165006",
+      "display": "Pathological fracture due to osteoporosis (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "444448004",
+      "display": "Injury of medial collateral ligament of knee"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "444470001",
+      "display": "Injury of anterior cruciate ligament"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "44465007",
+      "display": "Sprain of ankle"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "444814009",
+      "display": "Viral sinusitis (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "446096008",
+      "display": "Perennial allergic rhinitis"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "448417001",
+      "display": "Sepsis caused by Staphylococcus aureus"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "448813005",
+      "display": "Sepsis caused by Pseudomonas (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "449868002",
+      "display": "Smokes tobacco daily"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "45816000",
+      "display": "Pyelonephritis"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "47200007",
+      "display": "Non-low risk pregnancy"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "47505003",
+      "display": "Posttraumatic stress disorder"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "47693006",
+      "display": "Rupture of appendix"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "49436004",
+      "display": "Atrial Fibrillation"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "49727002",
+      "display": "Cough (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "53741008",
+      "display": "Coronary Heart Disease"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "53827007",
+      "display": "Excessive salivation (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "55680006",
+      "display": "Drug overdose"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "55822004",
+      "display": "Hyperlipidemia"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "56018004",
+      "display": "Wheezing (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "5602001",
+      "display": "Opioid abuse (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "57676002",
+      "display": "Joint pain (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "58150001",
+      "display": "Fracture of clavicle"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "59621000",
+      "display": "Hypertension"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "6072007",
+      "display": "Bleeding from anus"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "60951000119105",
+      "display": "Blindness due to type 2 diabetes mellitus (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "62106007",
+      "display": "Concussion with no loss of consciousness"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "62564004",
+      "display": "Concussion with loss of consciousness"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "62718007",
+      "display": "Dribbling from mouth (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "64859006",
+      "display": "Osteoporosis (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "65275009",
+      "display": "Acute Cholecystitis"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "65363002",
+      "display": "Otitis media"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "65710008",
+      "display": "Acute respiratory failure (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "65966004",
+      "display": "Fracture of forearm"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "66857006",
+      "display": "Hemoptysis (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "67782005",
+      "display": "Acute respiratory distress syndrome (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "67811000119102",
+      "display": "Primary small cell malignant neoplasm of lung, TNM stage 1 (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "68235000",
+      "display": "Nasal congestion (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "68496003",
+      "display": "Polyp of colon"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "68566005",
+      "display": "Urinary tract infectious disease (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "68962001",
+      "display": "Muscle pain (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "698754002",
+      "display": "Chronic paralysis due to lesion of spinal cord"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "69896004",
+      "display": "Rheumatoid arthritis"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "703151001",
+      "display": "History of single seizure (situation)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "706870000",
+      "display": "Acute pulmonary embolism (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "70704007",
+      "display": "Sprain of wrist"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "707577004",
+      "display": "Female Infertility"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "713197008",
+      "display": "Recurrent rectal polyp"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "7200002",
+      "display": "Alcoholism"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "72892002",
+      "display": "Normal pregnancy"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "74400008",
+      "display": "Appendicitis"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "75498004",
+      "display": "Acute bacterial sinusitis (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "76571007",
+      "display": "Septic shock (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "76916001",
+      "display": "Spina bifida occulta (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "770349000",
+      "display": "Sepsis caused by virus (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "79586000",
+      "display": "Tubal pregnancy"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "80394007",
+      "display": "Hyperglycemia (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "82423001",
+      "display": "Chronic pain"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "83664006",
+      "display": "Idiopathic atrophic hypothyroidism"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "840539006",
+      "display": "COVID-19"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "840544004",
+      "display": "Suspected COVID-19"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "84114007",
+      "display": "Heart failure (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "84229001",
+      "display": "Fatigue (finding)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "84757009",
+      "display": "Epilepsy"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "86175003",
+      "display": "Injury of heart (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "86849004",
+      "display": "Suicidal deliberate poisoning"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "87433001",
+      "display": "Pulmonary emphysema (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "87628006",
+      "display": "Bacterial infectious disease (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "88805009",
+      "display": "Chronic congestive heart failure (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "90560007",
+      "display": "Gout"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "90781000119102",
+      "display": "Microalbuminuria due to type 2 diabetes mellitus (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "91302008",
+      "display": "Sepsis (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "92691004",
+      "display": "Carcinoma in situ of prostate (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "93761005",
+      "display": "Primary malignant neoplasm of colon"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "94260004",
+      "display": "Secondary malignant neoplasm of colon"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "95417003",
+      "display": "Primary fibromyalgia syndrome"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Condition",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "97331000119101",
+      "display": "Macular edema and retinopathy due to type 2 diabetes mellitus (disorder)"
+    },
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "recorded-date"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "103746007",
+      "display": "Heparin therapy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "103750000",
+      "display": "Sleep apnea assessment (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "10383002",
+      "display": "Counseling for termination of pregnancy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "104091002",
+      "display": "Hemoglobin / Hematocrit / Platelet count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "104173009",
+      "display": "Sputum Culture"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "104308009",
+      "display": "Serologic test for Toxoplasma gondii (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "104326007",
+      "display": "Measurement of Varicella-zoster virus antibody"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "104375008",
+      "display": "Hepatitis C antibody test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "104435004",
+      "display": "Screening for occult blood in feces (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "108290001",
+      "display": "Radiation oncology AND/OR radiotherapy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "112001000119100",
+      "display": "positive screening for PHQ-9"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "112011000119102",
+      "display": "negative screening for PHQ9"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "112790001",
+      "display": "Nasal sinus endoscopy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "112798008",
+      "display": "Insertion of endotracheal tube (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "113076002",
+      "display": "Oral Glucose Tolerance Test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "113120007",
+      "display": "Interstitial brachytherapy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "11466000",
+      "display": "Cesarean section"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "117010004",
+      "display": "Urine culture"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "117015009",
+      "display": "Throat culture (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "118001005",
+      "display": "Streptococcus pneumoniae group B antigen test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "1225002",
+      "display": "Upper arm X-ray"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "122548005",
+      "display": "Biopsy of breast (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "127783003",
+      "display": "Spirometry (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "13569004",
+      "display": "Transfusion of plasma (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "13995008",
+      "display": "Amputation of left arm"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "14152002",
+      "display": "Intravenous infusion (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "14768001",
+      "display": "Peripheral blood smear interpretation"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "15081005",
+      "display": "Pulmonary rehabilitation (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "15220000",
+      "display": "Laboratory test (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "1571000087109",
+      "display": "Ultrasonography of bilateral breasts (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "162676008",
+      "display": "Brief general examination (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "16335031000119103",
+      "display": "High resolution computed tomography of chest without contrast (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "165829005",
+      "display": "Gonorrhea infection test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "166001",
+      "display": "Behavioral therapy (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "167252002",
+      "display": "Urine pregnancy test (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "167271000",
+      "display": "Urine protein test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "167995008",
+      "display": "Sputum microscopy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "168594001",
+      "display": "Clavicle X-ray"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "169230002",
+      "display": "Ultrasound scan for fetal viability"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "169553002",
+      "display": "Insertion of subcutaneous contraceptive"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "169673001",
+      "display": "Antenatal RhD antibody screening"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "169690007",
+      "display": "Rubella screening"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "171122006",
+      "display": "Hepatitis B screening (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "171126009",
+      "display": "Tuberculosis screening (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "171128005",
+      "display": "Venereal disease screening (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "171207006",
+      "display": "Depression screening"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "171231001",
+      "display": "Asthma screening"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "173160006",
+      "display": "Diagnostic fiberoptic bronchoscopy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "173521004",
+      "display": "Transposition of submandibular duct (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "177157003",
+      "display": "Spontaneous breech delivery"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "17881005",
+      "display": "Cauterization of choroid plexus (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "180030006",
+      "display": "Amputation of left foot"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "180207008",
+      "display": "Intravenous blood transfusion of packed cells (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "180256009",
+      "display": "Subcutaneous immunotherapy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "180325003",
+      "display": "Electrical cardioversion"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "182777000",
+      "display": "Monitoring of patient (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "182836005",
+      "display": "Review of Medication (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "18286008",
+      "display": "Catheter ablation of tissue of heart"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "183418007",
+      "display": "Social case work (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "183450002",
+      "display": "Admission to burn unit"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "183856001",
+      "display": "Referral to hypertension clinic"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "185087000",
+      "display": "Notifications (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "18946005",
+      "display": "Epidural anesthesia"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "19490002",
+      "display": "Ankle X-ray"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "200619008",
+      "display": "Comprehensive interview and evaluation (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "225158009",
+      "display": "Auscultation of the fetal heart"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "22523008",
+      "display": "Vasectomy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "225297008",
+      "display": "Care planning and problem solving actions (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "225337009",
+      "display": "Suicide risk assessment (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "225386006",
+      "display": "Pre-discharge assessment (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "228557008",
+      "display": "Cognitive and behavioral therapy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "229064008",
+      "display": "Movement therapy (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "229069003",
+      "display": "Posture training (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "229095001",
+      "display": "Exercise class"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "232717009",
+      "display": "Coronary artery bypass grafting"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "232967006",
+      "display": "Implantation of left ventricular assist device (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "23426006",
+      "display": "Measurement of respiratory function (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "234262008",
+      "display": "Excision of axillary lymph node (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "234817001",
+      "display": "Insertion of oral appliance for the handicapped (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "236931002",
+      "display": "Methotrexate injection into tubal pregnancy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "236974004",
+      "display": "Instrumental delivery"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "237001001",
+      "display": "Augmentation of labor"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "241055006",
+      "display": "Mammogram - symptomatic (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "241149003",
+      "display": "Videofluoroscopy swallow (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "241615005",
+      "display": "Magnetic resonance imaging of breast (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "241645008",
+      "display": "Magnetic resonance imaging of spine (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "243063003",
+      "display": "Postoperative procedure education (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "243174005",
+      "display": "Weaning from mechanically assisted ventilation (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "24623002",
+      "display": "Screening mammography (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "252160004",
+      "display": "Standard pregnancy test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "252895004",
+      "display": "Urodynamic studies (procedure"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "261352009",
+      "display": "Face mask (physical object)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "265764009",
+      "display": "Renal dialysis (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "26763009",
+      "display": "Controlled ventilation procedure and therapy, initiation and management (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "268425006",
+      "display": "Pelvis X-ray"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "268556000",
+      "display": "Urine screening for glucose"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "269828009",
+      "display": "Syphilis infection test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "269911007",
+      "display": "Sputum examination (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "271280005",
+      "display": "Removal of endotracheal tube (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "271442007",
+      "display": "Fetal anatomy study"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "274031008",
+      "display": "Rectal polypectomy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "274474001",
+      "display": "Bone immobilization"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "274804006",
+      "display": "Evaluation of uterine fundal height"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "275833003",
+      "display": "Alpha-fetoprotein test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "28163009",
+      "display": "Skin test for tuberculosis"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "281790008",
+      "display": "Intravenous antibiotic therapy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "287664005",
+      "display": "Bilateral tubal ligation"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "288086009",
+      "display": "Suture open wound"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "290045001",
+      "display": "Kitchen practice"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "29303009",
+      "display": "Electrocardiographic procedure"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "301807007",
+      "display": "Removal of subcutaneous contraceptive"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "302351005",
+      "display": "Ligation of salivary duct (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "302497006",
+      "display": "Hemodialysis (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "303653007",
+      "display": "Computed tomography of head (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "305340004",
+      "display": "Admission to long stay hospital"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "305351004",
+      "display": "Admit to ICU (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "305425002",
+      "display": "Admission to neurosurgical department"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "305428000",
+      "display": "Admission to orthopedic department"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "305433001",
+      "display": "Admission to trauma surgery department"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "310417005",
+      "display": "Certification procedure (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "310861008",
+      "display": "Chlamydia antigen test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "311555007",
+      "display": "Speech and language therapy regime (regime/therapy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "311707005",
+      "display": "Oromotor Exercises"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "311791003",
+      "display": "Information gathering (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "31208007",
+      "display": "Medical induction of labor"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "312681000",
+      "display": "Bone density scan (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "313077009",
+      "display": "Human immunodeficiency virus counseling (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "313191000",
+      "display": "Injection of adrenaline"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "313613002",
+      "display": "Hepatitis A antibody test (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "313660005",
+      "display": "Absolute CD4 count procedure (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "315124004",
+      "display": "Human immunodeficiency virus viral load (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "315639002",
+      "display": "Initial patient assessment (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "31676001",
+      "display": "Human immunodeficiency virus antigen test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "32413006",
+      "display": "Transplantation of heart (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "33195004",
+      "display": "Teleradiotherapy procedure (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "3457005",
+      "display": "Patient referral (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "35025007",
+      "display": "Manual pelvic examination (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "36321500",
+      "display": "Musculoskeletal system physical examination (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "367336001",
+      "display": "Chemotherapy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "370789001",
+      "display": "Development of individualized plan of care (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "370995009",
+      "display": "Health risks education (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "371908008",
+      "display": "Oxygen administration by mask (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "373786007",
+      "display": "Reasons for treatment delay (finding)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "38102005",
+      "display": "Open Removal of Gall Bladder"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "384692006",
+      "display": "Intracavitary brachytherapy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "384700001",
+      "display": "Injection of tetanus antitoxin"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "385763009",
+      "display": "Hospice care (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "385781007",
+      "display": "Home health aide service (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "385798007",
+      "display": "Radiation therapy care (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "385892002",
+      "display": "Mental health screening (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "386394001",
+      "display": "Pregnancy termination care"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "386516004",
+      "display": "Anticipatory guidance (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "387607004",
+      "display": "Construction of diverting colostomy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "387685009",
+      "display": "Surgical manipulation of shoulder joint"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "392021009",
+      "display": "Lumpectomy of breast (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "392091000",
+      "display": "Care regimes assessment (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "395123002",
+      "display": "Urine screening test for diabetes"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "395142003",
+      "display": "Allergy screening test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "396487001",
+      "display": "Sentinel lymph node biopsy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "398171003",
+      "display": "Hearing examination (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "399014008",
+      "display": "Vaccination for diphtheria, pertussis, and tetanus"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "399208008",
+      "display": "Chest X-ray"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "404909007",
+      "display": "Injection of botulinum toxin (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "40617009",
+      "display": "Artificial respiration (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "40701008",
+      "display": "Echocardiography (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "408919008",
+      "display": "Psychosocial care (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "409023009",
+      "display": "Professional / ancillary services care (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "409066002",
+      "display": "Education, guidance and counseling (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "410006001",
+      "display": "Digital examination of rectum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "410401003",
+      "display": "Nursing care/supplementary surveillance (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "412809002",
+      "display": "Viral hepatitis screening test (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "413107006",
+      "display": "Hepatitis C screening (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "415070008",
+      "display": "Percutaneous coronary intervention"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "415300000",
+      "display": "Review of systems (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "417511005",
+      "display": "Referral to home health care service (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "418891003",
+      "display": "Computed tomography of chest and abdomen"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "423475008",
+      "display": "Heart failure education (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "426701000119108",
+      "display": "Ultrasonography of abdomen, right upper quadrant and epigastrium"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "428211000124100",
+      "display": "Assessment of substance use (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "42839003",
+      "display": "Repair of myelomeningocele (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "429609002",
+      "display": "Lung volume reduction surgery (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "430193006",
+      "display": "Medication Reconciliation (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "430701006",
+      "display": "Resuscitation using intravenous fluid (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "43075005",
+      "display": "Partial resection of colon"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "431182000",
+      "display": "Placing subject in prone position (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "432231006",
+      "display": "Fine needle aspiration biopsy of lung (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "433112001",
+      "display": "Percutaneous mechanical thrombectomy of portal vein using fluoroscopic guidance"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "433114000",
+      "display": "Human epidermal growth factor receptor 2 gene detection by immunohistochemistry (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "434363004",
+      "display": "Human epidermal growth factor receptor 2 gene detection by fluorescence in situ hybridization (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "441763001",
+      "display": "Endoscopic third ventriculostomy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "443497002",
+      "display": "Excision of sentinel lymph node (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "443529005",
+      "display": "Screening for chromosomal aneuploidy in prenatal amniotic fluid"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "444260001",
+      "display": "20 Gene mutation test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "445912000",
+      "display": "Excision of fallopian tube and surgical removal of ectopic pregnancy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "44608003",
+      "display": "Blood typing, RH typing"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "446573003",
+      "display": "Continuous positive airway pressure titration (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "446987006",
+      "display": "Determination of susceptibility of Human immunodeficiency virus 1 to panel of antiretroviral drugs using genotypic technique (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "447365002",
+      "display": "Insertion of biventricular implantable cardioverter defibrillator"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "447759004",
+      "display": "Brachytherapy of breast (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "449214001",
+      "display": "Transfer to stepdown"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "449381000124108",
+      "display": "Discharge from skilled nursing facility (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "454711000124102",
+      "display": "Depression screening using Patient Health Questionnaire Two-Item score (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "45595009",
+      "display": "Laparoscopic Removal of Gall Bladder"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "46028000",
+      "display": "Amputation of right hand"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "46706006",
+      "display": "Replacement of contraceptive intrauterine device"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "47020004",
+      "display": "Ventriculoperitoneal shunt (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "47758006",
+      "display": "Hepatitis B Surface Antigen Measurement"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "51116004",
+      "display": "RhD passive immunization"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "52734007",
+      "display": "Total replacement of hip"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "52765003",
+      "display": "Intubation"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "54550000",
+      "display": "Seizure Count Cerebral Cortex Electroencephalogram (EEG)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "58000006",
+      "display": "Patient discharge (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "5880005",
+      "display": "Physical exam following abortion"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "60027007",
+      "display": "X-ray or wrist"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "60151004",
+      "display": "Neonatal Screening"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "609588000",
+      "display": "Total knee replacement"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "61594008",
+      "display": "Microbial culture (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "63332003",
+      "display": "History AND physical examination (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "65200003",
+      "display": "Insertion of intrauterine contraceptive device"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "65546002",
+      "display": "Extraction of wisdom tooth"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "65575008",
+      "display": "Biopsy of prostate"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "65588006",
+      "display": "Premature birth of newborn"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "66348005",
+      "display": "Childbirth"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "67879005",
+      "display": "History and physical examination, limited (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "68254000",
+      "display": "Removal of intrauterine device"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "69031006",
+      "display": "Excision of breast tissue (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "698354004",
+      "display": "Magnetic resonance imaging for measurement of brain volume (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "698560000",
+      "display": "Referral to sleep apnea clinic (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "699253003",
+      "display": "Surgical manipulation of joint of knee"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "703423002",
+      "display": "Combined chemotherapy and radiation therapy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "709506004",
+      "display": "Assessment of readiness for disclosure of health status (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "709640007",
+      "display": "Doppler ultrasonography of renal vein (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "710824005",
+      "display": "Assessment of health and social care needs (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "710841007",
+      "display": "Assessment of anxiety (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "711018006",
+      "display": "Assessment of social support (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "711069006",
+      "display": "Coordination of care plan (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "71121004",
+      "display": "Human immunodeficiency virus screening (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "713106006",
+      "display": "Screening for drug abuse (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "714812005",
+      "display": "Induced termination of pregnancy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "715252007",
+      "display": "Depression screening using Patient Health Questionnaire Nine Item score (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "71651007",
+      "display": "Mammography (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "717778001",
+      "display": "Mouth care (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "7227006",
+      "display": "Excision of submandibular gland (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "733863009",
+      "display": "Assessment of readiness for self-management (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "73761001",
+      "display": "Colonoscopy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "74016001",
+      "display": "Knee X-ray"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "74857009",
+      "display": "Hospital admission, short-term, 24 hours"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "76164006",
+      "display": "Biopsy of colon"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "762993000",
+      "display": "Assessment using Morse Fall Scale (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "762998009",
+      "display": "Assessment using New York Heart Association Classification (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "763302001",
+      "display": "Assessment using Alcohol Use Disorders Identification Test - Consumption (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "76601001",
+      "display": "Intramuscular injection"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "76746007",
+      "display": "Cardiovascular stress testing (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "79733001",
+      "display": "Amputation of left leg"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "80146002",
+      "display": "Appendectomy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "82078001",
+      "display": "Take blood sample"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "82808001",
+      "display": "Sleep apnea monitoring with alarm (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "84478008",
+      "display": "Occupational therapy (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "84728005",
+      "display": "Neurological examination (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "85548006",
+      "display": "Episiotomy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "866148006",
+      "display": "Screening for domestic abuse (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "868187001",
+      "display": "Assessment using Car, Relax, Alone, Forget, Friends, Trouble Screening Test (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "86964003",
+      "display": "Sweat Test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "88039007",
+      "display": "Transplant of lung (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "88848003",
+      "display": "Psychiatric follow-up"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "9002005",
+      "display": "Manual testing of muscle function (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "90226004",
+      "display": "Cytopathology procedure, preparation of smear, genital source"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "90407005",
+      "display": "Evaluation of psychiatric state of patient"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "90470006",
+      "display": "Prostatectomy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "91251008",
+      "display": "Physical therapy procedure (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "91602002",
+      "display": "Thoracentesis (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "9564003",
+      "display": "Complete blood count with white cell differential, automated (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "10230-1",
+      "display": "Left ventricular Ejection fraction"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "10480-2",
+      "display": "Estrogen+Progesterone receptor Ag [Presence] in Tissue by Immune stain"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "10834-0",
+      "display": "Globulin"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "14804-9",
+      "display": "Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma by Lactate to pyruvate reaction"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "14959-1",
+      "display": "Microalbumin Creatinine Ratio"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "1742-6",
+      "display": "ALT (Elevated)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "1751-7",
+      "display": "Albumin"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "17861-6",
+      "display": "Calcium"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "18262-6",
+      "display": "Low Density Lipoprotein Cholesterol"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "19123-9",
+      "display": "Magnesium [Mass/volume] in Serum or Plasma"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "1920-8",
+      "display": "AST (Elevated)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "1960-4",
+      "display": "Bicarbonate [Moles/volume] in Arterial blood"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "1975-2",
+      "display": "Bilirubin.total [Mass/volume] in Serum or Plasma"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "1988-5",
+      "display": "C reactive protein [Mass/volume] in Serum or Plasma"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "19926-5",
+      "display": "FEV1/FVC"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "19994-3",
+      "display": "Oxygen/Inspired gas setting [Volume Fraction] Ventilator"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2019-8",
+      "display": "Carbon dioxide [Partial pressure] in Arterial blood"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2028-9",
+      "display": "Carbon Dioxide"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "20447-9",
+      "display": "HIV 1 RNA [#/volume] (viral load) in Serum or Plasma by NAA with probe detection"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "20454-5",
+      "display": "Protein [Presence] in Urine by Test strip"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "20505-4",
+      "display": "Bilirubin.total [Mass/volume] in Urine by Test strip"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "20565-8",
+      "display": "Carbon Dioxide"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "20570-8",
+      "display": "Hematocrit"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2069-3",
+      "display": "Chloride"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2075-0",
+      "display": "Chloride"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2085-9",
+      "display": "High Density Lipoprotein Cholesterol"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2093-3",
+      "display": "Total Cholesterol"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "21000-5",
+      "display": "Erythrocyte distribution width [Entitic volume] by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2157-6",
+      "display": "Creatine kinase [Enzymatic activity/volume] in Serum or Plasma"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2160-0",
+      "display": "Creatinine"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "21905-5",
+      "display": "Primary tumor.clinical [Class] Cancer"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "21906-3",
+      "display": "Regional lymph nodes.clinical [Class] Cancer"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "21907-1",
+      "display": "Distant metastases.clinical [Class] Cancer"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "21908-9",
+      "display": "Stage group.clinical Cancer"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "21924-6",
+      "display": "Tumor marker Cancer"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "22577-1",
+      "display": "Toxoplasma gondii Ab [Presence] in Serum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2276-4",
+      "display": "Ferritin [Mass/volume] in Serum or Plasma"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2339-0",
+      "display": "Glucose"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2345-7",
+      "display": "Glucose"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "24467-3",
+      "display": "CD3+CD4+ (T4 helper) cells [#/volume] in Blood"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2498-4",
+      "display": "Iron [Mass/volume] in Serum or Plasma"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2500-7",
+      "display": "Iron binding capacity [Mass/volume] in Serum or Plasma"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2502-3",
+      "display": "Iron saturation [Mass Fraction] in Serum or Plasma"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2514-8",
+      "display": "Ketones [Presence] in Urine by Test strip"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "25428-4",
+      "display": "Glucose [Presence] in Urine by Test strip"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2571-8",
+      "display": "Triglycerides"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "26453-1",
+      "display": "Red Blood Cell"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "26464-8",
+      "display": "White Blood Cell (Elevated)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "26515-7",
+      "display": "Platelet Count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "26881-3",
+      "display": "Interleukin 6 [Mass/volume] in Serum or Plasma"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2703-7",
+      "display": "Oxygen [Partial pressure] in Arterial blood"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2708-6",
+      "display": "Oxygen saturation in Arterial blood"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2713-6",
+      "display": "Oxygen Saturation"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2744-1",
+      "display": "pH of Arterial blood"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2823-3",
+      "display": "Potassium"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "28245-9",
+      "display": "Abuse Status [OMAHA]"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2857-1",
+      "display": "Prostate specific Ag [Mass/volume] in Serum or Plasma"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2885-2",
+      "display": "Protein"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "29463-7",
+      "display": "Body Weight"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2947-0",
+      "display": "Sodium"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "2951-2",
+      "display": "Sodium"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "3016-3",
+      "display": "Thyrotropin [Units/volume] in Serum or Plasma"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "3024-7",
+      "display": "Thyroxine (T4) free [Mass/volume] in Serum or Plasma"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "30385-9",
+      "display": "RBC Distribution Width"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "30428-7",
+      "display": "MCV"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "3094-0",
+      "display": "Urea Nitrogen"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "32167-9",
+      "display": "Clarity of Urine"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "32207-3",
+      "display": "Platelet distribution width [Entitic volume] in Blood by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "32465-7",
+      "display": "Physical findings of Prostate"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "32623-1",
+      "display": "Platelet mean volume [Entitic volume] in Blood by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "33037-3",
+      "display": "Anion Gap"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "33728-7",
+      "display": "Size.maximum dimension in Tumor"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "33756-8",
+      "display": "Polyp size greatest dimension by CAP cancer protocols"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "33762-6",
+      "display": "NT-proBNP"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "33914-3",
+      "display": "Estimated Glomerular Filtration Rate"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "33959-8",
+      "display": "Procalcitonin [Mass/volume] in Serum or Plasma"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "38208-5",
+      "display": "Pain severity - Reported"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "38265-5",
+      "display": "DXA [T-score] Bone density"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "38483-4",
+      "display": "Creatinine"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "39156-5",
+      "display": "Body Mass Index"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "417181009",
+      "display": "Estrogen+Progesterone receptor Ag [Presence] in Tissue by Immune stain"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "42719-5",
+      "display": "Total Bilirubin (Elevated)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "44261-6",
+      "display": "Patient Health Questionnaire 9 item (PHQ-9) total score [Reported]"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "44667-4",
+      "display": "Site of distant metastasis in Breast tumor"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "44963-7",
+      "display": "Capillary refill [Time] of Nail bed"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "4544-3",
+      "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "4548-4",
+      "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "46240-8",
+      "display": "History of Hospitalizations+Outpatient visits"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "46288-7",
+      "display": "US Guidance for biopsy of Prostate"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "48065-7",
+      "display": "Fibrin D-dimer FEU [Mass/volume] in Platelet poor plasma"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "49765-1",
+      "display": "Calcium"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "55277-8",
+      "display": "HIV status"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "55758-7",
+      "display": "Patient Health Questionnaire 2 item (PHQ-2) total score [Reported]"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "5767-9",
+      "display": "Appearance of Urine"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "5770-3",
+      "display": "Bilirubin.total [Presence] in Urine by Test strip"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "5778-6",
+      "display": "Color of Urine"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "57905-2",
+      "display": "Hemoglobin.gastrointestinal [Presence] in Stool by Immunologic method"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "5792-7",
+      "display": "Glucose [Mass/volume] in Urine by Test strip"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "5794-3",
+      "display": "Hemoglobin [Presence] in Urine by Test strip"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "5797-6",
+      "display": "Ketones [Mass/volume] in Urine by Test strip"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "5799-2",
+      "display": "Leukocyte esterase [Presence] in Urine by Test strip"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "5802-4",
+      "display": "Nitrite [Presence] in Urine by Test strip"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "5803-2",
+      "display": "pH of Urine by Test strip"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "5804-0",
+      "display": "Protein [Mass/volume] in Urine by Test strip"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "5811-5",
+      "display": "Specific gravity of Urine by Test strip"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "5902-2",
+      "display": "Prothrombin time (PT)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "59032-3",
+      "display": "Lactate [Mass/volume] in Blood"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "5905-5",
+      "display": "Monocytes/100 leukocytes in Blood by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "59460-6",
+      "display": "Fall risk total [Morse Fall Scale]"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "59461-4",
+      "display": "Fall risk level [Morse Fall Scale]"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "59557-9",
+      "display": "Treatment status Cancer"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "59576-9",
+      "display": "Body mass index (BMI) [Percentile] Per age and gender"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6075-6",
+      "display": "Cladosporium herbarum IgE Ab in Serum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6082-2",
+      "display": "Codfish IgE Ab in Serum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6085-5",
+      "display": "Common Ragweed IgE Ab in Serum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6095-4",
+      "display": "American house dust mite IgE Ab in Serum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6106-9",
+      "display": "Egg white IgE Ab in Serum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "61576-5",
+      "display": "PROMIS short form - global - version 1.1"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6158-0",
+      "display": "Latex IgE Ab in Serum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6189-5",
+      "display": "White oak IgE Ab in Serum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6206-7",
+      "display": "Peanut IgE Ab in Serum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "62337-1",
+      "display": "PROMIS item bank - 29 profile"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6246-3",
+      "display": "Shrimp IgE Ab in Serum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6248-9",
+      "display": "Soybean IgE Ab in Serum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6273-7",
+      "display": "Walnut IgE Ab in Serum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6276-0",
+      "display": "Wheat IgE Ab in Serum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6298-4",
+      "display": "Potassium"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6299-2",
+      "display": "Urea Nitrogen"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6301-6",
+      "display": "INR in Platelet poor plasma by Coagulation assay"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "63513-6",
+      "display": "Are you covered by health insurance or some other kind of health care plan [PhenX]"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "65750-2",
+      "display": "Drugs of abuse 5 panel - Urine by Screen method"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "66519-0",
+      "display": "Percentage area affected by eczema Head and Neck"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "66524-0",
+      "display": "Percentage area affected by eczema Upper extremitiy - bilateral"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "66529-9",
+      "display": "Percentage area affected by eczema Trunk"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "66534-9",
+      "display": "Percentage area affected by eczema Lower extremitiy - bilateral"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6690-2",
+      "display": "Leukocytes [#/volume] in Blood by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6768-6",
+      "display": "Alkaline Phosphatase"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6833-8",
+      "display": "Cat dander IgE Ab in Serum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "6844-5",
+      "display": "Honey bee IgE Ab in Serum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "70274-6",
+      "display": "Generalized anxiety disorder 7 item (GAD-7) total score [Reported.PHQ]"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "704-7",
+      "display": "Basophils [#/volume] in Blood by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "706-2",
+      "display": "Basophils/100 leukocytes in Blood by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "711-2",
+      "display": "Eosinophils [#/volume] in Blood by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "713-8",
+      "display": "Eosinophils/100 leukocytes in Blood by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "718-7",
+      "display": "Hemoglobin"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "71802-3",
+      "display": "Housing status"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "71933-6",
+      "display": "Veterans Rand health survey - 36 item (VR-36)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "71934-4",
+      "display": "Veterans Rand health survey - 12 item (VR-12)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "72091-2",
+      "display": "Knee injury and Osteoarthritis Outcome Score [KOOS]"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "72092-0",
+      "display": "Hip Dysfunction and Osteoarthritis Outcome Score [HOOS]"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "72106-8",
+      "display": "Total score [MMSE]"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "72166-2",
+      "display": "Tobacco smoking status"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "72514-3",
+      "display": "Pain severity - 0-10 verbal numeric rating [Score] - Reported"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "7258-7",
+      "display": "Cow milk IgE Ab in Serum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "731-0",
+      "display": "Lymphocytes [#/volume] in Blood by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "736-9",
+      "display": "Lymphocytes/100 leukocytes in Blood by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "74006-8",
+      "display": "Weight difference [Mass difference] --pre dialysis - post dialysis"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "742-7",
+      "display": "Monocytes [#/volume] in Blood by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "751-8",
+      "display": "Neutrophils [#/volume] in Blood by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "75325-1",
+      "display": "Symptom"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "75443-2",
+      "display": "Mental health Outpatient Note"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "75626-2",
+      "display": "Total score [AUDIT-C]"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "76504-0",
+      "display": "Total score [HARK]"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "76690-7",
+      "display": "Sexual orientation"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "770-8",
+      "display": "Neutrophils/100 leukocytes in Blood by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "77606-2",
+      "display": "Weight-for-length Per age and sex"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "777-3",
+      "display": "Platelets [#/volume] in Blood by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "785-6",
+      "display": "MCH [Entitic mass] by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "786-4",
+      "display": "MCHC [Mass/volume] by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "787-2",
+      "display": "MCV [Entitic volume] by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "788-0",
+      "display": "Erythrocyte distribution width [Ratio] by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "789-8",
+      "display": "Erythrocytes [#/volume] in Blood by Automated count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "7917-8",
+      "display": "HIV 1 Ab [Presence] in Serum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "80271-0",
+      "display": "Physical findings of Abdomen by Palpation"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "80382-5",
+      "display": "Influenza virus A Ag [Presence] in Nasopharynx by Rapid immunoassay"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "80383-3",
+      "display": "Influenza virus B Ag [Presence] in Nasopharynx by Rapid immunoassay"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "82667-7",
+      "display": "Total score [DAST-10]"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "8289-1",
+      "display": "Head Occipital-frontal circumference Percentile"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "8302-2",
+      "display": "Body Height"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "8310-5",
+      "display": "Body Temperature"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "84215-3",
+      "display": "Mental health Telehealth Note"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "8478-0",
+      "display": "Mean blood pressure"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "85318-4",
+      "display": "HER2 [Presence] in Breast cancer specimen by FISH"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "85319-2",
+      "display": "HER2 [Presence] in Breast cancer specimen by Immune stain"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "85337-4",
+      "display": "Estrogen receptor Ag [Presence] in Breast cancer specimen by Immune stain"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "85339-0",
+      "display": "Progesterone receptor Ag [Presence] in Breast cancer specimen by Immune stain"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "85343-2",
+      "display": "Lymph nodes with macrometastases [#] in Cancer specimen by Light microscopy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "85344-0",
+      "display": "Lymph nodes with micrometastases [#] in Cancer specimen by Light microscopy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "85352-3",
+      "display": "Lymph nodes with isolated tumor cells [#] in Cancer specimen by Light microscopy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "85354-9",
+      "display": "Blood Pressure"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "88020-3",
+      "display": "Functional capacity NYHA"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "88021-1",
+      "display": "Objective assessment of cardiovascular disease NYHA"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "88040-1",
+      "display": "Response to cancer treatment"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "88262-1",
+      "display": "Gram positive blood culture panel by Probe in Positive blood culture"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "8867-4",
+      "display": "Heart rate"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "89204-2",
+      "display": "Patient Health Questionnaire-9: Modified for Teens total score [Reported.PHQ.Teen]"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "89579-7",
+      "display": "Troponin I.cardiac [Mass/volume] in Serum or Plasma by High sensitivity method"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "91148-7",
+      "display": "Pain intensity, Enjoyment of life, General activity (PEG) 3 item pain scale"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "92130-4",
+      "display": "Rhinovirus RNA [Presence] in Respiratory specimen by NAA with probe detection"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "92131-2",
+      "display": "Respiratory syncytial virus RNA [Presence] in Respiratory specimen by NAA with probe detection"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "92134-6",
+      "display": "Human metapneumovirus RNA [Presence] in Respiratory specimen by NAA with probe detection"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "92138-7",
+      "display": "Parainfluenza virus 3 RNA [Presence] in Respiratory specimen by NAA with probe detection"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "92139-5",
+      "display": "Parainfluenza virus 2 RNA [Presence] in Respiratory specimen by NAA with probe detection"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "92140-3",
+      "display": "Parainfluenza virus 1 RNA [Presence] in Respiratory specimen by NAA with probe detection"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "92141-1",
+      "display": "Influenza virus B RNA [Presence] in Respiratory specimen by NAA with probe detection"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "92142-9",
+      "display": "Influenza virus A RNA [Presence] in Respiratory specimen by NAA with probe detection"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "9279-1",
+      "display": "Respiratory rate"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "93025-5",
+      "display": "Protocol for Responding to and Assessing Patients' Assets, Risks, and Experiences [PRAPARE]"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "94040-3",
+      "display": "Adenovirus A+B+C+D+E DNA [Presence] in Respiratory specimen by NAA with probe detection"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "94531-1",
+      "display": "SARS-CoV-2 RNA Pnl Resp NAA+probe"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "9843-4",
+      "display": "Head Occipital-frontal circumference"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Observation",
+    "key": {
+      "system": "http://loinc.org",
+      "code": "99999-0",
+      "display": "DSM-5 Clinical Diagnostic Criteria for Opioid Use Disorder"
+    },
+    "termCodeSearchParameter": "code"
+  }
+]

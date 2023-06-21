@@ -1,0 +1,2450 @@
+[
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "103746007",
+      "display": "Heparin therapy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "103750000",
+      "display": "Sleep apnea assessment (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "10383002",
+      "display": "Counseling for termination of pregnancy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "104091002",
+      "display": "Hemoglobin / Hematocrit / Platelet count"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "104173009",
+      "display": "Sputum Culture"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "104308009",
+      "display": "Serologic test for Toxoplasma gondii (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "104326007",
+      "display": "Measurement of Varicella-zoster virus antibody"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "104375008",
+      "display": "Hepatitis C antibody test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "104435004",
+      "display": "Screening for occult blood in feces (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "108290001",
+      "display": "Radiation oncology AND/OR radiotherapy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "112001000119100",
+      "display": "positive screening for PHQ-9"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "112011000119102",
+      "display": "negative screening for PHQ9"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "112790001",
+      "display": "Nasal sinus endoscopy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "112798008",
+      "display": "Insertion of endotracheal tube (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "113076002",
+      "display": "Oral Glucose Tolerance Test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "113120007",
+      "display": "Interstitial brachytherapy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "11466000",
+      "display": "Cesarean section"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "117010004",
+      "display": "Urine culture"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "117015009",
+      "display": "Throat culture (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "118001005",
+      "display": "Streptococcus pneumoniae group B antigen test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "1225002",
+      "display": "Upper arm X-ray"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "122548005",
+      "display": "Biopsy of breast (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "127783003",
+      "display": "Spirometry (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "13569004",
+      "display": "Transfusion of plasma (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "13995008",
+      "display": "Amputation of left arm"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "14152002",
+      "display": "Intravenous infusion (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "14768001",
+      "display": "Peripheral blood smear interpretation"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "15081005",
+      "display": "Pulmonary rehabilitation (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "15220000",
+      "display": "Laboratory test (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "1571000087109",
+      "display": "Ultrasonography of bilateral breasts (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "162676008",
+      "display": "Brief general examination (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "16335031000119103",
+      "display": "High resolution computed tomography of chest without contrast (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "165829005",
+      "display": "Gonorrhea infection test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "166001",
+      "display": "Behavioral therapy (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "167252002",
+      "display": "Urine pregnancy test (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "167271000",
+      "display": "Urine protein test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "167995008",
+      "display": "Sputum microscopy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "168594001",
+      "display": "Clavicle X-ray"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "169230002",
+      "display": "Ultrasound scan for fetal viability"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "169553002",
+      "display": "Insertion of subcutaneous contraceptive"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "169673001",
+      "display": "Antenatal RhD antibody screening"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "169690007",
+      "display": "Rubella screening"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "171122006",
+      "display": "Hepatitis B screening (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "171126009",
+      "display": "Tuberculosis screening (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "171128005",
+      "display": "Venereal disease screening (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "171207006",
+      "display": "Depression screening"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "171231001",
+      "display": "Asthma screening"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "173160006",
+      "display": "Diagnostic fiberoptic bronchoscopy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "173521004",
+      "display": "Transposition of submandibular duct (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "177157003",
+      "display": "Spontaneous breech delivery"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "17881005",
+      "display": "Cauterization of choroid plexus (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "180030006",
+      "display": "Amputation of left foot"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "180207008",
+      "display": "Intravenous blood transfusion of packed cells (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "180256009",
+      "display": "Subcutaneous immunotherapy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "180325003",
+      "display": "Electrical cardioversion"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "182777000",
+      "display": "Monitoring of patient (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "182836005",
+      "display": "Review of Medication (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "18286008",
+      "display": "Catheter ablation of tissue of heart"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "183418007",
+      "display": "Social case work (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "183450002",
+      "display": "Admission to burn unit"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "183856001",
+      "display": "Referral to hypertension clinic"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "185087000",
+      "display": "Notifications (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "18946005",
+      "display": "Epidural anesthesia"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "19490002",
+      "display": "Ankle X-ray"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "200619008",
+      "display": "Comprehensive interview and evaluation (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "225158009",
+      "display": "Auscultation of the fetal heart"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "22523008",
+      "display": "Vasectomy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "225297008",
+      "display": "Care planning and problem solving actions (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "225337009",
+      "display": "Suicide risk assessment (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "225386006",
+      "display": "Pre-discharge assessment (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "228557008",
+      "display": "Cognitive and behavioral therapy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "229064008",
+      "display": "Movement therapy (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "229069003",
+      "display": "Posture training (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "229095001",
+      "display": "Exercise class"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "232717009",
+      "display": "Coronary artery bypass grafting"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "232967006",
+      "display": "Implantation of left ventricular assist device (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "23426006",
+      "display": "Measurement of respiratory function (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "234262008",
+      "display": "Excision of axillary lymph node (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "234817001",
+      "display": "Insertion of oral appliance for the handicapped (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "236931002",
+      "display": "Methotrexate injection into tubal pregnancy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "236974004",
+      "display": "Instrumental delivery"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "237001001",
+      "display": "Augmentation of labor"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "241055006",
+      "display": "Mammogram - symptomatic (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "241149003",
+      "display": "Videofluoroscopy swallow (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "241615005",
+      "display": "Magnetic resonance imaging of breast (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "241645008",
+      "display": "Magnetic resonance imaging of spine (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "243063003",
+      "display": "Postoperative procedure education (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "243174005",
+      "display": "Weaning from mechanically assisted ventilation (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "24623002",
+      "display": "Screening mammography (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "252160004",
+      "display": "Standard pregnancy test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "252895004",
+      "display": "Urodynamic studies (procedure"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "261352009",
+      "display": "Face mask (physical object)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "265764009",
+      "display": "Renal dialysis (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "26763009",
+      "display": "Controlled ventilation procedure and therapy, initiation and management (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "268425006",
+      "display": "Pelvis X-ray"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "268556000",
+      "display": "Urine screening for glucose"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "269828009",
+      "display": "Syphilis infection test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "269911007",
+      "display": "Sputum examination (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "271280005",
+      "display": "Removal of endotracheal tube (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "271442007",
+      "display": "Fetal anatomy study"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "274031008",
+      "display": "Rectal polypectomy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "274474001",
+      "display": "Bone immobilization"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "274804006",
+      "display": "Evaluation of uterine fundal height"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "275833003",
+      "display": "Alpha-fetoprotein test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "28163009",
+      "display": "Skin test for tuberculosis"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "281790008",
+      "display": "Intravenous antibiotic therapy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "287664005",
+      "display": "Bilateral tubal ligation"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "288086009",
+      "display": "Suture open wound"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "290045001",
+      "display": "Kitchen practice"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "29303009",
+      "display": "Electrocardiographic procedure"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "301807007",
+      "display": "Removal of subcutaneous contraceptive"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "302351005",
+      "display": "Ligation of salivary duct (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "302497006",
+      "display": "Hemodialysis (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "303653007",
+      "display": "Computed tomography of head (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "305340004",
+      "display": "Admission to long stay hospital"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "305351004",
+      "display": "Admit to ICU (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "305425002",
+      "display": "Admission to neurosurgical department"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "305428000",
+      "display": "Admission to orthopedic department"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "305433001",
+      "display": "Admission to trauma surgery department"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "310417005",
+      "display": "Certification procedure (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "310861008",
+      "display": "Chlamydia antigen test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "311555007",
+      "display": "Speech and language therapy regime (regime/therapy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "311707005",
+      "display": "Oromotor Exercises"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "311791003",
+      "display": "Information gathering (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "31208007",
+      "display": "Medical induction of labor"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "312681000",
+      "display": "Bone density scan (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "313077009",
+      "display": "Human immunodeficiency virus counseling (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "313191000",
+      "display": "Injection of adrenaline"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "313613002",
+      "display": "Hepatitis A antibody test (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "313660005",
+      "display": "Absolute CD4 count procedure (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "315124004",
+      "display": "Human immunodeficiency virus viral load (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "315639002",
+      "display": "Initial patient assessment (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "31676001",
+      "display": "Human immunodeficiency virus antigen test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "32413006",
+      "display": "Transplantation of heart (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "33195004",
+      "display": "Teleradiotherapy procedure (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "3457005",
+      "display": "Patient referral (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "35025007",
+      "display": "Manual pelvic examination (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "36321500",
+      "display": "Musculoskeletal system physical examination (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "367336001",
+      "display": "Chemotherapy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "370789001",
+      "display": "Development of individualized plan of care (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "370995009",
+      "display": "Health risks education (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "371908008",
+      "display": "Oxygen administration by mask (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "373786007",
+      "display": "Reasons for treatment delay (finding)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "38102005",
+      "display": "Open Removal of Gall Bladder"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "384692006",
+      "display": "Intracavitary brachytherapy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "384700001",
+      "display": "Injection of tetanus antitoxin"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "385763009",
+      "display": "Hospice care (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "385781007",
+      "display": "Home health aide service (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "385798007",
+      "display": "Radiation therapy care (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "385892002",
+      "display": "Mental health screening (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "386394001",
+      "display": "Pregnancy termination care"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "386516004",
+      "display": "Anticipatory guidance (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "387607004",
+      "display": "Construction of diverting colostomy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "387685009",
+      "display": "Surgical manipulation of shoulder joint"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "392021009",
+      "display": "Lumpectomy of breast (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "392091000",
+      "display": "Care regimes assessment (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "395123002",
+      "display": "Urine screening test for diabetes"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "395142003",
+      "display": "Allergy screening test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "396487001",
+      "display": "Sentinel lymph node biopsy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "398171003",
+      "display": "Hearing examination (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "399014008",
+      "display": "Vaccination for diphtheria, pertussis, and tetanus"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "399208008",
+      "display": "Chest X-ray"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "404909007",
+      "display": "Injection of botulinum toxin (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "40617009",
+      "display": "Artificial respiration (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "40701008",
+      "display": "Echocardiography (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "408919008",
+      "display": "Psychosocial care (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "409023009",
+      "display": "Professional / ancillary services care (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "409066002",
+      "display": "Education, guidance and counseling (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "410006001",
+      "display": "Digital examination of rectum"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "410401003",
+      "display": "Nursing care/supplementary surveillance (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "412809002",
+      "display": "Viral hepatitis screening test (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "413107006",
+      "display": "Hepatitis C screening (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "415070008",
+      "display": "Percutaneous coronary intervention"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "415300000",
+      "display": "Review of systems (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "417511005",
+      "display": "Referral to home health care service (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "418891003",
+      "display": "Computed tomography of chest and abdomen"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "423475008",
+      "display": "Heart failure education (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "426701000119108",
+      "display": "Ultrasonography of abdomen, right upper quadrant and epigastrium"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "428211000124100",
+      "display": "Assessment of substance use (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "42839003",
+      "display": "Repair of myelomeningocele (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "429609002",
+      "display": "Lung volume reduction surgery (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "430193006",
+      "display": "Medication Reconciliation (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "430701006",
+      "display": "Resuscitation using intravenous fluid (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "43075005",
+      "display": "Partial resection of colon"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "431182000",
+      "display": "Placing subject in prone position (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "432231006",
+      "display": "Fine needle aspiration biopsy of lung (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "433112001",
+      "display": "Percutaneous mechanical thrombectomy of portal vein using fluoroscopic guidance"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "433114000",
+      "display": "Human epidermal growth factor receptor 2 gene detection by immunohistochemistry (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "434363004",
+      "display": "Human epidermal growth factor receptor 2 gene detection by fluorescence in situ hybridization (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "441763001",
+      "display": "Endoscopic third ventriculostomy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "443497002",
+      "display": "Excision of sentinel lymph node (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "443529005",
+      "display": "Screening for chromosomal aneuploidy in prenatal amniotic fluid"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "444260001",
+      "display": "20 Gene mutation test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "445912000",
+      "display": "Excision of fallopian tube and surgical removal of ectopic pregnancy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "44608003",
+      "display": "Blood typing, RH typing"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "446573003",
+      "display": "Continuous positive airway pressure titration (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "446987006",
+      "display": "Determination of susceptibility of Human immunodeficiency virus 1 to panel of antiretroviral drugs using genotypic technique (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "447365002",
+      "display": "Insertion of biventricular implantable cardioverter defibrillator"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "447759004",
+      "display": "Brachytherapy of breast (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "449214001",
+      "display": "Transfer to stepdown"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "449381000124108",
+      "display": "Discharge from skilled nursing facility (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "454711000124102",
+      "display": "Depression screening using Patient Health Questionnaire Two-Item score (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "45595009",
+      "display": "Laparoscopic Removal of Gall Bladder"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "46028000",
+      "display": "Amputation of right hand"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "46706006",
+      "display": "Replacement of contraceptive intrauterine device"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "47020004",
+      "display": "Ventriculoperitoneal shunt (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "47758006",
+      "display": "Hepatitis B Surface Antigen Measurement"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "51116004",
+      "display": "RhD passive immunization"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "52734007",
+      "display": "Total replacement of hip"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "52765003",
+      "display": "Intubation"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "54550000",
+      "display": "Seizure Count Cerebral Cortex Electroencephalogram (EEG)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "58000006",
+      "display": "Patient discharge (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "5880005",
+      "display": "Physical exam following abortion"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "60027007",
+      "display": "X-ray or wrist"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "60151004",
+      "display": "Neonatal Screening"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "609588000",
+      "display": "Total knee replacement"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "61594008",
+      "display": "Microbial culture (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "63332003",
+      "display": "History AND physical examination (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "65200003",
+      "display": "Insertion of intrauterine contraceptive device"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "65546002",
+      "display": "Extraction of wisdom tooth"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "65575008",
+      "display": "Biopsy of prostate"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "65588006",
+      "display": "Premature birth of newborn"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "66348005",
+      "display": "Childbirth"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "67879005",
+      "display": "History and physical examination, limited (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "68254000",
+      "display": "Removal of intrauterine device"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "69031006",
+      "display": "Excision of breast tissue (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "698354004",
+      "display": "Magnetic resonance imaging for measurement of brain volume (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "698560000",
+      "display": "Referral to sleep apnea clinic (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "699253003",
+      "display": "Surgical manipulation of joint of knee"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "703423002",
+      "display": "Combined chemotherapy and radiation therapy (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "709506004",
+      "display": "Assessment of readiness for disclosure of health status (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "709640007",
+      "display": "Doppler ultrasonography of renal vein (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "710824005",
+      "display": "Assessment of health and social care needs (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "710841007",
+      "display": "Assessment of anxiety (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "711018006",
+      "display": "Assessment of social support (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "711069006",
+      "display": "Coordination of care plan (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "71121004",
+      "display": "Human immunodeficiency virus screening (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "713106006",
+      "display": "Screening for drug abuse (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "714812005",
+      "display": "Induced termination of pregnancy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "715252007",
+      "display": "Depression screening using Patient Health Questionnaire Nine Item score (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "71651007",
+      "display": "Mammography (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "717778001",
+      "display": "Mouth care (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "7227006",
+      "display": "Excision of submandibular gland (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "733863009",
+      "display": "Assessment of readiness for self-management (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "73761001",
+      "display": "Colonoscopy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "74016001",
+      "display": "Knee X-ray"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "74857009",
+      "display": "Hospital admission, short-term, 24 hours"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "76164006",
+      "display": "Biopsy of colon"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "762993000",
+      "display": "Assessment using Morse Fall Scale (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "762998009",
+      "display": "Assessment using New York Heart Association Classification (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "763302001",
+      "display": "Assessment using Alcohol Use Disorders Identification Test - Consumption (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "76601001",
+      "display": "Intramuscular injection"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "76746007",
+      "display": "Cardiovascular stress testing (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "79733001",
+      "display": "Amputation of left leg"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "80146002",
+      "display": "Appendectomy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "82078001",
+      "display": "Take blood sample"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "82808001",
+      "display": "Sleep apnea monitoring with alarm (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "84478008",
+      "display": "Occupational therapy (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "84728005",
+      "display": "Neurological examination (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "85548006",
+      "display": "Episiotomy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "866148006",
+      "display": "Screening for domestic abuse (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "868187001",
+      "display": "Assessment using Car, Relax, Alone, Forget, Friends, Trouble Screening Test (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "86964003",
+      "display": "Sweat Test"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "88039007",
+      "display": "Transplant of lung (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "88848003",
+      "display": "Psychiatric follow-up"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "9002005",
+      "display": "Manual testing of muscle function (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "90226004",
+      "display": "Cytopathology procedure, preparation of smear, genital source"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "90407005",
+      "display": "Evaluation of psychiatric state of patient"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "90470006",
+      "display": "Prostatectomy"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "91251008",
+      "display": "Physical therapy procedure (regime/therapy)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "91602002",
+      "display": "Thoracentesis (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  },
+  {
+    "fhirResourceType": "Procedure",
+    "key": {
+      "system": "http://snomed.info/sct",
+      "code": "9564003",
+      "display": "Complete blood count with white cell differential, automated (procedure)"
+    },
+    "termCodeSearchParameter": "code"
+  }
+]

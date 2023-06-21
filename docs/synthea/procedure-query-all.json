@@ -1,0 +1,15 @@
+{
+  "inclusionCriteria": [
+    [
+      {
+        "termCodes": [
+          {
+            "code": "Prozedur",
+            "display": "Prozedur",
+            "system": "mii.abide"
+          }
+        ]
+      }
+    ]
+  ]
+}

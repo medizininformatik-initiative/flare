@@ -6,7 +6,7 @@ This test uses a query about the [the union of the top 10 most frequent conditio
 
 ```sh
 jq -scM '.[0].body = (.[1] | @base64) | .[0]' load-tests/execute.json synthea/condition-query-union-top-10.json |\
-vegeta attack -rate=10 -format=json -duration=60s | \
+vegeta attack -rate=10 -format=json -duration=60s |\
 vegeta report
 ```
 

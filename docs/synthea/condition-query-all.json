@@ -1,0 +1,15 @@
+{
+  "inclusionCriteria": [
+    [
+      {
+        "termCodes": [
+          {
+            "system": "flare",
+            "code": "all-conditions",
+            "display": ""
+          }
+        ]
+      }
+    ]
+  ]
+}
