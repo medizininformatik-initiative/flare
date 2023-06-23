@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.2.4
+
+### Minor Enhancements
+
+* Retry Failed Requests ([#43](https://github.com/medizininformatik-initiative/flare/pull/43))
+* Allow to Specify the Max Request Queue Size ([#55](https://github.com/medizininformatik-initiative/flare/pull/55))
+* Lower the Maximum Number of Connections towards the FHIR Server ([#44](https://github.com/medizininformatik-initiative/flare/pull/44))
+
+### Bugfixes
+
+* Avoid Memory Problems while Collecting Patient IDs ([#53](https://github.com/medizininformatik-initiative/flare/pull/53))
+
 ## v0.2.3
 
 ### Bugfixes
