@@ -1,5 +1,6 @@
 package de.medizininformatikinitiative.flare.service;
 
+import de.medizininformatikinitiative.flare.Util;
 import de.medizininformatikinitiative.flare.model.Population;
 import de.medizininformatikinitiative.flare.model.fhir.Bundle;
 import de.medizininformatikinitiative.flare.model.fhir.Query;
@@ -65,7 +66,7 @@ public class DataStore implements FhirQueryService {
                 .collect(Collectors.toSet())
                 .map(patientIds -> Population.copyOf(patientIds).withCreated(clock.instant()))
                 .doOnNext(p -> logger.debug("Finished query `{}` returning {} patients in {} seconds.", query, p.size(),
-                        "%.1f".formatted(durationSecondsSince(startNanoTime))))
+                        "%.1f".formatted(Util.durationSecondsSince(startNanoTime))))
                 .doOnError(e -> logger.error("Error while executing query `{}`: {}", query, e.getMessage()));
     }
 
@@ -96,9 +97,5 @@ public class DataStore implements FhirQueryService {
             case "Consent" -> "patient";
             default -> "subject";
         };
-    }
-
-    private static double durationSecondsSince(long startNanoTime) {
-        return ((double) (System.nanoTime() - startNanoTime)) / 1e9;
     }
 }

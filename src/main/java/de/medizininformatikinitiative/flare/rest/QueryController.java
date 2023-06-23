@@ -1,6 +1,7 @@
 package de.medizininformatikinitiative.flare.rest;
 
 import de.medizininformatikinitiative.Monos;
+import de.medizininformatikinitiative.flare.Util;
 import de.medizininformatikinitiative.flare.model.mapping.MappingException;
 import de.medizininformatikinitiative.flare.model.sq.StructuredQuery;
 import de.medizininformatikinitiative.flare.service.StructuredQueryService;
@@ -42,10 +43,15 @@ public class QueryController {
     }
 
     public Mono<ServerResponse> execute(ServerRequest request) {
+        var startNanoTime = System.nanoTime();
         logger.debug("Execute query");
         return request.bodyToMono(StructuredQuery.class)
                 .flatMap(queryService::execute)
-                .flatMap(count -> ok().bodyValue(count))
+                .flatMap(count -> {
+                    logger.debug("Finished query returning {} patients in {} seconds.", count,
+                            "%.1f".formatted(Util.durationSecondsSince(startNanoTime)));
+                    return ok().bodyValue(count);
+                })
                 .onErrorResume(MappingException.class, e -> {
                     logger.warn("Mapping error: {}", e.getMessage());
                     return badRequest().bodyValue(new Error(e.getMessage()));
