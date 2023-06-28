@@ -44,13 +44,13 @@ public record ComparatorFilterPart(Comparator comparator, BigDecimal value, Term
     }
 
     @Override
-    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping) {
+    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping, String referenceSearchParam) {
         if (filterMapping.isAge()) {
             return unit == null
                     ? Either.left(new CalculationException("Missing unit in age calculation."))
-                    : AgeUtils.expandedAgeFilterFromComparator(today, comparator, value, unit);
+                    : AgeUtils.expandedAgeFilterFromComparator(today, comparator, value, unit, referenceSearchParam);
         }
         TermCode compositeCode = filterMapping.type() == COMPOSITE_QUANTITY_COMPARATOR ? filterMapping.compositeCode() : null;
-        return Either.right(List.of(new ExpandedComparatorFilter(filterMapping.searchParameter(), comparator, value, unit, compositeCode)));
+        return Either.right(List.of(new ExpandedComparatorFilter(filterMapping.searchParameter(), comparator, value, unit, compositeCode, referenceSearchParam)));
     }
 }

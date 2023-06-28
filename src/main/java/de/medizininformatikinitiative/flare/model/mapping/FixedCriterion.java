@@ -39,9 +39,9 @@ public record FixedCriterion(FilterType type, String searchParameter, List<TermC
         return type == COMPOSITE_QUANTITY_COMPARATOR || type == COMPOSITE_QUANTITY_RANGE ?
                 Either.left(new FixedCriterionTypeNotExpandableException(type)) :
                 Either.right(concepts.stream().map(concept ->  switch (type) {
-                    case CODING -> (ExpandedFilter) new ExpandedConceptFilter(searchParameter, concept, null);
-                    case CODE -> new ExpandedCodeFilter(searchParameter, concept.code());
-                    case COMPOSITE_CONCEPT_COMPARATOR -> new ExpandedConceptFilter(searchParameter, concept, compositeCode);
+                    case CODING -> (ExpandedFilter) new ExpandedConceptFilter(searchParameter, concept, null, null);
+                    case CODE -> new ExpandedCodeFilter(searchParameter, concept.code(), null);
+                    case COMPOSITE_CONCEPT_COMPARATOR -> new ExpandedConceptFilter(searchParameter, concept, compositeCode, null);
                     default -> null;
                 }).filter(Objects::nonNull).toList());
 

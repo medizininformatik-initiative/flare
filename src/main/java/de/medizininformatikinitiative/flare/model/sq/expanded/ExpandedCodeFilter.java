@@ -8,10 +8,10 @@ import de.medizininformatikinitiative.flare.model.fhir.QueryParams;
  * @param searchParameter the FHIR search parameter code to use for the value
  * @param code            the code to search for
  */
-public record ExpandedCodeFilter(String searchParameter, String code) implements ExpandedFilter {
+public record ExpandedCodeFilter(String searchParameter, String code, String referenceSearchParam) implements ExpandedFilter {
 
     @Override
     public QueryParams toParams() {
-        return QueryParams.of(searchParameter, code);
+        return QueryParams.of(searchParameter, code, referenceSearchParam);
     }
 }

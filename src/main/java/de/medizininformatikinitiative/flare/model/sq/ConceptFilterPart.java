@@ -37,17 +37,17 @@ public record ConceptFilterPart(List<TermCode> concepts) implements FilterPart {
     }
 
     @Override
-    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping) {
+    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping, String referenceSearchParam) {
         if(filterMapping.type() == COMPOSITE_QUANTITY_COMPARATOR || filterMapping.type() == COMPOSITE_QUANTITY_RANGE){
             return Either.left(new ConceptFilterTypeNotExpandableException(filterMapping.type()));
         }
         return Either.right(concepts.stream()
                 .map(concept -> switch (filterMapping.type()) {
                     case CODE -> (ExpandedFilter) new ExpandedCodeFilter(filterMapping.searchParameter(),
-                            concept.code());
-                    case CODING -> new ExpandedConceptFilter(filterMapping.searchParameter(), concept, null);
-                    case COMPOSITE_CONCEPT_COMPARATOR -> new ExpandedConceptFilter(filterMapping.searchParameter(), concept, filterMapping.compositeCode());
-                    case COMPOSITE_QUANTITY_RANGE, COMPOSITE_QUANTITY_COMPARATOR -> null;
+                            concept.code(), referenceSearchParam);
+                    case CODING -> new ExpandedConceptFilter(filterMapping.searchParameter(), concept, null,referenceSearchParam);
+                    case COMPOSITE_CONCEPT_COMPARATOR -> new ExpandedConceptFilter(filterMapping.searchParameter(), concept, filterMapping.compositeCode(), referenceSearchParam);
+                    case COMPOSITE_QUANTITY_RANGE, COMPOSITE_QUANTITY_COMPARATOR, REFERENCE -> null;
                 }).filter(Objects::nonNull)
                 .toList());
     }

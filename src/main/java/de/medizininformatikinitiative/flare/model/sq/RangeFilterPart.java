@@ -30,11 +30,11 @@ public record RangeFilterPart(BigDecimal lowerBound, BigDecimal upperBound, Term
     }
 
     @Override
-    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping) {
+    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping, String referenceSearchParam) {
         if (filterMapping.isAge()) {
-            return AgeUtils.expandedAgeFilterFromRange(today, lowerBound, upperBound, unit);
+            return AgeUtils.expandedAgeFilterFromRange(today, lowerBound, upperBound, unit, referenceSearchParam);
         }
         TermCode compositeCode = filterMapping.type() == COMPOSITE_QUANTITY_RANGE ? filterMapping.compositeCode() : null;
-        return Either.right(List.of(new ExpandedRangeFilter(filterMapping.searchParameter(), lowerBound, upperBound, unit, compositeCode)));
+        return Either.right(List.of(new ExpandedRangeFilter(filterMapping.searchParameter(), lowerBound, upperBound, unit, compositeCode, referenceSearchParam)));
     }
 }

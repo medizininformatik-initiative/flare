@@ -8,4 +8,5 @@ public enum FilterType {
     @JsonProperty("composite-quantity-comparator") COMPOSITE_QUANTITY_COMPARATOR,
     @JsonProperty("composite-quantity-range") COMPOSITE_QUANTITY_RANGE,
     @JsonProperty("composite-quantity-concept") COMPOSITE_CONCEPT_COMPARATOR,
+    @JsonProperty("reference") REFERENCE,
 }

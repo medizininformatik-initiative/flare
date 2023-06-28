@@ -14,6 +14,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -53,6 +54,7 @@ class CriterionTest {
     static final TermCode COMPOSITE_CODE = new TermCode("http://loing.org", "8480-6", "Sistolic Bloodpressure");
     static final TermCode BLOOD_PRESSURE = new TermCode("http://loing.org", "8480-6", "Systolischer Blutdruck");
     public static final String COMPONENT_CODE_VALUE_QUANTITY = "component-code-value-quantity";
+
 
     @Mock
     MappingContext mappingContext;
@@ -181,7 +183,7 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE, null))));
+                        .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE, null, null))));
             }
 
             @Test
@@ -196,8 +198,8 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE, null))
-                        .appendFilter(new ExpandedCodeFilter("status", "final"))));
+                        .appendFilter(new ExpandedConceptFilter("value-concept", POSITIVE, null, null))
+                        .appendFilter(new ExpandedCodeFilter("status", "final", null))));
             }
 
             @Test
@@ -210,8 +212,8 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("value-concept", MALE, null)),
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("value-concept", FEMALE, null))));
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("value-concept", MALE, null, null)),
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("value-concept", FEMALE, null, null))));
             }
 
             @Test
@@ -225,11 +227,11 @@ class CriterionTest {
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
                         expandedCriterion
-                                .appendFilter(new ExpandedCodeFilter("status", "final"))
-                                .appendFilter(new ExpandedConceptFilter("value-concept", MALE, null)),
+                                .appendFilter(new ExpandedCodeFilter("status", "final", null))
+                                .appendFilter(new ExpandedConceptFilter("value-concept", MALE, null, null)),
                         expandedCriterion
-                                .appendFilter(new ExpandedCodeFilter("status", "final"))
-                                .appendFilter(new ExpandedConceptFilter("value-concept", FEMALE, null))));
+                                .appendFilter(new ExpandedCodeFilter("status", "final", null))
+                                .appendFilter(new ExpandedConceptFilter("value-concept", FEMALE, null, null))));
             }
 
             @Test
@@ -242,7 +244,7 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedComparatorFilter("value-quantity", LESS_THAN, DECIMAL, GRAM_PER_DECILITER, null))));
+                        .appendFilter(new ExpandedComparatorFilter("value-quantity", LESS_THAN, DECIMAL, GRAM_PER_DECILITER, null, null))));
             }
 
             @Test
@@ -255,7 +257,7 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_1, DECIMAL_2, GRAM_PER_DECILITER, null))));
+                        .appendFilter(new ExpandedRangeFilter("value-quantity", DECIMAL_1, DECIMAL_2, GRAM_PER_DECILITER, null, null))));
             }
 
             @Test
@@ -268,7 +270,7 @@ class CriterionTest {
                         VERIFICATION_STATUS, CONFIRMED)).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null))));
+                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null, null))));
             }
 
             @Test
@@ -281,8 +283,8 @@ class CriterionTest {
                         VERIFICATION_STATUS, CONFIRMED, UNCONFIRMED)).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null)),
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED, null))));
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null, null)),
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED, null, null))));
             }
 
             @Test
@@ -294,7 +296,7 @@ class CriterionTest {
                 var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null))));
+                        .appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null, null))));
             }
 
             @Test
@@ -306,8 +308,8 @@ class CriterionTest {
                 var criteria = Criterion.of(Concept.of(TERM_CODE)).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null)),
-                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED, null))));
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null, null)),
+                        expandedCriterion.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED, null, null))));
             }
 
             @Test
@@ -320,7 +322,7 @@ class CriterionTest {
                         new ComparatorFilterPart(GREATER_THAN, DECIMAL, GRAM_PER_DECILITER, BLOOD_PRESSURE))).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedComparatorFilter(COMPONENT_CODE_VALUE_QUANTITY, GREATER_THAN, DECIMAL, GRAM_PER_DECILITER, COMPOSITE_CODE))));
+                        .appendFilter(new ExpandedComparatorFilter(COMPONENT_CODE_VALUE_QUANTITY, GREATER_THAN, DECIMAL, GRAM_PER_DECILITER, COMPOSITE_CODE, null))));
             }
 
             @Test
@@ -333,7 +335,7 @@ class CriterionTest {
                         new RangeFilterPart(DECIMAL_1, DECIMAL_2, GRAM_PER_DECILITER))).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedRangeFilter(COMPONENT_CODE_VALUE_QUANTITY, DECIMAL_1, DECIMAL_2, GRAM_PER_DECILITER, COMPOSITE_CODE))));
+                        .appendFilter(new ExpandedRangeFilter(COMPONENT_CODE_VALUE_QUANTITY, DECIMAL_1, DECIMAL_2, GRAM_PER_DECILITER, COMPOSITE_CODE, null))));
             }
 
             @Test
@@ -346,7 +348,7 @@ class CriterionTest {
                         new ConceptFilterPart(List.of(TERM_CODE)))).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedConceptFilter(COMPONENT_CODE_VALUE_QUANTITY, TERM_CODE, COMPOSITE_CODE))));
+                        .appendFilter(new ExpandedConceptFilter(COMPONENT_CODE_VALUE_QUANTITY, TERM_CODE, COMPOSITE_CODE, null))));
             }
 
             @Test
@@ -373,7 +375,7 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedDateComparatorFilter("time-restriction", LESS_EQUAL, end))));
+                        .appendFilter(new ExpandedDateComparatorFilter("time-restriction", LESS_EQUAL, end, null))));
             }
 
             @ParameterizedTest(name = "[{0})")
@@ -388,7 +390,7 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedDateComparatorFilter("time-restriction", GREATER_EQUAL, start))));
+                        .appendFilter(new ExpandedDateComparatorFilter("time-restriction", GREATER_EQUAL, start, null))));
             }
 
             @ParameterizedTest(name = "[{0}, {1}]")
@@ -403,7 +405,7 @@ class CriterionTest {
                         .expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedDateRangeFilter("time-restriction", start, end))));
+                        .appendFilter(new ExpandedDateRangeFilter("time-restriction", start, end, null))));
             }
 
             static Stream<LocalDate> localDates() {
@@ -462,10 +464,10 @@ class CriterionTest {
                         VERIFICATION_STATUS, CONFIRMED, UNCONFIRMED)).expand(mappingContext);
 
                 assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
-                        expandedCriterion1.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null)),
-                        expandedCriterion1.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED, null)),
-                        expandedCriterion2.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null)),
-                        expandedCriterion2.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED, null))));
+                        expandedCriterion1.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null, null)),
+                        expandedCriterion1.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED, null, null)),
+                        expandedCriterion2.appendFilter(new ExpandedConceptFilter("verification-status", CONFIRMED, null, null)),
+                        expandedCriterion2.appendFilter(new ExpandedConceptFilter("verification-status", UNCONFIRMED, null, null))));
             }
         }
 
@@ -503,6 +505,333 @@ class CriterionTest {
         }
 
         @Nested
+        @DisplayName("with reference filers")
+        class ReferenceFilters {
+            static final TermCode TERM_CODE_1 = new TermCode("sys", "termcode1", "disp");
+            static final TermCode TERM_CODE_2 = new TermCode("sys", "termcode2", "disp");
+            static final TermCode TERM_CODE_3 = new TermCode("sys", "termcode3", "disp");
+            static final TermCode TERM_CODE_4 = new TermCode("sys", "termcode4", "disp");
+            static final TermCode TERM_CODE_5 = new TermCode("sys", "termcode5", "disp");
+            static final TermCode CONC1 = new TermCode("sys", "conc1", "disp");
+            static final TermCode CONC2 = new TermCode("sys", "conc2", "disp");
+            static final TermCode CONC3 = new TermCode("sys", "conc3", "disp");
+            static final TermCode CONC4 = new TermCode("sys", "conc4", "disp");
+            static final TermCode CONC5 = new TermCode("sys", "conc5", "disp");
+            static final TermCode CONC6 = new TermCode("sys", "conc6", "disp");
+            static final TermCode CONC7 = new TermCode("sys", "conc7", "disp");
+            static final TermCode CONC8 = new TermCode("sys", "conc8", "disp");
+
+            static final TermCode CONC_FILTER_CODE_1 = new TermCode("sys", "conc_code_1", "disp");
+            static final TermCode CONC_FILTER_CODE_2 = new TermCode("sys", "conc_code_2", "disp");
+            static final TermCode CONC_FILTER_CODE_3 = new TermCode("sys", "conc_code_3", "disp");
+            static final TermCode CONC_FILTER_CODE_4 = new TermCode("sys", "conc_code_4", "disp");
+            static final TermCode CONC_FILTER_CODE_5 = new TermCode("sys", "conc_code_5", "disp");
+            static final TermCode CONC_FILTER_CODE_6 = new TermCode("sys", "conc_code_6", "disp");
+            static final TermCode REF_FILTER_CODE_1 = new TermCode("sys", "ref-filter-code-1", "dips");
+            static final TermCode REF_FILTER_CODE_2 = new TermCode("sys", "ref-filter-code-2", "dips");
+            public static final String RESSOURCE_TYPE_1 = "ressourceType1";
+            public static final String TERM_CODE_SEARCHPARAM_1 = "term-code-searchparam-1";
+            public static final String REF_CODE_SEARCHPARAM_1 = "ref-code-searchparam-1";
+            public static final String REF_CODE_SEARCHPARAM_2 = "ref-code-searchparam-2";
+            public static final String CONC_1_AND_2_SEARCH_PARAM = "conc1and2-ressourceType";
+            public static final String RESSOURCE_TYPE_2 = "ressourceType2";
+            public static final String TERM_CODE_SEARCHPARAM_2 = "term-code-searchparam-2";
+            public static final String CONC_3_SEARCH_PARAM = "conc3-ressourceType";
+            public static final String RESSOURCE_TYPE_3 = "ressourceType3";
+            public static final String TERM_CODE_SEARCHPARAM_3 = "term-code-searchparam-3";
+            public static final String CONC_4_SEARCH_PARAM = "conc4-ressourceType";
+            public static final String CONC_5_SEARCH_PARAM = "conc5-ressourceType";
+            public static final String RESSOURCE_TYPE_4 = "ressourceType4";
+            public static final String TERM_CODE_SEARCHPARAM_4 = "term-code-searchparam-4";
+            public static final String CONC_6_SEARCH_PARAM = "conc5-ressourceType";
+            public static final String RESSOURCE_TYPE_41 = "ressourceType4";
+            public static final String TERM_CODE_SEARCHPARAM_5 = "term-code-searchparam-5";
+            public static final String CONC_7_AND_8_SEARCH_PARAM = "conc7and8-ressourceType";
+
+            @Test
+            @DisplayName("One Criterion that expands into two TermCodes and One Reference Criterion that also expands into two TermCodes" +
+                    "with a concept filter with two Concepts.")
+            void singleParentCritTwoTermCodes_singleRefCritTwoTermCodes(){
+                when(mappingContext.expandConcept(Concept.of(TERM_CODE_1))).thenReturn(Either.right(List.of(TERM_CODE_1, TERM_CODE_2)));
+                when(mappingContext.expandConcept(Concept.of(TERM_CODE_3))).thenReturn(Either.right(List.of(TERM_CODE_3, TERM_CODE_4)));
+
+
+                when(mappingContext.findMapping(TERM_CODE_1)).thenReturn(Either.right(Mapping.of(TERM_CODE_1, RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1)
+                        .appendAttributeMapping(AttributeMapping.reference(REF_FILTER_CODE_1, REF_CODE_SEARCHPARAM_1))));
+                when(mappingContext.findMapping(TERM_CODE_2)).thenReturn(Either.right(Mapping.of(TERM_CODE_2, RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_2)
+                        .appendAttributeMapping(AttributeMapping.reference(REF_FILTER_CODE_1, REF_CODE_SEARCHPARAM_1))));
+
+                when(mappingContext.findMapping(TERM_CODE_3)).thenReturn(Either.right(Mapping.of(TERM_CODE_3, RESSOURCE_TYPE_3, TERM_CODE_SEARCHPARAM_3)
+                        .appendAttributeMapping(AttributeMapping.code(CONC_FILTER_CODE_1, CONC_1_AND_2_SEARCH_PARAM))));
+                when(mappingContext.findMapping(TERM_CODE_4)).thenReturn(Either.right(Mapping.of(TERM_CODE_4, RESSOURCE_TYPE_3, TERM_CODE_SEARCHPARAM_4)
+                        .appendAttributeMapping(AttributeMapping.code(CONC_FILTER_CODE_1, CONC_1_AND_2_SEARCH_PARAM))));
+
+
+                var criteria = Criterion.of(Concept.of(TERM_CODE_1))
+                        .appendReferenceFiler(new ReferenceFilter(List.of(
+                                Criterion.of(Concept.of(TERM_CODE_3))
+                                        .appendAttributeFilter(AttributeFilter.ofConcept(CONC_FILTER_CODE_1, CONC1, CONC2))
+                        ), REF_FILTER_CODE_1)).expand(mappingContext);
+
+                var expandedCriteria = List.of(
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                                new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC1.code(), REF_CODE_SEARCHPARAM_1),
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_3, TERM_CODE_3.code(), REF_CODE_SEARCHPARAM_1))),
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                                new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC2.code(), REF_CODE_SEARCHPARAM_1),
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_3, TERM_CODE_3.code(), REF_CODE_SEARCHPARAM_1))),
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                                new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC1.code(), REF_CODE_SEARCHPARAM_1),
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_4, TERM_CODE_4.code(), REF_CODE_SEARCHPARAM_1))),
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                                new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC2.code(), REF_CODE_SEARCHPARAM_1),
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_4, TERM_CODE_4.code(), REF_CODE_SEARCHPARAM_1))),
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_2, TERM_CODE_2, List.of(
+                                new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC1.code(), REF_CODE_SEARCHPARAM_1),
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_3, TERM_CODE_3.code(), REF_CODE_SEARCHPARAM_1))),
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_2, TERM_CODE_2, List.of(
+                                new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC2.code(), REF_CODE_SEARCHPARAM_1),
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_3, TERM_CODE_3.code(), REF_CODE_SEARCHPARAM_1))),
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_2, TERM_CODE_2, List.of(
+                                new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC1.code(), REF_CODE_SEARCHPARAM_1),
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_4, TERM_CODE_4.code(), REF_CODE_SEARCHPARAM_1))),
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_2, TERM_CODE_2, List.of(
+                                new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC2.code(), REF_CODE_SEARCHPARAM_1),
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_4, TERM_CODE_4.code(), REF_CODE_SEARCHPARAM_1))));
+
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).hasSameElementsAs(expandedCriteria));
+            }
+
+            @Test
+            @DisplayName("One Criterion that expands into two TermCodes and Two Reference Criteria:" +
+                    " One Reference Criterion that also expands into two TermCodes with a concept filter with two Concepts " +
+                    "and One Reference Criterion with a single TermCode in the same Reference Filter, but does not have any further filters.")
+            void oneRefWithExpandingConceptCrit(){
+
+                when(mappingContext.expandConcept(Concept.of(TERM_CODE_1))).thenReturn(Either.right(List.of(TERM_CODE_1, TERM_CODE_2)));
+                when(mappingContext.expandConcept(Concept.of(TERM_CODE_3))).thenReturn(Either.right(List.of(TERM_CODE_3, TERM_CODE_4)));
+                when(mappingContext.expandConcept(Concept.of(TERM_CODE_5))).thenReturn(Either.right(List.of(TERM_CODE_5)));
+
+
+                when(mappingContext.findMapping(TERM_CODE_1)).thenReturn(Either.right(Mapping.of(TERM_CODE_1, RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1)
+                        .appendAttributeMapping(AttributeMapping.reference(REF_FILTER_CODE_1, REF_CODE_SEARCHPARAM_1))));
+                when(mappingContext.findMapping(TERM_CODE_2)).thenReturn(Either.right(Mapping.of(TERM_CODE_2, RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_2)
+                        .appendAttributeMapping(AttributeMapping.reference(REF_FILTER_CODE_1, REF_CODE_SEARCHPARAM_1))));
+
+                when(mappingContext.findMapping(TERM_CODE_3)).thenReturn(Either.right(Mapping.of(TERM_CODE_3, RESSOURCE_TYPE_3, TERM_CODE_SEARCHPARAM_3)
+                        .appendAttributeMapping(AttributeMapping.code(CONC_FILTER_CODE_1, CONC_1_AND_2_SEARCH_PARAM))));
+                when(mappingContext.findMapping(TERM_CODE_4)).thenReturn(Either.right(Mapping.of(TERM_CODE_4, RESSOURCE_TYPE_3, TERM_CODE_SEARCHPARAM_4)
+                        .appendAttributeMapping(AttributeMapping.code(CONC_FILTER_CODE_1, CONC_1_AND_2_SEARCH_PARAM))));
+
+                when(mappingContext.findMapping(TERM_CODE_5)).thenReturn(Either.right(Mapping.of(TERM_CODE_5, RESSOURCE_TYPE_4, TERM_CODE_SEARCHPARAM_5)));
+
+
+
+                var criteria = Criterion.of(Concept.of(TERM_CODE_1))
+                        .appendReferenceFiler(new ReferenceFilter(List.of(
+                                Criterion.of(Concept.of(TERM_CODE_3))
+                                        .appendAttributeFilter(AttributeFilter.ofConcept(CONC_FILTER_CODE_1, CONC1, CONC2)),
+                                Criterion.of(Concept.of(TERM_CODE_5))
+                        ), REF_FILTER_CODE_1)).expand(mappingContext);
+
+                var expandedCriteria = List.of(
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                                new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC1.code(), REF_CODE_SEARCHPARAM_1),
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_3, TERM_CODE_3.code(), REF_CODE_SEARCHPARAM_1))),
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                                new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC2.code(), REF_CODE_SEARCHPARAM_1),
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_3, TERM_CODE_3.code(), REF_CODE_SEARCHPARAM_1))),
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                                new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC1.code(), REF_CODE_SEARCHPARAM_1),
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_4, TERM_CODE_4.code(), REF_CODE_SEARCHPARAM_1))),
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                                new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC2.code(), REF_CODE_SEARCHPARAM_1),
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_4, TERM_CODE_4.code(), REF_CODE_SEARCHPARAM_1))),
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_2, TERM_CODE_2, List.of(
+                                new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC1.code(), REF_CODE_SEARCHPARAM_1),
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_3, TERM_CODE_3.code(), REF_CODE_SEARCHPARAM_1))),
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_2, TERM_CODE_2, List.of(
+                                new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC2.code(), REF_CODE_SEARCHPARAM_1),
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_3, TERM_CODE_3.code(), REF_CODE_SEARCHPARAM_1))),
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_2, TERM_CODE_2, List.of(
+                                new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC1.code(), REF_CODE_SEARCHPARAM_1),
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_4, TERM_CODE_4.code(), REF_CODE_SEARCHPARAM_1))),
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_2, TERM_CODE_2, List.of(
+                                new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC2.code(), REF_CODE_SEARCHPARAM_1),
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_4, TERM_CODE_4.code(), REF_CODE_SEARCHPARAM_1))),
+
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_5, TERM_CODE_5.code(), REF_CODE_SEARCHPARAM_1))),
+                        new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_2, TERM_CODE_2, List.of(
+                                new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_5, TERM_CODE_5.code(), REF_CODE_SEARCHPARAM_1)))
+                );
+
+                assertThat(criteria).isRightSatisfying(r -> assertThat(r).hasSameElementsAs(expandedCriteria));
+            }
+
+            @Test
+            @DisplayName("One Criterion with one Concept Filter of two Concepts and two Reference Filters with two Criteria " +
+                    "with difference amounts of Concepts in their Concept Filters.")
+            void twoRefs_withTwoCriteria(){
+                /*
+                    Concept Filters of "Parent-Criterion": {{conc1, conc2}}
+                    Concept Filters of first Criterion of first Ref-Filter: {{conc3}}
+                    Concept Filters of second Criterion of first Ref-Filter:  {{conc4}, {conc5}}
+                    Concept Filters of first Criterion of second Ref-Filter:  {{conc6}}
+                    Concept Filters of second Criterion of second Ref-Filter:  {{conc7, conc8}}
+
+                    Should expand into (only looking at filters):
+
+                    {conc1, conc3, conc6}
+                    {conc1, conc3, conc7}
+                    {conc1, conc3, conc8}
+                    {conc1, conc4, conc5, conc6}
+                    {conc1, conc4, conc5, conc7}
+                    {conc1, conc4, conc5, conc8}
+                    {conc2, conc3, conc6}
+                    {conc2, conc3, conc7}
+                    {conc2, conc3, conc8}
+                    {conc2, conc4, conc5, conc6}
+                    {conc2, conc4, conc5, conc7}
+                    {conc2, conc4, conc5, conc8}
+                 */
+
+
+                when(mappingContext.expandConcept(Concept.of(TERM_CODE_1))).thenReturn(Either.right(List.of(TERM_CODE_1)));
+                when(mappingContext.expandConcept(Concept.of(TERM_CODE_2))).thenReturn(Either.right(List.of(TERM_CODE_2)));
+                when(mappingContext.expandConcept(Concept.of(TERM_CODE_3))).thenReturn(Either.right(List.of(TERM_CODE_3)));
+                when(mappingContext.expandConcept(Concept.of(TERM_CODE_4))).thenReturn(Either.right(List.of(TERM_CODE_4)));
+                when(mappingContext.expandConcept(Concept.of(TERM_CODE_5))).thenReturn(Either.right(List.of(TERM_CODE_5)));
+
+
+                when(mappingContext.findMapping(TERM_CODE_1)).thenReturn(Either.right(Mapping.of(TERM_CODE_1, RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1)
+                                .appendAttributeMapping(AttributeMapping.reference(REF_FILTER_CODE_1, REF_CODE_SEARCHPARAM_1))
+                                .appendAttributeMapping(AttributeMapping.reference(REF_FILTER_CODE_2, REF_CODE_SEARCHPARAM_2))
+                        .appendAttributeMapping(AttributeMapping.code(CONC_FILTER_CODE_1, CONC_1_AND_2_SEARCH_PARAM))));
+                when(mappingContext.findMapping(TERM_CODE_2)).thenReturn(Either.right(Mapping.of(TERM_CODE_2, RESSOURCE_TYPE_2, TERM_CODE_SEARCHPARAM_2)
+                        .appendAttributeMapping(AttributeMapping.code(CONC_FILTER_CODE_2, CONC_3_SEARCH_PARAM))));
+                when(mappingContext.findMapping(TERM_CODE_3)).thenReturn(Either.right(Mapping.of(TERM_CODE_3, RESSOURCE_TYPE_3, TERM_CODE_SEARCHPARAM_3)
+                        .appendAttributeMapping(AttributeMapping.code(CONC_FILTER_CODE_3, CONC_4_SEARCH_PARAM))
+                        .appendAttributeMapping(AttributeMapping.code(CONC_FILTER_CODE_4, CONC_5_SEARCH_PARAM))));
+                when(mappingContext.findMapping(TERM_CODE_4)).thenReturn(Either.right(Mapping.of(TERM_CODE_4, RESSOURCE_TYPE_4, TERM_CODE_SEARCHPARAM_4)
+                        .appendAttributeMapping(AttributeMapping.code(CONC_FILTER_CODE_5, CONC_6_SEARCH_PARAM))));
+                when(mappingContext.findMapping(TERM_CODE_5)).thenReturn(Either.right(Mapping.of(TERM_CODE_5, RESSOURCE_TYPE_41, TERM_CODE_SEARCHPARAM_5)
+                        .appendAttributeMapping(AttributeMapping.code(CONC_FILTER_CODE_6, CONC_7_AND_8_SEARCH_PARAM))));
+
+                var criteria = Criterion.of(Concept.of(TERM_CODE_1))
+                        .appendAttributeFilter(AttributeFilter.ofConcept(CONC_FILTER_CODE_1, CONC1, CONC2))
+                        .appendReferenceFiler(new ReferenceFilter(List.of(
+                                Criterion.of(Concept.of(TERM_CODE_2))
+                                        .appendAttributeFilter(AttributeFilter.ofConcept(CONC_FILTER_CODE_2, CONC3)),
+                                Criterion.of(Concept.of(TERM_CODE_3))
+                                        .appendAttributeFilter(AttributeFilter.ofConcept(CONC_FILTER_CODE_3, CONC4))
+                                        .appendAttributeFilter(AttributeFilter.ofConcept(CONC_FILTER_CODE_4, CONC5))), REF_FILTER_CODE_1))
+                        .appendReferenceFiler(new ReferenceFilter(List.of(
+                                Criterion.of(Concept.of(TERM_CODE_4))
+                                        .appendAttributeFilter(AttributeFilter.ofConcept(CONC_FILTER_CODE_5, CONC6)),
+                                Criterion.of(Concept.of(TERM_CODE_5))
+                                        .appendAttributeFilter(AttributeFilter.ofConcept(CONC_FILTER_CODE_6, CONC7, CONC8))), REF_FILTER_CODE_2))
+                        .expand(mappingContext);
+
+               var expandedCriteria = List.of(
+                       new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                               new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC1.code(), null),
+                               new ExpandedCodeFilter(CONC_3_SEARCH_PARAM, CONC3.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_2, TERM_CODE_2.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(CONC_6_SEARCH_PARAM, CONC6.code(), REF_CODE_SEARCHPARAM_2),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_4, TERM_CODE_4.code(), REF_CODE_SEARCHPARAM_2))),
+                       new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                               new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC1.code(), null),
+                               new ExpandedCodeFilter(CONC_3_SEARCH_PARAM, CONC3.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_2, TERM_CODE_2.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(CONC_7_AND_8_SEARCH_PARAM, CONC7.code(), REF_CODE_SEARCHPARAM_2),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_5, TERM_CODE_5.code(), REF_CODE_SEARCHPARAM_2)
+                       )),
+                       new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                               new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC1.code(), null),
+                               new ExpandedCodeFilter(CONC_3_SEARCH_PARAM, CONC3.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_2, TERM_CODE_2.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(CONC_7_AND_8_SEARCH_PARAM, CONC8.code(), REF_CODE_SEARCHPARAM_2),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_5, TERM_CODE_5.code(), REF_CODE_SEARCHPARAM_2)
+                       )),
+                       new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                               new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC2.code(), null),
+                               new ExpandedCodeFilter(CONC_3_SEARCH_PARAM, CONC3.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_2, TERM_CODE_2.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(CONC_6_SEARCH_PARAM, CONC6.code(), REF_CODE_SEARCHPARAM_2),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_4, TERM_CODE_4.code(), REF_CODE_SEARCHPARAM_2))),
+                       new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                               new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC2.code(), null),
+                               new ExpandedCodeFilter(CONC_3_SEARCH_PARAM, CONC3.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_2, TERM_CODE_2.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(CONC_7_AND_8_SEARCH_PARAM, CONC7.code(), REF_CODE_SEARCHPARAM_2),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_5, TERM_CODE_5.code(), REF_CODE_SEARCHPARAM_2)
+                       )),
+                       new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                               new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC2.code(), null),
+                               new ExpandedCodeFilter(CONC_3_SEARCH_PARAM, CONC3.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_2, TERM_CODE_2.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(CONC_7_AND_8_SEARCH_PARAM, CONC8.code(), REF_CODE_SEARCHPARAM_2),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_5, TERM_CODE_5.code(), REF_CODE_SEARCHPARAM_2)
+                       )),
+                       new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                               new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC1.code(), null),
+                               new ExpandedCodeFilter(CONC_4_SEARCH_PARAM, CONC4.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(CONC_5_SEARCH_PARAM, CONC5.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_3, TERM_CODE_3.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(CONC_6_SEARCH_PARAM, CONC6.code(), REF_CODE_SEARCHPARAM_2),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_4, TERM_CODE_4.code(), REF_CODE_SEARCHPARAM_2)
+                       )),
+                       new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                               new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC1.code(), null),
+                               new ExpandedCodeFilter(CONC_4_SEARCH_PARAM, CONC4.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(CONC_5_SEARCH_PARAM, CONC5.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_3, TERM_CODE_3.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(CONC_7_AND_8_SEARCH_PARAM, CONC7.code(), REF_CODE_SEARCHPARAM_2),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_5, TERM_CODE_5.code(), REF_CODE_SEARCHPARAM_2)
+                       )),
+                       new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                               new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC1.code(), null),
+                               new ExpandedCodeFilter(CONC_4_SEARCH_PARAM, CONC4.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(CONC_5_SEARCH_PARAM, CONC5.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_3, TERM_CODE_3.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(CONC_7_AND_8_SEARCH_PARAM, CONC8.code(), REF_CODE_SEARCHPARAM_2),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_5, TERM_CODE_5.code(), REF_CODE_SEARCHPARAM_2)
+                       )),
+                       new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                               new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC2.code(), null),
+                               new ExpandedCodeFilter(CONC_4_SEARCH_PARAM, CONC4.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(CONC_5_SEARCH_PARAM, CONC5.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_3, TERM_CODE_3.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(CONC_6_SEARCH_PARAM, CONC6.code(), REF_CODE_SEARCHPARAM_2),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_4, TERM_CODE_4.code(), REF_CODE_SEARCHPARAM_2)
+                       )),
+                       new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                               new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC2.code(), null),
+                               new ExpandedCodeFilter(CONC_4_SEARCH_PARAM, CONC4.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(CONC_5_SEARCH_PARAM, CONC5.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_3, TERM_CODE_3.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(CONC_7_AND_8_SEARCH_PARAM, CONC7.code(), REF_CODE_SEARCHPARAM_2),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_5, TERM_CODE_5.code(), REF_CODE_SEARCHPARAM_2)
+                       )),
+                       new ExpandedCriterion(RESSOURCE_TYPE_1, TERM_CODE_SEARCHPARAM_1, TERM_CODE_1, List.of(
+                               new ExpandedCodeFilter(CONC_1_AND_2_SEARCH_PARAM, CONC2.code(), null),
+                               new ExpandedCodeFilter(CONC_4_SEARCH_PARAM, CONC4.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(CONC_5_SEARCH_PARAM, CONC5.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_3, TERM_CODE_3.code(), REF_CODE_SEARCHPARAM_1),
+                               new ExpandedCodeFilter(CONC_7_AND_8_SEARCH_PARAM, CONC8.code(), REF_CODE_SEARCHPARAM_2),
+                               new ExpandedCodeFilter(TERM_CODE_SEARCHPARAM_5, TERM_CODE_5.code(), REF_CODE_SEARCHPARAM_2)
+                       )));
+
+               assertThat(criteria).isRightSatisfying(r -> assertThat(r).hasSameElementsAs(expandedCriteria));
+            }
+
+
+        }
+
+
+
+        @Nested
         @DisplayName("special patient criteria")
         class PatientCriteria {
 
@@ -537,7 +866,7 @@ class CriterionTest {
                             .expand(mappingContext);
 
                     assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1994.plusDays(1), YEAR_1995))));
+                            .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1994.plusDays(1), YEAR_1995, null))));
                 }
 
                 @ParameterizedTest
@@ -551,7 +880,7 @@ class CriterionTest {
                             .expand(mappingContext);
 
                     assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateComparatorFilter("birthdate", comparator.reverse(), YEAR_1995))));
+                            .appendFilter(new ExpandedDateComparatorFilter("birthdate", comparator.reverse(), YEAR_1995, null))));
                 }
 
                 @Test
@@ -587,7 +916,7 @@ class CriterionTest {
                             .expand(mappingContext);
 
                     assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1990, YEAR_1995))));
+                            .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1990, YEAR_1995, null))));
                 }
             }
 
@@ -600,7 +929,7 @@ class CriterionTest {
                 var criterion = Criterion.of(Concept.of(GENDER), ValueFilter.ofConcept(MALE)).expand(mappingContext);
 
                 assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedCodeFilter("gender", "male"))));
+                        .appendFilter(new ExpandedCodeFilter("gender", "male", null))));
             }
         }
     }

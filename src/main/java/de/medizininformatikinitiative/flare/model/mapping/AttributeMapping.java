@@ -47,6 +47,10 @@ public record AttributeMapping(FilterType type, TermCode key, String searchParam
         return new AttributeMapping(COMPOSITE_CONCEPT_COMPARATOR, key, searchParameter, compositeCode);
     }
 
+    public static AttributeMapping reference(TermCode key, String searchParameter) {
+        return new AttributeMapping(REFERENCE, key, searchParameter, null);
+    }
+
     @Override
     public boolean isAge() {
         return false;

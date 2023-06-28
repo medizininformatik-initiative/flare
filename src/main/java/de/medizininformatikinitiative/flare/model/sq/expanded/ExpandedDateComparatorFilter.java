@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 import static java.util.Objects.requireNonNull;
 
-public record ExpandedDateComparatorFilter(String searchParameter, Comparator comparator, LocalDate date)
+public record ExpandedDateComparatorFilter(String searchParameter, Comparator comparator, LocalDate date, String referenceSearchParam)
         implements ExpandedFilter {
 
     public ExpandedDateComparatorFilter {
@@ -18,6 +18,6 @@ public record ExpandedDateComparatorFilter(String searchParameter, Comparator co
 
     @Override
     public QueryParams toParams() {
-        return QueryParams.EMPTY.appendParam(searchParameter, comparator, date);
+        return QueryParams.EMPTY.appendParam(searchParameter, comparator, date, referenceSearchParam);
     }
 }
