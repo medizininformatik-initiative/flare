@@ -54,7 +54,7 @@ class StructuredQueryServiceIT {
     private static final Logger logger = LoggerFactory.getLogger(StructuredQueryServiceIT.class);
     @Container
     @SuppressWarnings("resource")
-    private static final GenericContainer<?> blaze = new GenericContainer<>("samply/blaze:0.20")
+    private static final GenericContainer<?> blaze = new GenericContainer<>("samply/blaze:0.22")
             .withImagePullPolicy(PullPolicy.alwaysPull())
             .withEnv("LOG_LEVEL", "debug")
             .withExposedPorts(8080)

@@ -3,7 +3,8 @@ flare:
     server: 'http://localhost:8082/fhir'
     user: ''
     password: ''
-    maxConnections: ${FLARE_FHIR_MAX_CONNECTIONS:32}
+    maxConnections: ${FLARE_FHIR_MAX_CONNECTIONS:4}
+    maxQueueSize: ${FLARE_FHIR_MAX_QUEUE_SIZE:500}
     pageCount: ${FLARE_FHIR_PAGE_COUNT:1000}
   cache:
     mem:

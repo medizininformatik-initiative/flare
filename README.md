@@ -39,7 +39,8 @@ docker run -p 8080:8080 ghcr.io/medizininformatik-initiative/flare:0.2
 | FLARE_FHIR_SERVER               | http://localhost:8082/fhir            | The base URL of the FHIR server to use.                                                          |
 | FLARE_FHIR_USER                 |                                       | The username to use for HTTP Basic Authentication.                                               |
 | FLARE_FHIR_PASSWORD             |                                       | The password to use for HTTP Basic Authentication.                                               |
-| FLARE_FHIR_MAX_CONNECTIONS      | 32                                    | The maximum number of connections Flare opens towards the FHIR server.                           |
+| FLARE_FHIR_MAX_CONNECTIONS      | 4                                     | The maximum number of connections Flare opens towards the FHIR server.                           |
+| FLARE_FHIR_MAX_QUEUE_SIZE       | 500                                   | The maximum number FHIR server requests Flare queues before returning an error.                  |
 | FLARE_FHIR_PAGE_COUNT           | 1000                                  | The number of resources per page to request from the FHIR server.                                |
 | FLARE_CACHE_MEM_SIZE_MB         | 1024                                  | The size of the in-memory cache in mebibytes.                                                    |
 | FLARE_CACHE_MEM_EXPIRE          | PT48H                                 | The duration after which in-memory cache entries should expire in [ISO 8601 durations][1].       |
@@ -65,7 +66,7 @@ The default configuration assumes the following:
   * the disk space used by the disk-based cache is not constrained right now
   * cache entries life for at least 7 days per default
   * disk space is only reclaimed on a best-effort base
-* the FHIR endpoint is capable of handling 32 requests in parallel
+* the FHIR endpoint is capable of handling 4 requests in parallel
 * the FHIR endpoint is capable of returning pages of size 1000 or constrain the page size itself
 
 ## Documentation

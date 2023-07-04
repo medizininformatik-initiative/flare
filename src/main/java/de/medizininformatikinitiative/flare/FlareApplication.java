@@ -49,11 +49,12 @@ public class FlareApplication {
                                      @Value("${flare.fhir.user}") String user,
                                      @Value("${flare.fhir.password}") String password,
                                      @Value("${flare.fhir.maxConnections}") int maxConnections,
+                                     @Value("${flare.fhir.maxQueueSize}") int maxQueueSize,
                                      ObjectMapper mapper) {
         logger.info("Create a HTTP connection pool to {} with a maximum of {} connections.", baseUrl, maxConnections);
         ConnectionProvider provider = ConnectionProvider.builder("data-store")
                 .maxConnections(maxConnections)
-                .pendingAcquireMaxCount(500)
+                .pendingAcquireMaxCount(maxQueueSize)
                 .build();
         HttpClient httpClient = HttpClient.create(provider);
         WebClient.Builder builder = WebClient.builder()

@@ -18,14 +18,14 @@ class TermCodeNodeTest {
 
     @Test
     void noChildren() {
-        var node = TermCodeNode.of(ROOT);
+        var node = TermCodeNode.createNormal(ROOT);
 
         assertThat(node.children()).isEmpty();
     }
 
     @Test
     void expand_notFound() {
-        var node = TermCodeNode.of(ROOT);
+        var node = TermCodeNode.createNormal(ROOT);
 
         var result = node.expand(C1).toList();
 
@@ -34,7 +34,7 @@ class TermCodeNodeTest {
 
     @Test
     void expand_itSelf_asLeaf() {
-        var node = TermCodeNode.of(ROOT);
+        var node = TermCodeNode.createNormal(ROOT);
 
         var result = node.expand(ROOT).toList();
 
@@ -42,8 +42,17 @@ class TermCodeNodeTest {
     }
 
     @Test
-    void expand_itSelf_withChildren() {
-        var node = TermCodeNode.of(ROOT, TermCodeNode.of(C1), TermCodeNode.of(C2));
+    void expand_itSelf_withChildren_abstract() {
+        var node = TermCodeNode.createAbstract(ROOT, TermCodeNode.createNormal(C1), TermCodeNode.createNormal(C2));
+
+        var result = node.expand(ROOT).toList();
+
+        assertThat(result).containsExactly(C1, C2);
+    }
+
+    @Test
+    void expand_itSelf_withChildren_normal() {
+        var node = TermCodeNode.createNormal(ROOT, TermCodeNode.createNormal(C1), TermCodeNode.createNormal(C2));
 
         var result = node.expand(ROOT).toList();
 
@@ -52,8 +61,8 @@ class TermCodeNodeTest {
 
     @Test
     void expand_child_withChildren() {
-        var c1 = TermCodeNode.of(C1, TermCodeNode.of(C11), TermCodeNode.of(C12));
-        var node = TermCodeNode.of(ROOT, c1, TermCodeNode.of(C2));
+        var c1 = TermCodeNode.createNormal(C1, TermCodeNode.createNormal(C11), TermCodeNode.createNormal(C12));
+        var node = TermCodeNode.createNormal(ROOT, c1, TermCodeNode.createNormal(C2));
 
         var result = node.expand(C1).toList();
 
@@ -62,9 +71,9 @@ class TermCodeNodeTest {
 
     @Test
     void expand_child_deep() {
-        var c11 = TermCodeNode.of(C11, TermCodeNode.of(C111), TermCodeNode.of(C112));
-        var c1 = TermCodeNode.of(C1, c11, TermCodeNode.of(C12));
-        var node = TermCodeNode.of(ROOT, c1, TermCodeNode.of(C2));
+        var c11 = TermCodeNode.createNormal(C11, TermCodeNode.createNormal(C111), TermCodeNode.createNormal(C112));
+        var c1 = TermCodeNode.createNormal(C1, c11, TermCodeNode.createNormal(C12));
+        var node = TermCodeNode.createNormal(ROOT, c1, TermCodeNode.createNormal(C2));
 
         var result = node.expand(C1).toList();
 

@@ -53,4 +53,8 @@ public interface Util {
     static <T> List<T> concat(List<T> as, List<? extends T> bs) {
         return Stream.concat(as.stream(), bs.stream()).toList();
     }
+
+    static double durationSecondsSince(long startNanoTime) {
+        return ((double) (System.nanoTime() - startNanoTime)) / 1e9;
+    }
 }

@@ -1,5 +1,6 @@
 package de.medizininformatikinitiative.flare.service;
 
+import de.medizininformatikinitiative.flare.Util;
 import de.medizininformatikinitiative.flare.model.Population;
 import de.medizininformatikinitiative.flare.model.fhir.Bundle;
 import de.medizininformatikinitiative.flare.model.fhir.Query;
@@ -9,13 +10,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
 
 import java.time.Clock;
+import java.time.Duration;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
 
@@ -53,12 +59,19 @@ public class DataStore implements FhirQueryService {
                 .expand(bundle -> bundle.linkWithRel("next")
                         .map(link -> fetchPage(link.url()))
                         .orElse(Mono.empty()))
+                .retryWhen(Retry.backoff(3, Duration.ofSeconds(1))
+                        .filter(e -> e instanceof WebClientResponseException &&
+                                shouldRetry(((WebClientResponseException) e).getStatusCode())))
                 .flatMap(bundle -> Flux.fromStream(bundle.entry().stream().flatMap(e -> e.resource().patientId().stream())))
-                .collectList()
+                .collect(Collectors.toSet())
                 .map(patientIds -> Population.copyOf(patientIds).withCreated(clock.instant()))
                 .doOnNext(p -> logger.debug("Finished query `{}` returning {} patients in {} seconds.", query, p.size(),
-                        "%.1f".formatted(durationSecondsSince(startNanoTime))))
+                        "%.1f".formatted(Util.durationSecondsSince(startNanoTime))))
                 .doOnError(e -> logger.error("Error while executing query `{}`: {}", query, e.getMessage()));
+    }
+
+    private static boolean shouldRetry(HttpStatusCode code) {
+        return code.is5xxServerError() || code.value() == 404;
     }
 
     private Mono<Bundle> fetchPage(String url) {
@@ -84,9 +97,5 @@ public class DataStore implements FhirQueryService {
             case "Consent" -> "patient";
             default -> "subject";
         };
-    }
-
-    private static double durationSecondsSince(long startNanoTime) {
-        return ((double) (System.nanoTime() - startNanoTime)) / 1e9;
     }
 }
