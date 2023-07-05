@@ -8,13 +8,13 @@ import java.math.BigDecimal;
 import static de.medizininformatikinitiative.flare.model.sq.Comparator.GREATER_EQUAL;
 import static de.medizininformatikinitiative.flare.model.sq.Comparator.LESS_EQUAL;
 
-public record ExpandedRangeFilter(String searchParameter, BigDecimal lowerBound, BigDecimal upperBound, TermCode unit)
+public record ExpandedRangeFilter(String searchParameter, BigDecimal lowerBound, BigDecimal upperBound, TermCode unit, TermCode compositeCode, String referenceSearchParam)
         implements ExpandedFilter {
 
     @Override
     public QueryParams toParams() {
         return QueryParams.EMPTY
-                .appendParam(searchParameter, GREATER_EQUAL, lowerBound, unit)
-                .appendParam(searchParameter, LESS_EQUAL, upperBound, unit);
+                .appendParam(searchParameter, GREATER_EQUAL, lowerBound, unit, compositeCode, referenceSearchParam)
+                .appendParam(searchParameter, LESS_EQUAL, upperBound, unit, compositeCode, referenceSearchParam);
     }
 }

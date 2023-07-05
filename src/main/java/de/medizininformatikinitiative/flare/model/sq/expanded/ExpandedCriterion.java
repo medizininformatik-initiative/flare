@@ -6,8 +6,10 @@ import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.sq.Criterion;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 import static de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter.toParams;
 import static java.util.Objects.requireNonNull;
@@ -51,5 +53,23 @@ public record ExpandedCriterion(String resourceType, String searchParameter, Ter
 
     private QueryParams startQueryParams() {
         return searchParameter == null || code == null ? QueryParams.EMPTY : QueryParams.of(searchParameter, code);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ExpandedCriterion expCrit = (ExpandedCriterion) o;
+
+        boolean singleAttributesAreEqual = Objects.equals(resourceType, expCrit.resourceType)
+                && Objects.equals(code, expCrit.code)
+                && Objects.equals(searchParameter, expCrit.searchParameter);
+        boolean filtersAreEqual;
+        if(filters == null || expCrit.filters == null){
+            filtersAreEqual = filters == null && expCrit.filters == null;
+        }else{
+            filtersAreEqual = new HashSet<>(filters).containsAll(expCrit.filters) && new HashSet<>(expCrit.filters).containsAll(filters);
+        }
+        return singleAttributesAreEqual && filtersAreEqual;
     }
 }

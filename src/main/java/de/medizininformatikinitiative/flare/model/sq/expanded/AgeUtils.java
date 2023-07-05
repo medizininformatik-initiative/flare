@@ -38,20 +38,22 @@ public class AgeUtils {
     }
 
     public static Either<Exception, List<ExpandedFilter>> expandedAgeFilterFromComparator(LocalDate today, Comparator comparator,
-                                                                                          BigDecimal age, TermCode unit) {
+                                                                                          BigDecimal age, TermCode unit,
+                                                                                          String referenceSearchParam) {
         if (comparator.equals(Comparator.EQUAL)) {
             return equalCaseLowerDate(today, age, unit)
                     .flatMap(lowerBound -> equalCaseUpperDate(today, age, unit)
-                            .map(upperBound -> List.of(new ExpandedDateRangeFilter("birthdate", lowerBound, upperBound))));
+                            .map(upperBound -> List.of(new ExpandedDateRangeFilter("birthdate", lowerBound, upperBound, referenceSearchParam))));
         } else {
             return birthDate(today, age, unit).map(birthDate ->
-                    List.of(new ExpandedDateComparatorFilter("birthdate", comparator.reverse(), birthDate)));
+                    List.of(new ExpandedDateComparatorFilter("birthdate", comparator.reverse(), birthDate, referenceSearchParam)));
         }
     }
 
     public static Either<Exception, List<ExpandedFilter>> expandedAgeFilterFromRange(LocalDate today, BigDecimal ageLowerBound,
-                                                                                     BigDecimal ageUpperBound, TermCode unit) {
+                                                                                     BigDecimal ageUpperBound, TermCode unit,
+                                                                                     String referenceSearchParam) {
         return birthDate(today, ageLowerBound, unit).flatMap(upperBoundDate -> birthDate(today, ageUpperBound, unit)
-                .map(lowerBoundDate -> List.of(new ExpandedDateRangeFilter("birthdate", lowerBoundDate, upperBoundDate))));
+                .map(lowerBoundDate -> List.of(new ExpandedDateRangeFilter("birthdate", lowerBoundDate, upperBoundDate, referenceSearchParam))));
     }
 }

@@ -57,7 +57,7 @@ public final class Mapping {
                 valueSearchParameter == null
                         ? null
                         : new ValueFilterMapping(valueTypeFhir == null ? FilterType.CODING : valueTypeFhir,
-                        valueSearchParameter, key),
+                        valueSearchParameter, key, null),
                 fixedCriteria == null ? List.of() : List.copyOf(fixedCriteria),
                 (attributeMappings == null ? Map.of() : attributeMappings.stream()
                         .collect(Collectors.toMap(AttributeMapping::key, Function.identity()))),
@@ -66,7 +66,7 @@ public final class Mapping {
 
     public Mapping withValueFilterMapping(FilterType type, String searchParameter) {
         return new Mapping(key, resourceType, termCodeSearchParameter,
-                new ValueFilterMapping(type, searchParameter, key),
+                new ValueFilterMapping(type, searchParameter, key, null),
                 fixedCriteria, attributeMappings, timeRestrictionParameter);
     }
 
@@ -118,7 +118,7 @@ public final class Mapping {
         return timeRestrictionParameter;
     }
 
-    private record ValueFilterMapping(FilterType type, String searchParameter, TermCode key) implements FilterMapping {
+    private record ValueFilterMapping(FilterType type, String searchParameter, TermCode key, TermCode compositeCode) implements FilterMapping {
 
         private static final TermCode AGE = TermCode.of("http://snomed.info/sct", "424144002", "age");
 

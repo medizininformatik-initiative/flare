@@ -9,10 +9,10 @@ import de.medizininformatikinitiative.flare.model.sq.TermCode;
  * @param searchParameter the FHIR search parameter code to use for the value
  * @param termCode        the code to search for
  */
-public record ExpandedConceptFilter(String searchParameter, TermCode termCode) implements ExpandedFilter {
+public record ExpandedConceptFilter(String searchParameter, TermCode termCode, TermCode compositeCode, String referenceSearchParam) implements ExpandedFilter {
 
     @Override
     public QueryParams toParams() {
-        return QueryParams.of(searchParameter, termCode);
+        return QueryParams.of(searchParameter, termCode, compositeCode, referenceSearchParam);
     }
 }
