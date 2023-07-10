@@ -19,6 +19,7 @@ import reactor.test.StepVerifier;
 import java.util.List;
 
 import static de.medizininformatikinitiative.flare.Assertions.assertThat;
+import static de.medizininformatikinitiative.flare.model.fhir.QueryParams.conceptValue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -37,9 +38,9 @@ class StructuredQueryServiceTest {
     static final String PATIENT_ID = "patient-id-140857";
     static final String PATIENT_ID_1 = "patient-id-144725";
     static final String PATIENT_ID_2 = "patient-id-144727";
-    static final Query CONCEPT_QUERY = Query.of("Condition", QueryParams.of("code", C71));
-    static final Query CONCEPT_QUERY_1 = Query.of("Condition", QueryParams.of("code", C72));
-    static final Query CONCEPT_QUERY_2 = Query.of("Condition", QueryParams.of("code", C73));
+    static final Query CONCEPT_QUERY = Query.of("Condition", QueryParams.of("code", conceptValue(C71)));
+    static final Query CONCEPT_QUERY_1 = Query.of("Condition", QueryParams.of("code", conceptValue(C72)));
+    static final Query CONCEPT_QUERY_2 = Query.of("Condition", QueryParams.of("code", conceptValue(C73)));
 
     @Mock
     private FhirQueryService fhirQueryService;

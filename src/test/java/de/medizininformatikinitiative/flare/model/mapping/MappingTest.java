@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+//TODO: more parsing tests
 class MappingTest {
 
     static final TermCode GENDER = new TermCode("http://snomed.info/sct", "263495000", "Geschlecht");

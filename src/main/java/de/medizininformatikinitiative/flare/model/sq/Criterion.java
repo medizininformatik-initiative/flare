@@ -101,11 +101,12 @@ public record Criterion(Concept concept, List<Filter> filters) {
     private Either<Exception, List<List<ExpandedFilter>>> expandFilters(LocalDate today, Mapping mapping) {
         return filters.stream()
                 .map(filter -> filter.expand(today, mapping))
-                .reduce(Either.right(fixedCriterionFilters(mapping)), Either.lift2(Util::add), Either.liftBinOp(Util::concat));
+                .reduce(fixedCriterionFilters(mapping), Either.lift2(Util::add), Either.liftBinOp(Util::concat));
     }
 
-    private static List<List<ExpandedFilter>> fixedCriterionFilters(Mapping mapping) {
-        return mapping.fixedCriteria().stream().map(FixedCriterion::expand).toList();
+    private static Either<Exception, List<List<ExpandedFilter>>> fixedCriterionFilters(Mapping mapping) {
+        return mapping.fixedCriteria().stream().map(FixedCriterion::expand)
+                .reduce(Either.right(List.of()),  Either.lift2(Util::add), Either.liftBinOp(Util::concat));
     }
 
     private static ExpandedCriterion expandedCriterion(Mapping mapping, TermCode termCode) {

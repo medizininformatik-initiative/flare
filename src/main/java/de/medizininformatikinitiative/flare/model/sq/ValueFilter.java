@@ -7,7 +7,6 @@ import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.ValueMappingNotFoundException;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -28,16 +27,12 @@ public record ValueFilter(FilterPart filterPart) implements Filter {
         return new ValueFilter(filterPart);
     }
 
-    public static ValueFilter ofComparator(Comparator comparator, BigDecimal value) {
-        return new ValueFilter(ComparatorFilterPart.of(comparator, value));
+    public static ValueFilter ofComparator(Comparator comparator, Quantity value) {
+        return new ValueFilter(QuantityComparatorFilterPart.of(comparator, value));
     }
 
-    public static ValueFilter ofComparator(Comparator comparator, BigDecimal value, TermCode unit) {
-        return new ValueFilter(ComparatorFilterPart.of(comparator, value, unit));
-    }
-
-    public static ValueFilter ofRange(BigDecimal lowerBound, BigDecimal upperBound, TermCode unit) {
-        return new ValueFilter(RangeFilterPart.of(lowerBound, upperBound, unit));
+    public static ValueFilter ofRange(Quantity lowerBound, Quantity upperBound) {
+        return new ValueFilter(QuantityRangeFilterPart.of(lowerBound, upperBound));
     }
 
     /**

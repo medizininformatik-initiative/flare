@@ -5,19 +5,20 @@ import de.medizininformatikinitiative.flare.model.sq.Comparator;
 
 import java.time.LocalDate;
 
+import static de.medizininformatikinitiative.flare.model.fhir.QueryParams.dateValue;
 import static java.util.Objects.requireNonNull;
 
-public record ExpandedDateComparatorFilter(String searchParameter, Comparator comparator, LocalDate date)
+public record ExpandedDateComparatorFilter(String searchParameter, Comparator comparator, LocalDate value)
         implements ExpandedFilter {
 
     public ExpandedDateComparatorFilter {
         requireNonNull(searchParameter);
         requireNonNull(comparator);
-        requireNonNull(date);
+        requireNonNull(value);
     }
 
     @Override
     public QueryParams toParams() {
-        return QueryParams.EMPTY.appendParam(searchParameter, comparator, date);
+        return QueryParams.EMPTY.appendParam(searchParameter, dateValue(comparator, value));
     }
 }

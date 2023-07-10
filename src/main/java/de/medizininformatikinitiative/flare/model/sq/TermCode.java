@@ -42,6 +42,15 @@ public record TermCode(String system, String code, String display) {
         return TermCode.of(node.get("system").asText(), node.get("code").asText(), node.get("display").asText());
     }
 
+    /**
+     * Returns a string that can be used as FHIR search parameter value.
+     *
+     * @return a string that can be used as FHIR search parameter value
+     */
+    public String searchValue() {
+        return system + "|" + code;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

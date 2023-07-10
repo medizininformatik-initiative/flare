@@ -4,6 +4,7 @@ import de.medizininformatikinitiative.flare.model.fhir.QueryParams;
 
 import java.time.LocalDate;
 
+import static de.medizininformatikinitiative.flare.model.fhir.QueryParams.dateValue;
 import static de.medizininformatikinitiative.flare.model.sq.Comparator.GREATER_EQUAL;
 import static de.medizininformatikinitiative.flare.model.sq.Comparator.LESS_EQUAL;
 import static java.util.Objects.requireNonNull;
@@ -20,7 +21,7 @@ public record ExpandedDateRangeFilter(String searchParameter, LocalDate lowerBou
     @Override
     public QueryParams toParams() {
         return QueryParams.EMPTY
-                .appendParam(searchParameter, GREATER_EQUAL, lowerBound)
-                .appendParam(searchParameter, LESS_EQUAL, upperBound);
+                .appendParam(searchParameter, dateValue(GREATER_EQUAL, lowerBound))
+                .appendParam(searchParameter, dateValue(LESS_EQUAL, upperBound));
     }
 }
