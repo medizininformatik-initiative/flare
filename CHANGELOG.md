@@ -12,6 +12,8 @@
 
 * Avoid Memory Problems while Collecting Patient IDs ([#53](https://github.com/medizininformatik-initiative/flare/pull/53))
 
+The full changelog can be found [here](https://github.com/medizininformatik-initiative/flare/milestone/7?closed=1).
+
 ## v0.2.3
 
 ### Bugfixes
