@@ -8,6 +8,7 @@ import de.medizininformatikinitiative.flare.model.mapping.MappingNotFoundExcepti
 import de.medizininformatikinitiative.flare.model.sq.*;
 import de.medizininformatikinitiative.flare.model.translate.Operator;
 import de.medizininformatikinitiative.flare.model.translate.QueryExpression;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,15 +32,19 @@ class StructuredQueryServiceTest {
             "Malignant neoplasm of brain");
     static final TermCode C73 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "C73",
             "Malignant neoplasm of brain");
+    static final TermCode C74 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "C74",
+            "Malignant neoplasm of brain");
     static final Criterion CONCEPT_CRITERION = Criterion.of(Concept.of(C71));
     static final Criterion CONCEPT_CRITERION_1 = Criterion.of(Concept.of(C72));
     static final Criterion CONCEPT_CRITERION_2 = Criterion.of(Concept.of(C73));
+    static final Criterion CONCEPT_CRITERION_3 = Criterion.of(Concept.of(C74));
     static final String PATIENT_ID = "patient-id-140857";
     static final String PATIENT_ID_1 = "patient-id-144725";
     static final String PATIENT_ID_2 = "patient-id-144727";
     static final Query CONCEPT_QUERY = Query.of("Condition", QueryParams.of("code", C71));
     static final Query CONCEPT_QUERY_1 = Query.of("Condition", QueryParams.of("code", C72));
     static final Query CONCEPT_QUERY_2 = Query.of("Condition", QueryParams.of("code", C73));
+    static final Query CONCEPT_QUERY_3 = Query.of("Condition", QueryParams.of("code", C74));
 
     @Mock
     private FhirQueryService fhirQueryService;
@@ -136,6 +141,83 @@ class StructuredQueryServiceTest {
 
         assertThat(result).isZero();
     }
+
+    @Test
+    @DisplayName("Execute a single Inclusion Criterion and two Exclusion Criteria that should be combined with a union " +
+            "and both result in different patient ID's as the Inclusion Criterion")
+    void execute_singleIncludeConceptCriterion_twoDifferentOuterExcludeConceptCriteria() {
+        var query = StructuredQuery.of(
+                CriterionGroup.of(CriterionGroup.of(CONCEPT_CRITERION)),
+                CriterionGroup.of(CriterionGroup.of(CONCEPT_CRITERION_1), CriterionGroup.of(CONCEPT_CRITERION_2)));
+        when(translator.toQuery(CONCEPT_CRITERION)).thenReturn(Either.right(List.of(CONCEPT_QUERY)));
+        when(translator.toQuery(CONCEPT_CRITERION_1)).thenReturn(Either.right(List.of(CONCEPT_QUERY_1)));
+        when(translator.toQuery(CONCEPT_CRITERION_2)).thenReturn(Either.right(List.of(CONCEPT_QUERY_2)));
+        when(fhirQueryService.execute(CONCEPT_QUERY)).thenReturn(Mono.just(Population.of(PATIENT_ID)));
+        when(fhirQueryService.execute(CONCEPT_QUERY_1)).thenReturn(Mono.just(Population.of(PATIENT_ID_1)));
+        when(fhirQueryService.execute(CONCEPT_QUERY_2)).thenReturn(Mono.just(Population.of(PATIENT_ID_2)));
+
+        var result = service.execute(query).block();
+
+        assertThat(result).isOne();
+    }
+
+    @Test
+    @DisplayName("Execute a single Inclusion Criterion and two Exclusion Criteria that should be combined with a union " +
+            "and one of them results in the same patient ID as the Inclusion Criterion")
+    void execute_singleIncludeConceptCriterion_oneSameOneDifferentOuterExcludeConceptCriteria() {
+        var query = StructuredQuery.of(
+                CriterionGroup.of(CriterionGroup.of(CONCEPT_CRITERION_1)),
+                CriterionGroup.of(CriterionGroup.of(CONCEPT_CRITERION_2), CriterionGroup.of(CONCEPT_CRITERION_3)));
+        when(translator.toQuery(CONCEPT_CRITERION_1)).thenReturn(Either.right(List.of(CONCEPT_QUERY_1)));
+        when(translator.toQuery(CONCEPT_CRITERION_2)).thenReturn(Either.right(List.of(CONCEPT_QUERY_2)));
+        when(translator.toQuery(CONCEPT_CRITERION_3)).thenReturn(Either.right(List.of(CONCEPT_QUERY_3)));
+        when(fhirQueryService.execute(CONCEPT_QUERY_1)).thenReturn(Mono.just(Population.of(PATIENT_ID_1)));
+        when(fhirQueryService.execute(CONCEPT_QUERY_2)).thenReturn(Mono.just(Population.of(PATIENT_ID_1)));
+        when(fhirQueryService.execute(CONCEPT_QUERY_3)).thenReturn(Mono.just(Population.of(PATIENT_ID_2)));
+
+        var result = service.execute(query).block();
+
+        assertThat(result).isZero();
+    }
+
+    @Test
+    @DisplayName("Execute a single Inclusion Criterion and two Exclusion Criteria that should be combined with an intersection " +
+            "and one of them results in the same patient ID as the Inclusion Criterion")
+    void execute_singleIncludeConceptCriterion_oneSameOneDifferentInnerExcludeConceptCriteria() {
+        var query = StructuredQuery.of(
+                CriterionGroup.of(CriterionGroup.of(CONCEPT_CRITERION_1)),
+                CriterionGroup.of(CriterionGroup.of(CONCEPT_CRITERION_2, CONCEPT_CRITERION_3)));
+        when(translator.toQuery(CONCEPT_CRITERION_1)).thenReturn(Either.right(List.of(CONCEPT_QUERY_1)));
+        when(translator.toQuery(CONCEPT_CRITERION_2)).thenReturn(Either.right(List.of(CONCEPT_QUERY_2)));
+        when(translator.toQuery(CONCEPT_CRITERION_3)).thenReturn(Either.right(List.of(CONCEPT_QUERY_3)));
+        when(fhirQueryService.execute(CONCEPT_QUERY_1)).thenReturn(Mono.just(Population.of(PATIENT_ID_1)));
+        when(fhirQueryService.execute(CONCEPT_QUERY_2)).thenReturn(Mono.just(Population.of(PATIENT_ID_1)));
+        when(fhirQueryService.execute(CONCEPT_QUERY_3)).thenReturn(Mono.just(Population.of(PATIENT_ID_2)));
+
+        var result = service.execute(query).block();
+
+        assertThat(result).isOne();
+    }
+
+    @Test
+    @DisplayName("Execute a single Inclusion Criterion and two Exclusion Criteria that should be combined with an intersection " +
+            "and both result in the same patient ID as the Inclusion Criterion")
+    void execute_singleIncludeConceptCriterion_twoSameInnerExcludeConceptCriteria() {
+        var query = StructuredQuery.of(
+                CriterionGroup.of(CriterionGroup.of(CONCEPT_CRITERION_1)),
+                CriterionGroup.of(CriterionGroup.of(CONCEPT_CRITERION_2, CONCEPT_CRITERION_3)));
+        when(translator.toQuery(CONCEPT_CRITERION_1)).thenReturn(Either.right(List.of(CONCEPT_QUERY_1)));
+        when(translator.toQuery(CONCEPT_CRITERION_2)).thenReturn(Either.right(List.of(CONCEPT_QUERY_2)));
+        when(translator.toQuery(CONCEPT_CRITERION_3)).thenReturn(Either.right(List.of(CONCEPT_QUERY_3)));
+        when(fhirQueryService.execute(CONCEPT_QUERY_1)).thenReturn(Mono.just(Population.of(PATIENT_ID_1)));
+        when(fhirQueryService.execute(CONCEPT_QUERY_2)).thenReturn(Mono.just(Population.of(PATIENT_ID_1)));
+        when(fhirQueryService.execute(CONCEPT_QUERY_3)).thenReturn(Mono.just(Population.of(PATIENT_ID_1)));
+
+        var result = service.execute(query).block();
+
+        assertThat(result).isZero();
+    }
+
 
     @Test
     void execute_singleIncludeConceptCriterion_singleExcludeConceptCriterion_SamePatient() {
