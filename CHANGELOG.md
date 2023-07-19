@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.0.0
+
+### Bugfixes
+
+* Fix Execution Operation ([#63](https://github.com/medizininformatik-initiative/flare/pull/63))
+
+The full changelog can be found [here](https://github.com/medizininformatik-initiative/flare/milestone/8?closed=1).
+
 ## v0.2.4
 
 ### Minor Enhancements
