@@ -10,7 +10,7 @@
 * create a PR from the release branch into main
 * merge that PR
 * create and push a tag called `v<version>` like `v0.1.1` on main at the merge commit
-* create a new branch called `new-dev` on top of the release branch
+* create a new branch called `next-dev` on top of the release branch
 * change the version in the POM to the next SNAPSHOT version which usually increments the minor version  
-* merge the `new-dev` branch back into develop
+* merge the `next-dev` branch back into develop
 * create release notes on GitHub
