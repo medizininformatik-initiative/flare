@@ -44,7 +44,7 @@ public class StructuredQueryService {
         var includedPatients = query.inclusionCriteria().executeAndIntersection(this::executeUnionGroup)
                 .defaultIfEmpty(Population.of());
         var excludedPatients = query.exclusionCriteria().map(c -> c.map(CriterionGroup::wrapCriteria)
-                        .executeAndUnion(group -> group.executeAndUnion(this::executeUnionGroup))
+                        .executeAndUnion(group -> group.executeAndIntersection(this::executeUnionGroup))
                         .defaultIfEmpty(Population.of()))
                 .orElse(Mono.just(Population.of()));
         return includedPatients
