@@ -1,5 +1,6 @@
 package de.medizininformatikinitiative.flare.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.medizininformatikinitiative.flare.FlareApplication;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
@@ -47,11 +48,13 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @SpringBootTest
 class StructuredQueryServiceIT {
 
-    public static final Clock CLOCK_2000 = Clock.fixed(LocalDate.of(2000, 1, 1).atStartOfDay().toInstant(ZoneOffset.UTC), ZoneOffset.UTC);
+    private static final Clock CLOCK_2000 = Clock.fixed(LocalDate.of(2000, 1, 1).atStartOfDay().toInstant(ZoneOffset.UTC), ZoneOffset.UTC);
     private static final TermCode I08 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "I08", "");
     private static final TermCode COVID = TermCode.of("http://loinc.org", "94500-6", "");
     private static final TermCode INVALID = TermCode.of("http://loinc.org", "LA15841-2", "Invalid");
+
     private static final Logger logger = LoggerFactory.getLogger(StructuredQueryServiceIT.class);
+
     @Container
     @SuppressWarnings("resource")
     private static final GenericContainer<?> blaze = new GenericContainer<>("samply/blaze:0.22")
@@ -60,9 +63,12 @@ class StructuredQueryServiceIT {
             .withExposedPorts(8080)
             .waitingFor(Wait.forHttp("/health").forStatusCode(200))
             .withLogConsumer(new Slf4jLogConsumer(logger));
+
     private static boolean dataImported = false;
+
     @Autowired
     private WebClient dataStoreClient;
+
     @Autowired
     private StructuredQueryService service;
 
@@ -162,8 +168,7 @@ class StructuredQueryServiceIT {
 
     @Test
     void execute_genderTestCase() throws URISyntaxException, IOException {
-        var query = new ObjectMapper().readValue(Files.readString(resourcePath("testCases").resolve("returningOther")
-                .resolve("2-gender.json")), StructuredQuery.class);
+        var query = parse(Files.readString(resourcePath("testCases").resolve("returningOther").resolve("2-gender.json")));
 
         var result = service.execute(query).block();
 
@@ -178,5 +183,50 @@ class StructuredQueryServiceIT {
         assertThat(result).isOne();
     }
 
+    @Test
+    void execute_BloodPressureTestCase() throws Exception {
+        var query = parse("""
+                {
+                  "version": "http://to_be_decided.com/draft-1/schema#",
+                  "inclusionCriteria": [
+                    [
+                      {
+                        "termCodes": [
+                          {
+                            "code": "85354-9",
+                            "system": "http://loinc.org",
+                            "display": "Blutdruck"
+                          }
+                        ],
+                        "attributeFilters": [
+                          {
+                            "type": "quantity-comparator",
+                            "unit": {
+                              "code": "mm[Hg]",
+                              "display": "mm[Hg]"
+                            },
+                            "value": 1,
+                            "comparator": "gt",
+                            "attributeCode": {
+                              "code": "8480-6",
+                              "system": "http://loinc.org",
+                              "display": "Sistolic Bloodpressure"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  ]
+                }
+                                
+                """);
 
+        var result = service.execute(query).block();
+
+        assertThat(result).isOne();
+    }
+
+    static StructuredQuery parse(String s) throws JsonProcessingException {
+        return new ObjectMapper().readValue(s, StructuredQuery.class);
+    }
 }

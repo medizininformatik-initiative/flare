@@ -23,6 +23,7 @@ import java.time.Duration;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static de.medizininformatikinitiative.flare.model.fhir.QueryParams.stringValue;
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
 
 @Component
@@ -83,7 +84,8 @@ public class DataStore implements FhirQueryService {
     }
 
     private QueryParams extraQueryParams(String type) {
-        return QueryParams.of("_elements", queryElements(type)).appendParam("_count", Integer.toString(pageCount));
+        return QueryParams.of("_elements", stringValue(queryElements(type)))
+                .appendParam("_count", stringValue(Integer.toString(pageCount)));
     }
 
     /**

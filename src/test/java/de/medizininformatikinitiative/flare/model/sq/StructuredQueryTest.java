@@ -20,43 +20,37 @@ class StructuredQueryTest {
 
     @Test
     void deserializeJson_Empty() {
-        var s = "{}";
-
-        assertThatThrownBy(() -> new ObjectMapper().readValue(s, StructuredQuery.class))
+        assertThatThrownBy(() -> parse("{}"))
                 .hasRootCauseMessage("empty inclusion criteria");
     }
 
     @Test
     void deserializeJson_EmptyInclusionCriteria() {
-        var s = """
+        assertThatThrownBy(() -> parse("""
                 {
                   "inclusionCriteria": [
                   ]
                 }
-                """;
-
-        assertThatThrownBy(() -> new ObjectMapper().readValue(s, StructuredQuery.class))
+                """))
                 .hasRootCauseMessage("empty inclusion criteria");
     }
 
     @Test
     void deserializeJson_EmptyInclusionCriteria2() {
-        var s = """
+        assertThatThrownBy(() -> parse("""
                 {
                   "inclusionCriteria": [
                     [
                     ]
                   ]
                 }
-                """;
-
-        assertThatThrownBy(() -> new ObjectMapper().readValue(s, StructuredQuery.class))
+                """))
                 .hasRootCauseMessage("empty inclusion criteria");
     }
 
     @Test
     void deserializeJson_OneInclusionCriteria() throws JsonProcessingException {
-        var s = """
+        var query = parse("""
                 {
                   "inclusionCriteria": [
                     [
@@ -72,16 +66,14 @@ class StructuredQueryTest {
                     ]
                   ]
                 }
-                """;
-
-        var query = new ObjectMapper().readValue(s, StructuredQuery.class);
+                """);
 
         assertThat(query).isEqualTo(StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(Concept.of(C71))))));
     }
 
     @Test
     void deserializeJson_TwoInclusionCriteria() throws JsonProcessingException {
-        var s = """
+        var query = parse("""
                 {
                   "inclusionCriteria": [
                     [
@@ -106,9 +98,7 @@ class StructuredQueryTest {
                     ]
                   ]
                 }
-                """;
-
-        var query = new ObjectMapper().readValue(s, StructuredQuery.class);
+                """);
 
         assertThat(query).isEqualTo(StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(Concept.of(C71)),
                 Criterion.of(Concept.of(C72))))));
@@ -116,7 +106,7 @@ class StructuredQueryTest {
 
     @Test
     void deserializeJson_TwoInclusionCriteria2() throws JsonProcessingException {
-        var s = """
+        var query = parse("""
                 {
                   "inclusionCriteria": [
                     [
@@ -143,9 +133,7 @@ class StructuredQueryTest {
                     ]
                   ]
                 }
-                """;
-
-        var query = new ObjectMapper().readValue(s, StructuredQuery.class);
+                """);
 
         assertThat(query).isEqualTo(StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(Concept.of(C71))),
                 CriterionGroup.of(Criterion.of(Concept.of(C72))))));
@@ -153,7 +141,7 @@ class StructuredQueryTest {
 
     @Test
     void deserializeJson_EmptyInclusionCriteriaAreIgnored() throws JsonProcessingException {
-        var s = """
+        var query = parse("""
                 {
                   "inclusionCriteria": [
                     [
@@ -171,16 +159,14 @@ class StructuredQueryTest {
                     ]
                   ]
                 }
-                """;
-
-        var query = new ObjectMapper().readValue(s, StructuredQuery.class);
+                """);
 
         assertThat(query).isEqualTo(StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(Concept.of(C71))))));
     }
 
     @Test
     void deserializeJson_OneExclusionCriteria() throws JsonProcessingException {
-        var s = """
+        var query = parse("""
                 {
                   "inclusionCriteria": [
                     [
@@ -209,9 +195,7 @@ class StructuredQueryTest {
                     ]
                   ]
                 }
-                """;
-
-        var query = new ObjectMapper().readValue(s, StructuredQuery.class);
+                """);
 
         assertThat(query).isEqualTo(StructuredQuery.of(
                 CriterionGroup.of(CriterionGroup.of(Criterion.of(Concept.of(C71)))),
@@ -221,7 +205,7 @@ class StructuredQueryTest {
 
     @Test
     void deserializeJson_TwoExclusionCriteria() throws JsonProcessingException {
-        var s = """
+        var query = parse("""
                 {
                   "inclusionCriteria": [
                     [
@@ -259,9 +243,7 @@ class StructuredQueryTest {
                     ]
                   ]
                 }
-                """;
-
-        var query = new ObjectMapper().readValue(s, StructuredQuery.class);
+                """);
 
         assertThat(query).isEqualTo(StructuredQuery.of(
                 CriterionGroup.of(CriterionGroup.of(Criterion.of(Concept.of(C71)))),
@@ -271,7 +253,7 @@ class StructuredQueryTest {
 
     @Test
     void deserializeJson_TwoExclusionCriteria2() throws JsonProcessingException {
-        var s = """
+        var query = parse("""
                 {
                   "inclusionCriteria": [
                     [
@@ -311,14 +293,16 @@ class StructuredQueryTest {
                     ]
                   ]
                 }
-                """;
-
-        var query = new ObjectMapper().readValue(s, StructuredQuery.class);
+                """);
 
         assertThat(query).isEqualTo(StructuredQuery.of(
                 CriterionGroup.of(CriterionGroup.of(Criterion.of(Concept.of(C71)))),
                 CriterionGroup.of(CriterionGroup.of(Criterion.of(Concept.of(C72))),
                         CriterionGroup.of(Criterion.of(Concept.of(C73))))
         ));
+    }
+
+    static StructuredQuery parse(String s) throws JsonProcessingException {
+        return new ObjectMapper().readValue(s, StructuredQuery.class);
     }
 }

@@ -1,5 +1,6 @@
 package de.medizininformatikinitiative.flare.model.mapping;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
 import org.junit.jupiter.api.Test;
@@ -82,9 +83,7 @@ class TermCodeNodeTest {
 
     @Test
     void fromJson() throws Exception {
-        var mapper = new ObjectMapper();
-
-        var conceptNode = mapper.readValue("""
+        var conceptNode = parse("""
                 {"termCode": {
                    "system": "system-143705",
                    "code": "code-143708",
@@ -92,16 +91,14 @@ class TermCodeNodeTest {
                  },
                  "children": []
                 }
-                """, TermCodeNode.class);
+                """);
 
         assertThat(conceptNode.termCode().system()).isEqualTo("system-143705");
     }
 
     @Test
     void fromJson_AdditionalPropertyIsIgnored() throws Exception {
-        var mapper = new ObjectMapper();
-
-        var conceptNode = mapper.readValue("""
+        var conceptNode = parse("""
                 {"foo-152133": "bar-152136",
                  "termCode": {
                    "system": "system-143705",
@@ -110,16 +107,14 @@ class TermCodeNodeTest {
                  },
                  "children": []
                 }
-                """, TermCodeNode.class);
+                """);
 
         assertThat(conceptNode.termCode().system()).isEqualTo("system-143705");
     }
 
     @Test
     void fromJson_WithChildren() throws Exception {
-        var mapper = new ObjectMapper();
-
-        var conceptNode = mapper.readValue("""
+        var conceptNode = parse("""
                 {"termCode": {
                    "system": "system-143705",
                    "code": "code-143708",
@@ -138,10 +133,14 @@ class TermCodeNodeTest {
                   }}
                  ]
                 }
-                """, TermCodeNode.class);
+                """);
 
         assertThat(conceptNode.termCode().system()).isEqualTo("system-143705");
         assertThat(conceptNode.children().get(0).termCode().system()).isEqualTo("child-1-system-155856");
         assertThat(conceptNode.children().get(1).termCode().system()).isEqualTo("child-2-system-155958");
+    }
+
+    static TermCodeNode parse(String s) throws JsonProcessingException {
+        return new ObjectMapper().readValue(s, TermCodeNode.class);
     }
 }

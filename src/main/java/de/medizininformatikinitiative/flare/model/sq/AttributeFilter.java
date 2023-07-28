@@ -28,11 +28,11 @@ public record AttributeFilter(TermCode code, FilterPart filterPart) implements F
     }
 
     /**
-     * Parses an attribute filterPart.
+     * Parses an attribute filter part.
      *
-     * @param node the JSON representation of the attribute filterPart
-     * @return the parsed attribute filterPart
-     * @throws IllegalArgumentException if the JSON isn't valid
+     * @param node the JSON representation of the attribute filter part
+     * @return the parsed attribute filter part
+     * @throws IllegalArgumentException if {@code node} isn't valid
      */
     public static AttributeFilter fromJsonNode(JsonNode node) {
         var code = TermCode.fromJsonNode(node.get("attributeCode"));
