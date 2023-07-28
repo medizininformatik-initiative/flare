@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
+import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCodeFilter;
+import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedConceptFilter;
+import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
 
 import java.util.*;
 import java.util.function.Function;
@@ -49,22 +52,23 @@ public final class Mapping {
                              @JsonProperty("fhirResourceType") String resourceType,
                              @JsonProperty("termCodeSearchParameter") String termCodeSearchParameter,
                              @JsonProperty("valueSearchParameter") String valueSearchParameter,
-                             @JsonProperty("valueTypeFhir") FilterType valueTypeFhir,
+                             @JsonProperty("valueTypeFhir") ValueMappingType valueTypeFhir,
                              @JsonProperty("fixedCriteria") List<FixedCriterion> fixedCriteria,
                              @JsonProperty("attributeSearchParameters") List<AttributeMapping> attributeMappings,
                              @JsonProperty("timeRestrictionParameter") String timeRestrictionParameter) {
         return new Mapping(key, resourceType, termCodeSearchParameter,
                 valueSearchParameter == null
                         ? null
-                        : new ValueFilterMapping(valueTypeFhir == null ? FilterType.CODING : valueTypeFhir,
+                        : new ValueFilterMapping(valueTypeFhir == null ? ValueMappingType.CODING : valueTypeFhir,
                         valueSearchParameter, key),
                 fixedCriteria == null ? List.of() : List.copyOf(fixedCriteria),
-                (attributeMappings == null ? Map.of() : attributeMappings.stream()
-                        .collect(Collectors.toMap(AttributeMapping::key, Function.identity()))),
+                attributeMappings == null
+                        ? Map.of()
+                        : attributeMappings.stream().collect(Collectors.toMap(AttributeMapping::key, Function.identity())),
                 timeRestrictionParameter);
     }
 
-    public Mapping withValueFilterMapping(FilterType type, String searchParameter) {
+    public Mapping withValueFilterMapping(ValueMappingType type, String searchParameter) {
         return new Mapping(key, resourceType, termCodeSearchParameter,
                 new ValueFilterMapping(type, searchParameter, key),
                 fixedCriteria, attributeMappings, timeRestrictionParameter);
@@ -118,7 +122,8 @@ public final class Mapping {
         return timeRestrictionParameter;
     }
 
-    private record ValueFilterMapping(FilterType type, String searchParameter, TermCode key) implements FilterMapping {
+    private record ValueFilterMapping(ValueMappingType type, String searchParameter,
+                                      TermCode key) implements FilterMapping {
 
         private static final TermCode AGE = TermCode.of("http://snomed.info/sct", "424144002", "age");
 
@@ -129,8 +134,21 @@ public final class Mapping {
         }
 
         @Override
+        public Optional<TermCode> compositeCode() {
+            return Optional.empty();
+        }
+
+        @Override
         public boolean isAge() {
             return key.equals(AGE);
+        }
+
+        @Override
+        public Either<Exception, ExpandedFilter> expandConcept(TermCode concept) {
+            return switch (type()) {
+                case CODE -> Either.right(new ExpandedCodeFilter(searchParameter(), concept.code()));
+                case CODING -> Either.right(new ExpandedConceptFilter(searchParameter(), concept));
+            };
         }
     }
 }

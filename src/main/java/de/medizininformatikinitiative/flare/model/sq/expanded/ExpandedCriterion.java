@@ -9,6 +9,7 @@ import de.medizininformatikinitiative.flare.model.sq.TermCode;
 import java.util.LinkedList;
 import java.util.List;
 
+import static de.medizininformatikinitiative.flare.model.fhir.QueryParams.conceptValue;
 import static de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter.toParams;
 import static java.util.Objects.requireNonNull;
 
@@ -50,6 +51,8 @@ public record ExpandedCriterion(String resourceType, String searchParameter, Ter
     }
 
     private QueryParams startQueryParams() {
-        return searchParameter == null || code == null ? QueryParams.EMPTY : QueryParams.of(searchParameter, code);
+        return searchParameter == null || code == null
+                ? QueryParams.EMPTY
+                : QueryParams.of(searchParameter, conceptValue(code));
     }
 }

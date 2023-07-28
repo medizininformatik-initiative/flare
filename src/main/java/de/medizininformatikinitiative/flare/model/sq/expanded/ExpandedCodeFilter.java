@@ -2,16 +2,24 @@ package de.medizininformatikinitiative.flare.model.sq.expanded;
 
 import de.medizininformatikinitiative.flare.model.fhir.QueryParams;
 
+import static de.medizininformatikinitiative.flare.model.fhir.QueryParams.stringValue;
+import static java.util.Objects.requireNonNull;
+
 /**
- * A value filterPart using a single code as value.
+ * A value filter using a single string code as value.
  *
  * @param searchParameter the FHIR search parameter code to use for the value
- * @param code            the code to search for
+ * @param value           the code to search for
  */
-public record ExpandedCodeFilter(String searchParameter, String code) implements ExpandedFilter {
+public record ExpandedCodeFilter(String searchParameter, String value) implements ExpandedFilter {
+
+    public ExpandedCodeFilter {
+        requireNonNull(searchParameter);
+        requireNonNull(value);
+    }
 
     @Override
     public QueryParams toParams() {
-        return QueryParams.of(searchParameter, code);
+        return QueryParams.of(searchParameter, stringValue(value));
     }
 }

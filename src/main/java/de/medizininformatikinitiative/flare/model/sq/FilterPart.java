@@ -10,15 +10,18 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
+/**
+ * The common part of {@link AttributeFilter} and {@link ValueFilter}.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public interface FilterPart {
 
     /**
-     * Parses a value filterPart.
+     * Parses a value filter part.
      *
-     * @param node the JSON representation of the value filterPart
-     * @return the parsed value filterPart
-     * @throws IllegalArgumentException if the JSON isn't valid
+     * @param node the JSON representation of the value filter part
+     * @return the parsed value filter part
+     * @throws IllegalArgumentException if {@code node} isn't valid
      */
     static FilterPart fromJsonNode(JsonNode node) {
         var type = node.get("type").asText();
@@ -37,21 +40,16 @@ public interface FilterPart {
                 var comparator = Comparator.fromJson(node.get("comparator").asText());
                 var value = node.get("value").decimalValue();
                 var unit = node.get("unit");
-                if (unit == null) {
-                    yield ComparatorFilterPart.of(comparator, value);
-                } else {
-                    yield ComparatorFilterPart.of(comparator, value, ucumTermCode(unit));
-                }
+                yield QuantityComparatorFilterPart.of(comparator, unit == null ? Quantity.of(value)
+                        : Quantity.of(value, ucumTermCode(unit)));
             }
             case "quantity-range" -> {
                 var lowerBound = node.get("minValue").decimalValue();
                 var upperBound = node.get("maxValue").decimalValue();
                 var unit = node.get("unit");
-                if (unit == null) {
-                    yield RangeFilterPart.of(lowerBound, upperBound);
-                } else {
-                    yield RangeFilterPart.of(lowerBound, upperBound, ucumTermCode(unit));
-                }
+                yield QuantityRangeFilterPart.of(unit == null ? Quantity.of(lowerBound)
+                        : Quantity.of(lowerBound, ucumTermCode(unit)), unit == null ? Quantity.of(upperBound)
+                        : Quantity.of(upperBound, ucumTermCode(unit)));
             }
             default -> throw new IllegalArgumentException("unknown filterPart type: " + type);
         };
