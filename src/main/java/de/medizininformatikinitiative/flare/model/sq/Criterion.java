@@ -3,6 +3,9 @@ package de.medizininformatikinitiative.flare.model.sq;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.Util;
@@ -13,7 +16,6 @@ import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCriterion;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
 import reactor.core.publisher.Mono;
 
-import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -62,6 +64,14 @@ public record Criterion(Concept concept, List<Filter> filters) {
         return new Criterion(concept, filters);
     }
 
+    static Criterion fromJsonNode(JsonNode node) {
+        try {
+            return new ObjectMapper().treeToValue(node, Criterion.class);
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
     Criterion appendAttributeFilter(AttributeFilter attributeFilter) {
         var filters = new LinkedList<>(this.filters);
         filters.add(attributeFilter);
@@ -77,7 +87,7 @@ public record Criterion(Concept concept, List<Filter> filters) {
     /**
      * Expands this criterion into a {@link Mono mono} of {@link ExpandedCriterion expanded criteria}.
      *
-     * @param mappingContext contains the mappings needed to create the expanded criteria
+     * @param mappingContext the context inside which the expansion should happen
      * @return a mono of expanded criteria
      */
     public Either<Exception, List<ExpandedCriterion>> expand(MappingContext mappingContext) {
@@ -89,7 +99,7 @@ public record Criterion(Concept concept, List<Filter> filters) {
 
     private Either<Exception, List<ExpandedCriterion>> expandTermCode(MappingContext mappingContext, TermCode termCode) {
         return mappingContext.findMapping(termCode)
-                .flatMap(mapping -> expandFilters(mappingContext.today(), mapping)
+                .flatMap(mapping -> expandFilters(mappingContext, mapping)
                         .map(Util::cartesianProduct)
                         .map(expandedFilterMatrix -> expandedFilterMatrix.isEmpty()
                                 ? List.of(expandedCriterion(mapping, termCode))
@@ -99,9 +109,9 @@ public record Criterion(Concept concept, List<Filter> filters) {
                                 .toList()));
     }
 
-    private Either<Exception, List<List<ExpandedFilter>>> expandFilters(LocalDate today, Mapping mapping) {
+    private Either<Exception, List<List<ExpandedFilter>>> expandFilters(MappingContext mappingContext, Mapping mapping) {
         return filters.stream()
-                .map(filter -> filter.expand(today, mapping))
+                .map(filter -> filter.expand(mappingContext, mapping))
                 .reduce(Either.right(fixedCriterionFilters(mapping)), Either.lift2(Util::add), Either.liftBinOp(Util::concat));
     }
 

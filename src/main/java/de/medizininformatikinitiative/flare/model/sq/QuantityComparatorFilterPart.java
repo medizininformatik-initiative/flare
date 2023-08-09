@@ -2,9 +2,9 @@ package de.medizininformatikinitiative.flare.model.sq;
 
 import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.mapping.FilterMapping;
+import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static java.util.Objects.requireNonNull;
@@ -28,7 +28,7 @@ public record QuantityComparatorFilterPart(Comparator comparator, Quantity value
     }
 
     @Override
-    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping) {
-        return filterMapping.expandComparatorFilterPart(today, comparator, value);
+    public Either<Exception, List<ExpandedFilter>> expand(MappingContext mappingContext, FilterMapping filterMapping) {
+        return filterMapping.expandComparatorFilterPart(mappingContext, comparator, value);
     }
 }

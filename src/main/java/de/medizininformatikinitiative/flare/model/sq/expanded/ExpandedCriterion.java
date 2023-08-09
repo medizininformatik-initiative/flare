@@ -6,10 +6,7 @@ import de.medizininformatikinitiative.flare.model.sq.Criterion;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
 
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 
-import static de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter.toParams;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -19,37 +16,33 @@ import static java.util.Objects.requireNonNull;
  * {@link Mapping mapping information} needed.
  *
  * @param resourceType the type of the resource like Condition or Observation
- * @param filters      all filters
+ * @param filter       the filter which can be also a {@link ExpandedFilterGroup group of filters}
  */
-public record ExpandedCriterion(String resourceType, List<ExpandedFilter> filters) {
+public record ExpandedCriterion(String resourceType, ExpandedFilter filter) {
 
     public ExpandedCriterion {
         requireNonNull(resourceType);
-        filters = List.copyOf(filters);
+        requireNonNull(filter);
     }
 
     public static ExpandedCriterion of(String resourceType) {
-        return new ExpandedCriterion(resourceType, List.of());
+        return new ExpandedCriterion(resourceType, ExpandedFilter.EMPTY);
     }
 
     public static ExpandedCriterion of(String resourceType, String searchParameter, TermCode termCode) {
-        return new ExpandedCriterion(resourceType, List.of(new ExpandedConceptFilter(requireNonNull(searchParameter),
-                requireNonNull(termCode))));
+        return new ExpandedCriterion(resourceType, new ExpandedConceptFilter(requireNonNull(searchParameter),
+                requireNonNull(termCode)));
     }
 
-    public ExpandedCriterion appendFilter(ExpandedFilter attributeFilter) {
-        var attributeFilters = new LinkedList<>(this.filters);
-        attributeFilters.add(attributeFilter);
-        return new ExpandedCriterion(resourceType, attributeFilters);
+    public ExpandedCriterion appendFilter(ExpandedFilter filter) {
+        return new ExpandedCriterion(resourceType, this.filter.append(filter));
     }
 
-    public ExpandedCriterion appendFilters(Collection<ExpandedFilter> attributeFilters) {
-        var newAttributeFilters = new LinkedList<>(this.filters);
-        newAttributeFilters.addAll(attributeFilters);
-        return new ExpandedCriterion(resourceType, newAttributeFilters);
+    public ExpandedCriterion appendFilters(Collection<ExpandedFilter> filters) {
+        return new ExpandedCriterion(resourceType, filters.stream().reduce(filter, ExpandedFilter::append));
     }
 
     public Query toQuery() {
-        return new Query(resourceType, toParams(filters));
+        return new Query(resourceType, filter.toParams());
     }
 }

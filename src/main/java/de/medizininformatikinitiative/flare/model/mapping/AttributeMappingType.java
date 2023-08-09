@@ -8,7 +8,8 @@ public enum AttributeMappingType implements JsonEnum {
     @JsonProperty("coding") CODING(false),
     @JsonProperty("composite-quantity-comparator") COMPOSITE_QUANTITY_COMPARATOR(true),
     @JsonProperty("composite-quantity-range") COMPOSITE_QUANTITY_RANGE(true),
-    @JsonProperty("composite-concept") COMPOSITE_CONCEPT(true);
+    @JsonProperty("composite-concept") COMPOSITE_CONCEPT(true),
+    @JsonProperty("reference") REFERENCE(false);
 
     private final boolean compositeType;
 

@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.mapping.FilterMapping;
+import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
@@ -51,6 +51,15 @@ public interface FilterPart {
                         : Quantity.of(lowerBound, ucumTermCode(unit)), unit == null ? Quantity.of(upperBound)
                         : Quantity.of(upperBound, ucumTermCode(unit)));
             }
+            case "reference" -> {
+                var criteria = node.get("criteria");
+                if (criteria == null || criteria.isEmpty()) {
+                    throw new IllegalArgumentException("empty criteria");
+                } else {
+                    yield new ReferenceFilterPart(StreamSupport.stream(criteria.spliterator(), false)
+                            .map(Criterion::fromJsonNode).toList());
+                }
+            }
             default -> throw new IllegalArgumentException("unknown filterPart type: " + type);
         };
     }
@@ -60,5 +69,13 @@ public interface FilterPart {
         return new TermCode(system, unit.get("code").asText(), unit.get("display").asText());
     }
 
-    Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping);
+    /**
+     * Expands this {@code FilterPart} into a list of {@code ExpandedFilter expanded filters} that should be combined
+     * with logical {@literal OR}.
+     *
+     * @param mappingContext the context inside which the expansion should happen
+     * @param filterMapping  the mapping for the filter to expand
+     * @return either an error or a list of expanded filters
+     */
+    Either<Exception, List<ExpandedFilter>> expand(MappingContext mappingContext, FilterMapping filterMapping);
 }

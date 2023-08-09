@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
@@ -60,6 +61,8 @@ class StructuredQueryServiceIT {
     private static final GenericContainer<?> blaze = new GenericContainer<>("samply/blaze:0.22")
             .withImagePullPolicy(PullPolicy.alwaysPull())
             .withEnv("LOG_LEVEL", "debug")
+            .withEnv("DB_SEARCH_PARAM_BUNDLE", "/app/custom-search-parameters.json")
+            .withClasspathResourceMapping("de/medizininformatikinitiative/flare/service/custom-search-parameters.json", "/app/custom-search-parameters.json", BindMode.READ_ONLY)
             .withExposedPorts(8080)
             .waitingFor(Wait.forHttp("/health").forStatusCode(200))
             .withLogConsumer(new Slf4jLogConsumer(logger));
@@ -71,6 +74,8 @@ class StructuredQueryServiceIT {
 
     @Autowired
     private StructuredQueryService service;
+    @Autowired
+    private StructuredQueryService service_Specimen;
 
     @Configuration
     static class Config {
@@ -95,6 +100,15 @@ class StructuredQueryServiceIT {
         }
 
         @Bean
+        public MappingContext mappingContext_Specimen() throws Exception {
+            var mapper = new ObjectMapper();
+            var mappings = Arrays.stream(mapper.readValue(slurp_ClassPath("mapping-specimen-test.json"), Mapping[].class))
+                    .collect(Collectors.toMap(Mapping::key, identity()));
+            var conceptTree = mapper.readValue(slurp_ClassPath("tree-specimen-test.json"), TermCodeNode.class);
+            return MappingContext.of(mappings, conceptTree, CLOCK_2000);
+        }
+
+        @Bean
         public FhirQueryService fhirQueryService(WebClient dataStoreClient) {
             return new DataStore(dataStoreClient, Clock.systemDefaultZone(), 1);
         }
@@ -105,27 +119,50 @@ class StructuredQueryServiceIT {
         }
 
         @Bean
+        public Translator translator_Specimen(MappingContext mappingContext_Specimen) {
+            return new Translator(mappingContext_Specimen);
+        }
+
+        @Bean
         public StructuredQueryService service(FhirQueryService fhirQueryService, Translator translator) {
             return new StructuredQueryService(fhirQueryService, translator);
         }
+
+        @Bean
+        public StructuredQueryService service_Specimen(FhirQueryService fhirQueryService, Translator translator_Specimen) {
+            return new StructuredQueryService(fhirQueryService, translator_Specimen);
+        }
     }
 
-    private static String slurp(String name) {
+    private static String slurp_FlareApplication(String name) {
         try {
-            return Files.readString(resourcePath(name));
+            return Files.readString(resourcePath_FlareApplication(name));
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static Path resourcePath(String name) throws URISyntaxException {
+    private static String slurp_ClassPath(String name) {
+        try {
+            return Files.readString(resourcePath_ClassPath(name));
+        } catch (IOException | URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static Path resourcePath_ClassPath(String name) throws URISyntaxException {
+        return Paths.get(Objects.requireNonNull(StructuredQueryServiceIT.class.getResource(name)).toURI());
+    }
+
+    private static Path resourcePath_FlareApplication(String name) throws URISyntaxException {
         return Paths.get(Objects.requireNonNull(FlareApplication.class.getResource(name)).toURI());
     }
+
 
     public static Stream<StructuredQuery> getTestQueriesReturningOnePatient() throws URISyntaxException, IOException {
         //not using try-with for zipFile here because the test would otherwise not work as it would state the error
         //that the zip file had been closed for some reason
-        var zipFile = new ZipFile(resourcePath("testCases").resolve("returningOnePatient.zip").toString());
+        var zipFile = new ZipFile(resourcePath_FlareApplication("testCases").resolve("returningOnePatient.zip").toString());
         return zipFile.stream().map(s -> {
             try {
                 return new ObjectMapper().readValue(zipFile.getInputStream(s), StructuredQuery.class);
@@ -140,7 +177,7 @@ class StructuredQueryServiceIT {
         if (!dataImported) {
             dataStoreClient.post()
                     .contentType(APPLICATION_JSON)
-                    .bodyValue(slurp("GeneratedBundle.json"))
+                    .bodyValue(slurp_FlareApplication("GeneratedBundle.json"))
                     .retrieve()
                     .toBodilessEntity()
                     .block();
@@ -168,11 +205,27 @@ class StructuredQueryServiceIT {
 
     @Test
     void execute_genderTestCase() throws URISyntaxException, IOException {
-        var query = parse(Files.readString(resourcePath("testCases").resolve("returningOther").resolve("2-gender.json")));
+        var query = parse(Files.readString(resourcePath_FlareApplication("testCases").resolve("returningOther").resolve("2-gender.json")));
 
         var result = service.execute(query).block();
 
         assertThat(result).isEqualTo(172);
+    }
+
+    @Test
+    void execute_specimenTestCase() throws IOException {
+        dataStoreClient.post()
+                .contentType(APPLICATION_JSON)
+                .bodyValue(slurp_ClassPath("specimen-diag-testbundle.json"))
+                .retrieve()
+                .toBodilessEntity()
+                .block();
+
+        var query = parse(slurp_ClassPath("sq-test-specimen-diag.json"));
+
+        var result = service_Specimen.execute(query).block();
+
+        assertThat(result).isOne();
     }
 
     @ParameterizedTest

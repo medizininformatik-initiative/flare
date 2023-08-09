@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import de.medizininformatikinitiative.flare.Either;
+import de.medizininformatikinitiative.flare.model.sq.Criterion;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCodeFilter;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedConceptFilter;
@@ -149,6 +150,12 @@ public final class Mapping {
                 case CODE -> Either.right(new ExpandedCodeFilter(searchParameter(), concept.code()));
                 case CODING -> Either.right(new ExpandedConceptFilter(searchParameter(), concept));
             };
+        }
+
+        @Override
+        public Either<Exception, List<ExpandedFilter>> expandReference(MappingContext mappingContext,
+                                                                       Criterion criterion) {
+            return Either.left(new Exception("There are no reference value filters."));
         }
     }
 }

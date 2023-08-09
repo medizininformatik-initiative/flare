@@ -2,22 +2,20 @@ package de.medizininformatikinitiative.flare.model.sq;
 
 import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
+import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface Filter {
 
     /**
-     * Expands this filter into possible multiple {@link ExpandedFilter expanded filters} using the {@code mapping}.
-     * <p>
-     * Filter expansion creates one expanded filter for each concept of a {@link ConceptFilterPart concept filter part}.
-     * Filters with other filter parts expand to one expanded filter.
+     * Expands this filter into a list {@link ExpandedFilter expanded filters} that should be combined with logical
+     * {@literal OR}.
      *
-     * @param today   the current day used for date/time calculations
-     * @param mapping the mapping to use for expansion
-     * @return possibly multiple expanded filters
+     * @param mappingContext the context inside which the expansion should happen
+     * @param mapping        the mapping to use for expansion
+     * @return either an error or a list of expanded filters
      */
-    Either<Exception, List<ExpandedFilter>> expand(LocalDate today, Mapping mapping);
+    Either<Exception, List<ExpandedFilter>> expand(MappingContext mappingContext, Mapping mapping);
 }
