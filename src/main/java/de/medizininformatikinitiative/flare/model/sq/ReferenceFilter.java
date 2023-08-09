@@ -21,8 +21,10 @@ public record ReferenceFilter(List<Criterion> criteria,
                         .map(critTermCode -> mappingContext.findMapping(critTermCode).flatMap(mapping ->
                                 singleRefCrit.expandNonReferenceFilters(mappingContext.today(), mapping, attrMapping.searchParameter())
                                         .map(filters -> {
-                                            ExpandedFilter termCodeFilter = new ExpandedCodeFilter(mapping.termCodeSearchParameter(),
-                                                    critTermCode.code(), attrMapping.searchParameter());
+                                            ExpandedFilter termCodeFilter = ExpandedCodeFilter.of(
+                                                    attrMapping.searchParameter(),
+                                                    mapping.termCodeSearchParameter(),
+                                                    critTermCode.code());
                                             List<List<ExpandedFilter>> filterList = new LinkedList<>(filters);
                                             filterList.add(List.of(termCodeFilter));
                                             return filterList;

@@ -18,7 +18,7 @@ class QueryTest {
 
     @Test
     void testToString_OneParam() {
-        var query = new Query("Condition", QueryParams.of("name-152643", stringValue("value-152647"), null));
+        var query = new Query("Condition", QueryParams.of("name-152643", stringValue("value-152647")));
 
         var s = query.toString();
 

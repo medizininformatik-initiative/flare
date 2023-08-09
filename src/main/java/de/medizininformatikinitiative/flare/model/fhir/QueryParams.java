@@ -14,8 +14,8 @@ import static java.util.Objects.requireNonNull;
 /**
  * An immutable list of query params.
  * <p>
- * In order to build a list of query params, start either with {@link #EMPTY} or one of the {@link #of(String, Value, String)
- * of-creator methods} and continue with one of the {@link #appendParam(String, Value, String) appendParam} functions.
+ * In order to build a list of query params, start either with {@link #EMPTY} or one of the {@link #of(String, Value)
+ * of-creator methods} and continue with one of the {@link #appendParam(String, Value) appendParam} functions.
  */
 public record QueryParams(List<Param> params) {
 
@@ -25,8 +25,8 @@ public record QueryParams(List<Param> params) {
         params = List.copyOf(params);
     }
 
-    public static QueryParams of(String name, Value value, String referenceSearchParam) {
-        return EMPTY.appendParam(requireNonNull(name), requireNonNull(value), referenceSearchParam);
+    public static QueryParams of(String name, Value value) {
+        return EMPTY.appendParam(requireNonNull(name), requireNonNull(value));
     }
 
     public static Value stringValue(String value) {
@@ -57,14 +57,13 @@ public record QueryParams(List<Param> params) {
     /**
      * Appends a param with {@code name} and {@code value}.
      *
-     * @param name                 the name of the query parameter
-     * @param value                the value of the query parameter
-     * @param referenceSearchParam the Search Parameter of the Reference Filter, if it comes from a reference
+     * @param name  the name of the query parameter
+     * @param value the value of the query parameter
      * @return the {@code QueryParams} resulting in appending the param
      */
-    public QueryParams appendParam(String name, Value value, String referenceSearchParam) {
+    public QueryParams appendParam(String name, Value value) {
         var sb = new LinkedList<>(this.params);
-        sb.add(new Param(requireNonNull(name), requireNonNull(value), referenceSearchParam));
+        sb.add(new Param(requireNonNull(name), requireNonNull(value)));
         return new QueryParams(sb);
     }
 
@@ -85,12 +84,11 @@ public record QueryParams(List<Param> params) {
         return params.stream().map(Param::toString).collect(Collectors.joining("&"));
     }
 
-    private record Param(String name, Value value, String referenceSearchParam) {
+    private record Param(String name, Value value) {
 
         @Override
         public String toString() {
-            String referenceAttachment = referenceSearchParam == null ? "" : referenceSearchParam + ".";
-            return referenceAttachment + name + "=" + value;
+            return name + "=" + value;
         }
     }
 

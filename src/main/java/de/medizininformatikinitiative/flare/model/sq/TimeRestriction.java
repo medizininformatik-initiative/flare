@@ -48,7 +48,7 @@ public interface TimeRestriction extends Filter {
 
         @Override
         public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, Mapping mapping, String referenceSearchParam) {
-            return Either.right(List.of(new ExpandedDateComparatorFilter(mapping.timeRestrictionParameter(), LESS_EQUAL, end, referenceSearchParam)));
+            return Either.right(List.of(ExpandedDateComparatorFilter.of(referenceSearchParam, mapping.timeRestrictionParameter(), LESS_EQUAL, end)));
         }
     }
 
@@ -60,7 +60,7 @@ public interface TimeRestriction extends Filter {
 
         @Override
         public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, Mapping mapping, String referenceSearchParam) {
-            return Either.right(List.of(new ExpandedDateComparatorFilter(mapping.timeRestrictionParameter(), GREATER_EQUAL, start, referenceSearchParam)));
+            return Either.right(List.of(ExpandedDateComparatorFilter.of(referenceSearchParam, mapping.timeRestrictionParameter(), GREATER_EQUAL, start)));
         }
     }
 
@@ -73,7 +73,7 @@ public interface TimeRestriction extends Filter {
 
         @Override
         public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, Mapping mapping, String referenceSearchParam) {
-            return Either.right(List.of(new ExpandedDateRangeFilter(mapping.timeRestrictionParameter(), start, end, referenceSearchParam)));
+            return Either.right(List.of(ExpandedDateRangeFilter.of(referenceSearchParam, mapping.timeRestrictionParameter(), start, end)));
         }
     }
 }

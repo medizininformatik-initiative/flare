@@ -13,8 +13,7 @@ import static java.util.Objects.requireNonNull;
  * @param compositeCode   the code to prepend before the {@code value}
  * @param value           the code to search for
  */
-public record ExpandedCompositeConceptFilter(String searchParameter, TermCode compositeCode, TermCode value,
-                                             String referenceSearchParameter)
+public record ExpandedCompositeConceptFilter(String searchParameter, TermCode compositeCode, TermCode value)
         implements ExpandedFilter {
 
     public ExpandedCompositeConceptFilter {
@@ -23,8 +22,12 @@ public record ExpandedCompositeConceptFilter(String searchParameter, TermCode co
         requireNonNull(value);
     }
 
+    public static ExpandedCompositeConceptFilter of(String referenceSearchParam, String searchParameter, TermCode compositeCode, TermCode value) {
+        return new ExpandedCompositeConceptFilter(ExpandedFilter.combinedSearchParam(referenceSearchParam, searchParameter), compositeCode, value);
+    }
+
     @Override
     public QueryParams toParams() {
-        return QueryParams.of(searchParameter, compositeConceptValue(compositeCode, value), referenceSearchParameter);
+        return QueryParams.of(searchParameter, compositeConceptValue(compositeCode, value));
     }
 }

@@ -22,7 +22,7 @@ class QueryParamsTest {
     @Test
     void appendParam_withQuantityValue() {
         var queryParams = QueryParams.EMPTY.appendParam("value-quantity", quantityValue(GREATER_THAN, Quantity.of(VALUE,
-                UNIT)), null);
+                UNIT)));
 
         assertThat(queryParams)
                 .hasToString("value-quantity=" + GREATER_THAN + VALUE + "|" + UCUM_SYSTEM + "|" + UNIT_CODE);
@@ -30,7 +30,7 @@ class QueryParamsTest {
 
     @Test
     void appendParam_withQuantityValue_withoutUnit() {
-        var queryParams = QueryParams.EMPTY.appendParam("value-quantity", quantityValue(GREATER_THAN, Quantity.of(VALUE)), null);
+        var queryParams = QueryParams.EMPTY.appendParam("value-quantity", quantityValue(GREATER_THAN, Quantity.of(VALUE)));
 
         assertThat(queryParams).hasToString("value-quantity=" + GREATER_THAN + VALUE);
     }
@@ -38,7 +38,7 @@ class QueryParamsTest {
     @Test
     void appendParam_withCompositeQuantityComparatorValue() {
         var queryParams = QueryParams.EMPTY.appendParam("component-code-value-quantity", compositeQuantityValue(
-                COMPOSITE_CODE, GREATER_THAN, Quantity.of(VALUE)), null);
+                COMPOSITE_CODE, GREATER_THAN, Quantity.of(VALUE)));
 
         assertThat(queryParams)
                 .hasToString("component-code-value-quantity=" + COMPOSITE_CODE.system() + "|" + COMPOSITE_CODE.code() +
@@ -48,24 +48,9 @@ class QueryParamsTest {
     @Test
     void appendParam_withCompositeConceptValue() {
         var queryParams = QueryParams.EMPTY.appendParam("component-code-value-concept",
-                compositeConceptValue(COMPOSITE_CODE, TERM_CODE), null);
+                compositeConceptValue(COMPOSITE_CODE, TERM_CODE));
 
         assertThat(queryParams).hasToString("component-code-value-concept=" + COMPOSITE_CODE.system() + "|" +
                 COMPOSITE_CODE.code() + "$" + TERM_CODE.system() + "|" + TERM_CODE.code());
-    }
-
-    @Test
-    void appendParam_withReferenceSearchParam() {
-        var queryParams = QueryParams.EMPTY.appendParam("code", conceptValue(TERM_CODE), "diagnosis");
-
-        assertThat(queryParams).hasToString("diagnosis.code=" + TERM_CODE.system() + "|" + TERM_CODE.code());
-    }
-
-    @Test
-    void appendParam_withQuantityValue_withReferenceSearchParam() {
-        var queryParams = QueryParams.EMPTY.appendParam("value-quantity", quantityValue(GREATER_THAN, Quantity.of(VALUE, UNIT)), "diagnosis");
-
-        assertThat(queryParams)
-                .hasToString("diagnosis.value-quantity=" + GREATER_THAN + VALUE + "|" + UCUM_SYSTEM + "|" + UNIT_CODE);
     }
 }

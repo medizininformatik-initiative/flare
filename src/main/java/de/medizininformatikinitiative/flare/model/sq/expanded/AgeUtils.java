@@ -44,10 +44,10 @@ public class AgeUtils {
         if (comparator.equals(Comparator.EQUAL)) {
             return equalCaseLowerDate(today, age)
                     .flatMap(lowerBound -> equalCaseUpperDate(today, age)
-                            .map(upperBound -> List.of(new ExpandedDateRangeFilter("birthdate", lowerBound, upperBound, referenceSearchParam))));
+                            .map(upperBound -> List.of(ExpandedDateRangeFilter.of(referenceSearchParam, "birthdate", lowerBound, upperBound))));
         } else {
             return birthDate(today, age).map(birthDate ->
-                    List.of(new ExpandedDateComparatorFilter("birthdate", comparator.reverse(), birthDate, referenceSearchParam)));
+                    List.of(ExpandedDateComparatorFilter.of(referenceSearchParam, "birthdate", comparator.reverse(), birthDate)));
         }
     }
 
@@ -57,7 +57,7 @@ public class AgeUtils {
                                                                                      String referenceSearchParam) {
         return birthDate(today, ageLowerBound)
                 .flatMap(upperBoundDate -> birthDate(today, ageUpperBound)
-                        .map(lowerBoundDate -> List.of(new ExpandedDateRangeFilter("birthdate", lowerBoundDate,
-                                upperBoundDate, referenceSearchParam))));
+                        .map(lowerBoundDate -> List.of(ExpandedDateRangeFilter.of(referenceSearchParam, "birthdate", lowerBoundDate,
+                                upperBoundDate))));
     }
 }

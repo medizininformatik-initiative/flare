@@ -9,8 +9,7 @@ import static de.medizininformatikinitiative.flare.model.sq.Comparator.GREATER_E
 import static de.medizininformatikinitiative.flare.model.sq.Comparator.LESS_EQUAL;
 import static java.util.Objects.requireNonNull;
 
-public record ExpandedDateRangeFilter(String searchParameter, LocalDate lowerBound, LocalDate upperBound,
-                                      String referenceSearchParam)
+public record ExpandedDateRangeFilter(String searchParameter, LocalDate lowerBound, LocalDate upperBound)
         implements ExpandedFilter {
 
     public ExpandedDateRangeFilter {
@@ -19,10 +18,14 @@ public record ExpandedDateRangeFilter(String searchParameter, LocalDate lowerBou
         requireNonNull(upperBound);
     }
 
+    public static ExpandedDateRangeFilter of(String referenceSearchParam, String searchParameter, LocalDate lowerBound, LocalDate upperBound) {
+        return new ExpandedDateRangeFilter(ExpandedFilter.combinedSearchParam(referenceSearchParam, searchParameter), lowerBound, upperBound);
+    }
+
     @Override
     public QueryParams toParams() {
         return QueryParams.EMPTY
-                .appendParam(searchParameter, dateValue(GREATER_EQUAL, lowerBound), referenceSearchParam)
-                .appendParam(searchParameter, dateValue(LESS_EQUAL, upperBound), referenceSearchParam);
+                .appendParam(searchParameter, dateValue(GREATER_EQUAL, lowerBound))
+                .appendParam(searchParameter, dateValue(LESS_EQUAL, upperBound));
     }
 }

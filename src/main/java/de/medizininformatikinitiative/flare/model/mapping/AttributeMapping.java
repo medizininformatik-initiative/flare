@@ -78,14 +78,13 @@ public record AttributeMapping(AttributeMappingType type, TermCode key, String s
     @Override
     public Either<Exception, ExpandedFilter> expandConcept(TermCode concept, String referenceSearchParameter) {
         return switch (type) {
-            case CODE ->
-                    Either.right(new ExpandedCodeFilter(searchParameter, concept.code(), referenceSearchParameter));
-            case CODING -> Either.right(new ExpandedConceptFilter(searchParameter, concept, referenceSearchParameter));
+            case CODE -> Either.right(ExpandedCodeFilter.of(referenceSearchParameter, searchParameter, concept.code()));
+            case CODING -> Either.right(ExpandedConceptFilter.of(referenceSearchParameter, searchParameter, concept));
             case COMPOSITE_QUANTITY_COMPARATOR, COMPOSITE_QUANTITY_RANGE ->
                     Either.left(new ConceptFilterTypeNotExpandableException(type));
             case COMPOSITE_CONCEPT -> compositeCode
                     .map((Function<TermCode, Either<Exception, ExpandedFilter>>) compositeCode ->
-                            Either.right(new ExpandedCompositeConceptFilter(searchParameter, compositeCode, concept, referenceSearchParameter)))
+                            Either.right(ExpandedCompositeConceptFilter.of(referenceSearchParameter, searchParameter(), compositeCode, concept)))
                     .orElse(Either.left(new ConceptFilterTypeNotExpandableException(COMPOSITE_CONCEPT)));
             case REFERENCE -> Either.left(new ConceptFilterNotAllowedException());
         };

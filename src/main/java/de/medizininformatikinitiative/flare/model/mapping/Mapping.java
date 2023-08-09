@@ -147,9 +147,9 @@ public final class Mapping {
         public Either<Exception, ExpandedFilter> expandConcept(TermCode concept, String referenceSearchParameter) {
             return switch (type()) {
                 case CODE ->
-                        Either.right(new ExpandedCodeFilter(searchParameter(), concept.code(), referenceSearchParameter));
+                        Either.right(ExpandedCodeFilter.of(referenceSearchParameter, searchParameter(), concept.code()));
                 case CODING ->
-                        Either.right(new ExpandedConceptFilter(searchParameter(), concept, referenceSearchParameter));
+                        Either.right(ExpandedConceptFilter.of(referenceSearchParameter, searchParameter(), concept));
             };
         }
     }

@@ -84,8 +84,8 @@ public class DataStore implements FhirQueryService {
     }
 
     private QueryParams extraQueryParams(String type) {
-        return QueryParams.of("_elements", stringValue(queryElements(type)), null)
-                .appendParam("_count", stringValue(Integer.toString(pageCount)), null);
+        return QueryParams.of("_elements", stringValue(queryElements(type)))
+                .appendParam("_count", stringValue(Integer.toString(pageCount)));
     }
 
     /**

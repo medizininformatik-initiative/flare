@@ -4,6 +4,8 @@ import de.medizininformatikinitiative.flare.model.fhir.QueryParams;
 
 import java.util.Collection;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * A filter part which can be used a value filter part and attribute filter part.
  */
@@ -25,4 +27,10 @@ public interface ExpandedFilter {
      * @return the query params of this filter part
      */
     QueryParams toParams();
+
+    static String combinedSearchParam(String referenceSearchParameter, String searchParameter) {
+        requireNonNull(searchParameter);
+        return referenceSearchParameter == null ? searchParameter : referenceSearchParameter + "." + searchParameter;
+    }
+
 }

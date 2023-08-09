@@ -10,8 +10,7 @@ import static de.medizininformatikinitiative.flare.model.sq.Comparator.LESS_EQUA
 import static java.util.Objects.requireNonNull;
 
 public record ExpandedCompositeQuantityRangeFilter(String searchParameter, TermCode compositeCode,
-                                                   Quantity lowerBound, Quantity upperBound,
-                                                   String referenceSearchParameter)
+                                                   Quantity lowerBound, Quantity upperBound)
         implements ExpandedFilter {
 
     public ExpandedCompositeQuantityRangeFilter {
@@ -21,9 +20,13 @@ public record ExpandedCompositeQuantityRangeFilter(String searchParameter, TermC
         requireNonNull(upperBound);
     }
 
+    public static ExpandedCompositeQuantityRangeFilter of(String referenceSearchParam, String searchParameter, TermCode compositeCode, Quantity lowerBound, Quantity upperBound) {
+        return new ExpandedCompositeQuantityRangeFilter(ExpandedFilter.combinedSearchParam(referenceSearchParam, searchParameter), compositeCode, lowerBound, upperBound);
+    }
+
     @Override
     public QueryParams toParams() {
-        return QueryParams.of(searchParameter, compositeQuantityValue(compositeCode, GREATER_EQUAL, lowerBound), referenceSearchParameter)
-                .appendParam(searchParameter, compositeQuantityValue(compositeCode, LESS_EQUAL, upperBound), referenceSearchParameter);
+        return QueryParams.of(searchParameter, compositeQuantityValue(compositeCode, GREATER_EQUAL, lowerBound))
+                .appendParam(searchParameter, compositeQuantityValue(compositeCode, LESS_EQUAL, upperBound));
     }
 }

@@ -55,7 +55,7 @@ public record ExpandedCriterion(String resourceType, String searchParameter, Ter
     private QueryParams startQueryParams() {
         return searchParameter == null || code == null
                 ? QueryParams.EMPTY
-                : QueryParams.of(searchParameter, conceptValue(code), null);
+                : QueryParams.of(searchParameter, conceptValue(code));
     }
 
     @Override

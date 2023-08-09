@@ -38,9 +38,9 @@ public interface FilterMapping {
                     : AgeUtils.expandedAgeFilterFromComparator(today, comparator, (Quantity.WithUnit) value, referenceSearchParameter);
         }
         return Either.right(List.of(compositeCode()
-                .map(compositeCode -> (ExpandedFilter) new ExpandedCompositeQuantityComparatorFilter(
-                        searchParameter(), compositeCode, comparator, value, referenceSearchParameter))
-                .orElse(new ExpandedQuantityComparatorFilter(searchParameter(), comparator, value, referenceSearchParameter))));
+                .map(compositeCode -> (ExpandedFilter) ExpandedCompositeQuantityComparatorFilter.of(referenceSearchParameter,
+                        searchParameter(), compositeCode, comparator, value))
+                .orElse(ExpandedQuantityComparatorFilter.of(referenceSearchParameter, searchParameter(), comparator, value))));
     }
 
     default Either<Exception, List<ExpandedFilter>> expandRangeFilterPart(LocalDate today, Quantity lowerBound, Quantity upperBound, String referenceSearchParameter) {
@@ -51,8 +51,8 @@ public interface FilterMapping {
                     (Quantity.WithUnit) upperBound, referenceSearchParameter);
         }
         return Either.right(List.of(compositeCode()
-                .map(compositeCode -> (ExpandedFilter) new ExpandedCompositeQuantityRangeFilter(
-                        searchParameter(), compositeCode, lowerBound, upperBound, referenceSearchParameter))
-                .orElse(new ExpandedQuantityRangeFilter(searchParameter(), lowerBound, upperBound, referenceSearchParameter))));
+                .map(compositeCode -> (ExpandedFilter) ExpandedCompositeQuantityRangeFilter.of(
+                        referenceSearchParameter, searchParameter(), compositeCode, lowerBound, upperBound))
+                .orElse(ExpandedQuantityRangeFilter.of(referenceSearchParameter, searchParameter(), lowerBound, upperBound))));
     }
 }
