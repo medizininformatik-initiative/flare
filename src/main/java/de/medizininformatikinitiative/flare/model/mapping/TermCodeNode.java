@@ -3,6 +3,7 @@ package de.medizininformatikinitiative.flare.model.mapping;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import de.medizininformatikinitiative.flare.model.sq.ContextualTermCode;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
 
 import java.util.List;
@@ -16,42 +17,44 @@ import static java.util.Objects.requireNonNull;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public sealed interface TermCodeNode permits TermCodeNode.Abstract, TermCodeNode.Normal {
 
-    static TermCodeNode createAbstract(TermCode termCode, TermCodeNode... children) {
+    static TermCodeNode createAbstract(ContextualTermCode termCode, TermCodeNode... children) {
         return new TermCodeNode.Abstract(termCode, children == null ? List.of() : List.of(children));
     }
 
-    static TermCodeNode createNormal(TermCode termCode, TermCodeNode... children) {
+    static TermCodeNode createNormal(ContextualTermCode termCode, TermCodeNode... children) {
         return new TermCodeNode.Normal(termCode, children == null ? List.of() : List.of(children));
     }
 
     @JsonCreator
-    static TermCodeNode fromJson(@JsonProperty("termCode") TermCode termCode,
+    static TermCodeNode fromJson(@JsonProperty("context") TermCode context,
+                                 @JsonProperty("termCode") TermCode termCode,
                                  @JsonProperty("abstract") boolean abstractJson,
                                  @JsonProperty("children") TermCodeNode... children) {
-        requireNonNull(termCode, "missing JSON property: termCode");
+        var contextualTermCode = ContextualTermCode.of(requireNonNull(context, "missing JSON property: context"),
+                requireNonNull(termCode, "missing JSON property: termCode"));
         return abstractJson
-                ? new Abstract(termCode, children == null ? List.of() : List.of(children))
-                : new Normal(termCode, children == null ? List.of() : List.of(children));
+                ? new Abstract(contextualTermCode, children == null ? List.of() : List.of(children))
+                : new Normal(contextualTermCode, children == null ? List.of() : List.of(children));
     }
 
-    Stream<TermCode> expand(TermCode termCode);
+    Stream<ContextualTermCode> expand(ContextualTermCode termCode);
 
-    Stream<TermCode> leafConcepts();
+    Stream<ContextualTermCode> leafConcepts();
 
-    TermCode termCode();
+    ContextualTermCode contextualTermCode();
 
     List<TermCodeNode> children();
 
-    record Abstract(TermCode termCode, List<TermCodeNode> children) implements TermCodeNode {
+    record Abstract(ContextualTermCode contextualTermCode, List<TermCodeNode> children) implements TermCodeNode {
 
         public Abstract {
-            requireNonNull(termCode);
+            requireNonNull(contextualTermCode);
             children = List.copyOf(children);
         }
 
         @Override
-        public Stream<TermCode> expand(TermCode termCode) {
-            if (requireNonNull(termCode).equals(this.termCode)) {
+        public Stream<ContextualTermCode> expand(ContextualTermCode termCode) {
+            if (requireNonNull(termCode).equals(this.contextualTermCode)) {
                 return leafConcepts();
             } else if (children.isEmpty()) {
                 return Stream.of();
@@ -61,21 +64,21 @@ public sealed interface TermCodeNode permits TermCodeNode.Abstract, TermCodeNode
         }
 
         @Override
-        public Stream<TermCode> leafConcepts() {
+        public Stream<ContextualTermCode> leafConcepts() {
             return children.isEmpty() ? Stream.of() : children.stream().flatMap(TermCodeNode::leafConcepts);
         }
     }
 
-    record Normal(TermCode termCode, List<TermCodeNode> children) implements TermCodeNode {
+    record Normal(ContextualTermCode contextualTermCode, List<TermCodeNode> children) implements TermCodeNode {
 
         public Normal {
-            requireNonNull(termCode);
+            requireNonNull(contextualTermCode);
             children = List.copyOf(children);
         }
 
         @Override
-        public Stream<TermCode> expand(TermCode termCode) {
-            if (requireNonNull(termCode).equals(this.termCode)) {
+        public Stream<ContextualTermCode> expand(ContextualTermCode termCode) {
+            if (requireNonNull(termCode).equals(this.contextualTermCode)) {
                 return leafConcepts();
             } else if (children.isEmpty()) {
                 return Stream.of();
@@ -85,11 +88,11 @@ public sealed interface TermCodeNode permits TermCodeNode.Abstract, TermCodeNode
         }
 
         @Override
-        public Stream<TermCode> leafConcepts() {
+        public Stream<ContextualTermCode> leafConcepts() {
             if (children.isEmpty()) {
-                return Stream.of(termCode);
+                return Stream.of(contextualTermCode);
             } else {
-                return Stream.concat(Stream.of(termCode), children.stream().flatMap(TermCodeNode::leafConcepts));
+                return Stream.concat(Stream.of(contextualTermCode), children.stream().flatMap(TermCodeNode::leafConcepts));
             }
         }
     }

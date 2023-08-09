@@ -1,6 +1,7 @@
 package de.medizininformatikinitiative.flare.model.mapping;
 
-import de.medizininformatikinitiative.flare.model.sq.Concept;
+import de.medizininformatikinitiative.flare.model.sq.ContextualConcept;
+import de.medizininformatikinitiative.flare.model.sq.ContextualTermCode;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
 import org.junit.jupiter.api.Test;
 
@@ -11,25 +12,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MappingContextTest {
 
-    static final TermCode ROOT = TermCode.of("root", "root", "root");
-    static final TermCode C1 = TermCode.of("foo", "c1", "c1");
-    static final TermCode C11 = TermCode.of("foo", "c11", "c11");
-    static final TermCode C12 = TermCode.of("foo", "c12", "c12");
+    static final TermCode CONTEXT = TermCode.of("context", "context", "context");
+    static final ContextualTermCode ROOT = ContextualTermCode.of(CONTEXT, TermCode.of("root", "root", "root"));
+    static final ContextualTermCode C1 = ContextualTermCode.of(CONTEXT, TermCode.of("foo", "c1", "c1"));
+    static final ContextualTermCode C11 = ContextualTermCode.of(CONTEXT, TermCode.of("foo", "c11", "c11"));
+    static final ContextualTermCode C12 = ContextualTermCode.of(CONTEXT, TermCode.of("foo", "c12", "c12"));
 
     @Test
     void expandConcept_ConceptNotExpandable() {
         var context = MappingContext.of(Map.of(), TermCodeNode.createNormal(ROOT));
 
-        var result = context.expandConcept(Concept.of(C1));
+        var result = context.expandConcept(ContextualConcept.of(C1));
 
-        assertThat(result).isLeftInstanceOf(ConceptNotExpandableException.class);
+        assertThat(result).isLeftInstanceOf(ContextualConceptNotExpandableException.class);
     }
 
     @Test
     void expandConcept_OneConcept() {
         var context = MappingContext.of(Map.of(), TermCodeNode.createNormal(ROOT, TermCodeNode.createNormal(C1)));
 
-        var result = context.expandConcept(Concept.of(C1));
+        var result = context.expandConcept(ContextualConcept.of(C1));
 
         assertThat(result).isRightSatisfying(r -> assertThat(r).containsExactly(C1));
     }
@@ -39,7 +41,7 @@ class MappingContextTest {
         var context = MappingContext.of(Map.of(), TermCodeNode.createAbstract(C1, TermCodeNode.createNormal(C11),
                 TermCodeNode.createNormal(C12)));
 
-        var result = context.expandConcept(Concept.of(C1));
+        var result = context.expandConcept(ContextualConcept.of(C1));
 
         assertThat(result).isRightSatisfying(r -> assertThat(r).containsExactly(C11, C12));
     }

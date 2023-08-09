@@ -28,27 +28,29 @@ import static java.util.Objects.requireNonNull;
  * @param filters the filters applied to entities of {@code concept}
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record Criterion(Concept concept, List<Filter> filters) {
+public record Criterion(ContextualConcept concept, List<Filter> filters) {
 
     public Criterion {
         requireNonNull(concept);
         filters = List.copyOf(filters);
     }
 
-    public static Criterion of(Concept concept) {
+    public static Criterion of(ContextualConcept concept) {
         return new Criterion(concept, List.of());
     }
 
-    public static Criterion of(Concept concept, ValueFilter valueFilter) {
+    public static Criterion of(ContextualConcept concept, ValueFilter valueFilter) {
         return new Criterion(concept, List.of(valueFilter));
     }
 
     @JsonCreator
-    static Criterion fromJson(@JsonProperty("termCodes") List<TermCode> termCodes,
+    static Criterion fromJson(@JsonProperty("context") TermCode context,
+                              @JsonProperty("termCodes") List<TermCode> termCodes,
                               @JsonProperty("valueFilter") ObjectNode valueFilter,
                               @JsonProperty("attributeFilters") List<ObjectNode> attributeFilters,
                               @JsonProperty("timeRestriction") TimeRestriction timeRestriction) {
-        var concept = Concept.of(requireNonNull(termCodes, "missing JSON property: termCodes"));
+        var concept = ContextualConcept.of(requireNonNull(context, "missing JSON property: context"),
+                Concept.of(requireNonNull(termCodes, "missing JSON property: termCodes")));
 
         var filters = new LinkedList<Filter>();
         if (valueFilter != null) {
@@ -92,19 +94,20 @@ public record Criterion(Concept concept, List<Filter> filters) {
      */
     public Either<Exception, List<ExpandedCriterion>> expand(MappingContext mappingContext) {
         return mappingContext.expandConcept(concept)
-                .flatMap(termCodes -> termCodes.stream()
-                        .map(termCode -> expandTermCode(mappingContext, termCode))
+                .flatMap(contextualTermCodes -> contextualTermCodes.stream()
+                        .map(contextualTermCode -> expandContextualTermCode(mappingContext, contextualTermCode))
                         .reduce(Either.right(List.of()), Either.liftBinOp(Util::concat)));
     }
 
-    private Either<Exception, List<ExpandedCriterion>> expandTermCode(MappingContext mappingContext, TermCode termCode) {
-        return mappingContext.findMapping(termCode)
+    private Either<Exception, List<ExpandedCriterion>> expandContextualTermCode(MappingContext mappingContext,
+                                                                                ContextualTermCode contextualTermCode) {
+        return mappingContext.findMapping(contextualTermCode)
                 .flatMap(mapping -> expandFilters(mappingContext, mapping)
                         .map(Util::cartesianProduct)
                         .map(expandedFilterMatrix -> expandedFilterMatrix.isEmpty()
-                                ? List.of(expandedCriterion(mapping, termCode))
+                                ? List.of(expandedCriterion(mapping, contextualTermCode.termCode()))
                                 : expandedFilterMatrix.stream()
-                                .map(expandedFilters -> expandedCriterion(mapping, termCode)
+                                .map(expandedFilters -> expandedCriterion(mapping, contextualTermCode.termCode())
                                         .appendFilters(expandedFilters))
                                 .toList()));
     }

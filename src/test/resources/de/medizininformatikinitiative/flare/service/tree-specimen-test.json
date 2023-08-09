@@ -1,4 +1,9 @@
 {
+  "context": {
+    "code": "root",
+    "display": "root",
+    "system": "root"
+  },
   "termCode": {
     "code": "root",
     "display": "root",
@@ -6,6 +11,12 @@
   },
   "children": [
     {
+      "context": {
+        "code": "Diagnose",
+        "display": "Diagnose",
+        "system": "fdpg.mii.cds",
+        "version": "1.0.0"
+      },
       "termCode": {
         "code": "E13.9",
         "display": "Sonstiger n\u00e4her bezeichneter Diabetes mellitus : Ohne Komplikationen",
@@ -14,6 +25,12 @@
       }
     },
     {
+      "context": {
+        "code": "Specimen",
+        "display": "Bioprobe",
+        "system": "fdpg.mii.cds",
+        "version": "1.0.0"
+      },
       "termCode": {
         "code": "119364003",
         "display": "Serum specimen",

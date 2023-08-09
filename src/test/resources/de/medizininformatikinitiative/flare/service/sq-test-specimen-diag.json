@@ -24,7 +24,13 @@
                     "version": "2023",
                     "display": "Sonstiger näher bezeichneter Diabetes mellitus : Ohne Komplikationen"
                   }
-                ]
+                ],
+                "context": {
+                  "code": "Diagnose",
+                  "system": "fdpg.mii.cds",
+                  "version": "1.0.0",
+                  "display": "Diagnose"
+                }
               }
             ],
             "attributeCode": {
@@ -33,7 +39,13 @@
               "system": "http://hl7.org/fhir/StructureDefinition"
             }
           }
-        ]
+        ],
+        "context": {
+          "code": "Specimen",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0",
+          "display": "Bioprobe"
+        }
       }
     ]
   ]
