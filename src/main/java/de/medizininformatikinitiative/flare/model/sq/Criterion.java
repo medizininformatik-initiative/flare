@@ -94,7 +94,8 @@ public record Criterion(Concept concept, List<Filter> filters) {
                         .map(expandedFilterMatrix -> expandedFilterMatrix.isEmpty()
                                 ? List.of(expandedCriterion(mapping, termCode))
                                 : expandedFilterMatrix.stream()
-                                .map(expandedFilters -> expandedCriterion(mapping, termCode, expandedFilters))
+                                .map(expandedFilters -> expandedCriterion(mapping, termCode)
+                                        .appendFilters(expandedFilters))
                                 .toList()));
     }
 
@@ -109,12 +110,8 @@ public record Criterion(Concept concept, List<Filter> filters) {
     }
 
     private static ExpandedCriterion expandedCriterion(Mapping mapping, TermCode termCode) {
-        return ExpandedCriterion.of(mapping.resourceType(), mapping.termCodeSearchParameter(), termCode);
-    }
-
-    private static ExpandedCriterion expandedCriterion(Mapping mapping, TermCode termCode,
-                                                       List<ExpandedFilter> filters) {
-        return new ExpandedCriterion(mapping.resourceType(), mapping.termCodeSearchParameter(),
-                mapping.termCodeSearchParameter() == null ? null : termCode, filters);
+        return mapping.termCodeSearchParameter() == null
+                ? ExpandedCriterion.of(mapping.resourceType())
+                : ExpandedCriterion.of(mapping.resourceType(), mapping.termCodeSearchParameter(), termCode);
     }
 }
