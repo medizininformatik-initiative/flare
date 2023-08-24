@@ -79,6 +79,16 @@ public record QueryParams(List<Param> params) {
         return new QueryParams(sb);
     }
 
+    /**
+     * Prefixes the name of each {@code Param query param} with {@code name} followed by an {@literal .}.
+     *
+     * @param name the name to use a prefix
+     * @return the {@code QueryParams} resulting in prefixing
+     */
+    public QueryParams prefixName(String name) {
+        return new QueryParams(params.stream().map(param -> new Param(name + "." + param.name, param.value)).toList());
+    }
+
     @Override
     public String toString() {
         return params.stream().map(Param::toString).collect(Collectors.joining("&"));

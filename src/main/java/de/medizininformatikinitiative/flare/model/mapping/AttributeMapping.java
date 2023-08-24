@@ -6,12 +6,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.sq.ConceptFilterTypeNotExpandableException;
+import de.medizininformatikinitiative.flare.model.sq.Criterion;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
-import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCodeFilter;
-import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCompositeConceptFilter;
-import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedConceptFilter;
-import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
+import de.medizininformatikinitiative.flare.model.sq.expanded.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -36,6 +35,9 @@ public record AttributeMapping(AttributeMappingType type, TermCode key, String s
                                      @JsonProperty("attributeSearchParameter") String searchParameter,
                                      @JsonProperty("compositeCode") JsonNode compositeCode)
             throws CompositeCodeNotFoundException {
+        requireNonNull(type, "missing JSON property: attributeType");
+        requireNonNull(key, "missing JSON property: attributeKey");
+        requireNonNull(searchParameter, "missing JSON property: attributeSearchParameter");
         if (type.isCompositeType()) {
             if (compositeCode == null) {
                 throw new CompositeCodeNotFoundException(type);
@@ -66,6 +68,10 @@ public record AttributeMapping(AttributeMappingType type, TermCode key, String s
         return new AttributeMapping(COMPOSITE_CONCEPT, key, searchParameter, Optional.of(compositeCode));
     }
 
+    public static AttributeMapping reference(TermCode key, String searchParameter) {
+        return new AttributeMapping(REFERENCE, key, searchParameter, Optional.empty());
+    }
+
     @Override
     public boolean isAge() {
         return false;
@@ -76,12 +82,22 @@ public record AttributeMapping(AttributeMappingType type, TermCode key, String s
         return switch (type) {
             case CODE -> Either.right(new ExpandedCodeFilter(searchParameter, concept.code()));
             case CODING -> Either.right(new ExpandedConceptFilter(searchParameter, concept));
-            case COMPOSITE_QUANTITY_COMPARATOR, COMPOSITE_QUANTITY_RANGE ->
-                    Either.left(new ConceptFilterTypeNotExpandableException(type));
             case COMPOSITE_CONCEPT -> compositeCode
                     .map((Function<TermCode, Either<Exception, ExpandedFilter>>) compositeCode ->
                             Either.right(new ExpandedCompositeConceptFilter(searchParameter, compositeCode, concept)))
                     .orElse(Either.left(new ConceptFilterTypeNotExpandableException(COMPOSITE_CONCEPT)));
+            default -> Either.left(new ConceptFilterTypeNotExpandableException(type));
         };
+    }
+
+    @Override
+    public Either<Exception, List<ExpandedFilter>> expandReference(MappingContext mappingContext, Criterion criterion) {
+        return type == REFERENCE
+                ? criterion.expand(mappingContext)
+                .map(expandedCriteria -> expandedCriteria.stream()
+                        .map(ExpandedCriterion::filter)
+                        .map(filter -> filter.chain(searchParameter))
+                        .toList())
+                : Either.left(new ConceptFilterTypeNotExpandableException(type));
     }
 }

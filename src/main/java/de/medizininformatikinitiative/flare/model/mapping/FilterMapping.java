@@ -1,13 +1,9 @@
 package de.medizininformatikinitiative.flare.model.mapping;
 
 import de.medizininformatikinitiative.flare.Either;
-import de.medizininformatikinitiative.flare.model.sq.CalculationException;
-import de.medizininformatikinitiative.flare.model.sq.Comparator;
-import de.medizininformatikinitiative.flare.model.sq.Quantity;
-import de.medizininformatikinitiative.flare.model.sq.TermCode;
+import de.medizininformatikinitiative.flare.model.sq.*;
 import de.medizininformatikinitiative.flare.model.sq.expanded.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,11 +27,12 @@ public interface FilterMapping {
 
     Either<Exception, ExpandedFilter> expandConcept(TermCode concept);
 
-    default Either<Exception, List<ExpandedFilter>> expandComparatorFilterPart(LocalDate today, Comparator comparator, Quantity value) {
+    default Either<Exception, List<ExpandedFilter>> expandComparatorFilterPart(MappingContext mappingContext,
+                                                                               Comparator comparator, Quantity value) {
         if (isAge()) {
             return (value instanceof Quantity.Unitless)
                     ? Either.left(new CalculationException("Missing unit in age calculation."))
-                    : AgeUtils.expandedAgeFilterFromComparator(today, comparator, (Quantity.WithUnit) value);
+                    : AgeUtils.expandedAgeFilterFromComparator(mappingContext.today(), comparator, (Quantity.WithUnit) value);
         }
         return Either.right(List.of(compositeCode()
                 .map(compositeCode -> (ExpandedFilter) new ExpandedCompositeQuantityComparatorFilter(
@@ -43,11 +40,12 @@ public interface FilterMapping {
                 .orElse(new ExpandedQuantityComparatorFilter(searchParameter(), comparator, value))));
     }
 
-    default Either<Exception, List<ExpandedFilter>> expandRangeFilterPart(LocalDate today, Quantity lowerBound, Quantity upperBound) {
+    default Either<Exception, List<ExpandedFilter>> expandRangeFilterPart(MappingContext mappingContext,
+                                                                          Quantity lowerBound, Quantity upperBound) {
         if (isAge()) {
             return (lowerBound instanceof Quantity.Unitless || upperBound instanceof Quantity.Unitless)
                     ? Either.left(new CalculationException("Missing unit in age calculation."))
-                    : AgeUtils.expandedAgeFilterFromRange(today, (Quantity.WithUnit) lowerBound,
+                    : AgeUtils.expandedAgeFilterFromRange(mappingContext.today(), (Quantity.WithUnit) lowerBound,
                     (Quantity.WithUnit) upperBound);
         }
         return Either.right(List.of(compositeCode()
@@ -55,4 +53,14 @@ public interface FilterMapping {
                         searchParameter(), compositeCode, lowerBound, upperBound))
                 .orElse(new ExpandedQuantityRangeFilter(searchParameter(), lowerBound, upperBound))));
     }
+
+    /**
+     * Expands the {@code criterion} into a list of {@code ExpandedFilter expanded filters} that should be combined with
+     * logical {@literal OR}.
+     *
+     * @param mappingContext the context inside which the expansion should happen
+     * @param criterion      the criterion to expand
+     * @return either an error or a list of {@code ExpandedFilter expanded filters}
+     */
+    Either<Exception, List<ExpandedFilter>> expandReference(MappingContext mappingContext, Criterion criterion);
 }

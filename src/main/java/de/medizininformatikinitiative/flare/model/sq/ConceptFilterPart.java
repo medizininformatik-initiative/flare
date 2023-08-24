@@ -3,12 +3,17 @@ package de.medizininformatikinitiative.flare.model.sq;
 import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.Util;
 import de.medizininformatikinitiative.flare.model.mapping.FilterMapping;
+import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
 
-import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Contains a list of selected concepts.
+ *
+ * @param concepts selected concepts
+ */
 public record ConceptFilterPart(List<TermCode> concepts) implements FilterPart {
 
     public ConceptFilterPart {
@@ -33,7 +38,7 @@ public record ConceptFilterPart(List<TermCode> concepts) implements FilterPart {
     }
 
     @Override
-    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, FilterMapping filterMapping) {
+    public Either<Exception, List<ExpandedFilter>> expand(MappingContext mappingContext, FilterMapping filterMapping) {
         return concepts.stream().map(filterMapping::expandConcept)
                 .reduce(Either.right(List.of()), Either.lift2(Util::add), Either.liftBinOp(Util::concat));
     }

@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
+import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
 import de.medizininformatikinitiative.flare.model.mapping.ValueMappingNotFoundException;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static java.util.Objects.requireNonNull;
@@ -47,9 +47,9 @@ public record ValueFilter(FilterPart filterPart) implements Filter {
     }
 
     @Override
-    public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, Mapping mapping) {
+    public Either<Exception, List<ExpandedFilter>> expand(MappingContext mappingContext, Mapping mapping) {
         return mapping.valueFilterMapping()
-                .map(filterMapping -> filterPart.expand(today, filterMapping))
+                .map(filterMapping -> filterPart.expand(mappingContext, filterMapping))
                 .orElseGet(() -> Either.left(new ValueMappingNotFoundException(mapping.key())));
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
+import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedDateComparatorFilter;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedDateRangeFilter;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
@@ -47,7 +48,7 @@ public interface TimeRestriction extends Filter {
         }
 
         @Override
-        public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, Mapping mapping) {
+        public Either<Exception, List<ExpandedFilter>> expand(MappingContext mappingContext, Mapping mapping) {
             return Either.right(List.of(new ExpandedDateComparatorFilter(mapping.timeRestrictionParameter(), LESS_EQUAL, end)));
         }
     }
@@ -59,7 +60,7 @@ public interface TimeRestriction extends Filter {
         }
 
         @Override
-        public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, Mapping mapping) {
+        public Either<Exception, List<ExpandedFilter>> expand(MappingContext mappingContext, Mapping mapping) {
             return Either.right(List.of(new ExpandedDateComparatorFilter(mapping.timeRestrictionParameter(), GREATER_EQUAL, start)));
         }
     }
@@ -72,7 +73,7 @@ public interface TimeRestriction extends Filter {
         }
 
         @Override
-        public Either<Exception, List<ExpandedFilter>> expand(LocalDate today, Mapping mapping) {
+        public Either<Exception, List<ExpandedFilter>> expand(MappingContext mappingContext, Mapping mapping) {
             return Either.right(List.of(new ExpandedDateRangeFilter(mapping.timeRestrictionParameter(), start, end)));
         }
     }
