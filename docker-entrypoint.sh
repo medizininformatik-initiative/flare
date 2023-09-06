@@ -10,6 +10,7 @@ if [[ -f "$CERT_FILE" ]]; then
     echo "Found certificate file ca-cert.pem - starting FLARE with own CA"
     if [[ ! -f "$TRUSTSTORE_FILE" ]]; then
         keytool -genkey -alias self-signed-truststore -keyalg RSA -keystore $TRUSTSTORE_FILE -storepass $TRUSTSTORE_PASS -keypass $KEY_PASS -dname "CN=self-signed,OU=self-signed,O=self-signed,L=self-signed,S=self-signed,C=TE"
+        keytool -delete -alias self-signed-truststore -keystore $TRUSTSTORE_FILE -storepass $TRUSTSTORE_PASS -noprompt
     else
       echo "CA cert file found, but truststore already exists -> using existing truststore and deleting previously added ca cert"
       keytool -delete -alias self-signed-cert-ca -keystore $TRUSTSTORE_FILE -storepass $TRUSTSTORE_PASS -noprompt
