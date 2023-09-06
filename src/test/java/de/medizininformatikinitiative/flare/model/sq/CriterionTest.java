@@ -305,6 +305,28 @@ class CriterionTest {
             }
 
             @Test
+            @DisplayName("value mapping not found")
+            void valueMappingNotFound() {
+                when(mappingContext.findMapping(CONTEXTUAL_TERM_CODE)).thenReturn(Either.right(mapping));
+
+                var criteria = Criterion.of(CONTEXTUAL_CONCEPT, ValueFilter.ofConcept(POSITIVE))
+                        .expand(mappingContext);
+
+                assertThat(criteria).isLeftInstanceOf(ValueMappingNotFoundException.class);
+            }
+
+            @Test
+            @DisplayName("attribute mapping not found")
+            void attributeMappingNotFound() {
+                when(mappingContext.findMapping(CONTEXTUAL_TERM_CODE)).thenReturn(Either.right(mapping));
+
+                var criteria = Criterion.of(CONTEXTUAL_CONCEPT).appendAttributeFilter(AttributeFilter.ofConcept(OBSERVATION_STATUS, FINAL))
+                        .expand(mappingContext);
+
+                assertThat(criteria).isLeftInstanceOf(AttributeMappingNotFoundException.class);
+            }
+
+            @Test
             @DisplayName("concept only")
             void conceptOnly() {
                 when(mappingContext.findMapping(CONTEXTUAL_TERM_CODE)).thenReturn(Either.right(mapping));
@@ -318,7 +340,7 @@ class CriterionTest {
             @DisplayName("one value filter with one concept")
             void oneValueFilter_OneConcept() {
                 when(mappingContext.findMapping(CONTEXTUAL_TERM_CODE)).thenReturn(Either.right(mapping
-                        .withValueFilterMapping(ValueMappingType.CODING, "value-concept")));
+                        .withValueFilterMapping(FilterMappingType.CONCEPT, "value-concept")));
 
                 var criteria = Criterion.of(CONTEXTUAL_CONCEPT, ValueFilter.ofConcept(POSITIVE))
                         .expand(mappingContext);
@@ -331,7 +353,7 @@ class CriterionTest {
             @DisplayName("one value filter with one concept and one attribute filter with one concept")
             void oneValueFilter_OneConcept_OneAttributeFilter_OneConcept() {
                 when(mappingContext.findMapping(CONTEXTUAL_TERM_CODE)).thenReturn(Either.right(mapping
-                        .withValueFilterMapping(ValueMappingType.CODING, "value-concept")
+                        .withValueFilterMapping(FilterMappingType.CONCEPT, "value-concept")
                         .appendAttributeMapping(AttributeMapping.code(OBSERVATION_STATUS, "status"))));
 
                 var criteria = Criterion.of(CONTEXTUAL_CONCEPT, ValueFilter.ofConcept(POSITIVE))
@@ -347,7 +369,7 @@ class CriterionTest {
             @DisplayName("one value filter with two concepts")
             void oneValueFilter_TwoConcepts() {
                 when(mappingContext.findMapping(CONTEXTUAL_TERM_CODE)).thenReturn(Either.right(mapping
-                        .withValueFilterMapping(ValueMappingType.CODING, "value-concept")));
+                        .withValueFilterMapping(FilterMappingType.CONCEPT, "value-concept")));
 
                 var criteria = Criterion.of(CONTEXTUAL_CONCEPT, ValueFilter.ofConcept(MALE, FEMALE))
                         .expand(mappingContext);
@@ -361,7 +383,7 @@ class CriterionTest {
             @DisplayName("one value filter with two concepts and one fixed criterion")
             void oneValueFilter_TwoConcepts_OneFixedCriteria_OneConcept() {
                 when(mappingContext.findMapping(CONTEXTUAL_TERM_CODE)).thenReturn(Either.right(mapping
-                        .withValueFilterMapping(ValueMappingType.CODING, "value-concept")
+                        .withValueFilterMapping(FilterMappingType.CONCEPT, "value-concept")
                         .withFixedCriteria(new FixedCriterion(FixedCriterionType.CODE, "status", List.of(FINAL), null))));
 
                 var criteria = Criterion.of(CONTEXTUAL_CONCEPT, ValueFilter.ofConcept(MALE, FEMALE)).expand(mappingContext);
@@ -379,7 +401,7 @@ class CriterionTest {
             @DisplayName("one comparator value filter")
             void oneComparatorValueFilter() {
                 when(mappingContext.findMapping(CONTEXTUAL_TERM_CODE)).thenReturn(Either.right(mapping
-                        .withValueFilterMapping(ValueMappingType.CODING, "value-quantity")));
+                        .withValueFilterMapping(FilterMappingType.CONCEPT, "value-quantity")));
 
                 var criteria = Criterion.of(CONTEXTUAL_CONCEPT, ValueFilter.ofComparator(LESS_THAN,
                         Quantity.of(DECIMAL, GRAM_PER_DECILITER))).expand(mappingContext);
@@ -393,7 +415,7 @@ class CriterionTest {
             @DisplayName("one range value filter")
             void oneRangeValueFilter() {
                 when(mappingContext.findMapping(CONTEXTUAL_TERM_CODE)).thenReturn(Either.right(mapping
-                        .withValueFilterMapping(ValueMappingType.CODING, "value-quantity")));
+                        .withValueFilterMapping(FilterMappingType.CONCEPT, "value-quantity")));
 
                 var criteria = Criterion.of(CONTEXTUAL_CONCEPT, ValueFilter.ofRange(Quantity.of(DECIMAL_1,
                                 GRAM_PER_DECILITER), Quantity.of(DECIMAL_2, GRAM_PER_DECILITER)))
@@ -700,7 +722,7 @@ class CriterionTest {
             static final TermCode PARENT_FILTER_CODE_2 = new TermCode("parent", "filter-code-2", "display");
             static final String P = "parent";
             static final String C = "child";
-            
+
 
             @Nested
             @DisplayName("one concept expansion")
@@ -722,6 +744,22 @@ class CriterionTest {
                 @Nested
                 @DisplayName("one reference attribute filter")
                 class OneReferenceAttributeFilter {
+
+                    @Test
+                    @DisplayName("with wrong attribute mapping type")
+                    void withWrongAttributeMappingType() {
+                        when(mappingContext.findMapping(ctc(P))).thenReturn(Either.right(Mapping.of(ctc(P),
+                                        PARENT_RESOURCE_TYPE, PARENT_CODE_SEARCH_PARAM)
+                                .appendAttributeMapping(AttributeMapping.code(PARENT_FILTER_CODE,
+                                        PARENT_REFERENCE_FILTER_SEARCH_PARAM))));
+
+                        var criteria = Criterion.of(cc(P))
+                                .appendAttributeFilter(AttributeFilter.ofReference(PARENT_FILTER_CODE,
+                                        Criterion.of(cc(C))))
+                                .expand(mappingContext);
+
+                        assertThat(criteria).isLeftInstanceOf(ConceptFilterTypeNotExpandableException.class);
+                    }
 
                     @Nested
                     @DisplayName("one referenced criterion")
@@ -1065,123 +1103,123 @@ class CriterionTest {
                                                 .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_1))
                                         .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM_2, tc(C, 2))
                                                 .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_2))));
-                        }
-
-                        @Test
-                        @DisplayName("with one attribute filter at the criterion of second reference filter")
-                        void withOneAttributeFilterAtSecond() {
-                            when(mappingContext.findMapping(ctc(C, 1))).thenReturn(Either.right(Mapping.of(ctc(C,1),
-                                    CHILD_RESOURCE_TYPE, CHILD_CODE_SEARCH_PARAM_1)));
-                            when(mappingContext.findMapping(ctc(C, 2))).thenReturn(Either.right(Mapping.of(ctc(C, 2),
-                                    CHILD_RESOURCE_TYPE, CHILD_CODE_SEARCH_PARAM_2).appendAttributeMapping(
-                                    AttributeMapping.coding(CHILD_ATTR_TERM_CODE, CHILD_ATTR_SEARCH_PARAM))));
-
-                            var criteria = Criterion.of(cc(P))
-                                    .appendAttributeFilter(AttributeFilter.ofReference(PARENT_FILTER_CODE_1,
-                                            Criterion.of(cc(C, 1))))
-                                    .appendAttributeFilter(AttributeFilter.ofReference(PARENT_FILTER_CODE_2,
-                                            Criterion.of(cc(C, 2)).appendAttributeFilter(
-                                                    AttributeFilter.ofConcept(CHILD_ATTR_TERM_CODE, CHILD_ATTR_VALUE))))
-                                    .expand(mappingContext);
-
-                            assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
-                                    ExpandedCriterion.of(PARENT_RESOURCE_TYPE, PARENT_CODE_SEARCH_PARAM, PARENT_TERM_CODE)
-                                            .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM_1, CHILD_TERM_CODE_1)
-                                                    .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_1))
-                                            .appendFilter(ExpandedFilterGroup.of(
-                                                            new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM_2, CHILD_TERM_CODE_2),
-                                                            new ExpandedConceptFilter(CHILD_ATTR_SEARCH_PARAM, CHILD_ATTR_VALUE))
-                                                    .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_2))));
-                        }
-
-                        @Test
-                        @DisplayName("with two attribute filters at the criterion of first reference filter")
-                        void withTwoAttributeFiltersAtFirst() {
-                            when(mappingContext.findMapping(ctc(C, 1))).thenReturn(Either.right(Mapping.of(ctc(C, 1),
-                                            CHILD_RESOURCE_TYPE, CHILD_CODE_SEARCH_PARAM_1)
-                                    .appendAttributeMapping(AttributeMapping.coding(CHILD_ATTR_TERM_CODE_1, CHILD_ATTR_SEARCH_PARAM_1))
-                                    .appendAttributeMapping(AttributeMapping.coding(CHILD_ATTR_TERM_CODE_2, CHILD_ATTR_SEARCH_PARAM_2))));
-                            when(mappingContext.findMapping(ctc(C, 2))).thenReturn(Either.right(Mapping.of(ctc(C, 2),
-                                    CHILD_RESOURCE_TYPE, CHILD_CODE_SEARCH_PARAM_2)));
-
-                            var criteria = Criterion.of(cc(P))
-                                    .appendAttributeFilter(AttributeFilter.ofReference(PARENT_FILTER_CODE_1,
-                                            Criterion.of(cc(C, 1))
-                                                    .appendAttributeFilter(AttributeFilter.ofConcept(CHILD_ATTR_TERM_CODE_1, CHILD_ATTR_VALUE_1))
-                                                    .appendAttributeFilter(AttributeFilter.ofConcept(CHILD_ATTR_TERM_CODE_2, CHILD_ATTR_VALUE_2))))
-                                    .appendAttributeFilter(AttributeFilter.ofReference(PARENT_FILTER_CODE_2,
-                                            Criterion.of(cc(C, 2))))
-                                    .expand(mappingContext);
-
-                            assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
-                                    ExpandedCriterion.of(PARENT_RESOURCE_TYPE, PARENT_CODE_SEARCH_PARAM, PARENT_TERM_CODE)
-                                            .appendFilter(ExpandedFilterGroup.of(
-                                                            new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM_1, CHILD_TERM_CODE_1),
-                                                            new ExpandedConceptFilter(CHILD_ATTR_SEARCH_PARAM_1, CHILD_ATTR_VALUE_1),
-                                                            new ExpandedConceptFilter(CHILD_ATTR_SEARCH_PARAM_2, CHILD_ATTR_VALUE_2))
-                                                    .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_1))
-                                            .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM_2, CHILD_TERM_CODE_2)
-                                                    .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_2))));
-                        }
                     }
 
-                    @Nested
-                    @DisplayName("two referenced criteria at each reference filter")
-                    class TwoReferencedCriteria {
+                    @Test
+                    @DisplayName("with one attribute filter at the criterion of second reference filter")
+                    void withOneAttributeFilterAtSecond() {
+                        when(mappingContext.findMapping(ctc(C, 1))).thenReturn(Either.right(Mapping.of(ctc(C, 1),
+                                CHILD_RESOURCE_TYPE, CHILD_CODE_SEARCH_PARAM_1)));
+                        when(mappingContext.findMapping(ctc(C, 2))).thenReturn(Either.right(Mapping.of(ctc(C, 2),
+                                CHILD_RESOURCE_TYPE, CHILD_CODE_SEARCH_PARAM_2).appendAttributeMapping(
+                                AttributeMapping.coding(CHILD_ATTR_TERM_CODE, CHILD_ATTR_SEARCH_PARAM))));
 
-                        @BeforeEach
-                        void setUp() {
-                            when(mappingContext.expandConcept(cc(C, 1))).thenReturn(Either.right(List.of(ctc(C, 1))));
-                            when(mappingContext.expandConcept(cc(C, 2))).thenReturn(Either.right(List.of(ctc(C, 2))));
-                            when(mappingContext.expandConcept(cc(C, 3))).thenReturn(Either.right(List.of(ctc(C, 3))));
-                            when(mappingContext.expandConcept(cc(C, 4))).thenReturn(Either.right(List.of(ctc(C, 4))));
-                        }
+                        var criteria = Criterion.of(cc(P))
+                                .appendAttributeFilter(AttributeFilter.ofReference(PARENT_FILTER_CODE_1,
+                                        Criterion.of(cc(C, 1))))
+                                .appendAttributeFilter(AttributeFilter.ofReference(PARENT_FILTER_CODE_2,
+                                        Criterion.of(cc(C, 2)).appendAttributeFilter(
+                                                AttributeFilter.ofConcept(CHILD_ATTR_TERM_CODE, CHILD_ATTR_VALUE))))
+                                .expand(mappingContext);
 
-                        @Test
-                        @DisplayName("without any filters")
-                        void withoutFilters() {
-                            when(mappingContext.findMapping(ctc(C, 1))).thenReturn(Either.right(Mapping.of(ctc(C, 1),
-                                    CHILD_RESOURCE_TYPE, CHILD_CODE_SEARCH_PARAM)));
-                            when(mappingContext.findMapping(ctc(C, 2))).thenReturn(Either.right(Mapping.of(ctc(C, 2),
-                                    CHILD_RESOURCE_TYPE, CHILD_CODE_SEARCH_PARAM)));
-                            when(mappingContext.findMapping(ctc(C, 3))).thenReturn(Either.right(Mapping.of(ctc(C, 3),
-                                    CHILD_RESOURCE_TYPE, CHILD_CODE_SEARCH_PARAM)));
-                            when(mappingContext.findMapping(ctc(C, 4))).thenReturn(Either.right(Mapping.of(ctc(C, 4),
-                                    CHILD_RESOURCE_TYPE, CHILD_CODE_SEARCH_PARAM)));
+                        assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
+                                ExpandedCriterion.of(PARENT_RESOURCE_TYPE, PARENT_CODE_SEARCH_PARAM, PARENT_TERM_CODE)
+                                        .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM_1, CHILD_TERM_CODE_1)
+                                                .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_1))
+                                        .appendFilter(ExpandedFilterGroup.of(
+                                                        new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM_2, CHILD_TERM_CODE_2),
+                                                        new ExpandedConceptFilter(CHILD_ATTR_SEARCH_PARAM, CHILD_ATTR_VALUE))
+                                                .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_2))));
+                    }
 
-                            var criteria = Criterion.of(cc(P))
-                                    .appendAttributeFilter(AttributeFilter.ofReference(PARENT_FILTER_CODE_1,
-                                            Criterion.of(cc(C, 1)),
-                                            Criterion.of(cc(C, 2))))
-                                    .appendAttributeFilter(AttributeFilter.ofReference(PARENT_FILTER_CODE_2,
-                                            Criterion.of(cc(C, 3)),
-                                            Criterion.of(cc(C, 4))))
-                                    .expand(mappingContext);
+                    @Test
+                    @DisplayName("with two attribute filters at the criterion of first reference filter")
+                    void withTwoAttributeFiltersAtFirst() {
+                        when(mappingContext.findMapping(ctc(C, 1))).thenReturn(Either.right(Mapping.of(ctc(C, 1),
+                                        CHILD_RESOURCE_TYPE, CHILD_CODE_SEARCH_PARAM_1)
+                                .appendAttributeMapping(AttributeMapping.coding(CHILD_ATTR_TERM_CODE_1, CHILD_ATTR_SEARCH_PARAM_1))
+                                .appendAttributeMapping(AttributeMapping.coding(CHILD_ATTR_TERM_CODE_2, CHILD_ATTR_SEARCH_PARAM_2))));
+                        when(mappingContext.findMapping(ctc(C, 2))).thenReturn(Either.right(Mapping.of(ctc(C, 2),
+                                CHILD_RESOURCE_TYPE, CHILD_CODE_SEARCH_PARAM_2)));
 
-                            assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
-                                    ExpandedCriterion.of(PARENT_RESOURCE_TYPE, PARENT_CODE_SEARCH_PARAM, PARENT_TERM_CODE)
-                                            .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM, CHILD_TERM_CODE_1)
-                                                    .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_1))
-                                            .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM, CHILD_TERM_CODE_3)
-                                                    .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_2)),
-                                    ExpandedCriterion.of(PARENT_RESOURCE_TYPE, PARENT_CODE_SEARCH_PARAM, PARENT_TERM_CODE)
-                                            .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM, CHILD_TERM_CODE_1)
-                                                    .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_1))
-                                            .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM, CHILD_TERM_CODE_4)
-                                                    .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_2)),
-                                    ExpandedCriterion.of(PARENT_RESOURCE_TYPE, PARENT_CODE_SEARCH_PARAM, PARENT_TERM_CODE)
-                                            .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM, CHILD_TERM_CODE_2)
-                                                    .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_1))
-                                            .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM, CHILD_TERM_CODE_3)
-                                                    .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_2)),
-                                    ExpandedCriterion.of(PARENT_RESOURCE_TYPE, PARENT_CODE_SEARCH_PARAM, PARENT_TERM_CODE)
-                                            .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM, CHILD_TERM_CODE_2)
-                                                    .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_1))
-                                            .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM, CHILD_TERM_CODE_4)
-                                                    .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_2))));
-                        }
+                        var criteria = Criterion.of(cc(P))
+                                .appendAttributeFilter(AttributeFilter.ofReference(PARENT_FILTER_CODE_1,
+                                        Criterion.of(cc(C, 1))
+                                                .appendAttributeFilter(AttributeFilter.ofConcept(CHILD_ATTR_TERM_CODE_1, CHILD_ATTR_VALUE_1))
+                                                .appendAttributeFilter(AttributeFilter.ofConcept(CHILD_ATTR_TERM_CODE_2, CHILD_ATTR_VALUE_2))))
+                                .appendAttributeFilter(AttributeFilter.ofReference(PARENT_FILTER_CODE_2,
+                                        Criterion.of(cc(C, 2))))
+                                .expand(mappingContext);
+
+                        assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
+                                ExpandedCriterion.of(PARENT_RESOURCE_TYPE, PARENT_CODE_SEARCH_PARAM, PARENT_TERM_CODE)
+                                        .appendFilter(ExpandedFilterGroup.of(
+                                                        new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM_1, CHILD_TERM_CODE_1),
+                                                        new ExpandedConceptFilter(CHILD_ATTR_SEARCH_PARAM_1, CHILD_ATTR_VALUE_1),
+                                                        new ExpandedConceptFilter(CHILD_ATTR_SEARCH_PARAM_2, CHILD_ATTR_VALUE_2))
+                                                .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_1))
+                                        .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM_2, CHILD_TERM_CODE_2)
+                                                .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_2))));
                     }
                 }
+
+                @Nested
+                @DisplayName("two referenced criteria at each reference filter")
+                class TwoReferencedCriteria {
+
+                    @BeforeEach
+                    void setUp() {
+                        when(mappingContext.expandConcept(cc(C, 1))).thenReturn(Either.right(List.of(ctc(C, 1))));
+                        when(mappingContext.expandConcept(cc(C, 2))).thenReturn(Either.right(List.of(ctc(C, 2))));
+                        when(mappingContext.expandConcept(cc(C, 3))).thenReturn(Either.right(List.of(ctc(C, 3))));
+                        when(mappingContext.expandConcept(cc(C, 4))).thenReturn(Either.right(List.of(ctc(C, 4))));
+                    }
+
+                    @Test
+                    @DisplayName("without any filters")
+                    void withoutFilters() {
+                        when(mappingContext.findMapping(ctc(C, 1))).thenReturn(Either.right(Mapping.of(ctc(C, 1),
+                                CHILD_RESOURCE_TYPE, CHILD_CODE_SEARCH_PARAM)));
+                        when(mappingContext.findMapping(ctc(C, 2))).thenReturn(Either.right(Mapping.of(ctc(C, 2),
+                                CHILD_RESOURCE_TYPE, CHILD_CODE_SEARCH_PARAM)));
+                        when(mappingContext.findMapping(ctc(C, 3))).thenReturn(Either.right(Mapping.of(ctc(C, 3),
+                                CHILD_RESOURCE_TYPE, CHILD_CODE_SEARCH_PARAM)));
+                        when(mappingContext.findMapping(ctc(C, 4))).thenReturn(Either.right(Mapping.of(ctc(C, 4),
+                                CHILD_RESOURCE_TYPE, CHILD_CODE_SEARCH_PARAM)));
+
+                        var criteria = Criterion.of(cc(P))
+                                .appendAttributeFilter(AttributeFilter.ofReference(PARENT_FILTER_CODE_1,
+                                        Criterion.of(cc(C, 1)),
+                                        Criterion.of(cc(C, 2))))
+                                .appendAttributeFilter(AttributeFilter.ofReference(PARENT_FILTER_CODE_2,
+                                        Criterion.of(cc(C, 3)),
+                                        Criterion.of(cc(C, 4))))
+                                .expand(mappingContext);
+
+                        assertThat(criteria).isRightSatisfying(r -> assertThat(r).containsExactly(
+                                ExpandedCriterion.of(PARENT_RESOURCE_TYPE, PARENT_CODE_SEARCH_PARAM, PARENT_TERM_CODE)
+                                        .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM, CHILD_TERM_CODE_1)
+                                                .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_1))
+                                        .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM, CHILD_TERM_CODE_3)
+                                                .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_2)),
+                                ExpandedCriterion.of(PARENT_RESOURCE_TYPE, PARENT_CODE_SEARCH_PARAM, PARENT_TERM_CODE)
+                                        .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM, CHILD_TERM_CODE_1)
+                                                .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_1))
+                                        .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM, CHILD_TERM_CODE_4)
+                                                .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_2)),
+                                ExpandedCriterion.of(PARENT_RESOURCE_TYPE, PARENT_CODE_SEARCH_PARAM, PARENT_TERM_CODE)
+                                        .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM, CHILD_TERM_CODE_2)
+                                                .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_1))
+                                        .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM, CHILD_TERM_CODE_3)
+                                                .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_2)),
+                                ExpandedCriterion.of(PARENT_RESOURCE_TYPE, PARENT_CODE_SEARCH_PARAM, PARENT_TERM_CODE)
+                                        .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM, CHILD_TERM_CODE_2)
+                                                .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_1))
+                                        .appendFilter(new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM, CHILD_TERM_CODE_4)
+                                                .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM_2))));
+                    }
+                }
+            }
 
 
             @Nested
@@ -1692,7 +1730,7 @@ class CriterionTest {
                                                     .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM)),
                                     ExpandedCriterion.of(PARENT_RESOURCE_TYPE, PARENT_CODE_SEARCH_PARAM_1, PARENT_TERM_CODE_1)
                                             .appendFilter(ExpandedFilterGroup.of(
-                                                            new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM_1_1, tc(C,11)),
+                                                            new ExpandedConceptFilter(CHILD_CODE_SEARCH_PARAM_1_1, tc(C, 11)),
                                                             new ExpandedConceptFilter(CHILD_ATTR_SEARCH_PARAM, CHILD_ATTR_VALUE_2))
                                                     .chain(PARENT_REFERENCE_FILTER_SEARCH_PARAM)),
                                     ExpandedCriterion.of(PARENT_RESOURCE_TYPE, PARENT_CODE_SEARCH_PARAM_1, PARENT_TERM_CODE_1)
@@ -1772,165 +1810,165 @@ class CriterionTest {
         }
     }
 
+    @Nested
+    @DisplayName("special patient criteria")
+    class PatientCriteria {
+
+        static final TermCode GENDER = new TermCode("http://snomed.info/sct", "263495000", "Geschlecht");
+
+        ExpandedCriterion expandedCriterion = ExpandedCriterion.of("Patient");
+
+        @Test
+        void gender() {
+            when(mappingContext.expandConcept(ContextualConcept.of(CONTEXT, Concept.of(GENDER)))).thenReturn(
+                    Either.right(List.of(ContextualTermCode.of(CONTEXT, GENDER))));
+            when(mappingContext.findMapping(ContextualTermCode.of(CONTEXT, GENDER))).thenReturn(Either.right(
+                    Mapping.of(ContextualTermCode.of(CONTEXT, GENDER), "Patient")
+                            .withValueFilterMapping(FilterMappingType.CODE, "gender")));
+
+            var criterion = Criterion.of(ContextualConcept.of(CONTEXT, Concept.of(GENDER)),
+                    ValueFilter.ofConcept(MALE)).expand(mappingContext);
+
+            assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                    .appendFilter(new ExpandedCodeFilter("gender", "male"))));
+        }
+
         @Nested
-        @DisplayName("special patient criteria")
-        class PatientCriteria {
+        @DisplayName("age")
+        class Age {
 
-            static final TermCode GENDER = new TermCode("http://snomed.info/sct", "263495000", "Geschlecht");
+            static final ContextualTermCode CONTEXTUAL_AGE = ContextualTermCode.of(CONTEXT, AGE);
+            static final ContextualConcept CONTEXTUAL_CONCEPT_AGE = ContextualConcept.of(CONTEXT, Concept.of(AGE));
+            static final LocalDate YEAR_2000 = LocalDate.of(2000, 1, 1);
+            static final LocalDate YEAR_1990 = LocalDate.of(1990, 1, 1);
+            static final LocalDate YEAR_1995 = LocalDate.of(1995, 1, 1);
+            static final LocalDate YEAR_1994 = LocalDate.of(1994, 1, 1);
+            static final BigDecimal AGE_OF_10 = BigDecimal.valueOf(10);
 
-            ExpandedCriterion expandedCriterion = ExpandedCriterion.of("Patient");
+            Mapping mapping = Mapping.of(CONTEXTUAL_AGE, "Patient").withValueFilterMapping(FilterMappingType.AGE,
+                    "birthdate");
 
-            @Test
-            void gender() {
-                when(mappingContext.expandConcept(ContextualConcept.of(CONTEXT, Concept.of(GENDER)))).thenReturn(
-                        Either.right(List.of(ContextualTermCode.of(CONTEXT, GENDER))));
-                when(mappingContext.findMapping(ContextualTermCode.of(CONTEXT, GENDER))).thenReturn(Either.right(
-                        Mapping.of(ContextualTermCode.of(CONTEXT, GENDER), "Patient")
-                                .withValueFilterMapping(ValueMappingType.CODE, "gender")));
-
-                var criterion = Criterion.of(ContextualConcept.of(CONTEXT, Concept.of(GENDER)),
-                        ValueFilter.ofConcept(MALE)).expand(mappingContext);
-
-                assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                        .appendFilter(new ExpandedCodeFilter("gender", "male"))));
+            @BeforeEach
+            void setUp() {
+                when(mappingContext.expandConcept(CONTEXTUAL_CONCEPT_AGE)).thenReturn(
+                        Either.right(List.of(CONTEXTUAL_AGE)));
             }
 
-            @Nested
-            @DisplayName("age")
-            class Age {
+            @Test
+            @DisplayName("with comparator equal")
+            void age_withComparatorEqual() {
+                when(mappingContext.findMapping(CONTEXTUAL_AGE)).thenReturn(Either.right(mapping));
+                when(mappingContext.today()).thenReturn(YEAR_2000);
 
-                static final ContextualTermCode CONTEXTUAL_AGE = ContextualTermCode.of(CONTEXT, AGE);
-                static final ContextualConcept CONTEXTUAL_CONCEPT_AGE = ContextualConcept.of(CONTEXT, Concept.of(AGE));
-                static final LocalDate YEAR_2000 = LocalDate.of(2000, 1, 1);
-                static final LocalDate YEAR_1990 = LocalDate.of(1990, 1, 1);
-                static final LocalDate YEAR_1995 = LocalDate.of(1995, 1, 1);
-                static final LocalDate YEAR_1994 = LocalDate.of(1994, 1, 1);
-                static final BigDecimal AGE_OF_10 = BigDecimal.valueOf(10);
+                var criterion = Criterion.of(CONTEXTUAL_CONCEPT_AGE, ValueFilter.ofComparator(EQUAL, Quantity.of(
+                        AGE_OF_5, YEAR_UNIT))).expand(mappingContext);
 
-                Mapping mapping = Mapping.of(CONTEXTUAL_AGE, "Patient").withValueFilterMapping(ValueMappingType.CODING,
-                        "birthdate");
+                assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1994.plusDays(1), YEAR_1995))));
+            }
 
-                @BeforeEach
-                void setUp() {
-                    when(mappingContext.expandConcept(CONTEXTUAL_CONCEPT_AGE)).thenReturn(
-                            Either.right(List.of(CONTEXTUAL_AGE)));
-                }
+            @ParameterizedTest
+            @EnumSource(names = {"EQUAL"}, mode = EXCLUDE)
+            @DisplayName("with other comparator")
+            void age_withOtherComparator(Comparator comparator) {
+                when(mappingContext.findMapping(CONTEXTUAL_AGE)).thenReturn(Either.right(mapping));
+                when(mappingContext.today()).thenReturn(YEAR_2000);
 
-                @Test
-                @DisplayName("with comparator equal")
-                void age_withComparatorEqual() {
-                    when(mappingContext.findMapping(CONTEXTUAL_AGE)).thenReturn(Either.right(mapping));
-                    when(mappingContext.today()).thenReturn(YEAR_2000);
+                var criterion = Criterion.of(CONTEXTUAL_CONCEPT_AGE, ValueFilter.ofComparator(comparator,
+                        Quantity.of(AGE_OF_5, YEAR_UNIT))).expand(mappingContext);
 
-                    var criterion = Criterion.of(CONTEXTUAL_CONCEPT_AGE, ValueFilter.ofComparator(EQUAL, Quantity.of(
-                            AGE_OF_5, YEAR_UNIT))).expand(mappingContext);
+                assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedDateComparatorFilter("birthdate", comparator.reverse(), YEAR_1995))));
+            }
 
-                    assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1994.plusDays(1), YEAR_1995))));
-                }
+            @Test
+            @DisplayName("with greater-than comparator and week unit")
+            void age_withWeekUnit() {
+                when(mappingContext.findMapping(CONTEXTUAL_AGE)).thenReturn(Either.right(mapping));
+                when(mappingContext.today()).thenReturn(YEAR_2000);
 
-                @ParameterizedTest
-                @EnumSource(names = {"EQUAL"}, mode = EXCLUDE)
-                @DisplayName("with other comparator")
-                void age_withOtherComparator(Comparator comparator) {
-                    when(mappingContext.findMapping(CONTEXTUAL_AGE)).thenReturn(Either.right(mapping));
-                    when(mappingContext.today()).thenReturn(YEAR_2000);
+                var criterion = Criterion.of(CONTEXTUAL_CONCEPT_AGE, ValueFilter.ofComparator(GREATER_THAN,
+                        Quantity.of(AGE_OF_5, WEEK_UNIT))).expand(mappingContext);
 
-                    var criterion = Criterion.of(CONTEXTUAL_CONCEPT_AGE, ValueFilter.ofComparator(comparator,
-                            Quantity.of(AGE_OF_5, YEAR_UNIT))).expand(mappingContext);
+                assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedDateComparatorFilter("birthdate", LESS_THAN,
+                                YEAR_2000.minusWeeks(AGE_OF_5.longValue())))));
+            }
 
-                    assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateComparatorFilter("birthdate", comparator.reverse(), YEAR_1995))));
-                }
+            @Test
+            @DisplayName("with greater-than comparator and month unit")
+            void age_withMonthUnit() {
+                when(mappingContext.findMapping(CONTEXTUAL_AGE)).thenReturn(Either.right(mapping));
+                when(mappingContext.today()).thenReturn(YEAR_2000);
 
-                @Test
-                @DisplayName("with greater-than comparator and week unit")
-                void age_withWeekUnit() {
-                    when(mappingContext.findMapping(CONTEXTUAL_AGE)).thenReturn(Either.right(mapping));
-                    when(mappingContext.today()).thenReturn(YEAR_2000);
+                var criterion = Criterion.of(CONTEXTUAL_CONCEPT_AGE, ValueFilter.ofComparator(GREATER_THAN,
+                        Quantity.of(AGE_OF_5, MONTH_UNIT))).expand(mappingContext);
 
-                    var criterion = Criterion.of(CONTEXTUAL_CONCEPT_AGE, ValueFilter.ofComparator(GREATER_THAN,
-                            Quantity.of(AGE_OF_5, WEEK_UNIT))).expand(mappingContext);
+                assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedDateComparatorFilter("birthdate", LESS_THAN,
+                                YEAR_2000.minusMonths(AGE_OF_5.longValue())))));
+            }
 
-                    assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateComparatorFilter("birthdate", LESS_THAN,
-                                    YEAR_2000.minusWeeks(AGE_OF_5.longValue())))));
-                }
+            @Test
+            @DisplayName("without unit in lower bound")
+            void age_RangeWithoutLowerUnit() {
+                when(mappingContext.findMapping(CONTEXTUAL_AGE)).thenReturn(Either.right(mapping));
 
-                @Test
-                @DisplayName("with greater-than comparator and month unit")
-                void age_withMonthUnit() {
-                    when(mappingContext.findMapping(CONTEXTUAL_AGE)).thenReturn(Either.right(mapping));
-                    when(mappingContext.today()).thenReturn(YEAR_2000);
+                var criterion = Criterion.of(CONTEXTUAL_CONCEPT_AGE, ValueFilter.ofRange(Quantity.of(AGE_OF_5),
+                        Quantity.of(AGE_OF_10, YEAR_UNIT))).expand(mappingContext);
 
-                    var criterion = Criterion.of(CONTEXTUAL_CONCEPT_AGE, ValueFilter.ofComparator(GREATER_THAN,
-                            Quantity.of(AGE_OF_5, MONTH_UNIT))).expand(mappingContext);
+                assertThat(criterion).isLeftInstanceOf(CalculationException.class);
+            }
 
-                    assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateComparatorFilter("birthdate", LESS_THAN,
-                                    YEAR_2000.minusMonths(AGE_OF_5.longValue())))));
-                }
+            @Test
+            @DisplayName("without unit in upper bound")
+            void age_RangeWithoutUpperUnit() {
+                when(mappingContext.findMapping(CONTEXTUAL_AGE)).thenReturn(Either.right(mapping));
 
-                @Test
-                @DisplayName("without unit in lower bound")
-                void age_RangeWithoutLowerUnit() {
-                    when(mappingContext.findMapping(CONTEXTUAL_AGE)).thenReturn(Either.right(mapping));
+                var criterion = Criterion.of(CONTEXTUAL_CONCEPT_AGE, ValueFilter.ofRange(Quantity.of(AGE_OF_5,
+                        YEAR_UNIT), Quantity.of(AGE_OF_10))).expand(mappingContext);
 
-                    var criterion = Criterion.of(CONTEXTUAL_CONCEPT_AGE, ValueFilter.ofRange(Quantity.of(AGE_OF_5),
-                            Quantity.of(AGE_OF_10, YEAR_UNIT))).expand(mappingContext);
+                assertThat(criterion).isLeftInstanceOf(CalculationException.class);
+            }
 
-                    assertThat(criterion).isLeftInstanceOf(CalculationException.class);
-                }
+            @Test
+            @DisplayName("with comparator and unknown unit")
+            void age_withComparator_UnknownUnit() {
+                when(mappingContext.findMapping(CONTEXTUAL_AGE)).thenReturn(Either.right(mapping));
+                when(mappingContext.today()).thenReturn(YEAR_2000);
 
-                @Test
-                @DisplayName("without unit in upper bound")
-                void age_RangeWithoutUpperUnit() {
-                    when(mappingContext.findMapping(CONTEXTUAL_AGE)).thenReturn(Either.right(mapping));
+                var criterion = Criterion.of(CONTEXTUAL_CONCEPT_AGE, ValueFilter.ofComparator(GREATER_THAN,
+                        Quantity.of(AGE_OF_5, GRAM_PER_DECILITER))).expand(mappingContext);
 
-                    var criterion = Criterion.of(CONTEXTUAL_CONCEPT_AGE, ValueFilter.ofRange(Quantity.of(AGE_OF_5,
-                            YEAR_UNIT), Quantity.of(AGE_OF_10))).expand(mappingContext);
+                assertThat(criterion).isLeftInstanceOf(CalculationException.class);
+            }
 
-                    assertThat(criterion).isLeftInstanceOf(CalculationException.class);
-                }
+            @Test
+            @DisplayName("with comparator and without unit")
+            void age_withComparator_WithoutUnit() {
+                when(mappingContext.findMapping(CONTEXTUAL_AGE)).thenReturn(Either.right(mapping));
 
-                @Test
-                @DisplayName("with comparator and unknown unit")
-                void age_withComparator_UnknownUnit() {
-                    when(mappingContext.findMapping(CONTEXTUAL_AGE)).thenReturn(Either.right(mapping));
-                    when(mappingContext.today()).thenReturn(YEAR_2000);
+                var criterion = Criterion.of(CONTEXTUAL_CONCEPT_AGE, ValueFilter.ofComparator(GREATER_THAN,
+                        Quantity.of(AGE_OF_5))).expand(mappingContext);
 
-                    var criterion = Criterion.of(CONTEXTUAL_CONCEPT_AGE, ValueFilter.ofComparator(GREATER_THAN,
-                            Quantity.of(AGE_OF_5, GRAM_PER_DECILITER))).expand(mappingContext);
+                assertThat(criterion).isLeftInstanceOf(CalculationException.class);
+            }
 
-                    assertThat(criterion).isLeftInstanceOf(CalculationException.class);
-                }
+            @Test
+            @DisplayName("with range")
+            void age_withRange() {
+                when(mappingContext.findMapping(CONTEXTUAL_AGE)).thenReturn(Either.right(mapping));
+                when(mappingContext.today()).thenReturn(YEAR_2000);
 
-                @Test
-                @DisplayName("with comparator and without unit")
-                void age_withComparator_WithoutUnit() {
-                    when(mappingContext.findMapping(CONTEXTUAL_AGE)).thenReturn(Either.right(mapping));
+                var criterion = Criterion.of(CONTEXTUAL_CONCEPT_AGE, ValueFilter.ofRange(Quantity.of(AGE_OF_5,
+                                YEAR_UNIT), Quantity.of(AGE_OF_10, YEAR_UNIT)))
+                        .expand(mappingContext);
 
-                    var criterion = Criterion.of(CONTEXTUAL_CONCEPT_AGE, ValueFilter.ofComparator(GREATER_THAN,
-                            Quantity.of(AGE_OF_5))).expand(mappingContext);
-
-                    assertThat(criterion).isLeftInstanceOf(CalculationException.class);
-                }
-
-                @Test
-                @DisplayName("with range")
-                void age_withRange() {
-                    when(mappingContext.findMapping(CONTEXTUAL_AGE)).thenReturn(Either.right(mapping));
-                    when(mappingContext.today()).thenReturn(YEAR_2000);
-
-                    var criterion = Criterion.of(CONTEXTUAL_CONCEPT_AGE, ValueFilter.ofRange(Quantity.of(AGE_OF_5,
-                                    YEAR_UNIT), Quantity.of(AGE_OF_10, YEAR_UNIT)))
-                            .expand(mappingContext);
-
-                    assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
-                            .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1990, YEAR_1995))));
-                }
+                assertThat(criterion).isRightSatisfying(r -> assertThat(r).containsExactly(expandedCriterion
+                        .appendFilter(new ExpandedDateRangeFilter("birthdate", YEAR_1990, YEAR_1995))));
             }
         }
     }
+}
 
 

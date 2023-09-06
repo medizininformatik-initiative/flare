@@ -35,7 +35,7 @@ class AttributeMappingTest {
     void fromJson_withCompositeCode() throws JsonProcessingException {
         var result = parse("""
                 {
-                    "attributeType": "composite-quantity-comparator",
+                    "attributeType": "composite-quantity",
                     "attributeKey": {
                         "system": "sys-162102",
                         "code": "code-162115",
@@ -57,7 +57,7 @@ class AttributeMappingTest {
     void fromJson_compositeType_withoutCompositeCode() {
         assertThatThrownBy(() -> parse("""
                 {
-                    "attributeType": "composite-quantity-comparator",
+                    "attributeType": "composite-quantity",
                     "attributeKey": {
                         "code": "8480-6",
                         "display": "Systolischer Blutdruck",

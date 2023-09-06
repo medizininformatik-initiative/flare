@@ -14,14 +14,12 @@ services:
     environment:
       JAVA_TOOL_OPTIONS: "-Xmx1g"
       FLARE_FHIR_SERVER: "http://data-store:8080/fhir"
-      FLARE_MAPPING_MAPPING_FILE: "ontology/synthea-mapping.json"
-      FLARE_MAPPING_CONCEPT_TREE_FILE: "ontology/synthea-tree.json"
       LOG_LEVEL: "debug"
     ports:
       - "8080:8080"
     volumes:
       - "flare-cache:/app/cache"
-      - "./../../ontology:/app/ontology"
+      - "./synthea-test-mapping:/app/ontology"
     depends_on:
       - data-store
 volumes:

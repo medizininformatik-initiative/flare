@@ -3,6 +3,7 @@ package de.medizininformatikinitiative.flare.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.medizininformatikinitiative.flare.FlareApplication;
+import de.medizininformatikinitiative.flare.Util;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
 import de.medizininformatikinitiative.flare.model.mapping.TermCodeNode;
@@ -43,7 +44,6 @@ import java.util.zip.ZipFile;
 import static java.util.function.Function.identity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static de.medizininformatikinitiative.flare.model.sq.TestUtil.CONTEXT;
 
 @Testcontainers
 @SpringBootTest
@@ -53,6 +53,8 @@ class StructuredQueryServiceIT {
     private static final TermCode I08 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "I08", "");
     private static final TermCode COVID = TermCode.of("http://loinc.org", "94500-6", "");
     private static final TermCode INVALID = TermCode.of("http://loinc.org", "LA15841-2", "Invalid");
+    TermCode DIAGNOSIS = TermCode.of("fdpg.mii.cds", "Diagnose", "Diagnose");
+    TermCode OBSERVATION = TermCode.of("fdpg.mii.cds", "Laboruntersuchung", "Laboruntersuchung");
 
     private static final Logger logger = LoggerFactory.getLogger(StructuredQueryServiceIT.class);
 
@@ -62,7 +64,7 @@ class StructuredQueryServiceIT {
             .withImagePullPolicy(PullPolicy.alwaysPull())
             .withEnv("LOG_LEVEL", "debug")
             .withEnv("DB_SEARCH_PARAM_BUNDLE", "/app/custom-search-parameters.json")
-            .withClasspathResourceMapping("de/medizininformatikinitiative/flare/service/custom-search-parameters.json", "/app/custom-search-parameters.json", BindMode.READ_ONLY)
+            .withClasspathResourceMapping("de/medizininformatikinitiative/flare/service/referencedCriteria/custom-search-parameters.json", "/app/custom-search-parameters.json", BindMode.READ_ONLY)
             .withExposedPorts(8080)
             .waitingFor(Wait.forHttp("/health").forStatusCode(200))
             .withLogConsumer(new Slf4jLogConsumer(logger));
@@ -76,6 +78,8 @@ class StructuredQueryServiceIT {
     private StructuredQueryService service;
     @Autowired
     private StructuredQueryService service_Specimen;
+    @Autowired
+    private StructuredQueryService service_BloodPressure;
 
     @Configuration
     static class Config {
@@ -92,19 +96,24 @@ class StructuredQueryServiceIT {
 
         @Bean
         public MappingContext mappingContext() throws Exception {
-            var mapper = new ObjectMapper();
-            var mappings = Arrays.stream(mapper.readValue(slurp_ClassPath("mapping-specimen-test.json"), Mapping[].class))
-                    .collect(Collectors.toMap(Mapping::key, identity()));
-            var conceptTree = mapper.readValue(slurp_ClassPath("tree-specimen-test.json"), TermCodeNode.class);
-            return MappingContext.of(mappings, conceptTree, CLOCK_2000);
+            return Util.flareMappingContext(CLOCK_2000);
         }
 
         @Bean
         public MappingContext mappingContext_Specimen() throws Exception {
             var mapper = new ObjectMapper();
-            var mappings = Arrays.stream(mapper.readValue(slurp_ClassPath("mapping-specimen-test.json"), Mapping[].class))
+            var mappings = Arrays.stream(mapper.readValue(slurp_ClassPath("referencedCriteria/mapping-specimen-test.json"), Mapping[].class))
                     .collect(Collectors.toMap(Mapping::key, identity()));
-            var conceptTree = mapper.readValue(slurp_ClassPath("tree-specimen-test.json"), TermCodeNode.class);
+            var conceptTree = mapper.readValue(slurp_ClassPath("referencedCriteria/tree-specimen-test.json"), TermCodeNode.class);
+            return MappingContext.of(mappings, conceptTree, CLOCK_2000);
+        }
+
+        @Bean
+        public MappingContext mappingContext_BloodPressure() throws Exception {
+            var mapper = new ObjectMapper();
+            var mappings = Arrays.stream(mapper.readValue(slurp_ClassPath("compositeSearchParams/mapping-bloodPressure.json"), Mapping[].class))
+                    .collect(Collectors.toMap(Mapping::key, identity()));
+            var conceptTree = mapper.readValue(slurp_ClassPath("compositeSearchParams/tree-bloodPressure.json"), TermCodeNode.class);
             return MappingContext.of(mappings, conceptTree, CLOCK_2000);
         }
 
@@ -124,6 +133,11 @@ class StructuredQueryServiceIT {
         }
 
         @Bean
+        public Translator translator_BloodPressure(MappingContext mappingContext_BloodPressure) {
+            return new Translator(mappingContext_BloodPressure);
+        }
+
+        @Bean
         public StructuredQueryService service(FhirQueryService fhirQueryService, Translator translator) {
             return new StructuredQueryService(fhirQueryService, translator);
         }
@@ -131,6 +145,11 @@ class StructuredQueryServiceIT {
         @Bean
         public StructuredQueryService service_Specimen(FhirQueryService fhirQueryService, Translator translator_Specimen) {
             return new StructuredQueryService(fhirQueryService, translator_Specimen);
+        }
+
+        @Bean
+        public StructuredQueryService service_BloodPressure(FhirQueryService fhirQueryService, Translator translator_BloodPressure) {
+            return new StructuredQueryService(fhirQueryService, translator_BloodPressure);
         }
     }
 
@@ -186,7 +205,7 @@ class StructuredQueryServiceIT {
 
     @Test
     void execute_Criterion() {
-        var query = StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(ContextualConcept.of(CONTEXT, Concept.of(I08))))));
+        var query = StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(ContextualConcept.of(DIAGNOSIS, Concept.of(I08))))));
 
         var result = service.execute(query).block();
 
@@ -195,7 +214,7 @@ class StructuredQueryServiceIT {
 
     @Test
     void execute_Criterion_WithValueFilter() {
-        var query = StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(ContextualConcept.of(CONTEXT, Concept.of(COVID)), ValueFilter.ofConcept(INVALID)))));
+        var query = StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(ContextualConcept.of(OBSERVATION, Concept.of(COVID)), ValueFilter.ofConcept(INVALID)))));
 
         var result = service.execute(query).block();
 
@@ -215,12 +234,12 @@ class StructuredQueryServiceIT {
     void execute_specimenTestCase() throws IOException {
         dataStoreClient.post()
                 .contentType(APPLICATION_JSON)
-                .bodyValue(slurp_ClassPath("specimen-diag-testbundle.json"))
+                .bodyValue(slurp_ClassPath("referencedCriteria/specimen-diag-testbundle.json"))
                 .retrieve()
                 .toBodilessEntity()
                 .block();
 
-        var query = parseSq(slurp_ClassPath("sq-test-specimen-diag.json"));
+        var query = parseSq(slurp_ClassPath("referencedCriteria/sq-test-specimen-diag.json"));
 
         var result = service_Specimen.execute(query).block();
 
@@ -243,6 +262,12 @@ class StructuredQueryServiceIT {
                   "inclusionCriteria": [
                     [
                       {
+                        "context": {
+                              "code": "Laboruntersuchung",
+                              "display": "Laboruntersuchung",
+                              "system": "fdpg.mii.cds",
+                              "version": "1.0.0"
+                         },
                         "termCodes": [
                           {
                             "code": "85354-9",
@@ -273,7 +298,7 @@ class StructuredQueryServiceIT {
                                 
                 """);
 
-        var result = service.execute(query).block();
+        var result = service_BloodPressure.execute(query).block();
 
         assertThat(result).isOne();
     }

@@ -1,9 +1,7 @@
 package de.medizininformatikinitiative.flare;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
-import de.medizininformatikinitiative.flare.model.mapping.TermCodeNode;
 import de.medizininformatikinitiative.flare.service.DiskCachingFhirQueryService;
 import de.medizininformatikinitiative.flare.service.FhirQueryService;
 import de.medizininformatikinitiative.flare.service.MemCachingFhirQueryService;
@@ -23,13 +21,8 @@ import reactor.core.scheduler.Schedulers;
 import reactor.netty.http.client.HttpClient;
 import reactor.netty.resources.ConnectionProvider;
 
-import java.io.File;
 import java.time.Clock;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
-import static java.util.function.Function.identity;
 
 @SpringBootApplication
 public class FlareApplication {
@@ -75,13 +68,8 @@ public class FlareApplication {
     }
 
     @Bean
-    public MappingContext mappingContext(@Value("${flare.mapping.mappingFile}") String mappingFile,
-                                         @Value("${flare.mapping.conceptTreeFile}") String conceptTreeFile) throws Exception {
-        var mapper = new ObjectMapper();
-        var mappings = Arrays.stream(mapper.readValue(new File(mappingFile), Mapping[].class))
-                .collect(Collectors.toMap(Mapping::key, identity()));
-        var conceptTree = mapper.readValue(new File(conceptTreeFile), TermCodeNode.class);
-        return MappingContext.of(mappings, conceptTree);
+    public MappingContext mappingContext() throws Exception {
+        return Util.flareMappingContext(Clock.systemDefaultZone());
     }
 
     @Bean

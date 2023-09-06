@@ -2,6 +2,7 @@ package de.medizininformatikinitiative.flare;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.Clock;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -60,5 +61,12 @@ class UtilTest {
                 List.of("a", "c", "e"),
                 List.of("b", "c", "d"),
                 List.of("b", "c", "e"));
+    }
+
+    @Test
+    void mappingCreationTest() throws Exception {
+        var mapping = Util.flareMappingContext(Clock.systemDefaultZone());
+
+        assertThat(mapping).isNotNull();
     }
 }

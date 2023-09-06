@@ -1,0 +1,13 @@
+{
+  "context": {
+    "code": "Laboruntersuchung",
+    "display": "Laboruntersuchung",
+    "system": "fdpg.mii.cds",
+    "version": "1.0.0"
+  },
+  "termCode": {
+    "code": "85354-9",
+    "display": "Blood pressure panel with all children optional",
+    "system": "http://loinc.org"
+  }
+}

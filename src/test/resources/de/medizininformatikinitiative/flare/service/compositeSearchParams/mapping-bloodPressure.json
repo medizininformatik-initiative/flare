@@ -1,0 +1,33 @@
+[
+  {
+    "attributeSearchParameters": [
+      {
+        "attributeKey": {
+          "code": "8480-6",
+          "display": "Systolischer Blutdruck",
+          "system": "http://loinc.org"
+        },
+        "attributeType": "composite-quantity",
+        "attributeSearchParameter": "component-code-value-quantity",
+        "compositeCode": {
+          "code": "8480-6",
+          "display": "Sistolic Bloodpressure",
+          "system": "http://loinc.org"
+        }
+      }
+    ],
+    "context": {
+      "code": "Laboruntersuchung",
+      "display": "Laboruntersuchung",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0"
+    },
+    "key": {
+      "code": "85354-9",
+      "display": "Blood pressure panel with all children optional",
+      "system": "http://loinc.org"
+    },
+    "fhirResourceType": "Observation",
+    "termCodeSearchParameter": "code"
+  }
+]

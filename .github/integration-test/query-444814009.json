@@ -8,7 +8,13 @@
             "code": "444814009",
             "display": "Viral sinusitis (disorder)"
           }
-        ]
+        ],
+        "context": {
+          "code": "Diagnose",
+          "display": "Diagnose",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0"
+        }
       }
     ]
   ]

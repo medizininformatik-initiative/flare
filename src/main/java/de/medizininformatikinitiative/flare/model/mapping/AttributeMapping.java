@@ -8,17 +8,17 @@ import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.sq.ConceptFilterTypeNotExpandableException;
 import de.medizininformatikinitiative.flare.model.sq.Criterion;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
-import de.medizininformatikinitiative.flare.model.sq.expanded.*;
+import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCriterion;
+import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
-import static de.medizininformatikinitiative.flare.model.mapping.AttributeMappingType.*;
+import static de.medizininformatikinitiative.flare.model.mapping.FilterMappingType.*;
 import static java.util.Objects.requireNonNull;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record AttributeMapping(AttributeMappingType type, TermCode key, String searchParameter,
+public record AttributeMapping(FilterMappingType type, TermCode key, String searchParameter,
                                Optional<TermCode> compositeCode)
         implements FilterMapping {
 
@@ -30,7 +30,7 @@ public record AttributeMapping(AttributeMappingType type, TermCode key, String s
     }
 
     @JsonCreator
-    static AttributeMapping fromJson(@JsonProperty("attributeType") AttributeMappingType type,
+    static AttributeMapping fromJson(@JsonProperty("attributeType") FilterMappingType type,
                                      @JsonProperty("attributeKey") JsonNode key,
                                      @JsonProperty("attributeSearchParameter") String searchParameter,
                                      @JsonProperty("compositeCode") JsonNode compositeCode)
@@ -53,15 +53,15 @@ public record AttributeMapping(AttributeMappingType type, TermCode key, String s
     }
 
     public static AttributeMapping coding(TermCode key, String searchParameter) {
-        return new AttributeMapping(CODING, key, searchParameter, Optional.empty());
+        return new AttributeMapping(CONCEPT, key, searchParameter, Optional.empty());
     }
 
     public static AttributeMapping compositeComparator(TermCode key, String searchParameter, TermCode compositeCode) {
-        return new AttributeMapping(COMPOSITE_QUANTITY_COMPARATOR, key, searchParameter, Optional.of(compositeCode));
+        return new AttributeMapping(COMPOSITE_QUANTITY, key, searchParameter, Optional.of(compositeCode));
     }
 
     public static AttributeMapping compositeRange(TermCode key, String searchParameter, TermCode compositeCode) {
-        return new AttributeMapping(COMPOSITE_QUANTITY_RANGE, key, searchParameter, Optional.of(compositeCode));
+        return new AttributeMapping(COMPOSITE_QUANTITY, key, searchParameter, Optional.of(compositeCode));
     }
 
     public static AttributeMapping compositeConcept(TermCode key, String searchParameter, TermCode compositeCode) {
@@ -70,24 +70,6 @@ public record AttributeMapping(AttributeMappingType type, TermCode key, String s
 
     public static AttributeMapping reference(TermCode key, String searchParameter) {
         return new AttributeMapping(REFERENCE, key, searchParameter, Optional.empty());
-    }
-
-    @Override
-    public boolean isAge() {
-        return false;
-    }
-
-    @Override
-    public Either<Exception, ExpandedFilter> expandConcept(TermCode concept) {
-        return switch (type) {
-            case CODE -> Either.right(new ExpandedCodeFilter(searchParameter, concept.code()));
-            case CODING -> Either.right(new ExpandedConceptFilter(searchParameter, concept));
-            case COMPOSITE_CONCEPT -> compositeCode
-                    .map((Function<TermCode, Either<Exception, ExpandedFilter>>) compositeCode ->
-                            Either.right(new ExpandedCompositeConceptFilter(searchParameter, compositeCode, concept)))
-                    .orElse(Either.left(new ConceptFilterTypeNotExpandableException(COMPOSITE_CONCEPT)));
-            default -> Either.left(new ConceptFilterTypeNotExpandableException(type));
-        };
     }
 
     @Override

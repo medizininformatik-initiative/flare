@@ -7,8 +7,6 @@ import de.medizininformatikinitiative.flare.Either;
 import de.medizininformatikinitiative.flare.model.sq.ContextualTermCode;
 import de.medizininformatikinitiative.flare.model.sq.Criterion;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
-import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCodeFilter;
-import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedConceptFilter;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
 
 import java.util.*;
@@ -20,7 +18,6 @@ import static java.util.Objects.requireNonNull;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class Mapping {
 
-    private static final TermCode AGE = TermCode.of("http://snomed.info/sct", "424144002", "age");
 
     private final ContextualTermCode key;
     private final String resourceType;
@@ -57,7 +54,7 @@ public final class Mapping {
                              @JsonProperty("fhirResourceType") String resourceType,
                              @JsonProperty("termCodeSearchParameter") String termCodeSearchParameter,
                              @JsonProperty("valueSearchParameter") String valueSearchParameter,
-                             @JsonProperty("valueTypeFhir") ValueMappingType valueTypeFhir,
+                             @JsonProperty("valueType") FilterMappingType valueType,
                              @JsonProperty("fixedCriteria") List<FixedCriterion> fixedCriteria,
                              @JsonProperty("attributeSearchParameters") List<AttributeMapping> attributeMappings,
                              @JsonProperty("timeRestrictionParameter") String timeRestrictionParameter) {
@@ -65,8 +62,7 @@ public final class Mapping {
                 requireNonNull(key, "missing JSON property: key")), resourceType, termCodeSearchParameter,
                 valueSearchParameter == null
                         ? null
-                        : new ValueFilterMapping(valueTypeFhir == null ? ValueMappingType.CODING : valueTypeFhir,
-                        valueSearchParameter, age(resourceType, key)),
+                        : new ValueFilterMapping(valueType, valueSearchParameter),
                 fixedCriteria == null ? List.of() : List.copyOf(fixedCriteria),
                 attributeMappings == null
                         ? Map.of()
@@ -74,13 +70,9 @@ public final class Mapping {
                 timeRestrictionParameter);
     }
 
-    private static boolean age(String resourceType, TermCode termCode) {
-        return "Patient".equals(resourceType) && AGE.equals(termCode);
-    }
-
-    public Mapping withValueFilterMapping(ValueMappingType type, String searchParameter) {
+    public Mapping withValueFilterMapping(FilterMappingType type, String searchParameter) {
         return new Mapping(key, resourceType, termCodeSearchParameter,
-                new ValueFilterMapping(type, searchParameter, age(resourceType, key.termCode())),
+                new ValueFilterMapping(type, searchParameter),
                 fixedCriteria, attributeMappings, timeRestrictionParameter);
     }
 
@@ -132,7 +124,7 @@ public final class Mapping {
         return timeRestrictionParameter;
     }
 
-    private record ValueFilterMapping(ValueMappingType type, String searchParameter, boolean age)
+    private record ValueFilterMapping(FilterMappingType type, String searchParameter)
             implements FilterMapping {
 
         private ValueFilterMapping {
@@ -143,19 +135,6 @@ public final class Mapping {
         @Override
         public Optional<TermCode> compositeCode() {
             return Optional.empty();
-        }
-
-        @Override
-        public boolean isAge() {
-            return age;
-        }
-
-        @Override
-        public Either<Exception, ExpandedFilter> expandConcept(TermCode concept) {
-            return switch (type()) {
-                case CODE -> Either.right(new ExpandedCodeFilter(searchParameter(), concept.code()));
-                case CODING -> Either.right(new ExpandedConceptFilter(searchParameter(), concept));
-            };
         }
 
         @Override
