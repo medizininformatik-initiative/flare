@@ -1,25 +1,36 @@
 #!/bin/bash
 
-CERT_FILE=/app/certs/ca-cert.pem
 TRUSTSTORE_FILE="/app/truststore/self-signed-truststore.jks"
 TRUSTSTORE_PASS=${TRUSTSTORE_PASS:-changeit}
 KEY_PASS=${KEY_PASS:-changeit}
 
+OWN_CERTS=false
+shopt -s nullglob
+IFS=$'\n'
+ca_files=(certs/*.pem)
 
-if [[ -f "$CERT_FILE" ]]; then
-    echo "Found certificate file ca-cert.pem - starting FLARE with own CA"
-    if [[ ! -f "$TRUSTSTORE_FILE" ]]; then
-        keytool -genkey -alias self-signed-truststore -keyalg RSA -keystore $TRUSTSTORE_FILE -storepass $TRUSTSTORE_PASS -keypass $KEY_PASS -dname "CN=self-signed,OU=self-signed,O=self-signed,L=self-signed,S=self-signed,C=TE"
-        keytool -delete -alias self-signed-truststore -keystore $TRUSTSTORE_FILE -storepass $TRUSTSTORE_PASS -noprompt
-    else
-      echo "CA cert file found, but truststore already exists -> using existing truststore and deleting previously added ca cert"
-      keytool -delete -alias self-signed-cert-ca -keystore $TRUSTSTORE_FILE -storepass $TRUSTSTORE_PASS -noprompt
+if [ ! ${#ca_files[@]} -eq 0 ]; then
+
+    echo "# At least one CA file with extension *.pem found in certs folder -> starting flare with own CAs"
+
+    if [[ -f "$TRUSTSTORE_FILE" ]]; then
+          echo "## Truststore already exists -> resetting truststore"
+          rm "$TRUSTSTORE_FILE"
     fi
 
-    echo "Importing cert $CERT_FILE"
-    keytool -importcert -alias self-signed-cert-ca -file $CERT_FILE -keystore $TRUSTSTORE_FILE -storepass $TRUSTSTORE_PASS -noprompt
+    keytool -genkey -alias self-signed-truststore -keyalg RSA -keystore $TRUSTSTORE_FILE -storepass $TRUSTSTORE_PASS -keypass $KEY_PASS -dname "CN=self-signed,OU=self-signed,O=self-signed,L=self-signed,S=self-signed,C=TE"
+    keytool -delete -alias self-signed-truststore -keystore $TRUSTSTORE_FILE -storepass $TRUSTSTORE_PASS -noprompt
+
+    for filename in ${ca_files[@]}; do
+
+      echo "### ADDING CERT: $filename"
+      keytool -delete -alias "$filename" -keystore $TRUSTSTORE_FILE -storepass $TRUSTSTORE_PASS -noprompt > /dev/null 2>&1
+      keytool -importcert -alias "$filename" -file "$filename" -keystore $TRUSTSTORE_FILE -storepass $TRUSTSTORE_PASS -noprompt
+
+    done
+
     java -Djavax.net.ssl.trustStore=$TRUSTSTORE_FILE -Djavax.net.ssl.trustStorePassword=$TRUSTSTORE_PASS -jar flare.jar
 else
-    echo "No ca cert file /app/certs/ca-cert.pem found -> starting flare without own CA"
+    echo "# No CA *.pem cert files found in /app/certs -> starting flare without own CAs"
     java -jar flare.jar
 fi
