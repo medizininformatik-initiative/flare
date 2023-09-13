@@ -4,10 +4,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import de.medizininformatikinitiative.flare.Either;
+import de.medizininformatikinitiative.flare.model.sq.ContextualTermCode;
 import de.medizininformatikinitiative.flare.model.sq.Criterion;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
-import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedCodeFilter;
-import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedConceptFilter;
 import de.medizininformatikinitiative.flare.model.sq.expanded.ExpandedFilter;
 
 import java.util.*;
@@ -19,7 +18,8 @@ import static java.util.Objects.requireNonNull;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class Mapping {
 
-    private final TermCode key;
+
+    private final ContextualTermCode key;
     private final String resourceType;
     private final String termCodeSearchParameter;
     private final ValueFilterMapping valueFilterMapping;
@@ -27,7 +27,7 @@ public final class Mapping {
     private final Map<TermCode, AttributeMapping> attributeMappings;
     private final String timeRestrictionParameter;
 
-    private Mapping(TermCode key, String resourceType, String termCodeSearchParameter,
+    private Mapping(ContextualTermCode key, String resourceType, String termCodeSearchParameter,
                     ValueFilterMapping valueFilterMapping, List<FixedCriterion> fixedCriteria,
                     Map<TermCode, AttributeMapping> attributeMappings, String timeRestrictionParameter) {
         this.key = requireNonNull(key);
@@ -39,29 +39,30 @@ public final class Mapping {
         this.timeRestrictionParameter = timeRestrictionParameter;
     }
 
-    public static Mapping of(TermCode concept, String resourceType) {
-        return new Mapping(concept, resourceType, null, null, List.of(), Map.of(), null);
+    public static Mapping of(ContextualTermCode contextualTermCode, String resourceType) {
+        return new Mapping(contextualTermCode, resourceType, null, null, List.of(), Map.of(), null);
     }
 
-    public static Mapping of(TermCode concept, String resourceType, String termCodeSearchParameter) {
-        return new Mapping(concept, resourceType, requireNonNull(termCodeSearchParameter), null, List.of(), Map.of(),
-                null);
+    public static Mapping of(ContextualTermCode contextualTermCode, String resourceType, String termCodeSearchParameter) {
+        return new Mapping(contextualTermCode, resourceType, requireNonNull(termCodeSearchParameter), null, List.of(),
+                Map.of(), null);
     }
 
     @JsonCreator
-    public static Mapping of(@JsonProperty("key") TermCode key,
+    public static Mapping of(@JsonProperty("context") TermCode context,
+                             @JsonProperty("key") TermCode key,
                              @JsonProperty("fhirResourceType") String resourceType,
                              @JsonProperty("termCodeSearchParameter") String termCodeSearchParameter,
                              @JsonProperty("valueSearchParameter") String valueSearchParameter,
-                             @JsonProperty("valueTypeFhir") ValueMappingType valueTypeFhir,
+                             @JsonProperty("valueType") FilterMappingType valueType,
                              @JsonProperty("fixedCriteria") List<FixedCriterion> fixedCriteria,
                              @JsonProperty("attributeSearchParameters") List<AttributeMapping> attributeMappings,
                              @JsonProperty("timeRestrictionParameter") String timeRestrictionParameter) {
-        return new Mapping(key, resourceType, termCodeSearchParameter,
+        return new Mapping(ContextualTermCode.of(requireNonNull(context, "missing JSON property: context"),
+                requireNonNull(key, "missing JSON property: key")), resourceType, termCodeSearchParameter,
                 valueSearchParameter == null
                         ? null
-                        : new ValueFilterMapping(valueTypeFhir == null ? ValueMappingType.CODING : valueTypeFhir,
-                        valueSearchParameter, key),
+                        : new ValueFilterMapping(valueType, valueSearchParameter),
                 fixedCriteria == null ? List.of() : List.copyOf(fixedCriteria),
                 attributeMappings == null
                         ? Map.of()
@@ -69,9 +70,9 @@ public final class Mapping {
                 timeRestrictionParameter);
     }
 
-    public Mapping withValueFilterMapping(ValueMappingType type, String searchParameter) {
+    public Mapping withValueFilterMapping(FilterMappingType type, String searchParameter) {
         return new Mapping(key, resourceType, termCodeSearchParameter,
-                new ValueFilterMapping(type, searchParameter, key),
+                new ValueFilterMapping(type, searchParameter),
                 fixedCriteria, attributeMappings, timeRestrictionParameter);
     }
 
@@ -94,7 +95,7 @@ public final class Mapping {
                 fixedCriteria, attributeMappings, requireNonNull(timeRestrictionParameter));
     }
 
-    public TermCode key() {
+    public ContextualTermCode key() {
         return key;
     }
 
@@ -123,33 +124,17 @@ public final class Mapping {
         return timeRestrictionParameter;
     }
 
-    private record ValueFilterMapping(ValueMappingType type, String searchParameter,
-                                      TermCode key) implements FilterMapping {
-
-        private static final TermCode AGE = TermCode.of("http://snomed.info/sct", "424144002", "age");
+    private record ValueFilterMapping(FilterMappingType type, String searchParameter)
+            implements FilterMapping {
 
         private ValueFilterMapping {
             requireNonNull(type);
             requireNonNull(searchParameter);
-            requireNonNull(key);
         }
 
         @Override
         public Optional<TermCode> compositeCode() {
             return Optional.empty();
-        }
-
-        @Override
-        public boolean isAge() {
-            return key.equals(AGE);
-        }
-
-        @Override
-        public Either<Exception, ExpandedFilter> expandConcept(TermCode concept) {
-            return switch (type()) {
-                case CODE -> Either.right(new ExpandedCodeFilter(searchParameter(), concept.code()));
-                case CODING -> Either.right(new ExpandedConceptFilter(searchParameter(), concept));
-            };
         }
 
         @Override

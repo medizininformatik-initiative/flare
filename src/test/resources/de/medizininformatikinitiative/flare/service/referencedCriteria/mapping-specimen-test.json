@@ -1,0 +1,58 @@
+[
+  {
+    "attributeSearchParameters": [
+      {
+        "attributeKey": {
+          "code": "festgestellteDiagnose",
+          "display": "Festgestellte Diagnose",
+          "system": "http://hl7.org/fhir/StructureDefinition"
+        },
+        "attributeType": "reference",
+        "attributeSearchParameter": "diagnose"
+      },
+      {
+        "attributeKey": {
+          "code": "icd-o-3",
+          "display": "icd-o-3",
+          "system": "http://hl7.org/fhir/StructureDefinition"
+        },
+        "attributeType": "concept",
+        "attributeSearchParameter": "bodysite"
+      }
+    ],
+    "context": {
+      "code": "Specimen",
+      "display": "Bioprobe",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0"
+    },
+    "fhirResourceType": "Specimen",
+    "key": {
+      "code": "119364003",
+      "display": "Serum specimen",
+      "system": "http://snomed.info/sct",
+      "version": "http://snomed.info/sct/900000000000207008/version/20220930"
+    },
+    "name": "Specimen",
+    "termCodeSearchParameter": "type",
+    "timeRestrictionParameter": "collected"
+  },
+  {
+    "context": {
+      "code": "Diagnose",
+      "display": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0"
+    },
+    "fhirResourceType": "Condition",
+    "key": {
+      "code": "E13.9",
+      "display": "Sonstiger n\u00e4her bezeichneter Diabetes mellitus : Ohne Komplikationen",
+      "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+      "version": "2023"
+    },
+    "name": "Condition",
+    "termCodeSearchParameter": "code",
+    "timeRestrictionParameter": "onset-date"
+  }
+]

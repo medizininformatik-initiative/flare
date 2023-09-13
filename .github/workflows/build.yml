@@ -170,6 +170,15 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v3
 
+      - name: Set up JDK 17 for Maven Build
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Maven Build for Ontology Download
+        run: mvn process-resources
+
       - name: Download Flare Jar
         uses: actions/download-artifact@v3
         with:
@@ -181,6 +190,9 @@ jobs:
         with:
           name: flare-image
           path: /tmp
+
+      - name: Download Ontology
+        run: curl https://github.com/medizininformatik-initiative/fhir-ontology-generator/raw/v2.0.1-RC/example/mii_core_data_set/ontology/mapping.zip --create-dirs -o ontology/mapping.zip
 
       - name: Load Flare Image
         run: docker load --input /tmp/flare.tar

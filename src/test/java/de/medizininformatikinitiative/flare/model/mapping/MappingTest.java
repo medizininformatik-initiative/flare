@@ -2,6 +2,7 @@ package de.medizininformatikinitiative.flare.model.mapping;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.medizininformatikinitiative.flare.model.sq.ContextualTermCode;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MappingTest {
 
+    static final TermCode CONTEXT = new TermCode("fdpg.mii.cds", "Patient", "Patient");
     static final TermCode GENDER = new TermCode("http://snomed.info/sct", "263495000", "Geschlecht");
     static final TermCode CONCEPT = new TermCode("http://hl7.org/fhir/consent-state-codes", "active", "Active");
 
@@ -18,20 +20,25 @@ class MappingTest {
     void fromJson_gender() throws Exception {
         var mapping = parse("""
                 {
-                    "fhirResourceType": "Patient",
-                    "key": {
-                        "code": "263495000",
-                        "display": "Geschlecht",
-                        "system": "http://snomed.info/sct"
-                    },
-                    "valueFhirPath": "gender",
-                    "valueSearchParameter": "gender",
-                    "valueType": "code",
-                    "valueTypeFhir": "code"
+                  "context": {
+                    "system": "fdpg.mii.cds",
+                    "code": "Patient",
+                    "display": "Patient"
+                  },
+                  "key": {
+                    "code": "263495000",
+                    "display": "Geschlecht",
+                    "system": "http://snomed.info/sct"
+                  },
+                  "fhirResourceType": "Patient",
+                  "valueFhirPath": "gender",
+                  "valueSearchParameter": "gender",
+                  "valueType": "code",
+                  "valueTypeFhir": "code"
                 }
                 """);
 
-        assertThat(mapping.key()).isEqualTo(GENDER);
+        assertThat(mapping.key()).isEqualTo(ContextualTermCode.of(CONTEXT, GENDER));
         assertThat(mapping.resourceType()).isEqualTo("Patient");
         assertThat(mapping.termCodeSearchParameter()).isNull();
     }
@@ -40,26 +47,31 @@ class MappingTest {
     void fromJson_withFixedCriterion() throws Exception {
         var mapping = parse("""
                 {
-                    "fhirResourceType": "Consent",
-                    "fixedCriteria": [
+                  "context": {
+                    "system": "fdpg.mii.cds",
+                    "code": "Patient",
+                    "display": "Patient"
+                  },
+                  "key": {
+                    "code": "combined-consent",
+                    "display": "Einwilligung f\\u00fcr die zentrale Datenanalyse",
+                    "system": "mii.abide"
+                  },
+                  "fhirResourceType": "Consent",
+                  "fixedCriteria": [
+                    {
+                      "fhirPath": "status",
+                      "searchParameter": "status",
+                      "type": "code",
+                      "value": [
                         {
-                          "fhirPath": "status",
-                          "searchParameter": "status",
-                          "type": "code",
-                          "value": [
-                              {
-                                "code": "active",
-                                "display": "Active",
-                                "system": "http://hl7.org/fhir/consent-state-codes"
-                              }
-                          ]
+                          "code": "active",
+                          "display": "Active",
+                          "system": "http://hl7.org/fhir/consent-state-codes"
                         }
-                    ],
-                    "key": {
-                        "code": "combined-consent",
-                        "display": "Einwilligung f\\u00fcr die zentrale Datenanalyse",
-                        "system": "mii.abide"
+                      ]
                     }
+                  ]
                 }
                 """);
 

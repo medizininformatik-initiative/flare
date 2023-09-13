@@ -1,27 +1,33 @@
 {
-    "inclusionCriteria": [
-        [
+  "inclusionCriteria": [
+    [
+      {
+        "attributeFilters": [],
+        "termCodes": [
+          {
+            "code": "263495000",
+            "display": "Geschlecht",
+            "system": "http://snomed.info/sct"
+          }
+        ],
+        "context": {
+          "code": "Patient",
+          "display": "Patient",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0"
+        },
+        "valueFilter": {
+          "selectedConcepts": [
             {
-                "attributeFilters": [],
-                "termCodes": [
-                    {
-                        "code": "263495000",
-                        "display": "Geschlecht",
-                        "system": "http://snomed.info/sct"
-                    }
-                ],
-                "valueFilter": {
-                    "selectedConcepts": [
-                        {
-                            "code": "other",
-                            "display": "",
-                            "system": "http://hl7.org/fhir/administrative-gender"
-                        }
-                    ],
-                    "type": "concept"
-                }
+              "code": "other",
+              "display": "",
+              "system": "http://hl7.org/fhir/administrative-gender"
             }
-        ]
-    ],
-    "version": ""
+          ],
+          "type": "concept"
+        }
+      }
+    ]
+  ],
+  "version": ""
 }

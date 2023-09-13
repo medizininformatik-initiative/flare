@@ -7,8 +7,7 @@ RUN apt-get update && apt-get upgrade -y && \
 
 RUN mkdir -p /app/cache && chown 1001:1001 /app/cache
 COPY target/flare.jar /app/
-COPY ontology/codex-term-code-mapping.json /app/ontology/
-COPY ontology/codex-code-tree.json /app/ontology/
+COPY ontology/mapping.zip /app/ontology/
 
 WORKDIR /app
 USER 1001

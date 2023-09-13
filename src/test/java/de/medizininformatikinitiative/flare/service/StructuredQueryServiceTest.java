@@ -24,6 +24,7 @@ import java.util.UUID;
 
 import static de.medizininformatikinitiative.flare.Assertions.assertThat;
 import static de.medizininformatikinitiative.flare.model.fhir.QueryParams.conceptValue;
+import static de.medizininformatikinitiative.flare.model.sq.TestUtil.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -32,10 +33,7 @@ import static org.mockito.Mockito.when;
 class StructuredQueryServiceTest {
 
     static final String BFARM = "http://fhir.de/CodeSystem/bfarm/icd-10-gm";
-    static final TermCode CODE_1 = TermCode.of(BFARM, "C71", "Malignant neoplasm of brain");
-    static final TermCode CODE_2 = TermCode.of(BFARM, "C72", "Malignant neoplasm of brain");
-    static final TermCode CODE_3 = TermCode.of(BFARM, "C73", "Malignant neoplasm of brain");
-    static final Criterion CONCEPT_CRITERION = Criterion.of(Concept.of(CODE_1));
+    static final Criterion CONCEPT_CRITERION = Criterion.of(cc(1));
     static final Population PATIENT = Population.of("patient-id-140857");
     static final Population PATIENT_1 = Population.of("patient-id-144725");
     static final Population PATIENT_2 = Population.of("patient-id-144727");
@@ -60,7 +58,7 @@ class StructuredQueryServiceTest {
 
             @BeforeEach
             void setUp() {
-                when(translator.toQuery(CONCEPT_CRITERION)).thenReturn(Either.left(new MappingNotFoundException(CODE_1)));
+                when(translator.toQuery(CONCEPT_CRITERION)).thenReturn(Either.left(new MappingNotFoundException(ctc(1))));
             }
 
             @Test
@@ -95,11 +93,11 @@ class StructuredQueryServiceTest {
             @Test
             @DisplayName("translate: returns CODE_1")
             void translate() {
-                var query = query(incl(CODE_1));
+                var query = query(incl(tc(1)));
 
                 var result = service.translate(query);
 
-                assertThat(result).isRightEqualTo(Operator.intersection(Operator.union(queryExpr(CODE_1))));
+                assertThat(result).isRightEqualTo(Operator.intersection(Operator.union(queryExpr(tc(1)))));
             }
         }
 
@@ -130,12 +128,12 @@ class StructuredQueryServiceTest {
             @Test
             @DisplayName("translate: returns CODE_1 ∪ CODE_2")
             void translate() {
-                var query = query(inclExpand(CODE_1, CODE_2));
+                var query = query(inclExpand(tc(1), tc(2)));
 
                 var result = service.translate(query);
 
-                assertThat(result).isRightEqualTo(Operator.intersection(Operator.union(queryExpr(CODE_1),
-                        queryExpr(CODE_2))));
+                assertThat(result).isRightEqualTo(Operator.intersection(Operator.union(queryExpr(tc(1)),
+                        queryExpr(tc(2)))));
             }
         }
     }
@@ -166,12 +164,12 @@ class StructuredQueryServiceTest {
         @Test
         @DisplayName("translate: returns CODE_1 ∩ CODE_2")
         void translate() {
-            var query = query(inclAnd(CODE_1, CODE_2));
+            var query = query(inclAnd(tc(1), tc(2)));
 
             var result = service.translate(query);
 
-            assertThat(result).isRightEqualTo(Operator.intersection(Operator.union(queryExpr(CODE_1)),
-                    Operator.union(queryExpr(CODE_2))));
+            assertThat(result).isRightEqualTo(Operator.intersection(Operator.union(queryExpr(tc(1))),
+                    Operator.union(queryExpr(tc(2)))));
         }
     }
 
@@ -201,12 +199,12 @@ class StructuredQueryServiceTest {
         @Test
         @DisplayName("translate: returns CODE_1 ∪ CODE_2")
         void translate() {
-            var query = query(inclOr(CODE_1, CODE_2));
+            var query = query(inclOr(tc(1), tc(2)));
 
             var result = service.translate(query);
 
-            assertThat(result).isRightEqualTo(Operator.intersection(Operator.union(queryExpr(CODE_1),
-                    queryExpr(CODE_2))));
+            assertThat(result).isRightEqualTo(Operator.intersection(Operator.union(queryExpr(tc(1)),
+                    queryExpr(tc(2)))));
         }
     }
 
@@ -236,13 +234,13 @@ class StructuredQueryServiceTest {
         @Test
         @DisplayName("translate: returns CODE_1 ∖ CODE_2")
         void translate() {
-            var query = query(incl(CODE_1), excl(CODE_2));
+            var query = query(incl(tc(1)), excl(tc(2)));
 
             var result = service.translate(query);
 
             assertThat(result).isRightEqualTo(Operator.difference(
-                    Operator.intersection(Operator.union(queryExpr(CODE_1))),
-                    Operator.union(Operator.intersection(Operator.union(queryExpr(CODE_2))))));
+                    Operator.intersection(Operator.union(queryExpr(tc(1)))),
+                    Operator.union(Operator.intersection(Operator.union(queryExpr(tc(2)))))));
         }
     }
 
@@ -272,14 +270,14 @@ class StructuredQueryServiceTest {
         @Test
         @DisplayName("translate: returns CODE_1 ∖ (CODE_2 ∪ CODE_3)")
         void translate() {
-            var query = query(incl(CODE_1), exclOr(CODE_2, CODE_3));
+            var query = query(incl(tc(1)), exclOr(tc(2), tc(3)));
 
             var result = service.translate(query);
 
             assertThat(result).isRightEqualTo(Operator.difference(
-                    Operator.intersection(Operator.union(queryExpr(CODE_1))),
-                    Operator.union(Operator.intersection(Operator.union(queryExpr(CODE_2))),
-                            Operator.intersection(Operator.union(queryExpr(CODE_3))))));
+                    Operator.intersection(Operator.union(queryExpr(tc(1)))),
+                    Operator.union(Operator.intersection(Operator.union(queryExpr(tc(2)))),
+                            Operator.intersection(Operator.union(queryExpr(tc(3)))))));
         }
     }
 
@@ -309,14 +307,14 @@ class StructuredQueryServiceTest {
         @Test
         @DisplayName("translate: returns CODE_1 ∖ (CODE_2 ∩ CODE_3)")
         void translate() {
-            var query = query(incl(CODE_1), exclAnd(CODE_2, CODE_3));
+            var query = query(incl(tc(1)), exclAnd(tc(2), tc(3)));
 
             var result = service.translate(query);
 
             assertThat(result).isRightEqualTo(Operator.difference(
-                    Operator.intersection(Operator.union(queryExpr(CODE_1))),
-                    Operator.union(Operator.intersection(Operator.union(queryExpr(CODE_2)),
-                            Operator.union(queryExpr(CODE_3))))));
+                    Operator.intersection(Operator.union(queryExpr(tc(1)))),
+                    Operator.union(Operator.intersection(Operator.union(queryExpr(tc(2))),
+                            Operator.union(queryExpr(tc(3)))))));
         }
     }
 
@@ -359,14 +357,14 @@ class StructuredQueryServiceTest {
     }
 
     CriterionQuery whenCriterion(TermCode code) {
-        var criterion = Criterion.of(Concept.of(code));
+        var criterion = Criterion.of(ContextualConcept.of(CONTEXT, Concept.of(code)));
         var query = Query.of("Condition", QueryParams.of("code", conceptValue(code)));
         when(translator.toQuery(criterion)).thenReturn(Either.right(List.of(query)));
         return new CriterionQuery(criterion, query);
     }
 
     CriterionQuery2 whenCriterionExpand(TermCode code1, TermCode code2) {
-        var criterion = Criterion.of(Concept.of(code1));
+        var criterion = Criterion.of(ContextualConcept.of(CONTEXT, Concept.of(code1)));
         var query1 = Query.of("Condition", QueryParams.of("code", conceptValue(code1)));
         var query2 = Query.of("Condition", QueryParams.of("code", conceptValue(code2)));
         when(translator.toQuery(criterion)).thenReturn(Either.right(List.of(query1, query2)));

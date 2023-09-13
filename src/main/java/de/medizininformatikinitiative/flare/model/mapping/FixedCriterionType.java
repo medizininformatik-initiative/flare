@@ -21,7 +21,7 @@ public enum FixedCriterionType implements JsonEnum {
     @Override
     public String jsonName() {
         try {
-            var field = AttributeMappingType.class.getField(name());
+            var field = FixedCriterionType.class.getField(name());
             return field.getAnnotation(JsonProperty.class).value();
         } catch (NoSuchFieldException e) {
             // can not happen

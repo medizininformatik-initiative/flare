@@ -1,7 +1,25 @@
 package de.medizininformatikinitiative.flare;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import de.medizininformatikinitiative.flare.model.mapping.Mapping;
+import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
+import de.medizininformatikinitiative.flare.model.mapping.TermCodeNode;
+import de.medizininformatikinitiative.flare.model.sq.ContextualTermCode;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.nio.charset.StandardCharsets;
+import java.time.Clock;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+
+import static java.util.function.Function.identity;
 
 public interface Util {
 
@@ -56,5 +74,41 @@ public interface Util {
 
     static double durationSecondsSince(long startNanoTime) {
         return ((double) (System.nanoTime() - startNanoTime)) / 1e9;
+    }
+
+    static MappingContext flareMappingContext(Clock clock) throws Exception {
+        var mapper = new ObjectMapper();
+        String ontologyZipFile = "ontology/mapping.zip";
+        String mappingFile = "mapping/mapping_fhir.json";
+        String conceptTreeFile = "mapping/mapping_tree.json";
+
+        Map<ContextualTermCode, Mapping> mappings = null;
+        TermCodeNode conceptTree = null;
+
+        try (FileInputStream fis = new FileInputStream(ontologyZipFile);
+             BufferedInputStream bis = new BufferedInputStream(fis);
+             ZipInputStream zis = new ZipInputStream(bis)) {
+            ZipEntry ze;
+            while ((ze = zis.getNextEntry()) != null) {
+                if (ze.getName().equals(mappingFile)) {
+                    mappings = Arrays.stream(mapper.readValue(readZipEntryContent(zis), Mapping[].class))
+                            .collect(Collectors.toMap(Mapping::key, identity()));
+                } else if (ze.getName().equals(conceptTreeFile)) {
+                    String treeString = readZipEntryContent(zis);
+                    conceptTree = mapper.readValue(treeString, TermCodeNode.class);
+                }
+            }
+        }
+        return MappingContext.of(mappings, conceptTree, clock);
+    }
+
+    private static String readZipEntryContent(ZipInputStream zis) throws Exception {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int len;
+        while ((len = zis.read(buffer)) > 0) {
+            baos.write(buffer, 0, len);
+        }
+        return baos.toString(StandardCharsets.UTF_8);
     }
 }
