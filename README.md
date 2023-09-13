@@ -69,6 +69,18 @@ The default configuration assumes the following:
 * the FHIR endpoint is capable of handling 4 requests in parallel
 * the FHIR endpoint is capable of returning pages of size 1000 or constrain the page size itself
 
+## Support for self-signed certificates
+
+Flare supports the use of self-signed certificates from your own CAs.
+On each startup FLARE will search through the folder /app/certs inside the container 
+, add all found CA *.pem files to a java truststore and start FLARE with this truststore.
+
+In order to add your own CA files, add your own CA *.pem files to the /app/certs folder of the container.
+
+Using docker-compose mount a folder from your host (e.g.: ./certs) to the /app/certs folder,
+ add your *.pem files (one for each CA you would like to support) to the folder and ensure that they
+have the .pem extension.
+
 ## Documentation
 
 * [REST API](docs/api.md)
