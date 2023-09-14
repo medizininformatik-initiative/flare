@@ -191,9 +191,6 @@ jobs:
           name: flare-image
           path: /tmp
 
-      - name: Download Ontology
-        run: curl https://github.com/medizininformatik-initiative/fhir-ontology-generator/raw/v2.0.1-RC/example/mii_core_data_set/ontology/mapping.zip --create-dirs -o ontology/mapping.zip
-
       - name: Load Flare Image
         run: docker load --input /tmp/flare.tar
 
