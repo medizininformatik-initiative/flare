@@ -79,8 +79,8 @@ public interface Util {
     static MappingContext flareMappingContext(Clock clock) throws Exception {
         var mapper = new ObjectMapper();
         String ontologyZipFile = "ontology/mapping.zip";
-        String mappingFile = "mapping/mapping_fhir.json";
-        String conceptTreeFile = "mapping/mapping_tree.json";
+        String mappingFile = "ontology/mapping/mapping_fhir.json";
+        String conceptTreeFile = "ontology/mapping/mapping_tree.json";
 
         Map<ContextualTermCode, Mapping> mappings = null;
         TermCodeNode conceptTree = null;
