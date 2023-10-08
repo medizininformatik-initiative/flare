@@ -1,6 +1,8 @@
 package de.medizininformatikinitiative.flare.model.mapping;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.medizininformatikinitiative.flare.model.sq.ContextualTermCode;
 import de.medizininformatikinitiative.flare.model.sq.TermCode;
 import org.junit.jupiter.api.Test;
 
@@ -8,13 +10,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class TermCodeNodeTest {
 
-    static final TermCode ROOT = TermCode.of("foo", "root", "root");
-    static final TermCode C1 = TermCode.of("foo", "c1", "c1");
-    static final TermCode C2 = TermCode.of("foo", "c2", "c2");
-    static final TermCode C11 = TermCode.of("foo", "c11", "c11");
-    static final TermCode C12 = TermCode.of("foo", "c12", "c12");
-    static final TermCode C111 = TermCode.of("foo", "c111", "c111");
-    static final TermCode C112 = TermCode.of("foo", "c112", "c112");
+    static final TermCode CONTEXT = TermCode.of("context", "context", "context");
+    static final ContextualTermCode ROOT = ContextualTermCode.of(CONTEXT, TermCode.of("foo", "root", "root"));
+    static final ContextualTermCode C1 = ContextualTermCode.of(CONTEXT, TermCode.of("foo", "c1", "c1"));
+    static final ContextualTermCode C2 = ContextualTermCode.of(CONTEXT, TermCode.of("foo", "c2", "c2"));
+    static final ContextualTermCode C11 = ContextualTermCode.of(CONTEXT, TermCode.of("foo", "c11", "c11"));
+    static final ContextualTermCode C12 = ContextualTermCode.of(CONTEXT, TermCode.of("foo", "c12", "c12"));
+    static final ContextualTermCode C111 = ContextualTermCode.of(CONTEXT, TermCode.of("foo", "c111", "c111"));
+    static final ContextualTermCode C112 = ContextualTermCode.of(CONTEXT, TermCode.of("foo", "c112", "c112"));
 
     @Test
     void noChildren() {
@@ -82,66 +85,108 @@ class TermCodeNodeTest {
 
     @Test
     void fromJson() throws Exception {
-        var mapper = new ObjectMapper();
-
-        var conceptNode = mapper.readValue("""
-                {"termCode": {
-                   "system": "system-143705",
-                   "code": "code-143708",
-                   "display": "display-143716"
-                 },
-                 "children": []
+        var conceptNode = parse("""
+                {
+                  "context": {
+                    "system": "context-system-142748",
+                    "code": "context-code-142803",
+                    "display": "context-display-142810"
+                  },
+                  "termCode": {
+                    "system": "system-143705",
+                    "code": "code-143708",
+                    "display": "display-143716"
+                  },
+                  "children": []
                 }
-                """, TermCodeNode.class);
+                """);
 
-        assertThat(conceptNode.termCode().system()).isEqualTo("system-143705");
+        assertThat(conceptNode.contextualTermCode())
+                .isEqualTo(ContextualTermCode.of(
+                        TermCode.of("context-system-142748", "context-code-142803", "context-display-142810"),
+                        TermCode.of("system-143705", "code-143708", "display-143716")));
     }
 
     @Test
     void fromJson_AdditionalPropertyIsIgnored() throws Exception {
-        var mapper = new ObjectMapper();
-
-        var conceptNode = mapper.readValue("""
-                {"foo-152133": "bar-152136",
-                 "termCode": {
-                   "system": "system-143705",
-                   "code": "code-143708",
-                   "display": "display-143716"
-                 },
-                 "children": []
+        var conceptNode = parse("""
+                {
+                  "foo-152133": "bar-152136",
+                  "context": {
+                    "system": "context-system-142748",
+                    "code": "context-code-142803",
+                    "display": "context-display-142810"
+                  },
+                  "termCode": {
+                    "system": "system-143705",
+                    "code": "code-143708",
+                    "display": "display-143716"
+                  },
+                  "children": []
                 }
-                """, TermCodeNode.class);
+                """);
 
-        assertThat(conceptNode.termCode().system()).isEqualTo("system-143705");
+        assertThat(conceptNode.contextualTermCode().context().system()).isEqualTo("context-system-142748");
     }
 
     @Test
     void fromJson_WithChildren() throws Exception {
-        var mapper = new ObjectMapper();
+        var conceptNode = parse("""
+                {
+                   "context": {
+                     "system": "parent-context-system",
+                     "code": "parent-context-code",
+                     "display": "parent-context-display"
+                   },
+                   "termCode": {
+                     "system": "parent-system",
+                     "code": "parent-code",
+                     "display": "parent-display"
+                   },
+                   "children": [
+                     {
+                       "context": {
+                         "system": "child-1-context-system",
+                         "code": "child-1-context-code",
+                         "display": "child-1-context-display"
+                       },
+                       "termCode": {
+                         "system": "child-1-system",
+                         "code": "child-1-code",
+                         "display": "child-1-display"
+                       }
+                     },
+                     {
+                       "context": {
+                         "system": "child-2-context-system",
+                         "code": "child-2-context-code",
+                         "display": "child-2-context-display"
+                       },
+                       "termCode": {
+                         "system": "child-2-system",
+                         "code": "child-2-code",
+                         "display": "child-2-display"
+                       }
+                     }
+                   ]
+                 }
+                """);
 
-        var conceptNode = mapper.readValue("""
-                {"termCode": {
-                   "system": "system-143705",
-                   "code": "code-143708",
-                   "display": "display-143716"
-                 },
-                 "children": [
-                  {"termCode": {
-                     "system": "child-1-system-155856",
-                     "code": "child-1-code-155858",
-                     "display": "child-1-display-155900"
-                  }},
-                  {"termCode": {
-                     "system": "child-2-system-155958",
-                     "code": "child-2-code-160000",
-                     "display": "child-2-display-160002"
-                  }}
-                 ]
-                }
-                """, TermCodeNode.class);
+        assertThat(conceptNode.contextualTermCode())
+                .isEqualTo(ContextualTermCode.of(
+                        TermCode.of("parent-context-system", "parent-context-code", "parent-context-display"),
+                        TermCode.of("parent-system", "parent-code", "parent-display")));
+        assertThat(conceptNode.children().get(0).contextualTermCode())
+                .isEqualTo(ContextualTermCode.of(
+                        TermCode.of("child-1-context-system", "child-1-context-code", "child-1-context-display"),
+                        TermCode.of("child-1-system", "child-1-code", "child-1-display")));
+        assertThat(conceptNode.children().get(1).contextualTermCode())
+                .isEqualTo(ContextualTermCode.of(
+                        TermCode.of("child-2-context-system", "child-2-context-code", "child-2-context-display"),
+                        TermCode.of("child-2-system", "child-2-code", "child-2-display")));
+    }
 
-        assertThat(conceptNode.termCode().system()).isEqualTo("system-143705");
-        assertThat(conceptNode.children().get(0).termCode().system()).isEqualTo("child-1-system-155856");
-        assertThat(conceptNode.children().get(1).termCode().system()).isEqualTo("child-2-system-155958");
+    static TermCodeNode parse(String s) throws JsonProcessingException {
+        return new ObjectMapper().readValue(s, TermCodeNode.class);
     }
 }

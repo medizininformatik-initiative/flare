@@ -1,0 +1,42 @@
+{
+  "context": {
+    "code": "root",
+    "display": "root",
+    "system": "root"
+  },
+  "termCode": {
+    "code": "root",
+    "display": "root",
+    "system": "root"
+  },
+  "children": [
+    {
+      "context": {
+        "code": "Diagnose",
+        "display": "Diagnose",
+        "system": "fdpg.mii.cds",
+        "version": "1.0.0"
+      },
+      "termCode": {
+        "code": "E13.9",
+        "display": "Sonstiger n\u00e4her bezeichneter Diabetes mellitus : Ohne Komplikationen",
+        "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+        "version": "2023"
+      }
+    },
+    {
+      "context": {
+        "code": "Specimen",
+        "display": "Bioprobe",
+        "system": "fdpg.mii.cds",
+        "version": "1.0.0"
+      },
+      "termCode": {
+        "code": "119364003",
+        "display": "Serum specimen",
+        "system": "http://snomed.info/sct",
+        "version": "http://snomed.info/sct/900000000000207008/version/20220930"
+      }
+    }
+  ]
+}

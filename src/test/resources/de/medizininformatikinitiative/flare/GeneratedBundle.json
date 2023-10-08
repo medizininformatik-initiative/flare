@@ -16,7 +16,85 @@
       "method": "PUT",
       "url": "Organization/3adf9bf3-ca12-4107-ac5e-09bbd910b770"
     }
-  }, {
+  },
+  {
+    "resource": {
+        "resourceType": "Observation",
+        "id": "76791c4a-ff74-4742-b781-5c89613f8f4e",
+        "meta": {
+            "profile": [
+                "https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/ObservationLab"
+            ]
+        },
+        "status": "final",
+        "category": [
+            {
+                "coding": [
+                    {
+                        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                        "code": "vital-signs"
+                    }
+                ]
+            }
+        ],
+        "code": {
+            "coding": [
+                {
+                    "system": "http://loinc.org",
+                    "code": "85354-9",
+                    "display": "Blood pressure panel with all children optional"
+                }
+            ]
+        },
+        "subject": {
+            "reference": "Patient/062d64e5-e4e5-4c89-8fa7-a47ae3b2b95c",
+            "display": "Alexia Wachtel"
+        },
+        "effectiveDateTime": "2010-08-05T07:16:58+02:00",
+        "component": [
+            {
+                "code": {
+                    "coding": [
+                        {
+                            "system": "http://loinc.org",
+                            "code": "8480-6",
+                            "display": "Systolic blood pressure"
+                        }
+                    ],
+                    "text": "Systolic blood pressure"
+                },
+                "valueQuantity": {
+                    "value": 109,
+                    "unit": "mmHg",
+                    "system": "http://unitsofmeasure.org",
+                    "code": "mm[Hg]"
+                }
+            },
+            {
+                "code": {
+                    "coding": [
+                        {
+                            "system": "http://loinc.org",
+                            "code": "8462-4",
+                            "display": "Diastolic blood pressure"
+                        }
+                    ],
+                    "text": "Diastolic blood pressure"
+                },
+                "valueQuantity": {
+                    "value": 44,
+                    "unit": "mmHg",
+                    "system": "http://unitsofmeasure.org",
+                    "code": "mm[Hg]"
+                }
+            }
+        ]
+    },
+    "request": {
+        "method": "PUT",
+        "url": "Observation/76791c4a-ff74-4742-b781-5c89613f8f4e"
+    }
+},{
     "resource": {
       "resourceType": "Patient",
       "id": "aec65589-3305-47d6-a437-9630460a828b",

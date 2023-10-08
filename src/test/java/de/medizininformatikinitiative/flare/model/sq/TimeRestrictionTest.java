@@ -1,5 +1,6 @@
 package de.medizininformatikinitiative.flare.model.sq;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
@@ -12,61 +13,55 @@ class TimeRestrictionTest {
 
     @Test
     void fromJson_withInvalidAfterDate() {
-        var mapper = new ObjectMapper();
-
-        assertThatThrownBy(() -> mapper.readValue("""
+        assertThatThrownBy(() -> parse("""
                 {
                   "afterDate": "foo",
                   "beforeDate": "2021-10-09"
                 }
-                """, TimeRestriction.class))
+                """))
                 .hasRootCauseMessage("Invalid value `foo` in time restriction property `afterDate`.");
     }
 
     @Test
     void fromJson_withInvalidBeforeDate() {
-        var mapper = new ObjectMapper();
-
-        assertThatThrownBy(() -> mapper.readValue("""
+        assertThatThrownBy(() -> parse("""
                 {
                   "afterDate": "2021-10-09",
                   "beforeDate": "bar"
                 }
-                """, TimeRestriction.class))
+                """))
                 .hasRootCauseMessage("Invalid value `bar` in time restriction property `beforeDate`.");
     }
 
     @Test
     void fromJson_withBothDatesMissing() {
-        var mapper = new ObjectMapper();
-
-        assertThatThrownBy(() -> mapper.readValue("{}", TimeRestriction.class))
+        assertThatThrownBy(() -> parse("{}"))
                 .hasRootCauseMessage("Missing properties expect at least one of `afterDate` or `beforeDate`.");
     }
 
     @Test
     void fromJson_withoutAfterDate() throws Exception {
-        var mapper = new ObjectMapper();
-
-        var result = mapper.readValue("""
+        var result = parse("""
                 {
                   "beforeDate": "2021-10-09"
                 }
-                """, TimeRestriction.class);
+                """);
 
         assertThat(result).isEqualTo(new TimeRestriction.OpenStart(LocalDate.of(2021, 10, 9)));
     }
 
     @Test
     void fromJson_withoutBeforeDate() throws Exception {
-        var mapper = new ObjectMapper();
-
-        var result = mapper.readValue("""
+        var result = parse("""
                 {
                   "afterDate": "2023-03-16"
                 }
-                """, TimeRestriction.class);
+                """);
 
         assertThat(result).isEqualTo(new TimeRestriction.OpenEnd(LocalDate.of(2023, 3, 16)));
+    }
+
+    static TimeRestriction parse(String s) throws JsonProcessingException {
+        return new ObjectMapper().readValue(s, TimeRestriction.class);
     }
 }

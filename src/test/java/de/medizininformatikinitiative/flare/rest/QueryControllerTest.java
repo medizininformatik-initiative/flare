@@ -25,7 +25,7 @@ class QueryControllerTest {
     static final MediaType MEDIA_TYPE_SQ = MediaType.valueOf("application/sq+json");
     static final TermCode FEVER = TermCode.of("http://snomed.info/sct", "386661006", "Fever (finding)");
     static final StructuredQuery STRUCTURED_QUERY = StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(
-            Criterion.of(Concept.of(FEVER)))));
+            Criterion.of(ContextualConcept.of(TestUtil.CONTEXT, Concept.of(FEVER))))));
     static final QueryExpression QUERY_EXPRESSION = new QueryExpression(Query.ofType("Condition"));
 
     @Mock
@@ -53,6 +53,11 @@ class QueryControllerTest {
                           "inclusionCriteria": [
                             [
                               {
+                                "context": {
+                                  "system": "context-system",
+                                  "code": "context-code",
+                                  "display": "context-display"
+                                },
                                 "termCodes": [
                                   {
                                     "system": "http://snomed.info/sct",
@@ -72,7 +77,7 @@ class QueryControllerTest {
 
     @Test
     void execute_error() {
-        when(queryService.execute(STRUCTURED_QUERY)).thenReturn(Mono.error(new MappingNotFoundException(FEVER)));
+        when(queryService.execute(STRUCTURED_QUERY)).thenReturn(Mono.error(new MappingNotFoundException(ContextualTermCode.of(TestUtil.CONTEXT, FEVER))));
 
         client.post()
                 .uri("/query/execute")
@@ -82,6 +87,11 @@ class QueryControllerTest {
                           "inclusionCriteria": [
                             [
                               {
+                                "context": {
+                                  "system": "context-system",
+                                  "code": "context-code",
+                                  "display": "context-display"
+                                },
                                 "termCodes": [
                                   {
                                     "system": "http://snomed.info/sct",
@@ -97,7 +107,7 @@ class QueryControllerTest {
                 .exchange()
                 .expectStatus().isBadRequest()
                 .expectBody()
-                .jsonPath("$.error").isEqualTo("Mapping for code TermCode[system=http://snomed.info/sct, code=386661006, display=Fever (finding)] not found.");
+                .jsonPath("$.error").isEqualTo("Mapping for the contextual term code ContextualTermCode[context=TermCode[system=context-system, code=context-code, display=context-display], termCode=TermCode[system=http://snomed.info/sct, code=386661006, display=Fever (finding)]] not found.");
     }
 
     @Test
@@ -112,6 +122,11 @@ class QueryControllerTest {
                           "inclusionCriteria": [
                             [
                               {
+                                "context": {
+                                  "system": "context-system",
+                                  "code": "context-code",
+                                  "display": "context-display"
+                                },
                                 "termCodes": [
                                   {
                                     "system": "http://snomed.info/sct",
@@ -133,7 +148,7 @@ class QueryControllerTest {
 
     @Test
     void translate_error() {
-        when(queryService.translate(STRUCTURED_QUERY)).thenReturn(Either.left(new MappingNotFoundException(FEVER)));
+        when(queryService.translate(STRUCTURED_QUERY)).thenReturn(Either.left(new MappingNotFoundException(ContextualTermCode.of(TestUtil.CONTEXT, FEVER))));
 
         client.post()
                 .uri("/query/translate")
@@ -143,6 +158,11 @@ class QueryControllerTest {
                           "inclusionCriteria": [
                             [
                               {
+                                "context": {
+                                  "system": "context-system",
+                                  "code": "context-code",
+                                  "display": "context-display"
+                                },
                                 "termCodes": [
                                   {
                                     "system": "http://snomed.info/sct",
@@ -158,6 +178,6 @@ class QueryControllerTest {
                 .exchange()
                 .expectStatus().isBadRequest()
                 .expectBody()
-                .jsonPath("$.error").isEqualTo("Mapping for code TermCode[system=http://snomed.info/sct, code=386661006, display=Fever (finding)] not found.");
+                .jsonPath("$.error").isEqualTo("Mapping for the contextual term code ContextualTermCode[context=TermCode[system=context-system, code=context-code, display=context-display], termCode=TermCode[system=http://snomed.info/sct, code=386661006, display=Fever (finding)]] not found.");
     }
 }

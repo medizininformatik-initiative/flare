@@ -8,6 +8,6 @@ import java.util.Optional;
 public record Reference(String reference) {
 
     public Optional<String> id() {
-        return reference == null ? Optional.empty() :  Optional.of(reference.substring(reference.indexOf('/') + 1));
+        return reference == null ? Optional.empty() : Optional.of(reference.substring(reference.indexOf('/') + 1));
     }
 }

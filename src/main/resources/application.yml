@@ -15,9 +15,6 @@ flare:
       path: 'cache'
       expire: 'P7D'
       threads: 4
-  mapping:
-    mappingFile: ${FLARE_MAPPING_MAPPING_FILE:ontology/codex-term-code-mapping.json}
-    conceptTreeFile: ${FLARE_MAPPING_CONCEPT_TREE_FILE:ontology/codex-code-tree.json}
 
 server:
   port: 8080

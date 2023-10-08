@@ -1,5 +1,16 @@
 # Changelog
 
+## v2.0.0
+
+### Enhancements
+
+* Support Composite Search Parameters ([#48](https://github.com/medizininformatik-initiative/flare/issues/48))
+* Implement Referenced Criteria ([#75](https://github.com/medizininformatik-initiative/flare/pull/75))
+
+### Minor Enhancements
+
+* Add Context to support Ontology 2.0 ([#77](https://github.com/medizininformatik-initiative/flare/pull/77))
+
 ## v1.0.0
 
 ### Bugfixes
