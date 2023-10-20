@@ -165,6 +165,7 @@ jobs:
       - integration-test
       - image-scan
     runs-on: ubuntu-22.04
+    if: ${{ ! startsWith(github.head_ref, 'dependabot/')}}
 
     steps:
       - name: Check out Git repository
