@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.1.0
+
+### Enhancements
+
+* Update Onto to v2.1.18-RC ([#93](https://github.com/medizininformatik-initiative/flare/pull/93))
+
+The full changelog can be found [here](https://github.com/medizininformatik-initiative/flare/milestone/10?closed=1).
+
 ## v2.0.0
 
 ### Enhancements
@@ -10,6 +18,8 @@
 ### Minor Enhancements
 
 * Add Context to support Ontology 2.0 ([#77](https://github.com/medizininformatik-initiative/flare/pull/77))
+
+The full changelog can be found [here](https://github.com/medizininformatik-initiative/flare/milestone/9?closed=1).
 
 ## v1.0.0
 
