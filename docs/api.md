@@ -12,7 +12,7 @@ curl -s http://localhost:8080/query/execute -H "Content-Type: application/sq+jso
 An example `<query>` is:
 ```json
 {
-  "version": "http://to_be_decided.com/draft-1/schema#",
+  "version": "https://medizininformatik-initiative.de/fdpg/StructuredQuery/v3/schema",
   "display": "",
   "inclusionCriteria": [
     [
@@ -94,7 +94,7 @@ Here is an example for a translation result:
 The example query is:
 ```json
 {
-  "version": "http://to_be_decided.com/draft-1/schema#",
+  "version": "https://medizininformatik-initiative.de/fdpg/StructuredQuery/v3/schema",
   "display": "",
   "inclusionCriteria": [
     [

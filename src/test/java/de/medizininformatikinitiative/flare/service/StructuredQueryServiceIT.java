@@ -183,7 +183,7 @@ class StructuredQueryServiceIT {
     void execute_BloodPressureTestCase() throws Exception {
         var query = parseSq("""
                 {
-                  "version": "http://to_be_decided.com/draft-1/schema#",
+                  "version": "https://medizininformatik-initiative.de/fdpg/StructuredQuery/v3/schema",
                   "inclusionCriteria": [
                     [
                       {
