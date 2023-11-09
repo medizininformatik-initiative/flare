@@ -36,9 +36,9 @@ import java.time.Clock;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.zip.ZipFile;
 
 import static java.util.function.Function.identity;
@@ -53,14 +53,14 @@ class StructuredQueryServiceIT {
     private static final TermCode I08 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "I08", "");
     private static final TermCode COVID = TermCode.of("http://loinc.org", "94500-6", "");
     private static final TermCode INVALID = TermCode.of("http://loinc.org", "LA15841-2", "Invalid");
-    TermCode DIAGNOSIS = TermCode.of("fdpg.mii.cds", "Diagnose", "Diagnose");
-    TermCode OBSERVATION = TermCode.of("fdpg.mii.cds", "Laboruntersuchung", "Laboruntersuchung");
+    private static final TermCode DIAGNOSIS = TermCode.of("fdpg.mii.cds", "Diagnose", "Diagnose");
+    private static final TermCode OBSERVATION = TermCode.of("fdpg.mii.cds", "Laboruntersuchung", "Laboruntersuchung");
 
     private static final Logger logger = LoggerFactory.getLogger(StructuredQueryServiceIT.class);
 
     @Container
     @SuppressWarnings("resource")
-    private static final GenericContainer<?> blaze = new GenericContainer<>("samply/blaze:0.22")
+    private static final GenericContainer<?> blaze = new GenericContainer<>("samply/blaze:0.23")
             .withImagePullPolicy(PullPolicy.alwaysPull())
             .withEnv("LOG_LEVEL", "debug")
             .withEnv("DB_SEARCH_PARAM_BUNDLE", "/app/custom-search-parameters.json")
@@ -76,122 +76,47 @@ class StructuredQueryServiceIT {
 
     @Autowired
     private StructuredQueryService service;
+
     @Autowired
     private StructuredQueryService service_Specimen;
+
     @Autowired
     private StructuredQueryService service_BloodPressure;
 
-    @Configuration
-    static class Config {
-
-        @Bean
-        public WebClient dataStoreClient() {
-            var host = "%s:%d".formatted(blaze.getHost(), blaze.getFirstMappedPort());
-            return WebClient.builder()
-                    .baseUrl("http://%s/fhir".formatted(host))
-                    .defaultHeader("Accept", "application/fhir+json")
-                    .defaultHeader("X-Forwarded-Host", host)
-                    .build();
-        }
-
-        @Bean
-        public MappingContext mappingContext() throws Exception {
-            return Util.flareMappingContext(CLOCK_2000);
-        }
-
-        @Bean
-        public MappingContext mappingContext_Specimen() throws Exception {
-            var mapper = new ObjectMapper();
-            var mappings = Arrays.stream(mapper.readValue(slurp_ClassPath("referencedCriteria/mapping-specimen-test.json"), Mapping[].class))
-                    .collect(Collectors.toMap(Mapping::key, identity()));
-            var conceptTree = mapper.readValue(slurp_ClassPath("referencedCriteria/tree-specimen-test.json"), TermCodeNode.class);
-            return MappingContext.of(mappings, conceptTree, CLOCK_2000);
-        }
-
-        @Bean
-        public MappingContext mappingContext_BloodPressure() throws Exception {
-            var mapper = new ObjectMapper();
-            var mappings = Arrays.stream(mapper.readValue(slurp_ClassPath("compositeSearchParams/mapping-bloodPressure.json"), Mapping[].class))
-                    .collect(Collectors.toMap(Mapping::key, identity()));
-            var conceptTree = mapper.readValue(slurp_ClassPath("compositeSearchParams/tree-bloodPressure.json"), TermCodeNode.class);
-            return MappingContext.of(mappings, conceptTree, CLOCK_2000);
-        }
-
-        @Bean
-        public FhirQueryService fhirQueryService(WebClient dataStoreClient) {
-            return new DataStore(dataStoreClient, Clock.systemDefaultZone(), 1);
-        }
-
-        @Bean
-        public Translator translator(MappingContext mappingContext) {
-            return new Translator(mappingContext);
-        }
-
-        @Bean
-        public Translator translator_Specimen(MappingContext mappingContext_Specimen) {
-            return new Translator(mappingContext_Specimen);
-        }
-
-        @Bean
-        public Translator translator_BloodPressure(MappingContext mappingContext_BloodPressure) {
-            return new Translator(mappingContext_BloodPressure);
-        }
-
-        @Bean
-        public StructuredQueryService service(FhirQueryService fhirQueryService, Translator translator) {
-            return new StructuredQueryService(fhirQueryService, translator);
-        }
-
-        @Bean
-        public StructuredQueryService service_Specimen(FhirQueryService fhirQueryService, Translator translator_Specimen) {
-            return new StructuredQueryService(fhirQueryService, translator_Specimen);
-        }
-
-        @Bean
-        public StructuredQueryService service_BloodPressure(FhirQueryService fhirQueryService, Translator translator_BloodPressure) {
-            return new StructuredQueryService(fhirQueryService, translator_BloodPressure);
-        }
+    private static String slurp_FlareApplication(String name) throws URISyntaxException, IOException {
+        return Files.readString(resourcePathFlareApplication(name));
     }
 
-    private static String slurp_FlareApplication(String name) {
-        try {
-            return Files.readString(resourcePath_FlareApplication(name));
-        } catch (IOException | URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+    private static String slurpStructuredQueryService(String name) throws URISyntaxException, IOException {
+        return Files.readString(resourcePathStructuredQueryService(name));
     }
 
-    private static String slurp_ClassPath(String name) {
-        try {
-            return Files.readString(resourcePath_ClassPath(name));
-        } catch (IOException | URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static Path resourcePath_ClassPath(String name) throws URISyntaxException {
+    private static Path resourcePathStructuredQueryService(String name) throws URISyntaxException {
         return Paths.get(Objects.requireNonNull(StructuredQueryServiceIT.class.getResource(name)).toURI());
     }
 
-    private static Path resourcePath_FlareApplication(String name) throws URISyntaxException {
+    private static Path resourcePathFlareApplication(String name) throws URISyntaxException {
         return Paths.get(Objects.requireNonNull(FlareApplication.class.getResource(name)).toURI());
     }
 
-    public static Stream<StructuredQuery> getTestQueriesReturningOnePatient() throws URISyntaxException, IOException {
-        //not using try-with for zipFile here because the test would otherwise not work as it would state the error
-        //that the zip file had been closed for some reason
-        var zipFile = new ZipFile(resourcePath_FlareApplication("testCases").resolve("returningOnePatient.zip").toString());
-        return zipFile.stream().map(s -> {
-            try {
-                return new ObjectMapper().readValue(zipFile.getInputStream(s), StructuredQuery.class);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+    public static List<StructuredQuery> getTestQueriesReturningOnePatient() throws URISyntaxException, IOException {
+        try (var zipFile = new ZipFile(resourcePathFlareApplication("testCases").resolve("returningOnePatient.zip").toString())) {
+            return zipFile.stream().map(entry -> {
+                try {
+                    return new ObjectMapper().readValue(zipFile.getInputStream(entry), StructuredQuery.class);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }).toList();
+        }
+    }
+
+    static StructuredQuery parseSq(String s) throws JsonProcessingException {
+        return new ObjectMapper().readValue(s, StructuredQuery.class);
     }
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws URISyntaxException, IOException {
         if (!dataImported) {
             dataStoreClient.post()
                     .contentType(APPLICATION_JSON)
@@ -223,7 +148,7 @@ class StructuredQueryServiceIT {
 
     @Test
     void execute_genderTestCase() throws URISyntaxException, IOException {
-        var query = parseSq(Files.readString(resourcePath_FlareApplication("testCases").resolve("returningOther").resolve("2-gender.json")));
+        var query = parseSq(Files.readString(resourcePathFlareApplication("testCases").resolve("returningOther").resolve("2-gender.json")));
 
         var result = service.execute(query).block();
 
@@ -231,15 +156,15 @@ class StructuredQueryServiceIT {
     }
 
     @Test
-    void execute_specimenTestCase() throws IOException {
+    void execute_specimenTestCase() throws IOException, URISyntaxException {
         dataStoreClient.post()
                 .contentType(APPLICATION_JSON)
-                .bodyValue(slurp_ClassPath("referencedCriteria/specimen-diag-testbundle.json"))
+                .bodyValue(slurpStructuredQueryService("referencedCriteria/specimen-diag-testbundle.json"))
                 .retrieve()
                 .toBodilessEntity()
                 .block();
 
-        var query = parseSq(slurp_ClassPath("referencedCriteria/sq-test-specimen-diag.json"));
+        var query = parseSq(slurpStructuredQueryService("referencedCriteria/sq-test-specimen-diag.json"));
 
         var result = service_Specimen.execute(query).block();
 
@@ -258,7 +183,7 @@ class StructuredQueryServiceIT {
     void execute_BloodPressureTestCase() throws Exception {
         var query = parseSq("""
                 {
-                  "version": "http://to_be_decided.com/draft-1/schema#",
+                  "version": "https://medizininformatik-initiative.de/fdpg/StructuredQuery/v3/schema",
                   "inclusionCriteria": [
                     [
                       {
@@ -303,7 +228,75 @@ class StructuredQueryServiceIT {
         assertThat(result).isOne();
     }
 
-    static StructuredQuery parseSq(String s) throws JsonProcessingException {
-        return new ObjectMapper().readValue(s, StructuredQuery.class);
+    @Configuration
+    static class Config {
+
+        @Bean
+        public WebClient dataStoreClient() {
+            var host = "%s:%d".formatted(blaze.getHost(), blaze.getFirstMappedPort());
+            return WebClient.builder()
+                    .baseUrl("http://%s/fhir".formatted(host))
+                    .defaultHeader("Accept", "application/fhir+json")
+                    .defaultHeader("X-Forwarded-Host", host)
+                    .build();
+        }
+
+        @Bean
+        public MappingContext mappingContext() throws Exception {
+            return Util.flareMappingContext(CLOCK_2000);
+        }
+
+        @Bean
+        public MappingContext mappingContext_Specimen() throws Exception {
+            var mapper = new ObjectMapper();
+            var mappings = Arrays.stream(mapper.readValue(slurpStructuredQueryService("referencedCriteria/mapping-specimen-test.json"), Mapping[].class))
+                    .collect(Collectors.toMap(Mapping::key, identity()));
+            var conceptTree = mapper.readValue(slurpStructuredQueryService("referencedCriteria/tree-specimen-test.json"), TermCodeNode.class);
+            return MappingContext.of(mappings, conceptTree, CLOCK_2000);
+        }
+
+        @Bean
+        public MappingContext mappingContext_BloodPressure() throws Exception {
+            var mapper = new ObjectMapper();
+            var mappings = Arrays.stream(mapper.readValue(slurpStructuredQueryService("compositeSearchParams/mapping-bloodPressure.json"), Mapping[].class))
+                    .collect(Collectors.toMap(Mapping::key, identity()));
+            var conceptTree = mapper.readValue(slurpStructuredQueryService("compositeSearchParams/tree-bloodPressure.json"), TermCodeNode.class);
+            return MappingContext.of(mappings, conceptTree, CLOCK_2000);
+        }
+
+        @Bean
+        public FhirQueryService fhirQueryService(WebClient dataStoreClient) {
+            return new DataStore(dataStoreClient, Clock.systemDefaultZone(), 1);
+        }
+
+        @Bean
+        public Translator translator(MappingContext mappingContext) {
+            return new Translator(mappingContext);
+        }
+
+        @Bean
+        public Translator translator_Specimen(MappingContext mappingContext_Specimen) {
+            return new Translator(mappingContext_Specimen);
+        }
+
+        @Bean
+        public Translator translator_BloodPressure(MappingContext mappingContext_BloodPressure) {
+            return new Translator(mappingContext_BloodPressure);
+        }
+
+        @Bean
+        public StructuredQueryService service(FhirQueryService fhirQueryService, Translator translator) {
+            return new StructuredQueryService(fhirQueryService, translator);
+        }
+
+        @Bean
+        public StructuredQueryService service_Specimen(FhirQueryService fhirQueryService, Translator translator_Specimen) {
+            return new StructuredQueryService(fhirQueryService, translator_Specimen);
+        }
+
+        @Bean
+        public StructuredQueryService service_BloodPressure(FhirQueryService fhirQueryService, Translator translator_BloodPressure) {
+            return new StructuredQueryService(fhirQueryService, translator_BloodPressure);
+        }
     }
 }
