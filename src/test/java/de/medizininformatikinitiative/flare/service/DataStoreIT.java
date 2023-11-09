@@ -35,7 +35,7 @@ class DataStoreIT {
 
     @Container
     @SuppressWarnings("resource")
-    private final GenericContainer<?> blaze = new GenericContainer<>("samply/blaze:0.22")
+    private final GenericContainer<?> blaze = new GenericContainer<>("samply/blaze:0.23")
             .withImagePullPolicy(PullPolicy.alwaysPull())
             .withEnv("LOG_LEVEL", "debug")
             .withExposedPorts(8080)

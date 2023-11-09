@@ -4,7 +4,7 @@
 
 ### Enhancements
 
-* Update Onto to v2.1.18-RC ([#93](https://github.com/medizininformatik-initiative/flare/pull/93))
+* Update Onto to v2.1.24 ([#93](https://github.com/medizininformatik-initiative/flare/pull/93))
 
 The full changelog can be found [here](https://github.com/medizininformatik-initiative/flare/milestone/10?closed=1).
 
