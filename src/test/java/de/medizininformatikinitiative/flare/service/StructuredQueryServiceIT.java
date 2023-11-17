@@ -78,9 +78,6 @@ class StructuredQueryServiceIT {
     private StructuredQueryService service;
 
     @Autowired
-    private StructuredQueryService service_Specimen;
-
-    @Autowired
     private StructuredQueryService service_BloodPressure;
 
     private static String slurp_FlareApplication(String name) throws URISyntaxException, IOException {
@@ -156,6 +153,15 @@ class StructuredQueryServiceIT {
     }
 
     @Test
+    void execute_consentTestCase() throws URISyntaxException, IOException {
+        var query = parseSq(Files.readString(resourcePathFlareApplication("testCases").resolve("returningOther").resolve("consent.json")));
+
+        var result = service.execute(query).block();
+
+        assertThat(result).isOne();
+    }
+
+    @Test
     void execute_specimenTestCase() throws IOException, URISyntaxException {
         dataStoreClient.post()
                 .contentType(APPLICATION_JSON)
@@ -166,7 +172,7 @@ class StructuredQueryServiceIT {
 
         var query = parseSq(slurpStructuredQueryService("referencedCriteria/sq-test-specimen-diag.json"));
 
-        var result = service_Specimen.execute(query).block();
+        var result = service.execute(query).block();
 
         assertThat(result).isOne();
     }
@@ -247,15 +253,6 @@ class StructuredQueryServiceIT {
         }
 
         @Bean
-        public MappingContext mappingContext_Specimen() throws Exception {
-            var mapper = new ObjectMapper();
-            var mappings = Arrays.stream(mapper.readValue(slurpStructuredQueryService("referencedCriteria/mapping-specimen-test.json"), Mapping[].class))
-                    .collect(Collectors.toMap(Mapping::key, identity()));
-            var conceptTree = mapper.readValue(slurpStructuredQueryService("referencedCriteria/tree-specimen-test.json"), TermCodeNode.class);
-            return MappingContext.of(mappings, conceptTree, CLOCK_2000);
-        }
-
-        @Bean
         public MappingContext mappingContext_BloodPressure() throws Exception {
             var mapper = new ObjectMapper();
             var mappings = Arrays.stream(mapper.readValue(slurpStructuredQueryService("compositeSearchParams/mapping-bloodPressure.json"), Mapping[].class))
@@ -275,11 +272,6 @@ class StructuredQueryServiceIT {
         }
 
         @Bean
-        public Translator translator_Specimen(MappingContext mappingContext_Specimen) {
-            return new Translator(mappingContext_Specimen);
-        }
-
-        @Bean
         public Translator translator_BloodPressure(MappingContext mappingContext_BloodPressure) {
             return new Translator(mappingContext_BloodPressure);
         }
@@ -287,11 +279,6 @@ class StructuredQueryServiceIT {
         @Bean
         public StructuredQueryService service(FhirQueryService fhirQueryService, Translator translator) {
             return new StructuredQueryService(fhirQueryService, translator);
-        }
-
-        @Bean
-        public StructuredQueryService service_Specimen(FhirQueryService fhirQueryService, Translator translator_Specimen) {
-            return new StructuredQueryService(fhirQueryService, translator_Specimen);
         }
 
         @Bean
