@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.1.1
+
+### Bugfixes
+
+* Fix Consent Search Param ([#97](https://github.com/medizininformatik-initiative/flare/issues/97))
+
+The full changelog can be found [here](https://github.com/medizininformatik-initiative/flare/milestone/11?closed=1).
+
 ## v2.1.0
 
 ### Enhancements
