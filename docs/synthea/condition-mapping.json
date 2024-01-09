@@ -7,7 +7,13 @@
       "display": "Acute bronchitis (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -17,7 +23,13 @@
       "display": "Overlapping malignant neoplasm of colon"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -27,17 +39,13 @@
       "display": "Concussion injury of brain"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "110359009",
-      "display": "Intellectual disability (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -47,17 +55,13 @@
       "display": "Chronic neck pain (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "11218009",
-      "display": "Infection caused by Pseudomonas aeruginosa"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -67,7 +71,13 @@
       "display": "Chronic intractable migraine without aura"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -77,7 +87,13 @@
       "display": "Neoplasm of prostate"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -87,27 +103,13 @@
       "display": "Diabetic renal disease (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "127295002",
-      "display": "Traumatic brain injury (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "128188000",
-      "display": "Cerebral palsy (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -117,7 +119,13 @@
       "display": "Seizure disorder"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -127,37 +135,13 @@
       "display": "Acute deep venous thrombosis (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "14760008",
-      "display": "Constipation (finding)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "1501000119109",
-      "display": "Proliferative diabetic retinopathy due to type II diabetes mellitus (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "1551000119108",
-      "display": "Nonproliferative diabetic retinopathy due to type 2 diabetes mellitus (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -167,37 +151,13 @@
       "display": "Fetus with unknown complication"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "157141000119108",
-      "display": "Proteinuria due to type 2 diabetes mellitus (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "15724005",
-      "display": "Fracture of vertebral column without spinal cord injury"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "157265008",
-      "display": "Dislocation of hip joint (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -207,17 +167,13 @@
       "display": "Prediabetes"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "15802004",
-      "display": "Dystonia (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -227,17 +183,13 @@
       "display": "Fracture of ankle"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "161622006",
-      "display": "History of lower limb amputation (situation)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -247,7 +199,13 @@
       "display": "Suspected lung cancer (situation)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -257,27 +215,13 @@
       "display": "Body mass index 30+ - obesity (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "171131006",
-      "display": "Meningocele (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "1734006",
-      "display": "Fracture of the vertebral column with spinal cord injury"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -287,17 +231,13 @@
       "display": "Chronic obstructive bronchitis (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "190905008",
-      "display": "Cystic Fibrosis"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -307,17 +247,13 @@
       "display": "Miscarriage in first trimester"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "192127007",
-      "display": "Child attention deficit disorder"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -327,7 +263,13 @@
       "display": "Acute viral pharyngitis (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -337,7 +279,13 @@
       "display": "Asthma"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -347,7 +295,13 @@
       "display": "Impacted molars"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -357,7 +311,13 @@
       "display": "Recurrent urinary tract infection"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -367,17 +327,13 @@
       "display": "Antepartum eclampsia"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "200936003",
-      "display": "Lupus erythematosus"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -387,7 +343,13 @@
       "display": "Localized, primary osteoarthritis of the hand"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -397,57 +359,13 @@
       "display": "Fibromyalgia (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "221360009",
-      "display": "Spasticity (finding)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "22253000",
-      "display": "Pain (finding)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "22298006",
-      "display": "Myocardial Infarction"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "225444004",
-      "display": "At risk for suicide (finding)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "230265002",
-      "display": "Familial Alzheimer's disease of early onset (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -457,17 +375,13 @@
       "display": "Stroke"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "230745008",
-      "display": "Hydrocephalus (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -477,7 +391,13 @@
       "display": "Perennial allergic rhinitis with seasonal variation"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -487,7 +407,13 @@
       "display": "Pneumonia"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -497,47 +423,13 @@
       "display": "Childhood asthma"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "234466008",
-      "display": "Acquired coagulation disorder (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "235595009",
-      "display": "Gastroesophageal reflux disease (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "235919008",
-      "display": "Cholelithiasis"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "236077008",
-      "display": "Protracted diarrhea"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -547,7 +439,13 @@
       "display": "Metabolic syndrome X (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -557,7 +455,13 @@
       "display": "Tear of meniscus of knee"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -567,7 +471,13 @@
       "display": "Osteoarthritis of hip"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -577,7 +487,13 @@
       "display": "Osteoarthritis of knee"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -587,7 +503,13 @@
       "display": "Atopic dermatitis"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -597,17 +519,13 @@
       "display": "Acute allergic reaction"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "246677007",
-      "display": "Passive conjunctival congestion (finding)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -617,7 +535,13 @@
       "display": "Sputum finding (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -627,7 +551,13 @@
       "display": "Vomiting symptom (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -637,7 +567,13 @@
       "display": "Headache (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -647,7 +583,13 @@
       "display": "Small cell carcinoma of lung (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -657,7 +599,13 @@
       "display": "Non-small cell lung cancer (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -667,17 +615,13 @@
       "display": "Malignant neoplasm of breast (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "262574004",
-      "display": "Bullet wound"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -687,7 +631,13 @@
       "display": "Fracture subluxation of wrist"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -697,7 +647,13 @@
       "display": "Dyspnea (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -707,17 +663,13 @@
       "display": "Diarrhea symptom (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "267064002",
-      "display": "Retention of urine (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -727,7 +679,13 @@
       "display": "Sore throat symptom (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -737,7 +695,13 @@
       "display": "Alzheimer's disease (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -747,7 +711,13 @@
       "display": "Anemia (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -757,7 +727,13 @@
       "display": "Respiratory distress (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -767,7 +743,13 @@
       "display": "Brain damage - traumatic"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -777,17 +759,13 @@
       "display": "Chronic low back pain (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "27942005",
-      "display": "Shock (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -797,7 +775,13 @@
       "display": "Laceration of forearm"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -807,7 +791,13 @@
       "display": "Laceration of thigh"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -817,7 +807,13 @@
       "display": "Laceration of hand"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -827,47 +823,13 @@
       "display": "Laceration of foot"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "287185009",
-      "display": "Attempted suicide - cut/stab"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "288959006",
-      "display": "Unable to swallow saliva (finding)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "298382003",
-      "display": "Scoliosis deformity of spine (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "300916003",
-      "display": "Allergy to latex (finding)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -877,17 +839,13 @@
       "display": "Escherichia coli urinary tract infection"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "302297009",
-      "display": "Congenital deformity of foot (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -897,7 +855,13 @@
       "display": "Hypertriglyceridemia (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -907,27 +871,13 @@
       "display": "Injury of tendon of the rotator cuff of shoulder"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "30832001",
-      "display": "Rupture of patellar tendon"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "314994000",
-      "display": "Metastasis from malignant tumor of prostate (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -937,7 +887,13 @@
       "display": "Fracture of rib"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -947,7 +903,13 @@
       "display": "Closed fracture of hip"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -957,17 +919,13 @@
       "display": "Blighted ovum"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "363406005",
-      "display": "Malignant tumor of colon"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -977,7 +935,13 @@
       "display": "Seasonal allergic rhinitis"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -987,17 +951,13 @@
       "display": "Neuropathy due to type 2 diabetes mellitus (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "36923009",
-      "display": "Major depression, single episode"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1007,7 +967,13 @@
       "display": "Loss of taste (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1017,7 +983,13 @@
       "display": "Sinusitis (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1027,7 +999,13 @@
       "display": "Major depression disorder"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1037,17 +1015,13 @@
       "display": "Facial laceration"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "373587001",
-      "display": "Chiari malformation type II (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1057,7 +1031,13 @@
       "display": "Fever (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1067,7 +1047,13 @@
       "display": "Cystitis"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1077,17 +1063,13 @@
       "display": "Hypoxemia (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "398152000",
-      "display": "Poor muscle tone (finding)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1097,7 +1079,13 @@
       "display": "Preeclampsia"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1107,27 +1095,13 @@
       "display": "Whiplash injury to neck"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "399211009",
-      "display": "History of myocardial infarction (situation)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "399912005",
-      "display": "Pressure ulcer (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1137,7 +1111,13 @@
       "display": "Chronic sinusitis (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1147,17 +1127,13 @@
       "display": "Injury of kidney (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "40275004",
-      "display": "Contact dermatitis"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1167,7 +1143,13 @@
       "display": "First degree burn"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1177,27 +1159,13 @@
       "display": "Second degree burn"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "403192003",
-      "display": "Third degree burn"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "406602003",
-      "display": "Infection caused by Staphylococcus aureus"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1207,7 +1175,13 @@
       "display": "Body mass index 40+ - severely obese (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1217,37 +1191,13 @@
       "display": "Cardiac Arrest"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "414564002",
-      "display": "Kyphosis deformity of spine (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "414667000",
-      "display": "Meningomyelocele (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "422034002",
-      "display": "Diabetic retinopathy associated with type II diabetes mellitus (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1257,7 +1207,13 @@
       "display": "Nausea (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1267,27 +1223,13 @@
       "display": "Non-small cell carcinoma of lung, TNM stage 1 (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "427089005",
-      "display": "Diabetes from Cystic Fibrosis"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "427419006",
-      "display": "Transformed migraine (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1297,7 +1239,13 @@
       "display": "History of appendectomy"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1307,17 +1255,13 @@
       "display": "History of cardiac arrest (situation)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "429280009",
-      "display": "History of amputation of foot (situation)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1327,7 +1271,13 @@
       "display": "Chronic kidney disease stage 1 (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1337,17 +1287,13 @@
       "display": "Chronic kidney disease stage 2 (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "433144002",
-      "display": "Chronic kidney disease stage 3 (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1357,7 +1303,13 @@
       "display": "Chill (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1367,7 +1319,13 @@
       "display": "Streptococcal sore throat (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1377,7 +1335,13 @@
       "display": "Diabetes"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1387,7 +1351,13 @@
       "display": "Pathological fracture due to osteoporosis (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1397,7 +1367,13 @@
       "display": "Injury of medial collateral ligament of knee"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1407,7 +1383,13 @@
       "display": "Injury of anterior cruciate ligament"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1417,7 +1399,13 @@
       "display": "Sprain of ankle"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1427,7 +1415,13 @@
       "display": "Viral sinusitis (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1437,27 +1431,13 @@
       "display": "Perennial allergic rhinitis"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "448417001",
-      "display": "Sepsis caused by Staphylococcus aureus"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "448813005",
-      "display": "Sepsis caused by Pseudomonas (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1467,47 +1447,29 @@
       "display": "Smokes tobacco daily"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
     "key": {
       "system": "http://snomed.info/sct",
-      "code": "45816000",
-      "display": "Pyelonephritis"
+      "code": "48333001",
+      "display": "Burn injury(morphologic abnormality)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "47200007",
-      "display": "Non-low risk pregnancy"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "47505003",
-      "display": "Posttraumatic stress disorder"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "47693006",
-      "display": "Rupture of appendix"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1517,7 +1479,13 @@
       "display": "Atrial Fibrillation"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1527,7 +1495,13 @@
       "display": "Cough (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1537,17 +1511,13 @@
       "display": "Coronary Heart Disease"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "53827007",
-      "display": "Excessive salivation (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1557,7 +1527,13 @@
       "display": "Drug overdose"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1567,7 +1543,13 @@
       "display": "Hyperlipidemia"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1577,7 +1559,13 @@
       "display": "Wheezing (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1587,7 +1575,13 @@
       "display": "Opioid abuse (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1597,7 +1591,13 @@
       "display": "Joint pain (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1607,7 +1607,13 @@
       "display": "Fracture of clavicle"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1617,27 +1623,13 @@
       "display": "Hypertension"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "6072007",
-      "display": "Bleeding from anus"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "60951000119105",
-      "display": "Blindness due to type 2 diabetes mellitus (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1647,27 +1639,13 @@
       "display": "Concussion with no loss of consciousness"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "62564004",
-      "display": "Concussion with loss of consciousness"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "62718007",
-      "display": "Dribbling from mouth (finding)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1677,17 +1655,13 @@
       "display": "Osteoporosis (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "65275009",
-      "display": "Acute Cholecystitis"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1697,7 +1671,13 @@
       "display": "Otitis media"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1707,7 +1687,13 @@
       "display": "Acute respiratory failure (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1717,17 +1703,13 @@
       "display": "Fracture of forearm"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "66857006",
-      "display": "Hemoptysis (finding)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1737,7 +1719,13 @@
       "display": "Acute respiratory distress syndrome (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1747,7 +1735,13 @@
       "display": "Primary small cell malignant neoplasm of lung, TNM stage 1 (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1757,7 +1751,13 @@
       "display": "Nasal congestion (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1767,17 +1767,13 @@
       "display": "Polyp of colon"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "68566005",
-      "display": "Urinary tract infectious disease (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1787,17 +1783,13 @@
       "display": "Muscle pain (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "698754002",
-      "display": "Chronic paralysis due to lesion of spinal cord"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1807,7 +1799,13 @@
       "display": "Rheumatoid arthritis"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1817,7 +1815,13 @@
       "display": "History of single seizure (situation)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1827,7 +1831,13 @@
       "display": "Acute pulmonary embolism (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1837,17 +1847,13 @@
       "display": "Sprain of wrist"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "707577004",
-      "display": "Female Infertility"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1857,7 +1863,13 @@
       "display": "Recurrent rectal polyp"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1867,7 +1879,13 @@
       "display": "Alcoholism"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1877,7 +1895,13 @@
       "display": "Normal pregnancy"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1887,7 +1911,13 @@
       "display": "Appendicitis"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1897,7 +1927,13 @@
       "display": "Acute bacterial sinusitis (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1907,17 +1943,13 @@
       "display": "Septic shock (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "76916001",
-      "display": "Spina bifida occulta (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1927,7 +1959,13 @@
       "display": "Sepsis caused by virus (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1937,7 +1975,13 @@
       "display": "Tubal pregnancy"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1947,7 +1991,13 @@
       "display": "Hyperglycemia (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1957,17 +2007,13 @@
       "display": "Chronic pain"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "83664006",
-      "display": "Idiopathic atrophic hypothyroidism"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1977,7 +2023,13 @@
       "display": "COVID-19"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1987,7 +2039,13 @@
       "display": "Suspected COVID-19"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -1997,7 +2055,13 @@
       "display": "Heart failure (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -2007,17 +2071,13 @@
       "display": "Fatigue (finding)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "84757009",
-      "display": "Epilepsy"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -2027,17 +2087,13 @@
       "display": "Injury of heart (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "86849004",
-      "display": "Suicidal deliberate poisoning"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -2047,17 +2103,13 @@
       "display": "Pulmonary emphysema (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "87628006",
-      "display": "Bacterial infectious disease (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -2067,17 +2119,13 @@
       "display": "Chronic congestive heart failure (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "90560007",
-      "display": "Gout"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -2087,7 +2135,13 @@
       "display": "Microalbuminuria due to type 2 diabetes mellitus (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -2097,7 +2151,13 @@
       "display": "Sepsis (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -2107,27 +2167,13 @@
       "display": "Carcinoma in situ of prostate (disorder)"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "93761005",
-      "display": "Primary malignant neoplasm of colon"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "94260004",
-      "display": "Secondary malignant neoplasm of colon"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   },
   {
     "fhirResourceType": "Condition",
@@ -2137,16 +2183,12 @@
       "display": "Primary fibromyalgia syndrome"
     },
     "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
-  },
-  {
-    "fhirResourceType": "Condition",
-    "key": {
-      "system": "http://snomed.info/sct",
-      "code": "97331000119101",
-      "display": "Macular edema and retinopathy due to type 2 diabetes mellitus (disorder)"
-    },
-    "termCodeSearchParameter": "code",
-    "timeRestrictionParameter": "recorded-date"
+    "timeRestrictionParameter": "recorded-date",
+    "context": {
+      "code": "Diagnose",
+      "system": "fdpg.mii.cds",
+      "version": "1.0.0",
+      "display": "Diagnose"
+    }
   }
 ]
