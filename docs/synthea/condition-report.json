@@ -3,7 +3,7 @@
     {
       "url": "https://samply.github.io/blaze/fhir/StructureDefinition/eval-duration",
       "valueQuantity": {
-        "value": 17.368520667,
+        "value": 0.267445662,
         "unit": "s",
         "system": "http://unitsofmeasure.org",
         "code": "s"
@@ -12,8 +12,8 @@
   ],
   "status": "complete",
   "type": "summary",
-  "measure": "urn:uuid:77d8243a-f1dc-4a56-89ed-076997ae16a4",
-  "date": "2023-03-18T14:07:02.880167764Z",
+  "measure": "urn:uuid:9b81d0a8-b95b-4437-b162-1a8513bf7977",
+  "date": "2024-01-09T14:24:01.633078837Z",
   "period": {
     "start": "1900",
     "end": "2200"
@@ -22,7 +22,7 @@
     {
       "population": [
         {
-          "count": 1318304,
+          "count": 1597,
           "code": {
             "coding": [
               {
@@ -41,56 +41,6 @@
                 "coding": [
                   {
                     "system": "http://snomed.info/sct",
-                    "code": "234466008",
-                    "display": "Acquired coagulation disorder (disorder)"
-                  }
-                ],
-                "text": "Acquired coagulation disorder (disorder)"
-              },
-              "population": [
-                {
-                  "count": 81,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "65275009",
-                    "display": "Acute Cholecystitis"
-                  }
-                ],
-                "text": "Acute Cholecystitis"
-              },
-              "population": [
-                {
-                  "count": 221,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
                     "code": "241929008",
                     "display": "Acute allergic reaction"
                   }
@@ -99,7 +49,7 @@
               },
               "population": [
                 {
-                  "count": 1639,
+                  "count": 3,
                   "code": {
                     "coding": [
                       {
@@ -124,7 +74,7 @@
               },
               "population": [
                 {
-                  "count": 5875,
+                  "count": 8,
                   "code": {
                     "coding": [
                       {
@@ -149,7 +99,7 @@
               },
               "population": [
                 {
-                  "count": 49871,
+                  "count": 63,
                   "code": {
                     "coding": [
                       {
@@ -174,7 +124,7 @@
               },
               "population": [
                 {
-                  "count": 4124,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -199,7 +149,7 @@
               },
               "population": [
                 {
-                  "count": 4141,
+                  "count": 9,
                   "code": {
                     "coding": [
                       {
@@ -224,7 +174,7 @@
               },
               "population": [
                 {
-                  "count": 214,
+                  "count": 3,
                   "code": {
                     "coding": [
                       {
@@ -249,7 +199,7 @@
               },
               "population": [
                 {
-                  "count": 5183,
+                  "count": 14,
                   "code": {
                     "coding": [
                       {
@@ -274,7 +224,7 @@
               },
               "population": [
                 {
-                  "count": 60372,
+                  "count": 69,
                   "code": {
                     "coding": [
                       {
@@ -299,32 +249,7 @@
               },
               "population": [
                 {
-                  "count": 432,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "300916003",
-                    "display": "Allergy to latex (finding)"
-                  }
-                ],
-                "text": "Allergy to latex (finding)"
-              },
-              "population": [
-                {
-                  "count": 14,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -349,7 +274,7 @@
               },
               "population": [
                 {
-                  "count": 1254,
+                  "count": 5,
                   "code": {
                     "coding": [
                       {
@@ -374,7 +299,7 @@
               },
               "population": [
                 {
-                  "count": 27925,
+                  "count": 37,
                   "code": {
                     "coding": [
                       {
@@ -399,7 +324,7 @@
               },
               "population": [
                 {
-                  "count": 2224,
+                  "count": 4,
                   "code": {
                     "coding": [
                       {
@@ -424,7 +349,7 @@
               },
               "population": [
                 {
-                  "count": 4571,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -449,32 +374,7 @@
               },
               "population": [
                 {
-                  "count": 166,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "225444004",
-                    "display": "At risk for suicide (finding)"
-                  }
-                ],
-                "text": "At risk for suicide (finding)"
-              },
-              "population": [
-                {
-                  "count": 8,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -499,7 +399,7 @@
               },
               "population": [
                 {
-                  "count": 1923,
+                  "count": 3,
                   "code": {
                     "coding": [
                       {
@@ -524,82 +424,7 @@
               },
               "population": [
                 {
-                  "count": 3027,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "287185009",
-                    "display": "Attempted suicide - cut/stab"
-                  }
-                ],
-                "text": "Attempted suicide - cut/stab"
-              },
-              "population": [
-                {
-                  "count": 1,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "87628006",
-                    "display": "Bacterial infectious disease (disorder)"
-                  }
-                ],
-                "text": "Bacterial infectious disease (disorder)"
-              },
-              "population": [
-                {
-                  "count": 146,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "6072007",
-                    "display": "Bleeding from anus"
-                  }
-                ],
-                "text": "Bleeding from anus"
-              },
-              "population": [
-                {
-                  "count": 134,
+                  "count": 4,
                   "code": {
                     "coding": [
                       {
@@ -624,32 +449,7 @@
               },
               "population": [
                 {
-                  "count": 1747,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "60951000119105",
-                    "display": "Blindness due to type 2 diabetes mellitus (disorder)"
-                  }
-                ],
-                "text": "Blindness due to type 2 diabetes mellitus (disorder)"
-              },
-              "population": [
-                {
-                  "count": 13,
+                  "count": 4,
                   "code": {
                     "coding": [
                       {
@@ -674,7 +474,7 @@
               },
               "population": [
                 {
-                  "count": 39754,
+                  "count": 53,
                   "code": {
                     "coding": [
                       {
@@ -699,7 +499,7 @@
               },
               "population": [
                 {
-                  "count": 916,
+                  "count": 3,
                   "code": {
                     "coding": [
                       {
@@ -724,7 +524,7 @@
               },
               "population": [
                 {
-                  "count": 602,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -741,15 +541,15 @@
                 "coding": [
                   {
                     "system": "http://snomed.info/sct",
-                    "code": "262574004",
-                    "display": "Bullet wound"
+                    "code": "48333001",
+                    "display": "Burn injury(morphologic abnormality)"
                   }
                 ],
-                "text": "Bullet wound"
+                "text": "Burn injury(morphologic abnormality)"
               },
               "population": [
                 {
-                  "count": 211,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -774,7 +574,7 @@
               },
               "population": [
                 {
-                  "count": 84050,
+                  "count": 92,
                   "code": {
                     "coding": [
                       {
@@ -799,7 +599,7 @@
               },
               "population": [
                 {
-                  "count": 880,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -824,82 +624,7 @@
               },
               "population": [
                 {
-                  "count": 3139,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "128188000",
-                    "display": "Cerebral palsy (disorder)"
-                  }
-                ],
-                "text": "Cerebral palsy (disorder)"
-              },
-              "population": [
-                {
-                  "count": 363,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "373587001",
-                    "display": "Chiari malformation type II (disorder)"
-                  }
-                ],
-                "text": "Chiari malformation type II (disorder)"
-              },
-              "population": [
-                {
-                  "count": 26,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "192127007",
-                    "display": "Child attention deficit disorder"
-                  }
-                ],
-                "text": "Child attention deficit disorder"
-              },
-              "population": [
-                {
-                  "count": 1621,
+                  "count": 4,
                   "code": {
                     "coding": [
                       {
@@ -924,7 +649,7 @@
               },
               "population": [
                 {
-                  "count": 2457,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -949,32 +674,7 @@
               },
               "population": [
                 {
-                  "count": 9798,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "235919008",
-                    "display": "Cholelithiasis"
-                  }
-                ],
-                "text": "Cholelithiasis"
-              },
-              "population": [
-                {
-                  "count": 221,
+                  "count": 14,
                   "code": {
                     "coding": [
                       {
@@ -999,7 +699,7 @@
               },
               "population": [
                 {
-                  "count": 427,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -1024,7 +724,7 @@
               },
               "population": [
                 {
-                  "count": 4197,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -1049,7 +749,7 @@
               },
               "population": [
                 {
-                  "count": 2122,
+                  "count": 4,
                   "code": {
                     "coding": [
                       {
@@ -1074,32 +774,7 @@
               },
               "population": [
                 {
-                  "count": 315,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "433144002",
-                    "display": "Chronic kidney disease stage 3 (disorder)"
-                  }
-                ],
-                "text": "Chronic kidney disease stage 3 (disorder)"
-              },
-              "population": [
-                {
-                  "count": 18,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -1124,7 +799,7 @@
               },
               "population": [
                 {
-                  "count": 19539,
+                  "count": 25,
                   "code": {
                     "coding": [
                       {
@@ -1149,7 +824,7 @@
               },
               "population": [
                 {
-                  "count": 12209,
+                  "count": 16,
                   "code": {
                     "coding": [
                       {
@@ -1174,7 +849,7 @@
               },
               "population": [
                 {
-                  "count": 898,
+                  "count": 5,
                   "code": {
                     "coding": [
                       {
@@ -1199,32 +874,7 @@
               },
               "population": [
                 {
-                  "count": 4161,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "698754002",
-                    "display": "Chronic paralysis due to lesion of spinal cord"
-                  }
-                ],
-                "text": "Chronic paralysis due to lesion of spinal cord"
-              },
-              "population": [
-                {
-                  "count": 70,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -1249,7 +899,7 @@
               },
               "population": [
                 {
-                  "count": 21243,
+                  "count": 38,
                   "code": {
                     "coding": [
                       {
@@ -1274,7 +924,7 @@
               },
               "population": [
                 {
-                  "count": 1068,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -1299,32 +949,7 @@
               },
               "population": [
                 {
-                  "count": 378,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "62564004",
-                    "display": "Concussion with loss of consciousness"
-                  }
-                ],
-                "text": "Concussion with loss of consciousness"
-              },
-              "population": [
-                {
-                  "count": 1566,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -1349,82 +974,7 @@
               },
               "population": [
                 {
-                  "count": 5795,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "302297009",
-                    "display": "Congenital deformity of foot (disorder)"
-                  }
-                ],
-                "text": "Congenital deformity of foot (disorder)"
-              },
-              "population": [
-                {
-                  "count": 28,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "14760008",
-                    "display": "Constipation (finding)"
-                  }
-                ],
-                "text": "Constipation (finding)"
-              },
-              "population": [
-                {
-                  "count": 52,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "40275004",
-                    "display": "Contact dermatitis"
-                  }
-                ],
-                "text": "Contact dermatitis"
-              },
-              "population": [
-                {
-                  "count": 558,
+                  "count": 7,
                   "code": {
                     "coding": [
                       {
@@ -1449,7 +999,7 @@
               },
               "population": [
                 {
-                  "count": 3294,
+                  "count": 8,
                   "code": {
                     "coding": [
                       {
@@ -1474,32 +1024,7 @@
               },
               "population": [
                 {
-                  "count": 58834,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "190905008",
-                    "display": "Cystic Fibrosis"
-                  }
-                ],
-                "text": "Cystic Fibrosis"
-              },
-              "population": [
-                {
-                  "count": 2,
+                  "count": 62,
                   "code": {
                     "coding": [
                       {
@@ -1524,7 +1049,7 @@
               },
               "population": [
                 {
-                  "count": 1875,
+                  "count": 3,
                   "code": {
                     "coding": [
                       {
@@ -1549,32 +1074,7 @@
               },
               "population": [
                 {
-                  "count": 5802,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "427089005",
-                    "display": "Diabetes from Cystic Fibrosis"
-                  }
-                ],
-                "text": "Diabetes from Cystic Fibrosis"
-              },
-              "population": [
-                {
-                  "count": 1,
+                  "count": 8,
                   "code": {
                     "coding": [
                       {
@@ -1599,32 +1099,7 @@
               },
               "population": [
                 {
-                  "count": 2269,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "422034002",
-                    "display": "Diabetic retinopathy associated with type II diabetes mellitus (disorder)"
-                  }
-                ],
-                "text": "Diabetic retinopathy associated with type II diabetes mellitus (disorder)"
-              },
-              "population": [
-                {
-                  "count": 1573,
+                  "count": 5,
                   "code": {
                     "coding": [
                       {
@@ -1649,57 +1124,7 @@
               },
               "population": [
                 {
-                  "count": 3466,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "157265008",
-                    "display": "Dislocation of hip joint (disorder)"
-                  }
-                ],
-                "text": "Dislocation of hip joint (disorder)"
-              },
-              "population": [
-                {
-                  "count": 63,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "62718007",
-                    "display": "Dribbling from mouth (finding)"
-                  }
-                ],
-                "text": "Dribbling from mouth (finding)"
-              },
-              "population": [
-                {
-                  "count": 100,
+                  "count": 5,
                   "code": {
                     "coding": [
                       {
@@ -1721,31 +1146,6 @@
                   }
                 ],
                 "text": "Drug overdose"
-              },
-              "population": [
-                {
-                  "count": 4260,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "55680006",
-                    "display": "Drug overdose (disorder)"
-                  }
-                ],
-                "text": "Drug overdose (disorder)"
               },
               "population": [
                 {
@@ -1774,82 +1174,7 @@
               },
               "population": [
                 {
-                  "count": 16200,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "15802004",
-                    "display": "Dystonia (disorder)"
-                  }
-                ],
-                "text": "Dystonia (disorder)"
-              },
-              "population": [
-                {
-                  "count": 58,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "84757009",
-                    "display": "Epilepsy"
-                  }
-                ],
-                "text": "Epilepsy"
-              },
-              "population": [
-                {
-                  "count": 1334,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "84757009",
-                    "display": "Epilepsy (disorder)"
-                  }
-                ],
-                "text": "Epilepsy (disorder)"
-              },
-              "population": [
-                {
-                  "count": 180,
+                  "count": 15,
                   "code": {
                     "coding": [
                       {
@@ -1874,32 +1199,7 @@
               },
               "population": [
                 {
-                  "count": 2984,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "53827007",
-                    "display": "Excessive salivation (disorder)"
-                  }
-                ],
-                "text": "Excessive salivation (disorder)"
-              },
-              "population": [
-                {
-                  "count": 152,
+                  "count": 3,
                   "code": {
                     "coding": [
                       {
@@ -1924,32 +1224,7 @@
               },
               "population": [
                 {
-                  "count": 2826,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "230265002",
-                    "display": "Familial Alzheimer's disease of early onset (disorder)"
-                  }
-                ],
-                "text": "Familial Alzheimer's disease of early onset (disorder)"
-              },
-              "population": [
-                {
-                  "count": 220,
+                  "count": 4,
                   "code": {
                     "coding": [
                       {
@@ -1974,32 +1249,7 @@
               },
               "population": [
                 {
-                  "count": 33042,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "707577004",
-                    "display": "Female Infertility"
-                  }
-                ],
-                "text": "Female Infertility"
-              },
-              "population": [
-                {
-                  "count": 1,
+                  "count": 40,
                   "code": {
                     "coding": [
                       {
@@ -2024,7 +1274,7 @@
               },
               "population": [
                 {
-                  "count": 3554,
+                  "count": 4,
                   "code": {
                     "coding": [
                       {
@@ -2049,7 +1299,7 @@
               },
               "population": [
                 {
-                  "count": 77114,
+                  "count": 87,
                   "code": {
                     "coding": [
                       {
@@ -2074,7 +1324,7 @@
               },
               "population": [
                 {
-                  "count": 2447,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -2099,7 +1349,7 @@
               },
               "population": [
                 {
-                  "count": 2258,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -2124,7 +1374,7 @@
               },
               "population": [
                 {
-                  "count": 2812,
+                  "count": 6,
                   "code": {
                     "coding": [
                       {
@@ -2149,7 +1399,7 @@
               },
               "population": [
                 {
-                  "count": 3070,
+                  "count": 3,
                   "code": {
                     "coding": [
                       {
@@ -2174,7 +1424,7 @@
               },
               "population": [
                 {
-                  "count": 3545,
+                  "count": 4,
                   "code": {
                     "coding": [
                       {
@@ -2199,57 +1449,7 @@
               },
               "population": [
                 {
-                  "count": 1364,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "1734006",
-                    "display": "Fracture of the vertebral column with spinal cord injury"
-                  }
-                ],
-                "text": "Fracture of the vertebral column with spinal cord injury"
-              },
-              "population": [
-                {
-                  "count": 20,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "15724005",
-                    "display": "Fracture of vertebral column without spinal cord injury"
-                  }
-                ],
-                "text": "Fracture of vertebral column without spinal cord injury"
-              },
-              "population": [
-                {
-                  "count": 129,
+                  "count": 3,
                   "code": {
                     "coding": [
                       {
@@ -2274,57 +1474,7 @@
               },
               "population": [
                 {
-                  "count": 2837,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "235595009",
-                    "display": "Gastroesophageal reflux disease (disorder)"
-                  }
-                ],
-                "text": "Gastroesophageal reflux disease (disorder)"
-              },
-              "population": [
-                {
-                  "count": 275,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "90560007",
-                    "display": "Gout"
-                  }
-                ],
-                "text": "Gout"
-              },
-              "population": [
-                {
-                  "count": 706,
+                  "count": 4,
                   "code": {
                     "coding": [
                       {
@@ -2349,7 +1499,7 @@
               },
               "population": [
                 {
-                  "count": 11909,
+                  "count": 16,
                   "code": {
                     "coding": [
                       {
@@ -2374,57 +1524,7 @@
               },
               "population": [
                 {
-                  "count": 167,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "66857006",
-                    "display": "Hemoptysis (finding)"
-                  }
-                ],
-                "text": "Hemoptysis (finding)"
-              },
-              "population": [
-                {
-                  "count": 712,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "429280009",
-                    "display": "History of amputation of foot (situation)"
-                  }
-                ],
-                "text": "History of amputation of foot (situation)"
-              },
-              "population": [
-                {
-                  "count": 24,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -2449,7 +1549,7 @@
               },
               "population": [
                 {
-                  "count": 4571,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -2474,57 +1574,7 @@
               },
               "population": [
                 {
-                  "count": 3139,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "161622006",
-                    "display": "History of lower limb amputation (situation)"
-                  }
-                ],
-                "text": "History of lower limb amputation (situation)"
-              },
-              "population": [
-                {
-                  "count": 29,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "399211009",
-                    "display": "History of myocardial infarction (situation)"
-                  }
-                ],
-                "text": "History of myocardial infarction (situation)"
-              },
-              "population": [
-                {
-                  "count": 215,
+                  "count": 4,
                   "code": {
                     "coding": [
                       {
@@ -2549,32 +1599,7 @@
               },
               "population": [
                 {
-                  "count": 2573,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "230745008",
-                    "display": "Hydrocephalus (disorder)"
-                  }
-                ],
-                "text": "Hydrocephalus (disorder)"
-              },
-              "population": [
-                {
-                  "count": 26,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -2599,7 +1624,7 @@
               },
               "population": [
                 {
-                  "count": 2991,
+                  "count": 4,
                   "code": {
                     "coding": [
                       {
@@ -2624,7 +1649,7 @@
               },
               "population": [
                 {
-                  "count": 9894,
+                  "count": 12,
                   "code": {
                     "coding": [
                       {
@@ -2649,7 +1674,7 @@
               },
               "population": [
                 {
-                  "count": 25134,
+                  "count": 30,
                   "code": {
                     "coding": [
                       {
@@ -2674,7 +1699,7 @@
               },
               "population": [
                 {
-                  "count": 5686,
+                  "count": 8,
                   "code": {
                     "coding": [
                       {
@@ -2699,32 +1724,7 @@
               },
               "population": [
                 {
-                  "count": 14425,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "83664006",
-                    "display": "Idiopathic atrophic hypothyroidism"
-                  }
-                ],
-                "text": "Idiopathic atrophic hypothyroidism"
-              },
-              "population": [
-                {
-                  "count": 627,
+                  "count": 24,
                   "code": {
                     "coding": [
                       {
@@ -2749,57 +1749,7 @@
               },
               "population": [
                 {
-                  "count": 4203,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "11218009",
-                    "display": "Infection caused by Pseudomonas aeruginosa"
-                  }
-                ],
-                "text": "Infection caused by Pseudomonas aeruginosa"
-              },
-              "population": [
-                {
-                  "count": 1,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "406602003",
-                    "display": "Infection caused by Staphylococcus aureus"
-                  }
-                ],
-                "text": "Infection caused by Staphylococcus aureus"
-              },
-              "population": [
-                {
-                  "count": 1,
+                  "count": 3,
                   "code": {
                     "coding": [
                       {
@@ -2824,7 +1774,7 @@
               },
               "population": [
                 {
-                  "count": 490,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -2849,7 +1799,7 @@
               },
               "population": [
                 {
-                  "count": 14,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -2874,7 +1824,7 @@
               },
               "population": [
                 {
-                  "count": 11,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -2899,7 +1849,7 @@
               },
               "population": [
                 {
-                  "count": 686,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -2924,32 +1874,7 @@
               },
               "population": [
                 {
-                  "count": 1462,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "110359009",
-                    "display": "Intellectual disability (disorder)"
-                  }
-                ],
-                "text": "Intellectual disability (disorder)"
-              },
-              "population": [
-                {
-                  "count": 181,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -2974,32 +1899,7 @@
               },
               "population": [
                 {
-                  "count": 12913,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "414564002",
-                    "display": "Kyphosis deformity of spine (disorder)"
-                  }
-                ],
-                "text": "Kyphosis deformity of spine (disorder)"
-              },
-              "population": [
-                {
-                  "count": 5,
+                  "count": 15,
                   "code": {
                     "coding": [
                       {
@@ -3024,7 +1924,7 @@
               },
               "population": [
                 {
-                  "count": 3005,
+                  "count": 6,
                   "code": {
                     "coding": [
                       {
@@ -3049,7 +1949,7 @@
               },
               "population": [
                 {
-                  "count": 2894,
+                  "count": 5,
                   "code": {
                     "coding": [
                       {
@@ -3074,7 +1974,7 @@
               },
               "population": [
                 {
-                  "count": 2871,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -3099,7 +1999,7 @@
               },
               "population": [
                 {
-                  "count": 2957,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -3124,7 +2024,7 @@
               },
               "population": [
                 {
-                  "count": 1952,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -3149,57 +2049,7 @@
               },
               "population": [
                 {
-                  "count": 43648,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "200936003",
-                    "display": "Lupus erythematosus"
-                  }
-                ],
-                "text": "Lupus erythematosus"
-              },
-              "population": [
-                {
-                  "count": 13,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "97331000119101",
-                    "display": "Macular edema and retinopathy due to type 2 diabetes mellitus (disorder)"
-                  }
-                ],
-                "text": "Macular edema and retinopathy due to type 2 diabetes mellitus (disorder)"
-              },
-              "population": [
-                {
-                  "count": 350,
+                  "count": 52,
                   "code": {
                     "coding": [
                       {
@@ -3221,56 +2071,6 @@
                   }
                 ],
                 "text": "Major depression disorder"
-              },
-              "population": [
-                {
-                  "count": 454,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "36923009",
-                    "display": "Major depression, single episode"
-                  }
-                ],
-                "text": "Major depression, single episode"
-              },
-              "population": [
-                {
-                  "count": 47,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "427089005",
-                    "display": "Male Infertility"
-                  }
-                ],
-                "text": "Male Infertility"
               },
               "population": [
                 {
@@ -3299,82 +2099,7 @@
               },
               "population": [
                 {
-                  "count": 1541,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "363406005",
-                    "display": "Malignant tumor of colon"
-                  }
-                ],
-                "text": "Malignant tumor of colon"
-              },
-              "population": [
-                {
-                  "count": 367,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "171131006",
-                    "display": "Meningocele (disorder)"
-                  }
-                ],
-                "text": "Meningocele (disorder)"
-              },
-              "population": [
-                {
-                  "count": 10,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "414667000",
-                    "display": "Meningomyelocele (disorder)"
-                  }
-                ],
-                "text": "Meningomyelocele (disorder)"
-              },
-              "population": [
-                {
-                  "count": 28,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -3399,32 +2124,7 @@
               },
               "population": [
                 {
-                  "count": 5576,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "314994000",
-                    "display": "Metastasis from malignant tumor of prostate (disorder)"
-                  }
-                ],
-                "text": "Metastasis from malignant tumor of prostate (disorder)"
-              },
-              "population": [
-                {
-                  "count": 18,
+                  "count": 7,
                   "code": {
                     "coding": [
                       {
@@ -3449,7 +2149,7 @@
               },
               "population": [
                 {
-                  "count": 331,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -3474,7 +2174,7 @@
               },
               "population": [
                 {
-                  "count": 17252,
+                  "count": 27,
                   "code": {
                     "coding": [
                       {
@@ -3499,32 +2199,7 @@
               },
               "population": [
                 {
-                  "count": 12913,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "22298006",
-                    "display": "Myocardial Infarction"
-                  }
-                ],
-                "text": "Myocardial Infarction"
-              },
-              "population": [
-                {
-                  "count": 215,
+                  "count": 15,
                   "code": {
                     "coding": [
                       {
@@ -3549,7 +2224,7 @@
               },
               "population": [
                 {
-                  "count": 4125,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -3574,7 +2249,7 @@
               },
               "population": [
                 {
-                  "count": 4415,
+                  "count": 7,
                   "code": {
                     "coding": [
                       {
@@ -3599,7 +2274,7 @@
               },
               "population": [
                 {
-                  "count": 892,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -3624,32 +2299,7 @@
               },
               "population": [
                 {
-                  "count": 2074,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "47200007",
-                    "display": "Non-low risk pregnancy"
-                  }
-                ],
-                "text": "Non-low risk pregnancy"
-              },
-              "population": [
-                {
-                  "count": 10,
+                  "count": 3,
                   "code": {
                     "coding": [
                       {
@@ -3674,7 +2324,7 @@
               },
               "population": [
                 {
-                  "count": 130,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -3699,32 +2349,7 @@
               },
               "population": [
                 {
-                  "count": 130,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "1551000119108",
-                    "display": "Nonproliferative diabetic retinopathy due to type 2 diabetes mellitus (disorder)"
-                  }
-                ],
-                "text": "Nonproliferative diabetic retinopathy due to type 2 diabetes mellitus (disorder)"
-              },
-              "population": [
-                {
-                  "count": 889,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -3749,7 +2374,7 @@
               },
               "population": [
                 {
-                  "count": 46384,
+                  "count": 31,
                   "code": {
                     "coding": [
                       {
@@ -3774,7 +2399,7 @@
               },
               "population": [
                 {
-                  "count": 828,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -3799,7 +2424,7 @@
               },
               "population": [
                 {
-                  "count": 1727,
+                  "count": 3,
                   "code": {
                     "coding": [
                       {
@@ -3824,7 +2449,7 @@
               },
               "population": [
                 {
-                  "count": 4713,
+                  "count": 4,
                   "code": {
                     "coding": [
                       {
@@ -3849,7 +2474,7 @@
               },
               "population": [
                 {
-                  "count": 4430,
+                  "count": 6,
                   "code": {
                     "coding": [
                       {
@@ -3874,7 +2499,7 @@
               },
               "population": [
                 {
-                  "count": 16120,
+                  "count": 21,
                   "code": {
                     "coding": [
                       {
@@ -3899,57 +2524,7 @@
               },
               "population": [
                 {
-                  "count": 502,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "22253000",
-                    "display": "Pain (finding)"
-                  }
-                ],
-                "text": "Pain (finding)"
-              },
-              "population": [
-                {
-                  "count": 109,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "246677007",
-                    "display": "Passive conjunctival congestion (finding)"
-                  }
-                ],
-                "text": "Passive conjunctival congestion (finding)"
-              },
-              "population": [
-                {
-                  "count": 726,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -3974,7 +2549,7 @@
               },
               "population": [
                 {
-                  "count": 1689,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -3999,7 +2574,7 @@
               },
               "population": [
                 {
-                  "count": 2928,
+                  "count": 3,
                   "code": {
                     "coding": [
                       {
@@ -4024,7 +2599,7 @@
               },
               "population": [
                 {
-                  "count": 3088,
+                  "count": 4,
                   "code": {
                     "coding": [
                       {
@@ -4074,7 +2649,7 @@
               },
               "population": [
                 {
-                  "count": 14585,
+                  "count": 24,
                   "code": {
                     "coding": [
                       {
@@ -4099,57 +2674,7 @@
               },
               "population": [
                 {
-                  "count": 7422,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "398152000",
-                    "display": "Poor muscle tone (finding)"
-                  }
-                ],
-                "text": "Poor muscle tone (finding)"
-              },
-              "population": [
-                {
-                  "count": 162,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "47505003",
-                    "display": "Posttraumatic stress disorder"
-                  }
-                ],
-                "text": "Posttraumatic stress disorder"
-              },
-              "population": [
-                {
-                  "count": 69,
+                  "count": 5,
                   "code": {
                     "coding": [
                       {
@@ -4174,7 +2699,7 @@
               },
               "population": [
                 {
-                  "count": 28942,
+                  "count": 39,
                   "code": {
                     "coding": [
                       {
@@ -4199,32 +2724,7 @@
               },
               "population": [
                 {
-                  "count": 2198,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "399912005",
-                    "display": "Pressure ulcer (disorder)"
-                  }
-                ],
-                "text": "Pressure ulcer (disorder)"
-              },
-              "population": [
-                {
-                  "count": 26,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -4249,32 +2749,7 @@
               },
               "population": [
                 {
-                  "count": 324,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "93761005",
-                    "display": "Primary malignant neoplasm of colon"
-                  }
-                ],
-                "text": "Primary malignant neoplasm of colon"
-              },
-              "population": [
-                {
-                  "count": 247,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -4299,82 +2774,7 @@
               },
               "population": [
                 {
-                  "count": 21,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "1501000119109",
-                    "display": "Proliferative diabetic retinopathy due to type II diabetes mellitus (disorder)"
-                  }
-                ],
-                "text": "Proliferative diabetic retinopathy due to type II diabetes mellitus (disorder)"
-              },
-              "population": [
-                {
-                  "count": 263,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "157141000119108",
-                    "display": "Proteinuria due to type 2 diabetes mellitus (disorder)"
-                  }
-                ],
-                "text": "Proteinuria due to type 2 diabetes mellitus (disorder)"
-              },
-              "population": [
-                {
-                  "count": 18,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "236077008",
-                    "display": "Protracted diarrhea"
-                  }
-                ],
-                "text": "Protracted diarrhea"
-              },
-              "population": [
-                {
-                  "count": 134,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -4399,32 +2799,7 @@
               },
               "population": [
                 {
-                  "count": 1014,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "45816000",
-                    "display": "Pyelonephritis"
-                  }
-                ],
-                "text": "Pyelonephritis"
-              },
-              "population": [
-                {
-                  "count": 49,
+                  "count": 3,
                   "code": {
                     "coding": [
                       {
@@ -4449,7 +2824,7 @@
               },
               "population": [
                 {
-                  "count": 1772,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -4474,7 +2849,7 @@
               },
               "population": [
                 {
-                  "count": 859,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -4499,32 +2874,7 @@
               },
               "population": [
                 {
-                  "count": 14425,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "267064002",
-                    "display": "Retention of urine (disorder)"
-                  }
-                ],
-                "text": "Retention of urine (disorder)"
-              },
-              "population": [
-                {
-                  "count": 32,
+                  "count": 24,
                   "code": {
                     "coding": [
                       {
@@ -4549,82 +2899,7 @@
               },
               "population": [
                 {
-                  "count": 244,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "47693006",
-                    "display": "Rupture of appendix"
-                  }
-                ],
-                "text": "Rupture of appendix"
-              },
-              "population": [
-                {
-                  "count": 1408,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "30832001",
-                    "display": "Rupture of patellar tendon"
-                  }
-                ],
-                "text": "Rupture of patellar tendon"
-              },
-              "population": [
-                {
-                  "count": 564,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "298382003",
-                    "display": "Scoliosis deformity of spine (disorder)"
-                  }
-                ],
-                "text": "Scoliosis deformity of spine (disorder)"
-              },
-              "population": [
-                {
-                  "count": 19,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -4649,7 +2924,7 @@
               },
               "population": [
                 {
-                  "count": 1489,
+                  "count": 3,
                   "code": {
                     "coding": [
                       {
@@ -4674,32 +2949,7 @@
               },
               "population": [
                 {
-                  "count": 1471,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "94260004",
-                    "display": "Secondary malignant neoplasm of colon"
-                  }
-                ],
-                "text": "Secondary malignant neoplasm of colon"
-              },
-              "population": [
-                {
-                  "count": 23,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -4724,7 +2974,7 @@
               },
               "population": [
                 {
-                  "count": 2573,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -4749,57 +2999,7 @@
               },
               "population": [
                 {
-                  "count": 2733,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "448813005",
-                    "display": "Sepsis caused by Pseudomonas (disorder)"
-                  }
-                ],
-                "text": "Sepsis caused by Pseudomonas (disorder)"
-              },
-              "population": [
-                {
-                  "count": 1,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "448417001",
-                    "display": "Sepsis caused by Staphylococcus aureus"
-                  }
-                ],
-                "text": "Sepsis caused by Staphylococcus aureus"
-              },
-              "population": [
-                {
-                  "count": 1,
+                  "count": 6,
                   "code": {
                     "coding": [
                       {
@@ -4824,7 +3024,7 @@
               },
               "population": [
                 {
-                  "count": 3385,
+                  "count": 8,
                   "code": {
                     "coding": [
                       {
@@ -4849,32 +3049,7 @@
               },
               "population": [
                 {
-                  "count": 463,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "27942005",
-                    "display": "Shock (disorder)"
-                  }
-                ],
-                "text": "Shock (disorder)"
-              },
-              "population": [
-                {
-                  "count": 7,
+                  "count": 3,
                   "code": {
                     "coding": [
                       {
@@ -4899,7 +3074,7 @@
               },
               "population": [
                 {
-                  "count": 5917,
+                  "count": 10,
                   "code": {
                     "coding": [
                       {
@@ -4924,7 +3099,7 @@
               },
               "population": [
                 {
-                  "count": 21,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -4949,7 +3124,7 @@
               },
               "population": [
                 {
-                  "count": 580,
+                  "count": 1,
                   "code": {
                     "coding": [
                       {
@@ -4974,57 +3149,7 @@
               },
               "population": [
                 {
-                  "count": 12063,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "221360009",
-                    "display": "Spasticity (finding)"
-                  }
-                ],
-                "text": "Spasticity (finding)"
-              },
-              "population": [
-                {
-                  "count": 279,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "76916001",
-                    "display": "Spina bifida occulta (disorder)"
-                  }
-                ],
-                "text": "Spina bifida occulta (disorder)"
-              },
-              "population": [
-                {
-                  "count": 21,
+                  "count": 15,
                   "code": {
                     "coding": [
                       {
@@ -5049,7 +3174,7 @@
               },
               "population": [
                 {
-                  "count": 10389,
+                  "count": 6,
                   "code": {
                     "coding": [
                       {
@@ -5074,7 +3199,7 @@
               },
               "population": [
                 {
-                  "count": 4546,
+                  "count": 5,
                   "code": {
                     "coding": [
                       {
@@ -5099,7 +3224,7 @@
               },
               "population": [
                 {
-                  "count": 29314,
+                  "count": 33,
                   "code": {
                     "coding": [
                       {
@@ -5124,7 +3249,7 @@
               },
               "population": [
                 {
-                  "count": 14475,
+                  "count": 15,
                   "code": {
                     "coding": [
                       {
@@ -5149,32 +3274,7 @@
               },
               "population": [
                 {
-                  "count": 3743,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "86849004",
-                    "display": "Suicidal deliberate poisoning"
-                  }
-                ],
-                "text": "Suicidal deliberate poisoning"
-              },
-              "population": [
-                {
-                  "count": 6,
+                  "count": 9,
                   "code": {
                     "coding": [
                       {
@@ -5199,7 +3299,7 @@
               },
               "population": [
                 {
-                  "count": 86890,
+                  "count": 92,
                   "code": {
                     "coding": [
                       {
@@ -5224,7 +3324,7 @@
               },
               "population": [
                 {
-                  "count": 152,
+                  "count": 3,
                   "code": {
                     "coding": [
                       {
@@ -5249,82 +3349,7 @@
               },
               "population": [
                 {
-                  "count": 478,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "403192003",
-                    "display": "Third degree burn"
-                  }
-                ],
-                "text": "Third degree burn"
-              },
-              "population": [
-                {
-                  "count": 151,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "427419006",
-                    "display": "Transformed migraine (disorder)"
-                  }
-                ],
-                "text": "Transformed migraine (disorder)"
-              },
-              "population": [
-                {
-                  "count": 840,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "127295002",
-                    "display": "Traumatic brain injury (disorder)"
-                  }
-                ],
-                "text": "Traumatic brain injury (disorder)"
-              },
-              "population": [
-                {
-                  "count": 28,
+                  "count": 2,
                   "code": {
                     "coding": [
                       {
@@ -5349,57 +3374,7 @@
               },
               "population": [
                 {
-                  "count": 2190,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "288959006",
-                    "display": "Unable to swallow saliva (finding)"
-                  }
-                ],
-                "text": "Unable to swallow saliva (finding)"
-              },
-              "population": [
-                {
-                  "count": 80,
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/measure-population",
-                        "code": "initial-population"
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "value": {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "68566005",
-                    "display": "Urinary tract infectious disease (disorder)"
-                  }
-                ],
-                "text": "Urinary tract infectious disease (disorder)"
-              },
-              "population": [
-                {
-                  "count": 28,
+                  "count": 8,
                   "code": {
                     "coding": [
                       {
@@ -5424,7 +3399,7 @@
               },
               "population": [
                 {
-                  "count": 106789,
+                  "count": 125,
                   "code": {
                     "coding": [
                       {
@@ -5449,7 +3424,7 @@
               },
               "population": [
                 {
-                  "count": 4415,
+                  "count": 7,
                   "code": {
                     "coding": [
                       {
@@ -5474,7 +3449,7 @@
               },
               "population": [
                 {
-                  "count": 16200,
+                  "count": 15,
                   "code": {
                     "coding": [
                       {
@@ -5499,7 +3474,7 @@
               },
               "population": [
                 {
-                  "count": 4667,
+                  "count": 7,
                   "code": {
                     "coding": [
                       {
