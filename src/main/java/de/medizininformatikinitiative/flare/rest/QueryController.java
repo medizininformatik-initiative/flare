@@ -39,7 +39,8 @@ public class QueryController {
     @Bean
     public RouterFunction<ServerResponse> queryRouter() {
         return route(POST("query/execute").and(accept(MEDIA_TYPE_SQ)), this::execute)
-                .andRoute(POST("query/translate").and(accept(MEDIA_TYPE_SQ)), this::translate);
+                .andRoute(POST("query/translate").and(accept(MEDIA_TYPE_SQ)), this::translate)
+                .andRoute(POST("query/execute-cohort").and(accept(MEDIA_TYPE_SQ)), this::executeCohort);
     }
 
     public Mono<ServerResponse> execute(ServerRequest request) {
@@ -51,6 +52,26 @@ public class QueryController {
                     logger.debug("Finished query returning {} patients in {} seconds.", count,
                             "%.1f".formatted(Util.durationSecondsSince(startNanoTime)));
                     return ok().bodyValue(count);
+                })
+                .onErrorResume(MappingException.class, e -> {
+                    logger.warn("Mapping error: {}", e.getMessage());
+                    return badRequest().bodyValue(new Error(e.getMessage()));
+                })
+                .onErrorResume(WebClientRequestException.class, e -> {
+                    logger.error("Service not available because of downstream web client errors: {}", e.getMessage());
+                    return status(503).bodyValue(new Error(e.getMessage()));
+                });
+    }
+
+    public Mono<ServerResponse> executeCohort(ServerRequest request) {
+        var startNanoTime = System.nanoTime();
+        logger.debug("Execute query");
+        return request.bodyToMono(StructuredQuery.class)
+                .flatMap(queryService::executeCohort)
+                .flatMap(population -> {
+                    logger.debug("Finished query returning {} patients in {} seconds.", population.size(),
+                            "%.1f".formatted(Util.durationSecondsSince(startNanoTime)));
+                    return ok().bodyValue(population);
                 })
                 .onErrorResume(MappingException.class, e -> {
                     logger.warn("Mapping error: {}", e.getMessage());

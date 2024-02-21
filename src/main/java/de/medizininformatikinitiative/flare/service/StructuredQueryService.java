@@ -52,6 +52,17 @@ public class StructuredQueryService {
                 .map(Set::size);
     }
 
+    public Mono<Population> executeCohort(StructuredQuery query) {
+        var includedPatients = query.inclusionCriteria().executeAndIntersection(this::executeUnionGroup)
+                .defaultIfEmpty(Population.of());
+        var excludedPatients = query.exclusionCriteria().map(c -> c.map(CriterionGroup::wrapCriteria)
+                        .executeAndUnion(group -> group.executeAndIntersection(this::executeUnionGroup))
+                        .defaultIfEmpty(Population.of()))
+                .orElse(Mono.just(Population.of()));
+        return includedPatients
+                .flatMap(i -> excludedPatients.map(i::difference));
+    }
+
     private Mono<Population> executeUnionGroup(CriterionGroup<Criterion> group) {
         return group.executeAndUnion(this::executeSingle);
     }

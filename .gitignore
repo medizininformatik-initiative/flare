@@ -2,3 +2,5 @@
 cache
 target
 /ontology/mapping.zip
+.idea/
+*.DS_Store
