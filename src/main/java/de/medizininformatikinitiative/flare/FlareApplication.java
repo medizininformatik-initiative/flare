@@ -15,6 +15,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.http.codec.json.Jackson2JsonEncoder;
+import org.springframework.security.oauth2.client.AuthorizedClientServiceReactiveOAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.InMemoryReactiveOAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.registration.ClientRegistrations;
+import org.springframework.security.oauth2.client.registration.InMemoryReactiveClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction;
+import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.scheduler.Schedulers;
@@ -24,8 +30,12 @@ import reactor.netty.resources.ConnectionProvider;
 import java.time.Clock;
 import java.time.Duration;
 
+import static org.springframework.security.oauth2.core.AuthorizationGrantType.CLIENT_CREDENTIALS;
+
 @SpringBootApplication
 public class FlareApplication {
+
+    private static final String REGISTRATION_ID = "openid-connect";
 
     private static final Logger logger = LoggerFactory.getLogger(FlareApplication.class);
 
@@ -43,7 +53,8 @@ public class FlareApplication {
                                      @Value("${flare.fhir.password}") String password,
                                      @Value("${flare.fhir.maxConnections}") int maxConnections,
                                      @Value("${flare.fhir.maxQueueSize}") int maxQueueSize,
-                                     ObjectMapper mapper) {
+                                     ObjectMapper mapper,
+                                     @Qualifier("oauth") ExchangeFilterFunction oauthExchangeFilterFunction) {
         logger.info("Create a HTTP connection pool to {} with a maximum of {} connections.", baseUrl, maxConnections);
         ConnectionProvider provider = ConnectionProvider.builder("data-store")
                 .maxConnections(maxConnections)
@@ -58,6 +69,7 @@ public class FlareApplication {
             builder = builder.filter(ExchangeFilterFunctions.basicAuthentication(user, password));
         }
         return builder
+                .filter(oauthExchangeFilterFunction)
                 .codecs(configurer -> {
                     var codecs = configurer.defaultCodecs();
                     codecs.maxInMemorySize(EIGHT_MEGA_BYTE);
@@ -96,5 +108,35 @@ public class FlareApplication {
     @Bean
     public Clock systemDefaultZone() {
         return Clock.systemDefaultZone();
+    }
+
+    @Bean
+    @Qualifier("oauth")
+    ExchangeFilterFunction oauthExchangeFilterFunction(
+            @Value("${flare.fhir.oauth.issuer.uri:}") String issuerUri,
+            @Value("${flare.fhir.oauth.client.id:}") String clientId,
+            @Value("${flare.fhir.oauth.client.secret:}") String clientSecret) {
+        if (!issuerUri.isEmpty() && !clientId.isEmpty() && !clientSecret.isEmpty()) {
+            logger.debug("Enabling OAuth2 authentication (issuer uri: '{}', client id: '{}').",
+                    issuerUri, clientId);
+            var clientRegistration = ClientRegistrations.fromIssuerLocation(issuerUri)
+                    .registrationId(REGISTRATION_ID)
+                    .clientId(clientId)
+                    .clientSecret(clientSecret)
+                    .authorizationGrantType(CLIENT_CREDENTIALS)
+                    .build();
+            var registrations = new InMemoryReactiveClientRegistrationRepository(clientRegistration);
+            var clientService = new InMemoryReactiveOAuth2AuthorizedClientService(registrations);
+            var authorizedClientManager = new AuthorizedClientServiceReactiveOAuth2AuthorizedClientManager(
+                    registrations, clientService);
+            var oAuthExchangeFilterFunction = new ServerOAuth2AuthorizedClientExchangeFilterFunction(
+                    authorizedClientManager);
+            oAuthExchangeFilterFunction.setDefaultClientRegistrationId(REGISTRATION_ID);
+
+            return oAuthExchangeFilterFunction;
+        } else {
+            logger.debug("Skipping OAuth2 authentication.");
+            return (request, next) -> next.exchange(request);
+        }
     }
 }
