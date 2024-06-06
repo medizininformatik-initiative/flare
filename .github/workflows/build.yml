@@ -42,7 +42,7 @@ jobs:
         run: mvn -B verify
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
