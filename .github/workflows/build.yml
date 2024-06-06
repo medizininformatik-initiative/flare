@@ -125,6 +125,12 @@ jobs:
 
   integration-test:
     needs: build
+    strategy:
+      matrix:
+        test:
+          - no-auth
+          - basic-auth
+          - oauth
     runs-on: ubuntu-22.04
 
     steps:
@@ -144,16 +150,10 @@ jobs:
         run: docker load --input /tmp/flare.tar
 
       - name: Run Flare and Blaze
-        run: docker-compose -f .github/integration-test/docker-compose.yml up -d
-
-      - name: Wait for Blaze
-        run: .github/scripts/wait-for-url.sh  http://localhost:8082/health
+        run: docker compose -f .github/integration-test/${{ matrix.test }}/docker-compose.yml up -d --wait --wait-timeout 300
 
       - name: Load Data
-        run: blazectl --no-progress --server http://localhost:8082/fhir upload .github/test-data/synthea
-
-      - name: Wait for Flare
-        run: .github/scripts/wait-for-url.sh  http://localhost:8080/cache/stats
+        run: .github/integration-test/${{ matrix.test }}/load-data.sh
 
       - name: Query for Viral sinusitis (disorder)
         run: .github/scripts/execute-query.sh 444814009 69
