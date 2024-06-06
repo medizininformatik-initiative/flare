@@ -69,7 +69,7 @@ class CriterionTest {
         @Test
         @DisplayName("missing context")
         void missingContext() {
-            assertThatThrownBy(() -> parse("{}")).hasMessage("Cannot construct instance of `de.medizininformatikinitiative.flare.model.sq.Criterion`, problem: missing JSON property: context\n at [Source: (String)\"{}\"; line: 1, column: 2]");
+            assertThatThrownBy(() -> parse("{}")).hasMessage("Cannot construct instance of `de.medizininformatikinitiative.flare.model.sq.Criterion`, problem: missing JSON property: context\n at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 2]");
         }
 
         @Test
@@ -1970,5 +1970,3 @@ class CriterionTest {
         }
     }
 }
-
-
