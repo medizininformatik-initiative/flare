@@ -14,7 +14,7 @@ services:
       - "certs:/certs"
       - "keys:/keys"
   generate-trust-store:
-    image: eclipse-temurin:17
+    image: eclipse-temurin:21
     networks:
       test-oauth:
     entrypoint: ["bash", "-c"]
