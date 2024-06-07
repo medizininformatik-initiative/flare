@@ -6,6 +6,6 @@
      reverse |
      limit(10; .[]) |
      .value.coding[0] |
-     [ { "termCodes": [ . ] } ]
+     [ { "termCodes": [ . ], "context": { "code": "Diagnose", "system": "fdpg.mii.cds", "version": "1.0.0", "display": "Diagnose"}} ]
   ]
 }

@@ -8,7 +8,13 @@
             "code": "444814009",
             "display": "Viral sinusitis (disorder)"
           }
-        ]
+        ],
+        "context": {
+          "code": "Diagnose",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0",
+          "display": "Diagnose"
+        }
       },
       {
         "termCodes": [
@@ -17,7 +23,13 @@
             "code": "840544004",
             "display": "Suspected COVID-19"
           }
-        ]
+        ],
+        "context": {
+          "code": "Diagnose",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0",
+          "display": "Diagnose"
+        }
       },
       {
         "termCodes": [
@@ -26,7 +38,13 @@
             "code": "840539006",
             "display": "COVID-19"
           }
-        ]
+        ],
+        "context": {
+          "code": "Diagnose",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0",
+          "display": "Diagnose"
+        }
       },
       {
         "termCodes": [
@@ -35,7 +53,13 @@
             "code": "386661006",
             "display": "Fever (finding)"
           }
-        ]
+        ],
+        "context": {
+          "code": "Diagnose",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0",
+          "display": "Diagnose"
+        }
       },
       {
         "termCodes": [
@@ -44,16 +68,13 @@
             "code": "195662009",
             "display": "Acute viral pharyngitis (disorder)"
           }
-        ]
-      },
-      {
-        "termCodes": [
-          {
-            "system": "http://snomed.info/sct",
-            "code": "49727002",
-            "display": "Cough (finding)"
-          }
-        ]
+        ],
+        "context": {
+          "code": "Diagnose",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0",
+          "display": "Diagnose"
+        }
       },
       {
         "termCodes": [
@@ -62,25 +83,28 @@
             "code": "10509002",
             "display": "Acute bronchitis (disorder)"
           }
-        ]
+        ],
+        "context": {
+          "code": "Diagnose",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0",
+          "display": "Diagnose"
+        }
       },
       {
         "termCodes": [
           {
             "system": "http://snomed.info/sct",
-            "code": "72892002",
-            "display": "Normal pregnancy"
+            "code": "49727002",
+            "display": "Cough (finding)"
           }
-        ]
-      },
-      {
-        "termCodes": [
-          {
-            "system": "http://snomed.info/sct",
-            "code": "36955009",
-            "display": "Loss of taste (finding)"
-          }
-        ]
+        ],
+        "context": {
+          "code": "Diagnose",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0",
+          "display": "Diagnose"
+        }
       },
       {
         "termCodes": [
@@ -89,7 +113,43 @@
             "code": "162864005",
             "display": "Body mass index 30+ - obesity (finding)"
           }
-        ]
+        ],
+        "context": {
+          "code": "Diagnose",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0",
+          "display": "Diagnose"
+        }
+      },
+      {
+        "termCodes": [
+          {
+            "system": "http://snomed.info/sct",
+            "code": "36955009",
+            "display": "Loss of taste (finding)"
+          }
+        ],
+        "context": {
+          "code": "Diagnose",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0",
+          "display": "Diagnose"
+        }
+      },
+      {
+        "termCodes": [
+          {
+            "system": "http://snomed.info/sct",
+            "code": "84229001",
+            "display": "Fatigue (finding)"
+          }
+        ],
+        "context": {
+          "code": "Diagnose",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0",
+          "display": "Diagnose"
+        }
       }
     ]
   ]

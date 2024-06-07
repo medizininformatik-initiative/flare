@@ -60,7 +60,7 @@ class StructuredQueryServiceIT {
 
     @Container
     @SuppressWarnings("resource")
-    private static final GenericContainer<?> blaze = new GenericContainer<>("samply/blaze:0.23")
+    private static final GenericContainer<?> blaze = new GenericContainer<>("samply/blaze:0.26")
             .withImagePullPolicy(PullPolicy.alwaysPull())
             .withEnv("LOG_LEVEL", "debug")
             .withEnv("DB_SEARCH_PARAM_BUNDLE", "/app/custom-search-parameters.json")
@@ -226,7 +226,6 @@ class StructuredQueryServiceIT {
                     ]
                   ]
                 }
-                                
                 """);
 
         var result = service_BloodPressure.execute(query).block();
