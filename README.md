@@ -29,7 +29,7 @@ mvn clean install
 ## Run
 
 ```sh
-docker run -p 8080:8080 ghcr.io/medizininformatik-initiative/flare:2.1
+docker run -p 8080:8080 ghcr.io/medizininformatik-initiative/flare:2.2
 ```
 
 ## Environment Variables
