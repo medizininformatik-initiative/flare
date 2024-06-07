@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.2.0
+
+### Enhancements
+
+* Add OAuth2 Support ([#134](https://github.com/medizininformatik-initiative/flare/issues/134))
+
+The full changelog can be found [here](https://github.com/medizininformatik-initiative/flare/milestone/13?closed=1).
+
 ## v2.1.1
 
 ### Bugfixes
