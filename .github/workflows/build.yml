@@ -33,7 +33,7 @@ jobs:
           key: maven-${{ hashFiles('pom.xml') }}
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+        uses: github/codeql-action/init@v3
         with:
           languages: java
           queries: security-and-quality
@@ -45,7 +45,7 @@ jobs:
         uses: codecov/codecov-action@v4
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+        uses: github/codeql-action/analyze@v3
 
       - name: Upload Flare Jar
         uses: actions/upload-artifact@v4
@@ -96,7 +96,7 @@ jobs:
           timeout: '15m0s'
 
       - name: Upload Trivy Scan Results to GitHub Security Tab
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: trivy-results.sarif
 
