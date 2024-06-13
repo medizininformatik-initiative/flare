@@ -1,0 +1,1 @@
+{"inclusionCriteria": [[{"attributeFilters": [], "termCodes": [{"code": "P01CA", "display": "", "system": "http://fhir.de/CodeSystem/bfarm/atc"}], "context": {"code": "Medikamentenverabreichung", "display": "Verabreichung von Medikamenten", "system": "fdpg.mii.cds", "version": "1.0.0"}}]], "version": "http://to_be_decided.com/draft-1/schema#"}
