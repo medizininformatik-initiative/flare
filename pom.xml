@@ -21,7 +21,7 @@
   <properties>
     <java.version>17</java.version>
     <testcontainers.version>1.19.8</testcontainers.version>
-    <ontology.version>2.1.27</ontology.version>
+    <ontology.version>2.2.0-RC</ontology.version>
   </properties>
 
   <dependencies>
