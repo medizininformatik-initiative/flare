@@ -60,7 +60,7 @@ class StructuredQueryServiceIT {
 
     @Container
     @SuppressWarnings("resource")
-    private static final GenericContainer<?> blaze = new GenericContainer<>("samply/blaze:0.26")
+    private static final GenericContainer<?> blaze = new GenericContainer<>("samply/blaze:0.27")
             .withImagePullPolicy(PullPolicy.alwaysPull())
             .withEnv("LOG_LEVEL", "debug")
             .withEnv("DB_SEARCH_PARAM_BUNDLE", "/app/custom-search-parameters.json")

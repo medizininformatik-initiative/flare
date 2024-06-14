@@ -1,6 +1,6 @@
 services:
   data-store:
-    image: "samply/blaze:0.26"
+    image: "samply/blaze:0.27"
     environment:
       BASE_URL: "http://localhost:8082"
       JAVA_TOOL_OPTIONS: "-Xmx1g"
