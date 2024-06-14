@@ -136,14 +136,6 @@ class StructuredQueryServiceIT {
         assertThat(result).isOne();
     }
 
-    // Commented out - as current ontology has no lab values in mapping
-    //@Test
-    void execute_Criterion_WithValueFilter() {
-        var query = StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(ContextualConcept.of(OBSERVATION, Concept.of(COVID)), ValueFilter.ofConcept(INVALID)))));
-        var result = service.execute(query).block();
-        assertThat(result).isOne();
-    }
-
     @Test
     void execute_genderTestCase() throws URISyntaxException, IOException {
         var query = parseSq(Files.readString(resourcePathFlareApplication("testCases").resolve("returningOther").resolve("2-gender.json")));
