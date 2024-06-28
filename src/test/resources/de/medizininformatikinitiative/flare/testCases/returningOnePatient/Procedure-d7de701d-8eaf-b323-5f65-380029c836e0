@@ -1,0 +1,1 @@
+{"inclusionCriteria": [[{"attributeFilters": [], "termCodes": [{"code": "5-403.05", "display": "", "system": "http://fhir.de/CodeSystem/bfarm/ops"}], "context": {"code": "Procedure", "display": "Prozedur", "system": "fdpg.mii.cds", "version": "1.0.0"}}]], "version": "http://to_be_decided.com/draft-1/schema#"}

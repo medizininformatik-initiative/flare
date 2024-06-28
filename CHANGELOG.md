@@ -1,5 +1,19 @@
 # Changelog
 
+## v2.3.0
+
+### Enhancements
+
+* Update Ontology to Version v2.2.0
+
+## v2.3.0-rc.1
+
+### Enhancements
+
+* Update Ontology to Version v2.2.0-RC ([#163](https://github.com/medizininformatik-initiative/flare/issues/163))
+
+The full changelog can be found [here](https://github.com/medizininformatik-initiative/flare/milestone/14?closed=1).
+
 ## v2.2.0
 
 ### Enhancements

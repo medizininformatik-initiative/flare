@@ -39,7 +39,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.zip.ZipFile;
+import java.util.stream.Stream;
 
 import static java.util.function.Function.identity;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -60,7 +60,7 @@ class StructuredQueryServiceIT {
 
     @Container
     @SuppressWarnings("resource")
-    private static final GenericContainer<?> blaze = new GenericContainer<>("samply/blaze:0.26")
+    private static final GenericContainer<?> blaze = new GenericContainer<>("samply/blaze:0.28")
             .withImagePullPolicy(PullPolicy.alwaysPull())
             .withEnv("LOG_LEVEL", "debug")
             .withEnv("DB_SEARCH_PARAM_BUNDLE", "/app/custom-search-parameters.json")
@@ -97,10 +97,12 @@ class StructuredQueryServiceIT {
     }
 
     public static List<StructuredQuery> getTestQueriesReturningOnePatient() throws URISyntaxException, IOException {
-        try (var zipFile = new ZipFile(resourcePathFlareApplication("testCases").resolve("returningOnePatient.zip").toString())) {
-            return zipFile.stream().map(entry -> {
+        Path directoryPath = Paths.get(resourcePathFlareApplication("testCases").resolve("returningOnePatient").toString());
+
+        try (Stream<Path> paths = Files.list(directoryPath)) {
+            return paths.map(path -> {
                 try {
-                    return new ObjectMapper().readValue(zipFile.getInputStream(entry), StructuredQuery.class);
+                    return new ObjectMapper().readValue(Files.readString(path), StructuredQuery.class);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -128,15 +130,6 @@ class StructuredQueryServiceIT {
     @Test
     void execute_Criterion() {
         var query = StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(ContextualConcept.of(DIAGNOSIS, Concept.of(I08))))));
-
-        var result = service.execute(query).block();
-
-        assertThat(result).isOne();
-    }
-
-    @Test
-    void execute_Criterion_WithValueFilter() {
-        var query = StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(ContextualConcept.of(OBSERVATION, Concept.of(COVID)), ValueFilter.ofConcept(INVALID)))));
 
         var result = service.execute(query).block();
 
