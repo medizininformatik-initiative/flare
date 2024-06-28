@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.3.0
+
+### Enhancements
+
+* Update Ontology to Version v2.2.0
+
 ## v2.3.0-rc.1
 
 ### Enhancements
