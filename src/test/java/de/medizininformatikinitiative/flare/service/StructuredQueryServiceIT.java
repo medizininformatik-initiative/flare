@@ -131,7 +131,7 @@ class StructuredQueryServiceIT {
     void execute_Criterion() {
         var query = StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(ContextualConcept.of(DIAGNOSIS, Concept.of(I08))))));
 
-        var result = service.execute(query).block();
+        var result = service.executeCohortSize(query).block();
 
         assertThat(result).isOne();
     }
@@ -140,7 +140,7 @@ class StructuredQueryServiceIT {
     void execute_genderTestCase() throws URISyntaxException, IOException {
         var query = parseSq(Files.readString(resourcePathFlareApplication("testCases").resolve("returningOther").resolve("2-gender.json")));
 
-        var result = service.execute(query).block();
+        var result = service.executeCohortSize(query).block();
 
         assertThat(result).isEqualTo(172);
     }
@@ -149,7 +149,7 @@ class StructuredQueryServiceIT {
     void execute_consentTestCase() throws URISyntaxException, IOException {
         var query = parseSq(Files.readString(resourcePathFlareApplication("testCases").resolve("returningOther").resolve("consent.json")));
 
-        var result = service.execute(query).block();
+        var result = service.executeCohortSize(query).block();
 
         assertThat(result).isOne();
     }
@@ -165,7 +165,7 @@ class StructuredQueryServiceIT {
 
         var query = parseSq(slurpStructuredQueryService("referencedCriteria/sq-test-specimen-diag.json"));
 
-        var result = service.execute(query).block();
+        var result = service.executeCohortSize(query).block();
 
         assertThat(result).isOne();
     }
@@ -173,7 +173,7 @@ class StructuredQueryServiceIT {
     @ParameterizedTest
     @MethodSource("getTestQueriesReturningOnePatient")
     void execute_casesReturningOne(StructuredQuery query) {
-        var result = service.execute(query).block();
+        var result = service.executeCohortSize(query).block();
 
         assertThat(result).isOne();
     }
@@ -221,7 +221,7 @@ class StructuredQueryServiceIT {
                 }
                 """);
 
-        var result = service_BloodPressure.execute(query).block();
+        var result = service_BloodPressure.executeCohortSize(query).block();
 
         assertThat(result).isOne();
     }
