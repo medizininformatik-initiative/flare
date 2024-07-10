@@ -264,7 +264,7 @@ class StructuredQueryServiceTest {
         void execute_PatientExcluded() {
             var query = query(incl(PATIENT), exclOr(PATIENT, PATIENT_1));
 
-            var result = service.execute(query).block().size();
+            var result = getExecutionResult(query);
 
             assertThat(result).isZero();
         }
@@ -291,7 +291,7 @@ class StructuredQueryServiceTest {
         void execute_PatientNotExcluded() {
             var query = query(incl(PATIENT), exclAnd(PATIENT, PATIENT_1));
 
-            var result = service.execute(query).block().size();
+            var result = getExecutionResult(query);
 
             assertThat(result).isOne();
         }
@@ -301,7 +301,7 @@ class StructuredQueryServiceTest {
         void execute_PatientExcluded() {
             var query = query(incl(PATIENT), exclAnd(PATIENT, PATIENT));
 
-            var result = service.execute(query).block().size();
+            var result = getExecutionResult(query);
 
             assertThat(result).isZero();
         }
