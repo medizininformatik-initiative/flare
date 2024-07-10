@@ -50,7 +50,7 @@ class QueryControllerTest {
     }
 
     @Test
-    void executeCohort() {
+    void execute() {
         when(queryService.execute(STRUCTURED_QUERY)).thenReturn(Mono.just(Population.of(PATIENT_ID)));
 
         client.post()
@@ -85,7 +85,7 @@ class QueryControllerTest {
 
 
     @Test
-    void execute() throws JsonProcessingException {
+    void executeCohort() throws JsonProcessingException {
         when(queryService.execute(STRUCTURED_QUERY)).thenReturn(Mono.just(Population.of(PATIENT_ID,PATIENT_ID_1)));
 
         ObjectMapper objectMapper = new ObjectMapper();

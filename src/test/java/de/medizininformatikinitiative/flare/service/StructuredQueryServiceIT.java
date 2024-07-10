@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.medizininformatikinitiative.flare.FlareApplication;
 import de.medizininformatikinitiative.flare.Util;
+import de.medizininformatikinitiative.flare.model.Population;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
 import de.medizininformatikinitiative.flare.model.mapping.TermCodeNode;
@@ -26,6 +27,7 @@ import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.images.PullPolicy;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import reactor.test.StepVerifier;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -135,9 +137,8 @@ class StructuredQueryServiceIT {
     void execute_Criterion() {
         var query = StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(ContextualConcept.of(DIAGNOSIS, Concept.of(I08))))));
 
-        var result = getExecutionResult(query);
-
-        assertThat(result).isOne();
+        var result = service.execute(query);
+        StepVerifier.create(result).expectNext(Population.of("id-pat-diag-I08.0")).verifyComplete();
     }
 
     @Test
@@ -151,9 +152,10 @@ class StructuredQueryServiceIT {
     @Test
     void execute_consentTestCase() throws URISyntaxException, IOException {
         var query = parseSq(Files.readString(resourcePathFlareApplication("testCases").resolve("returningOther").resolve("consent.json")));
-        var result = getExecutionResult(query);
 
-        assertThat(result).isOne();
+        var result = service.execute(query);
+
+        StepVerifier.create(result).expectNext(Population.of("id-pat-consent-test")).verifyComplete();
     }
 
     @Test
@@ -167,9 +169,10 @@ class StructuredQueryServiceIT {
 
         var query = parseSq(slurpStructuredQueryService("referencedCriteria/sq-test-specimen-diag.json"));
 
-        var result = getExecutionResult(query);
+        var result = service.execute(query);
 
-        assertThat(result).isOne();
+        StepVerifier.create(result).expectNext(Population.of("id-pat-diab-test-1")).verifyComplete();
+
     }
 
     @ParameterizedTest
@@ -223,9 +226,10 @@ class StructuredQueryServiceIT {
                 }
                 """);
 
-        var result = service_BloodPressure.execute(query).block().size();
+        var result = service_BloodPressure.execute(query);
 
-        assertThat(result).isOne();
+        StepVerifier.create(result).expectNext(Population.of("id-pat-bloodpressure-test")).verifyComplete();
+
     }
 
     @Configuration

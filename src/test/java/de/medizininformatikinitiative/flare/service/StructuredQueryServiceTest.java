@@ -34,9 +34,10 @@ class StructuredQueryServiceTest {
 
     static final String BFARM = "http://fhir.de/CodeSystem/bfarm/icd-10-gm";
     static final Criterion CONCEPT_CRITERION = Criterion.of(cc(1));
-    static final Population PATIENT = Population.of("patient-id-140857");
-    static final Population PATIENT_1 = Population.of("patient-id-144725");
-    static final Population PATIENT_2 = Population.of("patient-id-144727");
+    static final Population EMPTY_POP = Population.of();
+    static final Population PATIENT_POP = Population.of("patient-id-140857");
+    static final Population PATIENT_1_POP = Population.of("patient-id-144725");
+    static final Population PATIENT_2_POP = Population.of("patient-id-144727");
 
     @Mock
     private FhirQueryService fhirQueryService;
@@ -46,10 +47,6 @@ class StructuredQueryServiceTest {
 
     @InjectMocks
     private StructuredQueryService service;
-
-    private int getExecutionResult(StructuredQuery query){
-        return service.execute(query).block().size();
-    }
 
     @Nested
     class SingleInclusion {
@@ -87,11 +84,12 @@ class StructuredQueryServiceTest {
             @Test
             @DisplayName("execute: returns 1")
             void execute() {
-                var query = query(incl(PATIENT));
+                var query = query(incl(PATIENT_POP));
 
-                var result = getExecutionResult(query);
+                var result = service.execute(query);
 
-                assertThat(result).isOne();
+                StepVerifier.create(result).expectNext(PATIENT_POP).verifyComplete();
+
             }
 
             @Test
@@ -112,21 +110,23 @@ class StructuredQueryServiceTest {
             @Test
             @DisplayName("execute: multiple patients → returns 2")
             void execute_MultiplePatients() {
-                var query = query(inclExpand(PATIENT_1, PATIENT_2));
+                var query = query(inclExpand(PATIENT_1_POP, PATIENT_2_POP));
 
-                var result = getExecutionResult(query);
+                var result = service.execute(query);
 
-                assertThat(result).isEqualTo(2);
+                StepVerifier.create(result).expectNext(PATIENT_1_POP.union(PATIENT_2_POP)).verifyComplete();
             }
 
             @Test
             @DisplayName("execute: same patient → returns 1")
             void execute_SamePatient() {
-                var query = query(inclExpand(PATIENT, PATIENT));
+                var query = query(inclExpand(PATIENT_POP, PATIENT_POP));
 
-                var result = getExecutionResult(query);
+                var result = service.execute(query);
 
-                assertThat(result).isOne();
+                StepVerifier.create(result).expectNext(PATIENT_POP).verifyComplete();
+
+
             }
 
             @Test
@@ -146,23 +146,23 @@ class StructuredQueryServiceTest {
     class ConjunctionInclusion {
 
         @Test
-        @DisplayName("execute: multiple patients → returns 0")
+        @DisplayName("execute: multiple patients → returns empty population")
         void execute_MultiplePatients() {
-            var query = query(inclAnd(PATIENT_1, PATIENT_2));
+            var query = query(inclAnd(PATIENT_1_POP, PATIENT_2_POP));
 
-            var result = getExecutionResult(query);
+            var result = service.execute(query);
 
-            assertThat(result).isZero();
+            StepVerifier.create(result).expectNext(EMPTY_POP).verifyComplete();
         }
 
         @Test
-        @DisplayName("execute: same patient → returns 1")
+        @DisplayName("execute: same patient → returns the Patient once")
         void execute_SamePatient() {
-            var query = query(inclAnd(PATIENT, PATIENT));
+            var query = query(inclAnd(PATIENT_POP, PATIENT_POP));
 
-            var result = getExecutionResult(query);
+            var result = service.execute(query);
 
-            assertThat(result).isOne();
+            StepVerifier.create(result).expectNext(PATIENT_POP).verifyComplete();
         }
 
         @Test
@@ -181,23 +181,23 @@ class StructuredQueryServiceTest {
     class DisjunctionInclusion {
 
         @Test
-        @DisplayName("execute: multiple patients → returns 2")
+        @DisplayName("execute: multiple patients → returns the two patients")
         void execute_MultiplePatients() {
-            var query = query(inclOr(PATIENT_1, PATIENT_2));
+            var query = query(inclOr(PATIENT_1_POP, PATIENT_2_POP));
 
-            var result = getExecutionResult(query);
+            var result = service.execute(query);
 
-            assertThat(result).isEqualTo(2);
+            StepVerifier.create(result).expectNext(PATIENT_1_POP.union(PATIENT_2_POP)).verifyComplete();
         }
 
         @Test
         @DisplayName("execute: same patient → returns 1")
         void execute_SamePatient() {
-            var query = query(inclOr(PATIENT, PATIENT));
+            var query = query(inclOr(PATIENT_POP, PATIENT_POP));
 
-            var result = getExecutionResult(query);
+            var result = service.execute(query);
 
-            assertThat(result).isOne();
+            StepVerifier.create(result).expectNext(PATIENT_POP).verifyComplete();
         }
 
         @Test
@@ -216,21 +216,23 @@ class StructuredQueryServiceTest {
     class SingleInclusionAndExclusion {
 
         @Test
-        @DisplayName("execute: PATIENT is not excluded → returns 1")
+        @DisplayName("execute: PATIENT is not excluded → returns patient")
         void execute_PatientNotExcluded() {
-            var query = query(incl(PATIENT), excl(PATIENT_1));
-            var result = getExecutionResult(query);
-            assertThat(result).isOne();
+            var query = query(incl(PATIENT_POP), excl(PATIENT_1_POP));
+
+            var result = service.execute(query);
+
+            StepVerifier.create(result).expectNext(PATIENT_POP).verifyComplete();
         }
 
         @Test
-        @DisplayName("execute: PATIENT is excluded → returns 0")
+        @DisplayName("execute: PATIENT is excluded → returns empty Population")
         void execute_PatientExcluded() {
-            var query = query(incl(PATIENT), excl(PATIENT));
+            var query = query(incl(PATIENT_POP), excl(PATIENT_POP));
 
-            var result = getExecutionResult(query);
+            var result = service.execute(query);
 
-            assertThat(result).isZero();
+            StepVerifier.create(result).expectNext(EMPTY_POP).verifyComplete();
         }
 
         @Test
@@ -250,23 +252,24 @@ class StructuredQueryServiceTest {
     class SingleInclusionAndDisjunctionExclusion {
 
         @Test
-        @DisplayName("execute: PATIENT is not excluded → returns 1")
+        @DisplayName("execute: PATIENT is not excluded → returns PATIENT")
         void execute_PatientNotExcluded() {
-            var query = query(incl(PATIENT), exclOr(PATIENT_1, PATIENT_2));
+            var query = query(incl(PATIENT_POP), exclOr(PATIENT_1_POP, PATIENT_2_POP));
 
-            var result = getExecutionResult(query);
+            var result = service.execute(query);
 
-            assertThat(result).isOne();
+            StepVerifier.create(result).expectNext(PATIENT_POP).verifyComplete();
+
         }
 
         @Test
-        @DisplayName("execute: PATIENT is excluded → returns 0")
+        @DisplayName("execute: PATIENT is excluded → returns empty Population")
         void execute_PatientExcluded() {
-            var query = query(incl(PATIENT), exclOr(PATIENT, PATIENT_1));
+            var query = query(incl(PATIENT_POP), exclOr(PATIENT_POP, PATIENT_1_POP));
 
-            var result = getExecutionResult(query);
+            var result = service.execute(query);
 
-            assertThat(result).isZero();
+            StepVerifier.create(result).expectNext(EMPTY_POP).verifyComplete();
         }
 
         @Test
@@ -287,23 +290,23 @@ class StructuredQueryServiceTest {
     class SingleInclusionAndConjunctionExclusion {
 
         @Test
-        @DisplayName("execute: PATIENT is not excluded → returns 1")
+        @DisplayName("execute: PATIENT is not excluded → returns PATIENT")
         void execute_PatientNotExcluded() {
-            var query = query(incl(PATIENT), exclAnd(PATIENT, PATIENT_1));
+            var query = query(incl(PATIENT_POP), exclAnd(PATIENT_POP, PATIENT_1_POP));
 
-            var result = getExecutionResult(query);
+            var result = service.execute(query);
 
-            assertThat(result).isOne();
+            StepVerifier.create(result).expectNext(PATIENT_POP).verifyComplete();
         }
 
         @Test
-        @DisplayName("execute: PATIENT is excluded → returns 0")
+        @DisplayName("execute: PATIENT is excluded → returns empty Population")
         void execute_PatientExcluded() {
-            var query = query(incl(PATIENT), exclAnd(PATIENT, PATIENT));
+            var query = query(incl(PATIENT_POP), exclAnd(PATIENT_POP, PATIENT_POP));
 
-            var result = getExecutionResult(query);
+            var result = service.execute(query);
 
-            assertThat(result).isZero();
+            StepVerifier.create(result).expectNext(EMPTY_POP).verifyComplete();
         }
 
         @Test
