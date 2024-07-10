@@ -96,6 +96,10 @@ class StructuredQueryServiceIT {
         return Paths.get(Objects.requireNonNull(FlareApplication.class.getResource(name)).toURI());
     }
 
+    private int getExecutionResult(StructuredQuery query){
+        return service.execute(query).block().size();
+    }
+
     public static List<StructuredQuery> getTestQueriesReturningOnePatient() throws URISyntaxException, IOException {
         Path directoryPath = Paths.get(resourcePathFlareApplication("testCases").resolve("returningOnePatient").toString());
 
@@ -131,7 +135,7 @@ class StructuredQueryServiceIT {
     void execute_Criterion() {
         var query = StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(ContextualConcept.of(DIAGNOSIS, Concept.of(I08))))));
 
-        var result = service.executeCohortSize(query).block();
+        var result = getExecutionResult(query);
 
         assertThat(result).isOne();
     }
@@ -139,8 +143,7 @@ class StructuredQueryServiceIT {
     @Test
     void execute_genderTestCase() throws URISyntaxException, IOException {
         var query = parseSq(Files.readString(resourcePathFlareApplication("testCases").resolve("returningOther").resolve("2-gender.json")));
-
-        var result = service.executeCohortSize(query).block();
+        var result = getExecutionResult(query);
 
         assertThat(result).isEqualTo(172);
     }
@@ -148,8 +151,7 @@ class StructuredQueryServiceIT {
     @Test
     void execute_consentTestCase() throws URISyntaxException, IOException {
         var query = parseSq(Files.readString(resourcePathFlareApplication("testCases").resolve("returningOther").resolve("consent.json")));
-
-        var result = service.executeCohortSize(query).block();
+        var result = getExecutionResult(query);
 
         assertThat(result).isOne();
     }
@@ -165,7 +167,7 @@ class StructuredQueryServiceIT {
 
         var query = parseSq(slurpStructuredQueryService("referencedCriteria/sq-test-specimen-diag.json"));
 
-        var result = service.executeCohortSize(query).block();
+        var result = getExecutionResult(query);
 
         assertThat(result).isOne();
     }
@@ -173,7 +175,7 @@ class StructuredQueryServiceIT {
     @ParameterizedTest
     @MethodSource("getTestQueriesReturningOnePatient")
     void execute_casesReturningOne(StructuredQuery query) {
-        var result = service.executeCohortSize(query).block();
+        var result = getExecutionResult(query);
 
         assertThat(result).isOne();
     }
@@ -221,7 +223,7 @@ class StructuredQueryServiceIT {
                 }
                 """);
 
-        var result = service_BloodPressure.executeCohortSize(query).block();
+        var result = service_BloodPressure.execute(query).block().size();
 
         assertThat(result).isOne();
     }

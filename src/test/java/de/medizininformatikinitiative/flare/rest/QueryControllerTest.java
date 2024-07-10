@@ -21,6 +21,7 @@ import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 
@@ -49,8 +50,8 @@ class QueryControllerTest {
     }
 
     @Test
-    void executeCohortSize() {
-        when(queryService.executeCohortSize(STRUCTURED_QUERY)).thenReturn(Mono.just(1));
+    void executeCohort() {
+        when(queryService.execute(STRUCTURED_QUERY)).thenReturn(Mono.just(Population.of(PATIENT_ID)));
 
         client.post()
                 .uri("/query/execute")
@@ -84,8 +85,8 @@ class QueryControllerTest {
 
 
     @Test
-    void executeCohort() throws JsonProcessingException {
-        when(queryService.executeCohort(STRUCTURED_QUERY)).thenReturn(Mono.just(Population.of(PATIENT_ID,PATIENT_ID_1)));
+    void execute() throws JsonProcessingException {
+        when(queryService.execute(STRUCTURED_QUERY)).thenReturn(Mono.just(Population.of(PATIENT_ID,PATIENT_ID_1)));
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -116,12 +117,12 @@ class QueryControllerTest {
                         """)
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody().json(objectMapper.writeValueAsString(Arrays.asList(PATIENT_ID, PATIENT_ID_1)));
+                .expectBody().json(objectMapper.writeValueAsString(List.of(PATIENT_ID, PATIENT_ID_1)));
     }
 
     @Test
     void execute_error() {
-        when(queryService.executeCohortSize(STRUCTURED_QUERY)).thenReturn(Mono.error(new MappingNotFoundException(ContextualTermCode.of(TestUtil.CONTEXT, FEVER))));
+        when(queryService.execute(STRUCTURED_QUERY)).thenReturn(Mono.error(new MappingNotFoundException(ContextualTermCode.of(TestUtil.CONTEXT, FEVER))));
 
         client.post()
                 .uri("/query/execute")

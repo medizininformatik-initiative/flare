@@ -41,7 +41,7 @@ public class StructuredQueryService {
      * @param query the query to execute
      * @return the Patient IDs qualifying the criteria
      */
-    public Mono<Population> executeCohort(StructuredQuery query) {
+    public Mono<Population> execute(StructuredQuery query) {
         var includedPatients = query.inclusionCriteria().executeAndIntersection(this::executeUnionGroup)
                 .defaultIfEmpty(Population.of());
         var excludedPatients = query.exclusionCriteria().map(c -> c.map(CriterionGroup::wrapCriteria)
@@ -52,16 +52,6 @@ public class StructuredQueryService {
                 .flatMap(i -> excludedPatients.map(i::difference));
     }
 
-
-    /**
-     * Executes {@code query} and returns the number of Patients qualifying its criteria.
-     *
-     * @param query the query to execute
-     * @return the number of Patients qualifying the criteria
-     */
-    public Mono<Integer> executeCohortSize(StructuredQuery query) {
-        return this.executeCohort(query).map(Set::size);
-    }
 
     private Mono<Population> executeUnionGroup(CriterionGroup<Criterion> group) {
         return group.executeAndUnion(this::executeSingle);

@@ -47,6 +47,10 @@ class StructuredQueryServiceTest {
     @InjectMocks
     private StructuredQueryService service;
 
+    private int getExecutionResult(StructuredQuery query){
+        return service.execute(query).block().size();
+    }
+
     @Nested
     class SingleInclusion {
 
@@ -63,7 +67,7 @@ class StructuredQueryServiceTest {
 
             @Test
             void execute() {
-                var result = service.executeCohortSize(query);
+                var result = service.execute(query);
 
                 StepVerifier.create(result).expectError(MappingNotFoundException.class).verify();
             }
@@ -85,7 +89,7 @@ class StructuredQueryServiceTest {
             void execute() {
                 var query = query(incl(PATIENT));
 
-                var result = service.executeCohortSize(query).block();
+                var result = getExecutionResult(query);
 
                 assertThat(result).isOne();
             }
@@ -110,7 +114,7 @@ class StructuredQueryServiceTest {
             void execute_MultiplePatients() {
                 var query = query(inclExpand(PATIENT_1, PATIENT_2));
 
-                var result = service.executeCohortSize(query).block();
+                var result = getExecutionResult(query);
 
                 assertThat(result).isEqualTo(2);
             }
@@ -120,7 +124,7 @@ class StructuredQueryServiceTest {
             void execute_SamePatient() {
                 var query = query(inclExpand(PATIENT, PATIENT));
 
-                var result = service.executeCohortSize(query).block();
+                var result = getExecutionResult(query);
 
                 assertThat(result).isOne();
             }
@@ -146,7 +150,7 @@ class StructuredQueryServiceTest {
         void execute_MultiplePatients() {
             var query = query(inclAnd(PATIENT_1, PATIENT_2));
 
-            var result = service.executeCohortSize(query).block();
+            var result = getExecutionResult(query);
 
             assertThat(result).isZero();
         }
@@ -156,7 +160,7 @@ class StructuredQueryServiceTest {
         void execute_SamePatient() {
             var query = query(inclAnd(PATIENT, PATIENT));
 
-            var result = service.executeCohortSize(query).block();
+            var result = getExecutionResult(query);
 
             assertThat(result).isOne();
         }
@@ -181,7 +185,7 @@ class StructuredQueryServiceTest {
         void execute_MultiplePatients() {
             var query = query(inclOr(PATIENT_1, PATIENT_2));
 
-            var result = service.executeCohortSize(query).block();
+            var result = getExecutionResult(query);
 
             assertThat(result).isEqualTo(2);
         }
@@ -191,7 +195,7 @@ class StructuredQueryServiceTest {
         void execute_SamePatient() {
             var query = query(inclOr(PATIENT, PATIENT));
 
-            var result = service.executeCohortSize(query).block();
+            var result = getExecutionResult(query);
 
             assertThat(result).isOne();
         }
@@ -215,9 +219,7 @@ class StructuredQueryServiceTest {
         @DisplayName("execute: PATIENT is not excluded → returns 1")
         void execute_PatientNotExcluded() {
             var query = query(incl(PATIENT), excl(PATIENT_1));
-
-            var result = service.executeCohortSize(query).block();
-
+            var result = getExecutionResult(query);
             assertThat(result).isOne();
         }
 
@@ -226,7 +228,7 @@ class StructuredQueryServiceTest {
         void execute_PatientExcluded() {
             var query = query(incl(PATIENT), excl(PATIENT));
 
-            var result = service.executeCohortSize(query).block();
+            var result = getExecutionResult(query);
 
             assertThat(result).isZero();
         }
@@ -252,7 +254,7 @@ class StructuredQueryServiceTest {
         void execute_PatientNotExcluded() {
             var query = query(incl(PATIENT), exclOr(PATIENT_1, PATIENT_2));
 
-            var result = service.executeCohortSize(query).block();
+            var result = getExecutionResult(query);
 
             assertThat(result).isOne();
         }
@@ -262,7 +264,7 @@ class StructuredQueryServiceTest {
         void execute_PatientExcluded() {
             var query = query(incl(PATIENT), exclOr(PATIENT, PATIENT_1));
 
-            var result = service.executeCohortSize(query).block();
+            var result = service.execute(query).block().size();
 
             assertThat(result).isZero();
         }
@@ -289,7 +291,7 @@ class StructuredQueryServiceTest {
         void execute_PatientNotExcluded() {
             var query = query(incl(PATIENT), exclAnd(PATIENT, PATIENT_1));
 
-            var result = service.executeCohortSize(query).block();
+            var result = service.execute(query).block().size();
 
             assertThat(result).isOne();
         }
@@ -299,7 +301,7 @@ class StructuredQueryServiceTest {
         void execute_PatientExcluded() {
             var query = query(incl(PATIENT), exclAnd(PATIENT, PATIENT));
 
-            var result = service.executeCohortSize(query).block();
+            var result = service.execute(query).block().size();
 
             assertThat(result).isZero();
         }
