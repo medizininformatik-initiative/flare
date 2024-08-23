@@ -34,13 +34,14 @@ public class StructuredQueryService {
         this.translator = requireNonNull(translator);
     }
 
+
     /**
-     * Executes {@code query} and returns the number of Patients qualifying its criteria.
+     * Executes {@code query} and returns the Population of Patient IDs.
      *
      * @param query the query to execute
-     * @return the number of Patients qualifying the criteria
+     * @return the Patient IDs qualifying the criteria
      */
-    public Mono<Integer> execute(StructuredQuery query) {
+    public Mono<Population> execute(StructuredQuery query) {
         var includedPatients = query.inclusionCriteria().executeAndIntersection(this::executeUnionGroup)
                 .defaultIfEmpty(Population.of());
         var excludedPatients = query.exclusionCriteria().map(c -> c.map(CriterionGroup::wrapCriteria)
@@ -48,9 +49,9 @@ public class StructuredQueryService {
                         .defaultIfEmpty(Population.of()))
                 .orElse(Mono.just(Population.of()));
         return includedPatients
-                .flatMap(i -> excludedPatients.map(i::difference))
-                .map(Set::size);
+                .flatMap(i -> excludedPatients.map(i::difference));
     }
+
 
     private Mono<Population> executeUnionGroup(CriterionGroup<Criterion> group) {
         return group.executeAndUnion(this::executeSingle);

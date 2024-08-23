@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.medizininformatikinitiative.flare.FlareApplication;
 import de.medizininformatikinitiative.flare.Util;
+import de.medizininformatikinitiative.flare.model.Population;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
 import de.medizininformatikinitiative.flare.model.mapping.TermCodeNode;
@@ -26,6 +27,7 @@ import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.images.PullPolicy;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import reactor.test.StepVerifier;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -96,6 +98,10 @@ class StructuredQueryServiceIT {
         return Paths.get(Objects.requireNonNull(FlareApplication.class.getResource(name)).toURI());
     }
 
+    private int getExecutionResult(StructuredQuery query){
+        return service.execute(query).block().size();
+    }
+
     public static List<StructuredQuery> getTestQueriesReturningOnePatient() throws URISyntaxException, IOException {
         Path directoryPath = Paths.get(resourcePathFlareApplication("testCases").resolve("returningOnePatient").toString());
 
@@ -131,16 +137,14 @@ class StructuredQueryServiceIT {
     void execute_Criterion() {
         var query = StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(ContextualConcept.of(DIAGNOSIS, Concept.of(I08))))));
 
-        var result = service.execute(query).block();
-
-        assertThat(result).isOne();
+        var result = service.execute(query);
+        StepVerifier.create(result).expectNext(Population.of("id-pat-diag-I08.0")).verifyComplete();
     }
 
     @Test
     void execute_genderTestCase() throws URISyntaxException, IOException {
         var query = parseSq(Files.readString(resourcePathFlareApplication("testCases").resolve("returningOther").resolve("2-gender.json")));
-
-        var result = service.execute(query).block();
+        var result = getExecutionResult(query);
 
         assertThat(result).isEqualTo(172);
     }
@@ -149,9 +153,9 @@ class StructuredQueryServiceIT {
     void execute_consentTestCase() throws URISyntaxException, IOException {
         var query = parseSq(Files.readString(resourcePathFlareApplication("testCases").resolve("returningOther").resolve("consent.json")));
 
-        var result = service.execute(query).block();
+        var result = service.execute(query);
 
-        assertThat(result).isOne();
+        StepVerifier.create(result).expectNext(Population.of("id-pat-consent-test")).verifyComplete();
     }
 
     @Test
@@ -165,15 +169,16 @@ class StructuredQueryServiceIT {
 
         var query = parseSq(slurpStructuredQueryService("referencedCriteria/sq-test-specimen-diag.json"));
 
-        var result = service.execute(query).block();
+        var result = service.execute(query);
 
-        assertThat(result).isOne();
+        StepVerifier.create(result).expectNext(Population.of("id-pat-diab-test-1")).verifyComplete();
+
     }
 
     @ParameterizedTest
     @MethodSource("getTestQueriesReturningOnePatient")
     void execute_casesReturningOne(StructuredQuery query) {
-        var result = service.execute(query).block();
+        var result = getExecutionResult(query);
 
         assertThat(result).isOne();
     }
@@ -221,9 +226,10 @@ class StructuredQueryServiceIT {
                 }
                 """);
 
-        var result = service_BloodPressure.execute(query).block();
+        var result = service_BloodPressure.execute(query);
 
-        assertThat(result).isOne();
+        StepVerifier.create(result).expectNext(Population.of("id-pat-bloodpressure-test")).verifyComplete();
+
     }
 
     @Configuration
