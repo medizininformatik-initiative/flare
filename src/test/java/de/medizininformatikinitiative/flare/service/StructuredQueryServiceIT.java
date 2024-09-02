@@ -7,7 +7,8 @@ import de.medizininformatikinitiative.flare.Util;
 import de.medizininformatikinitiative.flare.model.Population;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
-import de.medizininformatikinitiative.flare.model.mapping.TermCodeNode;
+import de.medizininformatikinitiative.flare.model.mapping.MappingTreeBase;
+import de.medizininformatikinitiative.flare.model.mapping.MappingTreeModuleRoot;
 import de.medizininformatikinitiative.flare.model.sq.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,7 +44,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static java.util.function.Function.identity;
+import static java.util.function.UnaryOperator.identity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
@@ -98,7 +99,7 @@ class StructuredQueryServiceIT {
         return Paths.get(Objects.requireNonNull(FlareApplication.class.getResource(name)).toURI());
     }
 
-    private int getExecutionResult(StructuredQuery query){
+    private int getExecutionResult(StructuredQuery query) {
         return service.execute(query).block().size();
     }
 
@@ -255,7 +256,7 @@ class StructuredQueryServiceIT {
             var mapper = new ObjectMapper();
             var mappings = Arrays.stream(mapper.readValue(slurpStructuredQueryService("compositeSearchParams/mapping-bloodPressure.json"), Mapping[].class))
                     .collect(Collectors.toMap(Mapping::key, identity()));
-            var conceptTree = mapper.readValue(slurpStructuredQueryService("compositeSearchParams/tree-bloodPressure.json"), TermCodeNode.class);
+            var conceptTree = new MappingTreeBase(Arrays.stream(mapper.readValue(slurpStructuredQueryService("compositeSearchParams/tree-bloodPressure.json"), MappingTreeModuleRoot[].class)).toList());
             return MappingContext.of(mappings, conceptTree, CLOCK_2000);
         }
 
