@@ -25,8 +25,7 @@ class MappingTreeBaseTest {
     static final String C4 = "c4";
     static final String C5 = "c5";
 
-
-    private ContextualTermCode contextualTermCodeOf(TermCode context, String system, String code) {
+    private static ContextualTermCode contextualTermCodeOf(TermCode context, String system, String code) {
         return new ContextualTermCode(context, new TermCode(system, code, "display"));
     }
 

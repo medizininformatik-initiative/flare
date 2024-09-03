@@ -15,11 +15,10 @@ class MappingContextTest {
 
     static final TermCode CONTEXT = TermCode.of("context", "context", "context");
     static final String SYSTEM = "sys";
-    static final ContextualTermCode ROOT = ContextualTermCode.of(CONTEXT, TermCode.of("root", "root", "root"));
     static final String C1 = "c1";
     static final String C2 = "c2";
 
-    private ContextualTermCode contextualTermCodeOf(String code) {
+    private static ContextualTermCode contextualTermCodeOf(String code) {
         return new ContextualTermCode(MappingContextTest.CONTEXT, new TermCode(MappingContextTest.SYSTEM, code, "display"));
     }
 
@@ -50,9 +49,7 @@ class MappingContextTest {
 
         var result = context.expandConcept(ContextualConcept.of(contextualTermCodeOf(C1)));
 
-        assertThat(result).isRightSatisfying(r -> {
-            assertThat(r.get(0)).isEqualTo(contextualTermCodeOf(C1));
-            assertThat(r.get(1)).isEqualTo(contextualTermCodeOf(C2));
-        });
+        assertThat(result).isRightSatisfying(r ->
+                assertThat(r).containsExactly(contextualTermCodeOf(C1), contextualTermCodeOf(C2)));
     }
 }

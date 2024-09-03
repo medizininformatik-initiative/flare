@@ -44,8 +44,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static java.util.function.UnaryOperator.identity;
-import static org.assertj.core.api.Assertions.assertThat;
+import static java.util.function.Function.identity;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @Testcontainers
@@ -54,16 +53,13 @@ class StructuredQueryServiceIT {
 
     private static final Clock CLOCK_2000 = Clock.fixed(LocalDate.of(2000, 1, 1).atStartOfDay().toInstant(ZoneOffset.UTC), ZoneOffset.UTC);
     private static final TermCode I08 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "I08", "");
-    private static final TermCode COVID = TermCode.of("http://loinc.org", "94500-6", "");
-    private static final TermCode INVALID = TermCode.of("http://loinc.org", "LA15841-2", "Invalid");
     private static final TermCode DIAGNOSIS = TermCode.of("fdpg.mii.cds", "Diagnose", "Diagnose");
-    private static final TermCode OBSERVATION = TermCode.of("fdpg.mii.cds", "Laboruntersuchung", "Laboruntersuchung");
 
     private static final Logger logger = LoggerFactory.getLogger(StructuredQueryServiceIT.class);
 
     @Container
     @SuppressWarnings("resource")
-    private static final GenericContainer<?> blaze = new GenericContainer<>("samply/blaze:0.28")
+    private static final GenericContainer<?> blaze = new GenericContainer<>("samply/blaze:0.29")
             .withImagePullPolicy(PullPolicy.alwaysPull())
             .withEnv("LOG_LEVEL", "debug")
             .withEnv("DB_SEARCH_PARAM_BUNDLE", "/app/custom-search-parameters.json")
@@ -97,10 +93,6 @@ class StructuredQueryServiceIT {
 
     private static Path resourcePathFlareApplication(String name) throws URISyntaxException {
         return Paths.get(Objects.requireNonNull(FlareApplication.class.getResource(name)).toURI());
-    }
-
-    private int getExecutionResult(StructuredQuery query) {
-        return service.execute(query).block().size();
     }
 
     public static List<StructuredQuery> getTestQueriesReturningOnePatient() throws URISyntaxException, IOException {
@@ -139,15 +131,17 @@ class StructuredQueryServiceIT {
         var query = StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(ContextualConcept.of(DIAGNOSIS, Concept.of(I08))))));
 
         var result = service.execute(query);
+
         StepVerifier.create(result).expectNext(Population.of("id-pat-diag-I08.0")).verifyComplete();
     }
 
     @Test
     void execute_genderTestCase() throws URISyntaxException, IOException {
         var query = parseSq(Files.readString(resourcePathFlareApplication("testCases").resolve("returningOther").resolve("2-gender.json")));
-        var result = getExecutionResult(query);
 
-        assertThat(result).isEqualTo(172);
+        var result = service.execute(query);
+
+        StepVerifier.create(result).expectNextMatches(p -> p.size() == 172).verifyComplete();
     }
 
     @Test
@@ -179,9 +173,9 @@ class StructuredQueryServiceIT {
     @ParameterizedTest
     @MethodSource("getTestQueriesReturningOnePatient")
     void execute_casesReturningOne(StructuredQuery query) {
-        var result = getExecutionResult(query);
+        var result = service.execute(query);
 
-        assertThat(result).isOne();
+        StepVerifier.create(result).expectNextMatches(p -> p.size() == 1).verifyComplete();
     }
 
     @Test
