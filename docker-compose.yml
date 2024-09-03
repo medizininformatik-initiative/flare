@@ -1,13 +1,10 @@
 services:
-  data-store:
-    image: "samply/blaze:0.29"
-    environment:
-      BASE_URL: "http://localhost:8082"
-      JAVA_TOOL_OPTIONS: "-Xmx1g"
-      LOG_LEVEL: "debug"
+  flare:
+    image: ghcr.io/medizininformatik-initiative/flare:2.3.0
     ports:
-    - "8082:8080"
+      - 8080:8080
     volumes:
-    - "data-store-data:/app/data"
+      - flare-cache:/app/cache
+
 volumes:
-  data-store-data:
+  flare-cache:
