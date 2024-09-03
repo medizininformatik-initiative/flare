@@ -18,7 +18,7 @@ mvn clean install
 docker-compose up
 ```
 
-In order for flare to work, a FHIR server such as [blaze](https://github.com/samply/blaze) must be running.
+In order for flare to work, a FHIR server such as [Blaze](https://github.com/samply/blaze) must be running on port 8082 by default.
 
 ## Environment Variables
 
