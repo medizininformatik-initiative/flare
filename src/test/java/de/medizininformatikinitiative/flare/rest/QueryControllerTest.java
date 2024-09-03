@@ -20,7 +20,6 @@ import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingExcept
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 import reactor.core.publisher.Mono;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
@@ -86,7 +85,7 @@ class QueryControllerTest {
 
     @Test
     void executeCohort() throws JsonProcessingException {
-        when(queryService.execute(STRUCTURED_QUERY)).thenReturn(Mono.just(Population.of(PATIENT_ID,PATIENT_ID_1)));
+        when(queryService.execute(STRUCTURED_QUERY)).thenReturn(Mono.just(Population.of(PATIENT_ID, PATIENT_ID_1)));
 
         ObjectMapper objectMapper = new ObjectMapper();
 

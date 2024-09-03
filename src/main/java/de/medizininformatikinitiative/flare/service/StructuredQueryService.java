@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Set;
-
 import static de.medizininformatikinitiative.flare.model.translate.Operator.Name.UNION;
 import static java.util.Objects.requireNonNull;
 

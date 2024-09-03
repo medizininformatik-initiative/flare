@@ -21,10 +21,10 @@ import static java.util.Objects.requireNonNull;
 public class MappingContext {
 
     private final Map<ContextualTermCode, Mapping> mappings;
-    private final TermCodeNode conceptTree;
+    private final MappingTreeBase conceptTree;
     private final Clock clock;
 
-    private MappingContext(Map<ContextualTermCode, Mapping> mappings, TermCodeNode conceptTree, Clock clock) {
+    private MappingContext(Map<ContextualTermCode, Mapping> mappings, MappingTreeBase conceptTree, Clock clock) {
         this.mappings = Map.copyOf(mappings);
         this.conceptTree = requireNonNull(conceptTree);
         this.clock = requireNonNull(clock);
@@ -37,7 +37,7 @@ public class MappingContext {
      * @param conceptTree a tree of concepts to expand (can be null)
      * @return the mapping context
      */
-    public static MappingContext of(Map<ContextualTermCode, Mapping> mappings, TermCodeNode conceptTree) {
+    public static MappingContext of(Map<ContextualTermCode, Mapping> mappings, MappingTreeBase conceptTree) {
         return new MappingContext(mappings, conceptTree, Clock.systemDefaultZone());
     }
 
@@ -49,7 +49,7 @@ public class MappingContext {
      * @param clock       a clock that is used for time-related calculations
      * @return the mapping context
      */
-    public static MappingContext of(Map<ContextualTermCode, Mapping> mappings, TermCodeNode conceptTree, Clock clock) {
+    public static MappingContext of(Map<ContextualTermCode, Mapping> mappings, MappingTreeBase conceptTree, Clock clock) {
         return new MappingContext(mappings, conceptTree, clock);
     }
 

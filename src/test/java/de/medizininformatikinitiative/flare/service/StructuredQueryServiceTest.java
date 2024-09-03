@@ -25,7 +25,6 @@ import java.util.UUID;
 import static de.medizininformatikinitiative.flare.Assertions.assertThat;
 import static de.medizininformatikinitiative.flare.model.fhir.QueryParams.conceptValue;
 import static de.medizininformatikinitiative.flare.model.sq.TestUtil.*;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @SuppressWarnings("SameParameterValue")

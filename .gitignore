@@ -1,4 +1,5 @@
 .mvn
+.idea/
 cache
 target
 /ontology/mapping.zip
