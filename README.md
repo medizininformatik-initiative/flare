@@ -6,20 +6,6 @@
 
 The goal of this project is to provide a service that allows for execution of feasibility queries on a FHIR-server.
 
-## Setting up the test-environment
-
-Set up FHIR test server
-
-```sh
-docker compose up
-```
-
-Load example data into FHIR server
-
-```sh
-import-test-data.sh
-```
-
 ## Build
 
 ```sh
@@ -29,8 +15,10 @@ mvn clean install
 ## Run
 
 ```sh
-docker run -p 8080:8080 ghcr.io/medizininformatik-initiative/flare:2.3
+docker-compose up
 ```
+
+In order for flare to work, a FHIR server such as [blaze](https://github.com/samply/blaze) must be running.
 
 ## Environment Variables
 
