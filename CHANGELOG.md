@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.4.0-alpha.1
+
+### Enhancements
+
+* Update mapping_tree creation ([#191](https://github.com/medizininformatik-initiative/flare/issues/191))
+* Add cohort extraction endpoint ([#178](https://github.com/medizininformatik-initiative/flare/issues/178))
+* docker-compose.yml should be for flare instead of blaze ([#184](https://github.com/medizininformatik-initiative/flare/issues/184))
+
 ## v2.3.0
 
 ### Enhancements
