@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.4.0-alpha.2
+
+* Updated ontology to v3.0.0-alpha
+
 ## v2.4.0-alpha.1
 
 ### Enhancements
