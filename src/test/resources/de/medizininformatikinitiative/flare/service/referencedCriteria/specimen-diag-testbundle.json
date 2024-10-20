@@ -3,10 +3,10 @@
   "type": "transaction",
   "entry": [
     {
-      "fullUrl": "Patient/SPEC-DIAB-TEST-P-1",
+      "fullUrl": "Patient/id-pat-diab-test-1",
       "resource": {
         "resourceType": "Patient",
-        "id": "SPEC-DIAB-TEST-P-1",
+        "id": "id-pat-diab-test-1",
         "meta": {
           "profile": [
             "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/Patient"
@@ -24,7 +24,7 @@
               ]
             },
             "system": "https://test/pid",
-            "value": "SPEC-DIAB-TEST-P-1"
+            "value": "id-pat-diab-test-1"
           }
         ],
         "gender": "male",
@@ -32,7 +32,7 @@
       },
       "request": {
         "method": "PUT",
-        "url": "Patient/SPEC-DIAB-TEST-P-1"
+        "url": "Patient/id-pat-diab-test-1"
       }
     },
     {
@@ -61,7 +61,7 @@
           "text": "Idiopathische Hypotonie"
         },
         "subject": {
-          "reference": "Patient/SPEC-DIAB-TEST-P-1"
+          "reference": "Patient/id-pat-diab-test-1"
         },
         "recordedDate": "2021-01-01T00:00:00+01:00"
       },
@@ -99,7 +99,7 @@
           "text": "Serum Specimen"
         },
         "subject": {
-          "reference": "Patient/SPEC-DIAB-TEST-P-1"
+          "reference": "Patient/id-pat-diab-test-1"
         }
       },
       "request": {

@@ -3,7 +3,8 @@ package de.medizininformatikinitiative.flare;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.medizininformatikinitiative.flare.model.mapping.Mapping;
 import de.medizininformatikinitiative.flare.model.mapping.MappingContext;
-import de.medizininformatikinitiative.flare.model.mapping.TermCodeNode;
+import de.medizininformatikinitiative.flare.model.mapping.MappingTreeBase;
+import de.medizininformatikinitiative.flare.model.mapping.MappingTreeModuleRoot;
 import de.medizininformatikinitiative.flare.model.sq.ContextualTermCode;
 
 import java.io.BufferedInputStream;
@@ -79,11 +80,11 @@ public interface Util {
     static MappingContext flareMappingContext(Clock clock) throws Exception {
         var mapper = new ObjectMapper();
         String ontologyZipFile = "ontology/mapping.zip";
-        String mappingFile = "ontology/mapping/mapping_fhir.json";
-        String conceptTreeFile = "ontology/mapping/mapping_tree.json";
+        String mappingFile = "mapping/fhir/mapping_fhir.json";
+        String conceptTreeFile = "mapping/mapping_tree.json";
 
         Map<ContextualTermCode, Mapping> mappings = null;
-        TermCodeNode conceptTree = null;
+        MappingTreeBase conceptTree = null;
 
         try (FileInputStream fis = new FileInputStream(ontologyZipFile);
              BufferedInputStream bis = new BufferedInputStream(fis);
@@ -94,8 +95,8 @@ public interface Util {
                     mappings = Arrays.stream(mapper.readValue(readZipEntryContent(zis), Mapping[].class))
                             .collect(Collectors.toMap(Mapping::key, identity()));
                 } else if (ze.getName().equals(conceptTreeFile)) {
-                    String treeString = readZipEntryContent(zis);
-                    conceptTree = mapper.readValue(treeString, TermCodeNode.class);
+                    conceptTree = new MappingTreeBase(
+                            Arrays.stream(mapper.readValue(readZipEntryContent(zis), MappingTreeModuleRoot[].class)).toList());
                 }
             }
         }
