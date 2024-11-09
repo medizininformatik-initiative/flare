@@ -20,7 +20,7 @@ class MonosTest {
         void ofLeft() {
             var result = Monos.ofEither(Either.left(new Exception(MESSAGE)));
 
-            StepVerifier.create(result).expectErrorMessage(MESSAGE).verify();
+            StepVerifier.create(result).verifyErrorMessage(MESSAGE);
         }
 
         @Test

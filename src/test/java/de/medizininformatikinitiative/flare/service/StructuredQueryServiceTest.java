@@ -65,7 +65,7 @@ class StructuredQueryServiceTest {
             void execute() {
                 var result = service.execute(query);
 
-                StepVerifier.create(result).expectError(MappingNotFoundException.class).verify();
+                StepVerifier.create(result).verifyError(MappingNotFoundException.class);
             }
 
             @Test

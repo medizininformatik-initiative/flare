@@ -66,7 +66,7 @@ class DataStoreTest {
 
         var result = dataStore.execute(Query.ofType("Observation"));
 
-        StepVerifier.create(result).expectErrorMessage("Retries exhausted: 3/3").verify();
+        StepVerifier.create(result).verifyErrorMessage("Retries exhausted: 3/3");
     }
 
     @Test
@@ -76,6 +76,6 @@ class DataStoreTest {
 
         var result = dataStore.execute(Query.ofType("Observation"));
 
-        StepVerifier.create(result).expectError(WebClientResponseException.BadRequest.class).verify();
+        StepVerifier.create(result).verifyError(WebClientResponseException.BadRequest.class);
     }
 }
