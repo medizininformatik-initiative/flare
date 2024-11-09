@@ -1,6 +1,6 @@
 services:
   flare:
-    image: ghcr.io/medizininformatik-initiative/flare:2.3.0
+    image: ghcr.io/medizininformatik-initiative/flare:2.3.0-alpha.2
     ports:
       - 8080:8080
     volumes:
