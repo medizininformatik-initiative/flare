@@ -15,6 +15,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.event.annotation.BeforeTestExecution;
+import org.springframework.test.context.event.annotation.BeforeTestMethod;
+import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingException;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,7 +48,7 @@ class QueryControllerTest {
 
     @BeforeEach
     void setUp() {
-        client = WebTestClient.bindToRouterFunction(controller.queryRouter()).build();
+        client = WebTestClient.bindToRouterFunction(controller.queryRouter(true)).build();
     }
 
     @Test
@@ -82,7 +85,6 @@ class QueryControllerTest {
                 .expectBody().json("1");
     }
 
-
     @Test
     void executeCohort() throws JsonProcessingException {
         when(queryService.execute(STRUCTURED_QUERY)).thenReturn(Mono.just(Population.of(PATIENT_ID, PATIENT_ID_1)));
@@ -117,6 +119,40 @@ class QueryControllerTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody().json(objectMapper.writeValueAsString(List.of(PATIENT_ID, PATIENT_ID_1)));
+    }
+
+    @Test
+    void executeCohortDisabled() {
+
+        client = WebTestClient.bindToRouterFunction(controller.queryRouter(false)).build();
+
+        client.post()
+                .uri("/query/execute-cohort")
+                .contentType(MEDIA_TYPE_SQ)
+                .bodyValue("""
+                        {
+                          "inclusionCriteria": [
+                            [
+                              {
+                                "context": {
+                                  "system": "context-system",
+                                  "code": "context-code",
+                                  "display": "context-display"
+                                },
+                                "termCodes": [
+                                  {
+                                    "system": "http://snomed.info/sct",
+                                    "code": "386661006",
+                                    "display": "Fever (finding)"
+                                  }
+                                ]
+                              }
+                            ]
+                          ]
+                        }
+                        """)
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test

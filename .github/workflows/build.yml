@@ -3,16 +3,16 @@ name: Build
 on:
   push:
     branches:
-    - main
-    - develop
+      - main
+      - develop
     tags:
-    - 'v*.*.*'
+      - 'v*.*.*'
   pull_request:
     branches:
-    - main
-    - develop
+      - main
+      - develop
   schedule:
-  - cron: '0 1 * * *'
+    - cron: '0 1 * * *'
 
 jobs:
   build:
@@ -134,6 +134,7 @@ jobs:
           - no-auth
           - basic-auth
           - oauth
+          - no-auth-cohort-enabled
     runs-on: ubuntu-22.04
 
     steps:
@@ -160,6 +161,14 @@ jobs:
 
       - name: Query for Viral sinusitis (disorder)
         run: .github/scripts/execute-query.sh 444814009 69
+
+      - name: Query for Viral sinusitis (disorder) cohort not enabled
+        if: ${{ matrix.test == 'no-auth' }}
+        run: .github/scripts/execute-cohort-query-not-enabled.sh 444814009
+
+      - name: Query for Viral sinusitis (disorder) cohort enabled
+        if: ${{ matrix.test == 'no-auth-cohort-enabled' }}
+        run: .github/scripts/execute-cohort-query-enabled.sh 444814009 69 16
 
   push-image:
     needs:

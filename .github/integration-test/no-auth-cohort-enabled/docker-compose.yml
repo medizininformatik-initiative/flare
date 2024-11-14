@@ -1,0 +1,40 @@
+services:
+  data-store:
+    image: "samply/blaze:0.29"
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail -s http://localhost:8080/health"]
+      interval: "5s"
+      timeout: "5s"
+      retries: "3"
+      start_period: "60s"
+    environment:
+      BASE_URL: "http://data-store:8080"
+      JAVA_TOOL_OPTIONS: "-Xmx1g"
+      LOG_LEVEL: "debug"
+    ports:
+      - "8082:8080"
+    volumes:
+      - "data-store-data:/app/data"
+  flare:
+    image: "flare:latest"
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail -s http://localhost:8080/cache/stats"]
+      interval: "5s"
+      timeout: "5s"
+      retries: "3"
+      start_period: "60s"
+    environment:
+      JAVA_TOOL_OPTIONS: "-Xmx1g"
+      FLARE_FHIR_SERVER: "http://data-store:8080/fhir"
+      LOG_LEVEL: "debug"
+      FLARE_ENABLE_COHORT_ENDPOINT: true
+    ports:
+      - "8080:8080"
+    volumes:
+      - "flare-cache:/app/cache"
+      - "../synthea-test-mapping:/app/ontology"
+    depends_on:
+      - data-store
+volumes:
+  data-store-data:
+  flare-cache:
