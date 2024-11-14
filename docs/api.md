@@ -49,7 +49,7 @@ The result of that query could be:
 
 > [!CAUTION]
 > This feature is disabled by default. Be aware that it returns the actual patient IDs (techinal IDs of the FHIR server) for the patients.
-> To enable set the env var FLARE_COHORT_ENABLED=true
+> To enable set the env var FLARE_ENABLE_COHORT_ENDPOINT=true
 
 The ExecuteCohort-Endpoint returns a list of patient ids for patients fitting the criteria of the structured query that is passed in the body of a POST-Request. Also, the POST-Request must contain `application/sq+json` as Content-Type. It can be called like this:
 
