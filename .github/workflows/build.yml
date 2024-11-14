@@ -168,7 +168,7 @@ jobs:
 
       - name: Query for Viral sinusitis (disorder) cohort enabled
         if: ${{ matrix.test == 'no-auth-cohort-enabled' }}
-        run: .github/scripts/execute-cohort-query-enabled.sh 444814009
+        run: .github/scripts/execute-cohort-query-enabled.sh 444814009 69 16
 
   push-image:
     needs:

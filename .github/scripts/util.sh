@@ -11,28 +11,29 @@ test() {
 
 test_array() {
   local name="$1"
-  local array1_name="$2"
-  local array2_name="$3"
+  local array_name="$2"
+  local expected_length_id="$3"
+  local expected_array_length="$4"
 
-  # Get the length of both arrays
-  local len1=$(eval "echo \${#$array1_name[@]}")
-  local len2=$(eval "echo \${#$array2_name[@]}")
+  # Get the length of the array (number of elements)
+  local len=$(eval "echo \${#$array_name[@]}")
 
-  # Check if the arrays have the same length
-  if [ "$len1" -ne "$len2" ]; then
-    echo "Fail: the $name arrays have different lengths ($len1 vs $len2)"
+  # Check if the array has the expected number of elements
+  if [ "$len" -ne "$expected_array_length" ]; then
+    echo "Fail: the $name array has an unexpected number of elements ($len vs $expected_array_length)"
     exit 1
   fi
 
-  # Compare each element
-  for i in $(seq 0 $((len1 - 1))); do
-    local val1=$(eval "echo \${$array1_name[$i]}")
-    local val2=$(eval "echo \${$array2_name[$i]}")
-    if [ "$val1" != "$val2" ]; then
-      echo "Fail: the $name arrays differ at index $i: $val1 != $val2"
+  # Compare the length of each string in the array
+  for i in $(seq 0 $((len - 1))); do
+    local val=$(eval "echo \${$array_name[$i]}")
+
+    # Check if the string has the same expected length
+    if [ ${#val} -ne "$expected_length_id" ]; then
+      echo "Fail: the string at index $i in the $name array does not have the expected length of $expected_length_id: ${#val} != $expected_length_id"
       exit 1
     fi
   done
 
-  echo "OK: the $name arrays are equal"
+  echo "OK: all strings in the $name array have the expected length of $expected_length_id, and the array has the expected number of elements ($expected_array_length)"
 }
