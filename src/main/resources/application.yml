@@ -1,6 +1,6 @@
 flare:
   cohort:
-    enabled: false
+    enabled: ${FLARE_ENABLE_COHORT_ENDPOINT:false}
   fhir:
     server: 'http://localhost:8082/fhir'
     user: ''

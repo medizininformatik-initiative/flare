@@ -44,7 +44,7 @@ public class QueryController {
         var route = route(POST("query/execute").and(accept(MEDIA_TYPE_SQ)), this::execute)
                 .andRoute(POST("query/translate").and(accept(MEDIA_TYPE_SQ)), this::translate);
 
-        if (cohortEnabled){
+        if (cohortEnabled) {
             route = route.andRoute(POST("query/execute-cohort").and(accept(MEDIA_TYPE_SQ)), this::executeCohort);
         }
 
