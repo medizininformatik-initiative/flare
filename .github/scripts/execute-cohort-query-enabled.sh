@@ -1,18 +1,16 @@
 #!/bin/bash -e
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
-. "util.sh"
-
+. "$SCRIPT_DIR/util.sh"
 
 BASE="http://localhost:8080"
-curl_response=$(curl -s "$BASE/query/execute-cohort" -H "Content-Type: application/sq+json" -d @"../integration-test/query-$1.json")
+CURL_RESPONSE=$(curl -s "$BASE/query/execute-cohort" -H "Content-Type: application/sq+json" -d @"$SCRIPT_DIR/../integration-test/query-$1.json")
 
 ACTUAL_PAT_ID_ARRAY=()
 
 while IFS= read -r line; do
     ACTUAL_PAT_ID_ARRAY+=("$line")
-done < <(echo "$curl_response" | jq -r '.[]')
-
+done < <(echo "$CURL_RESPONSE" | jq -r '.[]')
 
 EXPECTED_PAT_ID_ARRAY=(
                           "DEZLXBBZCMJRHIWP" "DEZLXBBZGCL4O6LJ" "DEZLXBC7JY7I7VTM" "DEZLXBCWHPIDEXQP"
@@ -34,6 +32,5 @@ EXPECTED_PAT_ID_ARRAY=(
                           "DEZLXBQI5WPVLRR4" "DEZLXBQWR5KHBB44" "DEZLXBR4IC6RUSTD" "DEZLXBRJ4TA7BJYV"
                           "DEZLXBS5QKVCQCTT"
                       )
-
 
 test_array "cohort test" ACTUAL_PAT_ID_ARRAY EXPECTED_PAT_ID_ARRAY
