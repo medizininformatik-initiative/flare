@@ -7,6 +7,7 @@ import de.medizininformatikinitiative.flare.model.sq.StructuredQuery;
 import de.medizininformatikinitiative.flare.service.StructuredQueryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -38,10 +39,16 @@ public class QueryController {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> queryRouter() {
-        return route(POST("query/execute").and(accept(MEDIA_TYPE_SQ)), this::execute)
-                .andRoute(POST("query/translate").and(accept(MEDIA_TYPE_SQ)), this::translate)
-                .andRoute(POST("query/execute-cohort").and(accept(MEDIA_TYPE_SQ)), this::executeCohort);
+    public RouterFunction<ServerResponse> queryRouter(@Value("${flare.cohort.enabled}") boolean cohortEnabled) {
+
+        var route = route(POST("query/execute").and(accept(MEDIA_TYPE_SQ)), this::execute)
+                .andRoute(POST("query/translate").and(accept(MEDIA_TYPE_SQ)), this::translate);
+
+        if (cohortEnabled){
+            route = route.andRoute(POST("query/execute-cohort").and(accept(MEDIA_TYPE_SQ)), this::executeCohort);
+        }
+
+        return route;
     }
 
     public Mono<ServerResponse> execute(ServerRequest request) {

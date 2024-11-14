@@ -45,6 +45,68 @@ The result of that query could be:
 31910
 ```
 
+## Execute Cohort (Cohort Extraction)
+
+> [!CAUTION]
+> This feature is disabled by default. Be aware that it returns the actual patient IDs (techinal IDs of the FHIR server) for the patients.
+> To enable set the env var FLARE_COHORT_ENABLED=true
+
+The ExecuteCohort-Endpoint returns a list of patient ids for patients fitting the criteria of the structured query that is passed in the body of a POST-Request. Also, the POST-Request must contain `application/sq+json` as Content-Type. It can be called like this:
+
+```sh
+curl -s http://localhost:8080/query/execute-cohort -H "Content-Type: application/sq+json" -d '<query>'
+```
+
+An example `<query>` is:
+```json
+{
+  "version": "https://medizininformatik-initiative.de/fdpg/StructuredQuery/v3/schema",
+  "display": "",
+  "inclusionCriteria": [
+    [
+      {
+        "termCodes": [
+          {
+            "code": "263495000",
+            "system": "http://snomed.info/sct",
+            "display": "Geschlecht"
+          }
+        ],
+        "valueFilter": {
+          "selectedConcepts": [
+            {
+              "code": "female",
+              "system": "http://hl7.org/fhir/administrative-gender",
+              "display": "Female"
+            }
+          ],
+          "type": "concept"
+        }
+      }
+    ]
+  ]
+}
+```
+
+The result of that query could be:
+```json
+[
+  "VHF02060",
+  "VHF02061",
+  "VHF02062",
+  "VHF02066",
+  "VHF02067",
+  "VHF02069",
+  "VHF02072",
+  "VHF02073",
+  "VHF02075",
+  "VHF02076",
+  "VHF02082",
+  "VHF02083"
+]
+```
+
+
 ## Translate
 
 Flare also provides a Translate-Endpoint, which returns the separate FHIR Search queries wrapped in a json format that shows each set operation that is necessary to fit the original inclusion/ exclusion structure.

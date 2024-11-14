@@ -1,4 +1,6 @@
 flare:
+  cohort:
+    enabled: false
   fhir:
     server: 'http://localhost:8082/fhir'
     user: ''

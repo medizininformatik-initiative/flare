@@ -41,6 +41,7 @@ In order for flare to work, a FHIR server such as [Blaze](https://github.com/sam
 | FLARE_CACHE_DISK_THREADS        | 4                                     |        | The number of threads the disk cache should use for reading and writing entries.                 |
 | FLARE_MAPPING_MAPPING_FILE      | ontology/codex-term-code-mapping.json | v2.4.0 | The mappings to use.                                                                             |
 | FLARE_MAPPING_CONCEPT_TREE_FILE | ontology/codex-code-tree.json         | v2.4.0 | The code tree to use.                                                                            |
+| FLARE_COHORT_ENABLED            | false                                 |        | Toggle - enables the cohort extraction endpoint, which returns the actual patient ids            |
 | SERVER_PORT                     | 8080                                  |        | The port at which Flare provides its REST API.                                                   |
 | JAVA_TOOL_OPTIONS               | -Xmx4g                                |        | JVM options \(Docker only\)                                                                      |
 | LOG_LEVEL                       | info                                  |        | one of trace, debug, info, warn or error                                                         |
