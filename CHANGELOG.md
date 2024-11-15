@@ -1,6 +1,15 @@
 # Changelog
 
+## v2.4.0-alpha.3
+
+### Enhancements
+
+* Add Feature Toggle for the Cohort Endpoint ([#217](https://github.com/medizininformatik-initiative/flare/pull/217))
+* Updated ontology to v3.0.0-alpha.1
+
 ## v2.4.0-alpha.2
+
+### Enhancements
 
 * Updated ontology to v3.0.0-alpha
 
