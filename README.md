@@ -79,6 +79,12 @@ have the .pem extension.
 
 * [REST API](docs/api.md)
 
+## FHIR Endpoint Requirements
+
+The FHIR endpoint used by FLARE (see `FLARE_FHIR_SERVER`) has to support the following parts of the FHIR specification:
+
+* the search result parameters `_count` and `_elements` should be supported for optimal performance
+
 ## License
 
 Copyright ???
