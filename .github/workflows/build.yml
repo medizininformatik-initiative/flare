@@ -16,7 +16,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
@@ -71,7 +71,7 @@ jobs:
 
   image-scan:
     needs: build
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Download Flare Image
@@ -105,7 +105,7 @@ jobs:
 
   integration-test-default-config:
     needs: build
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Check out Git repository
@@ -135,7 +135,7 @@ jobs:
           - basic-auth
           - oauth
           - no-auth-cohort-enabled
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Check out Git repository
@@ -176,7 +176,7 @@ jobs:
       - integration-test-default-config
       - integration-test
       - image-scan
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     if: ${{ ! startsWith(github.head_ref, 'dependabot/')}}
 
     steps:
