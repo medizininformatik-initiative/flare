@@ -1,6 +1,7 @@
 package de.medizininformatikinitiative.flare.rest;
 
 import de.medizininformatikinitiative.flare.Either;
+import de.medizininformatikinitiative.flare.model.Population;
 import de.medizininformatikinitiative.flare.model.fhir.Query;
 import de.medizininformatikinitiative.flare.model.mapping.MappingNotFoundException;
 import de.medizininformatikinitiative.flare.model.sq.*;
@@ -14,14 +15,23 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.event.annotation.BeforeTestExecution;
+import org.springframework.test.context.event.annotation.BeforeTestMethod;
+import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingException;
+import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class QueryControllerTest {
 
+    static final String PATIENT_ID = "patient-id-211701";
+    static final String PATIENT_ID_1 = "patient-id-1-131300";
     static final MediaType MEDIA_TYPE_SQ = MediaType.valueOf("application/sq+json");
     static final TermCode FEVER = TermCode.of("http://snomed.info/sct", "386661006", "Fever (finding)");
     static final StructuredQuery STRUCTURED_QUERY = StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(
@@ -38,12 +48,12 @@ class QueryControllerTest {
 
     @BeforeEach
     void setUp() {
-        client = WebTestClient.bindToRouterFunction(controller.queryRouter()).build();
+        client = WebTestClient.bindToRouterFunction(controller.queryRouter(true)).build();
     }
 
     @Test
     void execute() {
-        when(queryService.execute(STRUCTURED_QUERY)).thenReturn(Mono.just(1));
+        when(queryService.execute(STRUCTURED_QUERY)).thenReturn(Mono.just(Population.of(PATIENT_ID)));
 
         client.post()
                 .uri("/query/execute")
@@ -73,6 +83,76 @@ class QueryControllerTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody().json("1");
+    }
+
+    @Test
+    void executeCohort() throws JsonProcessingException {
+        when(queryService.execute(STRUCTURED_QUERY)).thenReturn(Mono.just(Population.of(PATIENT_ID, PATIENT_ID_1)));
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        client.post()
+                .uri("/query/execute-cohort")
+                .contentType(MEDIA_TYPE_SQ)
+                .bodyValue("""
+                        {
+                          "inclusionCriteria": [
+                            [
+                              {
+                                "context": {
+                                  "system": "context-system",
+                                  "code": "context-code",
+                                  "display": "context-display"
+                                },
+                                "termCodes": [
+                                  {
+                                    "system": "http://snomed.info/sct",
+                                    "code": "386661006",
+                                    "display": "Fever (finding)"
+                                  }
+                                ]
+                              }
+                            ]
+                          ]
+                        }
+                        """)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody().json(objectMapper.writeValueAsString(List.of(PATIENT_ID, PATIENT_ID_1)));
+    }
+
+    @Test
+    void executeCohortDisabled() {
+
+        client = WebTestClient.bindToRouterFunction(controller.queryRouter(false)).build();
+
+        client.post()
+                .uri("/query/execute-cohort")
+                .contentType(MEDIA_TYPE_SQ)
+                .bodyValue("""
+                        {
+                          "inclusionCriteria": [
+                            [
+                              {
+                                "context": {
+                                  "system": "context-system",
+                                  "code": "context-code",
+                                  "display": "context-display"
+                                },
+                                "termCodes": [
+                                  {
+                                    "system": "http://snomed.info/sct",
+                                    "code": "386661006",
+                                    "display": "Fever (finding)"
+                                  }
+                                ]
+                              }
+                            ]
+                          ]
+                        }
+                        """)
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test

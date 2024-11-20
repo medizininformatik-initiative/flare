@@ -27,6 +27,7 @@ services:
       JAVA_TOOL_OPTIONS: "-Xmx1g"
       FLARE_FHIR_SERVER: "http://data-store:8080/fhir"
       LOG_LEVEL: "debug"
+      FLARE_ENABLE_COHORT_ENDPOINT: true
     ports:
       - "8080:8080"
     volumes:

@@ -76,6 +76,7 @@ public class DataStore implements FhirQueryService {
     }
 
     private Mono<Bundle> fetchPage(String url) {
+
         logger.trace("fetch page {}", url);
         return client.get()
                 .uri(url)

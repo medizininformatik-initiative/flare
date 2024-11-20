@@ -1,5 +1,38 @@
 # Changelog
 
+## v2.4.0
+
+### Enhancements
+
+* Updated ontology to v3.0.0
+* Add Feature Toggle for the Cohort Endpoint ([#217](https://github.com/medizininformatik-initiative/flare/pull/217))
+* Update mapping_tree creation ([#191](https://github.com/medizininformatik-initiative/flare/issues/191))
+* Add cohort extraction endpoint ([#178](https://github.com/medizininformatik-initiative/flare/issues/178))
+* docker-compose.yml should be for flare instead of blaze ([#184](https://github.com/medizininformatik-initiative/flare/issues/184))
+
+The full changelog can be found [here](https://github.com/medizininformatik-initiative/flare/milestone/15?closed=1).
+ 
+## v2.4.0-alpha.3
+
+### Enhancements
+
+* Add Feature Toggle for the Cohort Endpoint ([#217](https://github.com/medizininformatik-initiative/flare/pull/217))
+* Updated ontology to v3.0.0-alpha.1
+
+## v2.4.0-alpha.2
+
+### Enhancements
+
+* Updated ontology to v3.0.0-alpha
+
+## v2.4.0-alpha.1
+
+### Enhancements
+
+* Update mapping_tree creation ([#191](https://github.com/medizininformatik-initiative/flare/issues/191))
+* Add cohort extraction endpoint ([#178](https://github.com/medizininformatik-initiative/flare/issues/178))
+* docker-compose.yml should be for flare instead of blaze ([#184](https://github.com/medizininformatik-initiative/flare/issues/184))
+
 ## v2.3.0
 
 ### Enhancements

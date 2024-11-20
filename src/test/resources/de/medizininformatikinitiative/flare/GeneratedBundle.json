@@ -47,7 +47,7 @@
             ]
         },
         "subject": {
-            "reference": "Patient/062d64e5-e4e5-4c89-8fa7-a47ae3b2b95c",
+            "reference": "Patient/id-pat-bloodpressure-test",
             "display": "Alexia Wachtel"
         },
         "effectiveDateTime": "2010-08-05T07:16:58+02:00",
@@ -176,7 +176,7 @@
   }, {
     "resource": {
       "resourceType": "Patient",
-      "id": "7ca6f273-82f1-4fd5-9b0d-e9e4f957fe42",
+      "id": "id-pat-diag-I08.0",
       "meta": {
         "profile": [ "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/Patient" ]
       },
@@ -211,7 +211,7 @@
     },
     "request": {
       "method": "PUT",
-      "url": "Patient/7ca6f273-82f1-4fd5-9b0d-e9e4f957fe42"
+      "url": "Patient/id-pat-diag-I08.0"
     }
   }, {
     "resource": {
@@ -228,7 +228,7 @@
         } ]
       },
       "subject": {
-        "reference": "Patient/7ca6f273-82f1-4fd5-9b0d-e9e4f957fe42",
+        "reference": "Patient/id-pat-diag-I08.0",
         "display": "Baran Stolle"
       },
       "recordedDate": "2012-12-11T00:26:30+01:00"
@@ -255,7 +255,7 @@
   }, {
     "resource": {
       "resourceType": "Patient",
-      "id": "8da7a09c-c2b4-4b8f-9144-0ecf407f2ed1",
+      "id": "id-pat-consent-test",
       "meta": {
         "profile": [ "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/Patient" ]
       },
@@ -290,7 +290,7 @@
     },
     "request": {
       "method": "PUT",
-      "url": "Patient/8da7a09c-c2b4-4b8f-9144-0ecf407f2ed1"
+      "url": "Patient/id-pat-consent-test"
     }
   }, {
     "resource": {
@@ -313,7 +313,7 @@
         } ]
       } ],
       "patient": {
-        "reference": "Patient/8da7a09c-c2b4-4b8f-9144-0ecf407f2ed1",
+        "reference": "Patient/id-pat-consent-test",
         "display": "Ina Bielert"
       },
       "dateTime": "2003-07-09T00:45:44+02:00",
@@ -663,7 +663,7 @@
   }, {
     "resource": {
       "resourceType": "Patient",
-      "id": "062d64e5-e4e5-4c89-8fa7-a47ae3b2b95c",
+      "id": "id-pat-bloodpressure-test",
       "meta": {
         "profile": [ "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/Patient" ]
       },
@@ -698,7 +698,7 @@
     },
     "request": {
       "method": "PUT",
-      "url": "Patient/062d64e5-e4e5-4c89-8fa7-a47ae3b2b95c"
+      "url": "Patient/id-pat-bloodpressure-test"
     }
   }, {
     "resource": {
@@ -750,7 +750,7 @@
         } ]
       },
       "subject": {
-        "reference": "Patient/062d64e5-e4e5-4c89-8fa7-a47ae3b2b95c",
+        "reference": "Patient/id-pat-bloodpressure-test",
         "display": "Alexia Wachtel"
       },
       "effectiveDateTime": "2010-08-05T07:16:58+02:00",

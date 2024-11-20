@@ -3,20 +3,20 @@ name: Build
 on:
   push:
     branches:
-    - main
-    - develop
+      - main
+      - develop
     tags:
-    - 'v*.*.*'
+      - 'v*.*.*'
   pull_request:
     branches:
-    - main
-    - develop
+      - main
+      - develop
   schedule:
-  - cron: '0 1 * * *'
+    - cron: '0 1 * * *'
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
@@ -57,7 +57,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build and Export to Docker
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           tags: flare:latest
@@ -71,7 +71,7 @@ jobs:
 
   image-scan:
     needs: build
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Download Flare Image
@@ -94,6 +94,9 @@ jobs:
           output: trivy-results.sarif
           severity: 'CRITICAL,HIGH'
           timeout: '15m0s'
+        env:
+          TRIVY_DB_REPOSITORY: public.ecr.aws/aquasecurity/trivy-db:2
+          TRIVY_JAVA_DB_REPOSITORY: public.ecr.aws/aquasecurity/trivy-java-db:1
 
       - name: Upload Trivy Scan Results to GitHub Security Tab
         uses: github/codeql-action/upload-sarif@v3
@@ -102,7 +105,7 @@ jobs:
 
   integration-test-default-config:
     needs: build
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Check out Git repository
@@ -131,7 +134,8 @@ jobs:
           - no-auth
           - basic-auth
           - oauth
-    runs-on: ubuntu-22.04
+          - no-auth-cohort-enabled
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Check out Git repository
@@ -158,13 +162,21 @@ jobs:
       - name: Query for Viral sinusitis (disorder)
         run: .github/scripts/execute-query.sh 444814009 69
 
+      - name: Query for Viral sinusitis (disorder) cohort not enabled
+        if: ${{ matrix.test == 'no-auth' }}
+        run: .github/scripts/execute-cohort-query-not-enabled.sh 444814009
+
+      - name: Query for Viral sinusitis (disorder) cohort enabled
+        if: ${{ matrix.test == 'no-auth-cohort-enabled' }}
+        run: .github/scripts/execute-cohort-query-enabled.sh 444814009 69 16
+
   push-image:
     needs:
       - build
       - integration-test-default-config
       - integration-test
       - image-scan
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     if: ${{ ! startsWith(github.head_ref, 'dependabot/')}}
 
     steps:
@@ -222,7 +234,7 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
 
       - name: Build and push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           platforms: linux/amd64,linux/arm64

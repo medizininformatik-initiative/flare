@@ -7,21 +7,21 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.3.1</version>
+    <version>3.3.5</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
   <groupId>de.medizininformatik-initiative</groupId>
   <artifactId>flare</artifactId>
-  <version>2.3.0</version>
+  <version>2.4.0</version>
 
   <name>Flare</name>
   <description>Flare</description>
 
   <properties>
     <java.version>17</java.version>
-    <testcontainers.version>1.19.8</testcontainers.version>
-    <ontology.version>2.2.0</ontology.version>
+    <testcontainers.version>1.20.3</testcontainers.version>
+    <ontology.version>3.0.0</ontology.version>
   </properties>
 
   <dependencies>
@@ -44,7 +44,7 @@
     <dependency>
       <groupId>org.yaml</groupId>
       <artifactId>snakeyaml</artifactId>
-      <version>2.2</version>
+      <version>2.3</version>
     </dependency>
 
     <dependency>
@@ -61,7 +61,7 @@
     <dependency>
       <groupId>org.rocksdb</groupId>
       <artifactId>rocksdbjni</artifactId>
-      <version>9.2.1</version>
+      <version>9.7.3</version>
     </dependency>
 
     <dependency>
@@ -197,7 +197,7 @@
       <plugin>
         <groupId>com.googlecode.maven-download-plugin</groupId>
         <artifactId>download-maven-plugin</artifactId>
-        <version>1.9.0</version>
+        <version>1.12.0</version>
         <executions>
           <execution>
             <id>download-ontology</id>
@@ -206,9 +206,10 @@
               <goal>wget</goal>
             </goals>
             <configuration>
-              <url>https://github.com/medizininformatik-initiative/fhir-ontology-generator/raw/v${ontology.version}/example/mii_core_data_set/ontology/mapping.zip</url>
+              <url>https://github.com/medizininformatik-initiative/fhir-ontology-generator/raw/v${ontology.version}/example/fdpg-ontology/mapping.zip</url>
               <outputFileName>mapping.zip</outputFileName>
               <outputDirectory>ontology/</outputDirectory>
+              <skipCache>true</skipCache>
             </configuration>
           </execution>
         </executions>
