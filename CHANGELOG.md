@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.4.1
+
+### Enhancements
+
+* Updated ontology to v3.0.1
+
+The full changelog can be found [here](https://github.com/medizininformatik-initiative/flare/milestone/17?closed=1).
+
 ## v2.4.0
 
 ### Enhancements
