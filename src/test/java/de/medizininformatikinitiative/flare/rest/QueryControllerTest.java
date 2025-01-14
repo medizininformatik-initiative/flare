@@ -15,21 +15,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.event.annotation.BeforeTestExecution;
-import org.springframework.test.context.event.annotation.BeforeTestMethod;
-import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingException;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class QueryControllerTest {
 
+    static final UUID ID = UUID.randomUUID();
     static final String PATIENT_ID = "patient-id-211701";
     static final String PATIENT_ID_1 = "patient-id-1-131300";
     static final MediaType MEDIA_TYPE_SQ = MediaType.valueOf("application/sq+json");
@@ -40,6 +39,9 @@ class QueryControllerTest {
 
     @Mock
     StructuredQueryService queryService;
+
+    @Mock
+    IdGenerator queryIdGenerator;
 
     @InjectMocks
     private QueryController controller;
@@ -53,7 +55,8 @@ class QueryControllerTest {
 
     @Test
     void execute() {
-        when(queryService.execute(STRUCTURED_QUERY)).thenReturn(Mono.just(Population.of(PATIENT_ID)));
+        when(queryIdGenerator.generateRandom()).thenReturn(ID);
+        when(queryService.execute(ID, STRUCTURED_QUERY)).thenReturn(Mono.just(Population.of(PATIENT_ID)));
 
         client.post()
                 .uri("/query/execute")
@@ -87,7 +90,8 @@ class QueryControllerTest {
 
     @Test
     void executeCohort() throws JsonProcessingException {
-        when(queryService.execute(STRUCTURED_QUERY)).thenReturn(Mono.just(Population.of(PATIENT_ID, PATIENT_ID_1)));
+        when(queryIdGenerator.generateRandom()).thenReturn(ID);
+        when(queryService.execute(ID, STRUCTURED_QUERY)).thenReturn(Mono.just(Population.of(PATIENT_ID, PATIENT_ID_1)));
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -123,7 +127,6 @@ class QueryControllerTest {
 
     @Test
     void executeCohortDisabled() {
-
         client = WebTestClient.bindToRouterFunction(controller.queryRouter(false)).build();
 
         client.post()
@@ -157,7 +160,8 @@ class QueryControllerTest {
 
     @Test
     void execute_error() {
-        when(queryService.execute(STRUCTURED_QUERY)).thenReturn(Mono.error(new MappingNotFoundException(ContextualTermCode.of(TestUtil.CONTEXT, FEVER))));
+        when(queryIdGenerator.generateRandom()).thenReturn(ID);
+        when(queryService.execute(ID, STRUCTURED_QUERY)).thenReturn(Mono.error(new MappingNotFoundException(ContextualTermCode.of(TestUtil.CONTEXT, FEVER))));
 
         client.post()
                 .uri("/query/execute")

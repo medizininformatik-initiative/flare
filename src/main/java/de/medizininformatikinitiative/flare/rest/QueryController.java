@@ -17,9 +17,9 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
-import java.util.Objects;
 import java.util.Set;
 
+import static java.util.Objects.requireNonNull;
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
@@ -33,14 +33,15 @@ public class QueryController {
     private static final Logger logger = LoggerFactory.getLogger(QueryController.class);
 
     private final StructuredQueryService queryService;
+    private final IdGenerator queryIdGenerator;
 
-    public QueryController(StructuredQueryService queryService) {
-        this.queryService = Objects.requireNonNull(queryService);
+    public QueryController(StructuredQueryService queryService, IdGenerator queryIdGenerator) {
+        this.queryService = requireNonNull(queryService);
+        this.queryIdGenerator = requireNonNull(queryIdGenerator);
     }
 
     @Bean
     public RouterFunction<ServerResponse> queryRouter(@Value("${flare.cohort.enabled}") boolean cohortEnabled) {
-
         var route = route(POST("query/execute").and(accept(MEDIA_TYPE_SQ)), this::execute)
                 .andRoute(POST("query/translate").and(accept(MEDIA_TYPE_SQ)), this::translate);
 
@@ -53,40 +54,42 @@ public class QueryController {
 
     public Mono<ServerResponse> execute(ServerRequest request) {
         var startNanoTime = System.nanoTime();
-        logger.debug("Execute feasibility query");
+        var queryId = queryIdGenerator.generateRandom();
+        logger.debug("Execute feasibility query {}", queryId);
         return request.bodyToMono(StructuredQuery.class)
-                .flatMap(queryService::execute).map(Set::size)
+                .flatMap(query -> queryService.execute(queryId, query)).map(Set::size)
                 .flatMap(count -> {
-                    logger.debug("Finished feasibility query returning cohort size {} in {} seconds.", count,
+                    logger.debug("Finished feasibility query {} returning cohort size {} in {} seconds.", queryId, count,
                             "%.1f".formatted(Util.durationSecondsSince(startNanoTime)));
                     return ok().bodyValue(count);
                 })
                 .onErrorResume(MappingException.class, e -> {
-                    logger.warn("Mapping error: {}", e.getMessage());
+                    logger.warn("Mapping error in feasibility query {}: {}", queryId, e.getMessage());
                     return badRequest().bodyValue(new Error(e.getMessage()));
                 })
                 .onErrorResume(WebClientRequestException.class, e -> {
-                    logger.error("Service not available because of downstream web client errors: {}", e.getMessage());
+                    logger.error("Service not available in feasibility query {} because of downstream web client errors: {}", queryId, e.getMessage());
                     return status(503).bodyValue(new Error(e.getMessage()));
                 });
     }
 
     public Mono<ServerResponse> executeCohort(ServerRequest request) {
         var startNanoTime = System.nanoTime();
-        logger.debug("Execute cohort query");
+        var queryId = queryIdGenerator.generateRandom();
+        logger.debug("Execute cohort query {}", queryId);
         return request.bodyToMono(StructuredQuery.class)
-                .flatMap(queryService::execute)
+                .flatMap(query -> queryService.execute(queryId, query))
                 .flatMap(population -> {
-                    logger.debug("Finished cohort query returning cohort of {} patient IDs in {} seconds.", population.size(),
+                    logger.debug("Finished cohort query {} returning cohort of {} patient IDs in {} seconds.", queryId, population.size(),
                             "%.1f".formatted(Util.durationSecondsSince(startNanoTime)));
                     return ok().bodyValue(population);
                 })
                 .onErrorResume(MappingException.class, e -> {
-                    logger.warn("Mapping error: {}", e.getMessage());
+                    logger.warn("Mapping error in cohort query {}: {}", queryId, e.getMessage());
                     return badRequest().bodyValue(new Error(e.getMessage()));
                 })
                 .onErrorResume(WebClientRequestException.class, e -> {
-                    logger.error("Service not available because of downstream web client errors: {}", e.getMessage());
+                    logger.error("Service not available in cohort query {} because of downstream web client errors: {}", queryId, e.getMessage());
                     return status(503).bodyValue(new Error(e.getMessage()));
                 });
     }
