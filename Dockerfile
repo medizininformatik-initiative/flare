@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21.0.5_11-jre
+FROM eclipse-temurin:21.0.5_11-jre-jammy@sha256:5f8358c9d5615c18e95728e8b8528bda7ff40a7a5da2ac9a35b7a01f5d9b231a
 
 RUN apt-get update && apt-get upgrade -y && \
     apt-get purge wget libbinutils libctf0 libctf-nobfd0 libncurses6 -y && \
