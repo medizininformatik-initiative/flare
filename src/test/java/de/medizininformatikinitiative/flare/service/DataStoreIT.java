@@ -23,6 +23,7 @@ import reactor.test.StepVerifier;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneOffset;
+import java.util.UUID;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
@@ -31,6 +32,7 @@ class DataStoreIT {
 
     private static final Logger logger = LoggerFactory.getLogger(DataStoreIT.class);
 
+    private static final UUID ID = UUID.randomUUID();
     private static final Instant FIXED_INSTANT = Instant.ofEpochSecond(104152);
 
     @Container
@@ -64,7 +66,7 @@ class DataStoreIT {
 
     @Test
     void execute_empty() {
-        var result = dataStore.execute(Query.ofType("Observation"));
+        var result = dataStore.execute(ID, Query.ofType("Observation"));
 
         StepVerifier.create(result).expectNext(Population.of().withCreated(FIXED_INSTANT)).verifyComplete();
     }
@@ -74,7 +76,7 @@ class DataStoreIT {
         createPatient("0");
         createObservation("0");
 
-        var result = dataStore.execute(Query.ofType("Observation"));
+        var result = dataStore.execute(ID, Query.ofType("Observation"));
 
         StepVerifier.create(result).expectNext(Population.of("0").withCreated(FIXED_INSTANT)).verifyComplete();
     }
@@ -85,7 +87,7 @@ class DataStoreIT {
         createObservation("0");
         createObservation("0");
 
-        var result = dataStore.execute(Query.ofType("Observation"));
+        var result = dataStore.execute(ID, Query.ofType("Observation"));
 
         StepVerifier.create(result).expectNext(Population.of("0").withCreated(FIXED_INSTANT)).verifyComplete();
     }
@@ -97,7 +99,7 @@ class DataStoreIT {
         createObservation("0");
         createObservation("1");
 
-        var result = dataStore.execute(Query.ofType("Observation"));
+        var result = dataStore.execute(ID, Query.ofType("Observation"));
 
         StepVerifier.create(result).expectNext(Population.of("0", "1").withCreated(FIXED_INSTANT)).verifyComplete();
     }
@@ -107,7 +109,7 @@ class DataStoreIT {
     void execute_OneObsWithoutReference_FromOnePat() {
         createObservation_withoutReference();
 
-        var result = dataStore.execute(Query.ofType("Observation"));
+        var result = dataStore.execute(ID, Query.ofType("Observation"));
 
         StepVerifier.create(result).expectNext(Population.of().withCreated(FIXED_INSTANT)).verifyComplete();
     }
@@ -120,7 +122,7 @@ class DataStoreIT {
         createObservation_withoutReference();
         createObservation("1");
 
-        var result = dataStore.execute(Query.ofType("Observation"));
+        var result = dataStore.execute(ID, Query.ofType("Observation"));
 
         StepVerifier.create(result).expectNext(Population.of("1").withCreated(FIXED_INSTANT)).verifyComplete();
     }
@@ -130,7 +132,7 @@ class DataStoreIT {
     void pendingAcquireQueueReachedMaximum() {
         createPatient("0");
 
-        var result = Flux.range(1, 1000).flatMap(i -> dataStore.execute(Query.ofType("Patient"))).collectList();
+        var result = Flux.range(1, 1000).flatMap(i -> dataStore.execute(ID, Query.ofType("Patient"))).collectList();
 
         StepVerifier.create(result).verifyErrorMessage("Pending acquire queue has reached its maximum size of 8");
     }

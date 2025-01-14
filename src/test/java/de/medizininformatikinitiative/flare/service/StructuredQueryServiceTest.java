@@ -31,6 +31,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class StructuredQueryServiceTest {
 
+    static final UUID ID = UUID.randomUUID();
     static final String BFARM = "http://fhir.de/CodeSystem/bfarm/icd-10-gm";
     static final Criterion CONCEPT_CRITERION = Criterion.of(cc(1));
     static final Population EMPTY_POP = Population.of();
@@ -63,7 +64,7 @@ class StructuredQueryServiceTest {
 
             @Test
             void execute() {
-                var result = service.execute(query);
+                var result = service.execute(ID, query);
 
                 StepVerifier.create(result).verifyError(MappingNotFoundException.class);
             }
@@ -85,7 +86,7 @@ class StructuredQueryServiceTest {
             void execute() {
                 var query = query(incl(PATIENT_POP));
 
-                var result = service.execute(query);
+                var result = service.execute(ID, query);
 
                 StepVerifier.create(result).expectNext(PATIENT_POP).verifyComplete();
 
@@ -111,7 +112,7 @@ class StructuredQueryServiceTest {
             void execute_MultiplePatients() {
                 var query = query(inclExpand(PATIENT_1_POP, PATIENT_2_POP));
 
-                var result = service.execute(query);
+                var result = service.execute(ID, query);
 
                 StepVerifier.create(result).expectNext(PATIENT_1_POP.union(PATIENT_2_POP)).verifyComplete();
             }
@@ -121,7 +122,7 @@ class StructuredQueryServiceTest {
             void execute_SamePatient() {
                 var query = query(inclExpand(PATIENT_POP, PATIENT_POP));
 
-                var result = service.execute(query);
+                var result = service.execute(ID, query);
 
                 StepVerifier.create(result).expectNext(PATIENT_POP).verifyComplete();
 
@@ -149,7 +150,7 @@ class StructuredQueryServiceTest {
         void execute_MultiplePatients() {
             var query = query(inclAnd(PATIENT_1_POP, PATIENT_2_POP));
 
-            var result = service.execute(query);
+            var result = service.execute(ID, query);
 
             StepVerifier.create(result).expectNext(EMPTY_POP).verifyComplete();
         }
@@ -159,7 +160,7 @@ class StructuredQueryServiceTest {
         void execute_SamePatient() {
             var query = query(inclAnd(PATIENT_POP, PATIENT_POP));
 
-            var result = service.execute(query);
+            var result = service.execute(ID, query);
 
             StepVerifier.create(result).expectNext(PATIENT_POP).verifyComplete();
         }
@@ -184,7 +185,7 @@ class StructuredQueryServiceTest {
         void execute_MultiplePatients() {
             var query = query(inclOr(PATIENT_1_POP, PATIENT_2_POP));
 
-            var result = service.execute(query);
+            var result = service.execute(ID, query);
 
             StepVerifier.create(result).expectNext(PATIENT_1_POP.union(PATIENT_2_POP)).verifyComplete();
         }
@@ -194,7 +195,7 @@ class StructuredQueryServiceTest {
         void execute_SamePatient() {
             var query = query(inclOr(PATIENT_POP, PATIENT_POP));
 
-            var result = service.execute(query);
+            var result = service.execute(ID, query);
 
             StepVerifier.create(result).expectNext(PATIENT_POP).verifyComplete();
         }
@@ -219,7 +220,7 @@ class StructuredQueryServiceTest {
         void execute_PatientNotExcluded() {
             var query = query(incl(PATIENT_POP), excl(PATIENT_1_POP));
 
-            var result = service.execute(query);
+            var result = service.execute(ID, query);
 
             StepVerifier.create(result).expectNext(PATIENT_POP).verifyComplete();
         }
@@ -229,7 +230,7 @@ class StructuredQueryServiceTest {
         void execute_PatientExcluded() {
             var query = query(incl(PATIENT_POP), excl(PATIENT_POP));
 
-            var result = service.execute(query);
+            var result = service.execute(ID, query);
 
             StepVerifier.create(result).expectNext(EMPTY_POP).verifyComplete();
         }
@@ -255,7 +256,7 @@ class StructuredQueryServiceTest {
         void execute_PatientNotExcluded() {
             var query = query(incl(PATIENT_POP), exclOr(PATIENT_1_POP, PATIENT_2_POP));
 
-            var result = service.execute(query);
+            var result = service.execute(ID, query);
 
             StepVerifier.create(result).expectNext(PATIENT_POP).verifyComplete();
 
@@ -266,7 +267,7 @@ class StructuredQueryServiceTest {
         void execute_PatientExcluded() {
             var query = query(incl(PATIENT_POP), exclOr(PATIENT_POP, PATIENT_1_POP));
 
-            var result = service.execute(query);
+            var result = service.execute(ID, query);
 
             StepVerifier.create(result).expectNext(EMPTY_POP).verifyComplete();
         }
@@ -293,7 +294,7 @@ class StructuredQueryServiceTest {
         void execute_PatientNotExcluded() {
             var query = query(incl(PATIENT_POP), exclAnd(PATIENT_POP, PATIENT_1_POP));
 
-            var result = service.execute(query);
+            var result = service.execute(ID, query);
 
             StepVerifier.create(result).expectNext(PATIENT_POP).verifyComplete();
         }
@@ -303,7 +304,7 @@ class StructuredQueryServiceTest {
         void execute_PatientExcluded() {
             var query = query(incl(PATIENT_POP), exclAnd(PATIENT_POP, PATIENT_POP));
 
-            var result = service.execute(query);
+            var result = service.execute(ID, query);
 
             StepVerifier.create(result).expectNext(EMPTY_POP).verifyComplete();
         }
@@ -348,15 +349,15 @@ class StructuredQueryServiceTest {
 
     Criterion whenQuery(Population population) {
         var criterionQuery = whenCriterion(TermCode.of(BFARM, UUID.randomUUID().toString(), ""));
-        when(fhirQueryService.execute(criterionQuery.query)).thenReturn(Mono.just(population));
+        when(fhirQueryService.execute(ID, criterionQuery.query)).thenReturn(Mono.just(population));
         return criterionQuery.criterion;
     }
 
     Criterion whenQueryExpand(Population p1, Population p2) {
         var criterionQuery = whenCriterionExpand(TermCode.of(BFARM, UUID.randomUUID().toString(), ""),
                 TermCode.of(BFARM, UUID.randomUUID().toString(), ""));
-        when(fhirQueryService.execute(criterionQuery.query1)).thenReturn(Mono.just(p1));
-        when(fhirQueryService.execute(criterionQuery.query2)).thenReturn(Mono.just(p2));
+        when(fhirQueryService.execute(ID, criterionQuery.query1)).thenReturn(Mono.just(p1));
+        when(fhirQueryService.execute(ID, criterionQuery.query2)).thenReturn(Mono.just(p2));
         return criterionQuery.criterion;
     }
 

@@ -15,9 +15,11 @@ import java.io.IOException;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneOffset;
+import java.util.UUID;
 
 class DataStoreTest {
 
+    private static final UUID ID = UUID.randomUUID();
     private static final Instant FIXED_INSTANT = Instant.ofEpochSecond(104152);
     private static MockWebServer mockStore;
 
@@ -50,7 +52,7 @@ class DataStoreTest {
         mockStore.enqueue(new MockResponse().setResponseCode(statusCode));
         mockStore.enqueue(new MockResponse().setResponseCode(200));
 
-        var result = dataStore.execute(Query.ofType("Observation"));
+        var result = dataStore.execute(ID, Query.ofType("Observation"));
 
         StepVerifier.create(result).expectNext(Population.of().withCreated(FIXED_INSTANT)).verifyComplete();
     }
@@ -64,7 +66,7 @@ class DataStoreTest {
         mockStore.enqueue(new MockResponse().setResponseCode(500));
         mockStore.enqueue(new MockResponse().setResponseCode(200));
 
-        var result = dataStore.execute(Query.ofType("Observation"));
+        var result = dataStore.execute(ID, Query.ofType("Observation"));
 
         StepVerifier.create(result).verifyErrorMessage("Retries exhausted: 3/3");
     }
@@ -74,7 +76,7 @@ class DataStoreTest {
     void execute_retry_400() {
         mockStore.enqueue(new MockResponse().setResponseCode(400));
 
-        var result = dataStore.execute(Query.ofType("Observation"));
+        var result = dataStore.execute(ID, Query.ofType("Observation"));
 
         StepVerifier.create(result).verifyError(WebClientResponseException.BadRequest.class);
     }

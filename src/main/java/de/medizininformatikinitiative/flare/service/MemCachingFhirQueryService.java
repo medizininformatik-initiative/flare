@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
@@ -21,12 +23,12 @@ public class MemCachingFhirQueryService implements FhirQueryService {
 
     private static final Logger logger = LoggerFactory.getLogger(MemCachingFhirQueryService.class);
 
-    private static final Weigher<Query, Population> WEIGHER = (key, value) ->
-            key.toString().length() + value.memSize();
+    private static final Weigher<QueryWrapper, Population> WEIGHER = (key, value) ->
+            key.query.toString().length() + value.memSize();
 
     private final FhirQueryService fhirQueryService;
     private final Config config;
-    private AsyncLoadingCache<Query, Population> cache;
+    private AsyncLoadingCache<QueryWrapper, Population> cache;
 
     public MemCachingFhirQueryService(FhirQueryService fhirQueryService, Config config) {
         this.fhirQueryService = requireNonNull(fhirQueryService);
@@ -46,9 +48,9 @@ public class MemCachingFhirQueryService implements FhirQueryService {
     }
 
     @Override
-    public Mono<Population> execute(Query query, boolean ignoreCache) {
-        logger.trace("Try loading population for query `{}` from memory.", query);
-        return Mono.fromFuture(cache.get(query));
+    public Mono<Population> execute(UUID id, Query query, boolean ignoreCache) {
+        logger.trace("Try loading population for query `{}` part of query {} from memory.", query, id);
+        return Mono.fromFuture(cache.get(new QueryWrapper(id, query)));
     }
 
     public CacheStats stats() {
@@ -67,21 +69,43 @@ public class MemCachingFhirQueryService implements FhirQueryService {
     public record Config(long sizeInMebibytes, Duration expire, Duration refresh) {
     }
 
-    private class CacheLoader implements AsyncCacheLoader<Query, Population> {
-
-        @Override
-        public CompletableFuture<Population> asyncLoad(Query query, Executor executor) {
-            return fhirQueryService.execute(query).toFuture();
-        }
-
-        @Override
-        public CompletableFuture<Population> asyncReload(Query query, Population oldValue, Executor executor) {
-            return fhirQueryService.execute(query, true).toFuture();
-        }
-    }
-
     public record CacheStats(long estimatedEntryCount, long maxMemoryMiB, long usedMemoryMiB, long hitCount,
                              long missCount, long evictionCount, long loadSuccessCount, long loadFailureCount,
                              long totalLoadTimeNanos) {
+    }
+
+    private record QueryWrapper(UUID id, Query query) {
+
+        private QueryWrapper {
+            requireNonNull(id);
+            requireNonNull(query);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == null || getClass() != o.getClass()) return false;
+            QueryWrapper that = (QueryWrapper) o;
+            return Objects.equals(query, that.query);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(query);
+        }
+    }
+
+    private class CacheLoader implements AsyncCacheLoader<QueryWrapper, Population> {
+
+        @Override
+        public CompletableFuture<Population> asyncLoad(QueryWrapper query, Executor executor) {
+            logger.trace("Cache miss for query `{}` part of query {}.", query.query, query.id);
+            return fhirQueryService.execute(query.id, query.query).toFuture();
+        }
+
+        @Override
+        public CompletableFuture<Population> asyncReload(QueryWrapper query, Population oldValue, Executor executor) {
+            logger.trace("Refresh query `{}`.", query.query);
+            return fhirQueryService.execute(query.id, query.query, true).toFuture();
+        }
     }
 }

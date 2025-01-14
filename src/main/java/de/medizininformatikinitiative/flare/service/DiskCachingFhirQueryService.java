@@ -13,6 +13,7 @@ import reactor.core.scheduler.Scheduler;
 import java.nio.ByteBuffer;
 import java.time.Clock;
 import java.time.Duration;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -54,16 +55,16 @@ public class DiskCachingFhirQueryService implements FhirQueryService {
     }
 
     @Override
-    public Mono<Population> execute(Query query, boolean ignoreCache) {
+    public Mono<Population> execute(UUID id, Query query, boolean ignoreCache) {
         if (ignoreCache) {
-            return executeQuery(query, true);
+            return executeQuery(id, query, true);
         } else {
-            return internalGet(query).switchIfEmpty(Mono.defer(() -> executeQuery(query, false)));
+            return internalGet(query).switchIfEmpty(Mono.defer(() -> executeQuery(id, query, false)));
         }
     }
 
-    private Mono<Population> executeQuery(Query query, boolean ignoreCache) {
-        return fhirQueryService.execute(query, ignoreCache).doOnNext(population -> put(query, population));
+    private Mono<Population> executeQuery(UUID id, Query query, boolean ignoreCache) {
+        return fhirQueryService.execute(id, query, ignoreCache).doOnNext(population -> put(query, population));
     }
 
     private Mono<Population> internalGet(Query query) {
