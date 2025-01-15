@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.5.0
+
+### Enhancements
+
+* Add Query Tracing to Logging ([#240](https://github.com/medizininformatik-initiative/flare/issues/240))
+
+The full changelog can be found [here](https://github.com/medizininformatik-initiative/flare/milestone/16?closed=1).
+
 ## v2.4.1
 
 ### Enhancements
