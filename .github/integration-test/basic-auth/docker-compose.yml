@@ -1,6 +1,6 @@
 services:
   data-store:
-    image: "samply/blaze:0.30"
+    image: "samply/blaze:0.31"
     healthcheck:
       test: ["CMD-SHELL", "curl --fail -s http://localhost:8080/health"]
       interval: "5s"
@@ -37,7 +37,7 @@ services:
     depends_on:
       - data-store
   proxy:
-    image: "nginx:1.27.2"
+    image: "nginx:1.27.3"
     volumes:
       - "./nginx.conf:/etc/nginx/nginx.conf"
       - "./proxy.htpasswd:/etc/auth/.htpasswd"

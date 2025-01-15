@@ -21,6 +21,7 @@ import reactor.util.retry.Retry;
 import java.time.Clock;
 import java.time.Duration;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static de.medizininformatikinitiative.flare.model.fhir.QueryParams.stringValue;
@@ -48,9 +49,9 @@ public class DataStore implements FhirQueryService {
     }
 
     @Override
-    public Mono<Population> execute(Query query, boolean ignoreCache) {
+    public Mono<Population> execute(UUID id, Query query, boolean ignoreCache) {
         var startNanoTime = System.nanoTime();
-        logger.debug("Execute query: {}", query);
+        logger.debug("Execute query as part of query {}: {}", id, query);
         return client.post()
                 .uri("/{type}/_search", query.type())
                 .contentType(APPLICATION_FORM_URLENCODED)
@@ -66,9 +67,9 @@ public class DataStore implements FhirQueryService {
                 .flatMap(bundle -> Flux.fromStream(bundle.entry().stream().flatMap(e -> e.resource().patientId().stream())))
                 .collect(Collectors.toSet())
                 .map(patientIds -> Population.copyOf(patientIds).withCreated(clock.instant()))
-                .doOnNext(p -> logger.debug("Finished query `{}` returning {} patients in {} seconds.", query, p.size(),
+                .doOnNext(p -> logger.debug("Finished query `{}` as part of query {} returning {} patients in {} seconds.", query, id, p.size(),
                         "%.1f".formatted(Util.durationSecondsSince(startNanoTime))))
-                .doOnError(e -> logger.error("Error while executing query `{}`: {}", query, e.getMessage()));
+                .doOnError(e -> logger.error("Error while executing query `{}` as part of query {}: {}", query, id, e.getMessage()));
     }
 
     private static boolean shouldRetry(HttpStatusCode code) {

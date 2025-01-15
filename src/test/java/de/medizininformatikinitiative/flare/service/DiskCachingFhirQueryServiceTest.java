@@ -22,6 +22,7 @@ import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneOffset;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -33,6 +34,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class DiskCachingFhirQueryServiceTest {
 
+    static final UUID ID = UUID.randomUUID();
     static final Query QUERY = Query.ofType("foo");
     static final String PATIENT_ID = "patient-id-113617";
     static final String PATIENT_ID_1 = "patient-id-1-103010";
@@ -61,9 +63,9 @@ class DiskCachingFhirQueryServiceTest {
 
     @Test
     void execute_error() {
-        when(queryService.execute(QUERY, false)).thenReturn(Mono.error(new Exception(ERROR_MSG)));
+        when(queryService.execute(ID, QUERY, false)).thenReturn(Mono.error(new Exception(ERROR_MSG)));
 
-        var result = service.execute(QUERY);
+        var result = service.execute(ID, QUERY);
 
         StepVerifier.create(result).verifyErrorMessage(ERROR_MSG);
         waitForTasksToFinish();
@@ -72,9 +74,9 @@ class DiskCachingFhirQueryServiceTest {
 
     @Test
     void execute_miss() {
-        when(queryService.execute(QUERY, false)).thenReturn(Mono.just(Population.of(PATIENT_ID)));
+        when(queryService.execute(ID,  QUERY, false)).thenReturn(Mono.just(Population.of(PATIENT_ID)));
 
-        var result = service.execute(QUERY);
+        var result = service.execute(ID, QUERY);
 
         StepVerifier.create(result).expectNext(Population.of(PATIENT_ID)).verifyComplete();
         waitForTasksToFinish();
@@ -85,7 +87,7 @@ class DiskCachingFhirQueryServiceTest {
     void execute_hit() {
         ensureCacheContains(QUERY, Population.of(PATIENT_ID));
 
-        var result = service.execute(QUERY);
+        var result = service.execute(ID, QUERY);
 
         StepVerifier.create(result).expectNext(Population.of(PATIENT_ID)).verifyComplete();
         waitForTasksToFinish();
@@ -95,9 +97,9 @@ class DiskCachingFhirQueryServiceTest {
     @Test
     void execute_ignoringCache() {
         ensureCacheContains(QUERY, Population.of(PATIENT_ID_1));
-        when(queryService.execute(QUERY, true)).thenReturn(Mono.just(Population.of(PATIENT_ID_2)));
+        when(queryService.execute(ID,  QUERY, true)).thenReturn(Mono.just(Population.of(PATIENT_ID_2)));
 
-        var result = service.execute(QUERY, true);
+        var result = service.execute(ID,  QUERY, true);
 
         StepVerifier.create(result).expectNext(Population.of(PATIENT_ID_2)).verifyComplete();
         waitForTasksToFinish();
@@ -108,9 +110,9 @@ class DiskCachingFhirQueryServiceTest {
     @DisplayName("expired populations will not be returned as hit")
     void execute_expiredHit() {
         ensureCacheContains(QUERY, Population.of(PATIENT_ID_1).withCreated(Instant.EPOCH.minus(2, MINUTES)));
-        when(queryService.execute(QUERY, false)).thenReturn(Mono.just(Population.of(PATIENT_ID_2)));
+        when(queryService.execute(ID,  QUERY, false)).thenReturn(Mono.just(Population.of(PATIENT_ID_2)));
 
-        var result = service.execute(QUERY, false);
+        var result = service.execute(ID, QUERY, false);
 
         StepVerifier.create(result).expectNext(Population.of(PATIENT_ID_2)).verifyComplete();
         waitForTasksToFinish();
@@ -123,7 +125,7 @@ class DiskCachingFhirQueryServiceTest {
         var population = populationOfSize(n);
         ensureCacheContains(QUERY, population);
 
-        var result = service.execute(QUERY);
+        var result = service.execute(ID, QUERY);
 
         StepVerifier.create(result).expectNext(population).verifyComplete();
         waitForTasksToFinish();

@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 import static de.medizininformatikinitiative.flare.model.translate.Operator.Name.UNION;
 import static java.util.Objects.requireNonNull;
 
@@ -36,14 +38,15 @@ public class StructuredQueryService {
     /**
      * Executes {@code query} and returns the Population of Patient IDs.
      *
+     * @param id the ID of the query used for tracing purposes
      * @param query the query to execute
      * @return the Patient IDs qualifying the criteria
      */
-    public Mono<Population> execute(StructuredQuery query) {
-        var includedPatients = query.inclusionCriteria().executeAndIntersection(this::executeUnionGroup)
+    public Mono<Population> execute(UUID id, StructuredQuery query) {
+        var includedPatients = query.inclusionCriteria().executeAndIntersection(group -> executeUnionGroup(id, group))
                 .defaultIfEmpty(Population.of());
         var excludedPatients = query.exclusionCriteria().map(c -> c.map(CriterionGroup::wrapCriteria)
-                        .executeAndUnion(group -> group.executeAndIntersection(this::executeUnionGroup))
+                        .executeAndUnion(group -> group.executeAndIntersection(group1 -> executeUnionGroup(id, group1)))
                         .defaultIfEmpty(Population.of()))
                 .orElse(Mono.just(Population.of()));
         return includedPatients
@@ -51,14 +54,14 @@ public class StructuredQueryService {
     }
 
 
-    private Mono<Population> executeUnionGroup(CriterionGroup<Criterion> group) {
-        return group.executeAndUnion(this::executeSingle);
+    private Mono<Population> executeUnionGroup(UUID id, CriterionGroup<Criterion> group) {
+        return group.executeAndUnion(criterion -> executeSingle(id, criterion));
     }
 
-    private Flux<Population> executeSingle(Criterion criterion) {
-        logger.trace("Execute single criterion {}", criterion);
+    private Flux<Population> executeSingle(UUID id, Criterion criterion) {
+        logger.trace("Execute single criterion of query {}: {}", id, criterion);
         return translator.toQuery(criterion)
-                .either(Flux::error, queries -> Flux.fromIterable(queries).flatMap(fhirQueryService::execute));
+                .either(Flux::error, queries -> Flux.fromIterable(queries).flatMap(query -> fhirQueryService.execute(id, query)));
     }
 
     /**

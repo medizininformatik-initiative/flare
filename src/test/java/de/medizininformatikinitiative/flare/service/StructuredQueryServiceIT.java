@@ -41,6 +41,7 @@ import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -51,11 +52,12 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @SpringBootTest
 class StructuredQueryServiceIT {
 
+    private static final Logger logger = LoggerFactory.getLogger(StructuredQueryServiceIT.class);
+
+    private static final UUID ID = UUID.randomUUID();
     private static final Clock CLOCK_2000 = Clock.fixed(LocalDate.of(2000, 1, 1).atStartOfDay().toInstant(ZoneOffset.UTC), ZoneOffset.UTC);
     private static final TermCode I08 = TermCode.of("http://fhir.de/CodeSystem/bfarm/icd-10-gm", "I08", "");
     private static final TermCode DIAGNOSIS = TermCode.of("fdpg.mii.cds", "Diagnose", "Diagnose");
-
-    private static final Logger logger = LoggerFactory.getLogger(StructuredQueryServiceIT.class);
 
     @Container
     @SuppressWarnings("resource")
@@ -130,7 +132,7 @@ class StructuredQueryServiceIT {
     void execute_Criterion() {
         var query = StructuredQuery.of(CriterionGroup.of(CriterionGroup.of(Criterion.of(ContextualConcept.of(DIAGNOSIS, Concept.of(I08))))));
 
-        var result = service.execute(query);
+        var result = service.execute(ID, query);
 
         StepVerifier.create(result).expectNext(Population.of("id-pat-diag-I08.0")).verifyComplete();
     }
@@ -139,7 +141,7 @@ class StructuredQueryServiceIT {
     void execute_genderTestCase() throws URISyntaxException, IOException {
         var query = parseSq(Files.readString(resourcePathFlareApplication("testCases").resolve("returningOther").resolve("2-gender.json")));
 
-        var result = service.execute(query);
+        var result = service.execute(ID, query);
 
         StepVerifier.create(result).expectNextMatches(p -> p.size() == 172).verifyComplete();
     }
@@ -148,7 +150,7 @@ class StructuredQueryServiceIT {
     void execute_consentTestCase() throws URISyntaxException, IOException {
         var query = parseSq(Files.readString(resourcePathFlareApplication("testCases").resolve("returningOther").resolve("consent.json")));
 
-        var result = service.execute(query);
+        var result = service.execute(ID, query);
 
         StepVerifier.create(result).expectNext(Population.of("id-pat-consent-test")).verifyComplete();
     }
@@ -164,7 +166,7 @@ class StructuredQueryServiceIT {
 
         var query = parseSq(slurpStructuredQueryService("referencedCriteria/sq-test-specimen-diag.json"));
 
-        var result = service.execute(query);
+        var result = service.execute(ID, query);
 
         StepVerifier.create(result).expectNext(Population.of("id-pat-diab-test-1")).verifyComplete();
 
@@ -173,7 +175,7 @@ class StructuredQueryServiceIT {
     @ParameterizedTest
     @MethodSource("getTestQueriesReturningOnePatient")
     void execute_casesReturningOne(StructuredQuery query) {
-        var result = service.execute(query);
+        var result = service.execute(ID, query);
 
         StepVerifier.create(result).expectNextMatches(p -> p.size() == 1).verifyComplete();
     }
@@ -221,7 +223,7 @@ class StructuredQueryServiceIT {
                 }
                 """);
 
-        var result = service_BloodPressure.execute(query);
+        var result = service_BloodPressure.execute(ID, query);
 
         StepVerifier.create(result).expectNext(Population.of("id-pat-bloodpressure-test")).verifyComplete();
 
