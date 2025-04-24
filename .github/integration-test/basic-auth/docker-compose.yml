@@ -37,7 +37,7 @@ services:
     depends_on:
       - data-store
   proxy:
-    image: "nginx:1.27.4"
+    image: "nginx:1.28.0"
     volumes:
       - "./nginx.conf:/etc/nginx/nginx.conf"
       - "./proxy.htpasswd:/etc/auth/.htpasswd"
