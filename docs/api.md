@@ -33,6 +33,12 @@ An example `<query>` is:
             }
           ],
           "type": "concept"
+        },
+        "context": {
+          "code": "Patient",
+          "display": "Patient",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0"
         }
       }
     ]
@@ -81,6 +87,12 @@ An example `<query>` is:
             }
           ],
           "type": "concept"
+        },
+        "context": {
+          "code": "Patient",
+          "display": "Patient",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0"
         }
       }
     ]
@@ -176,6 +188,12 @@ The example query is:
           },
           "value": 5,
           "comparator": "gt"
+        },
+        "context": {
+          "code": "Patient",
+          "display": "Patient",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0"
         }
       },
       {
@@ -195,6 +213,12 @@ The example query is:
             }
           ],
           "type": "concept"
+        },
+        "context": {
+          "code": "Patient",
+          "display": "Patient",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0"
         }
       }
     ]
@@ -218,6 +242,12 @@ The example query is:
             }
           ],
           "type": "concept"
+        },
+        "context": {
+          "code": "Patient",
+          "display": "Patient",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0"
         }
       }
     ]
