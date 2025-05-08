@@ -1,7 +1,10 @@
-FROM eclipse-temurin:21.0.5_11-jre-jammy@sha256:5f8358c9d5615c18e95728e8b8528bda7ff40a7a5da2ac9a35b7a01f5d9b231a
+FROM eclipse-temurin:21.0.7_6-jre-noble@sha256:c06eb1dfa2c701a00fdc9e6ad57a7b667eee093f8361781023c3aee6815ef713
 
-RUN apt-get update && apt-get upgrade -y && \
-    apt-get purge wget libbinutils libctf0 libctf-nobfd0 libncurses6 -y && \
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get install libjemalloc2 -y && \
+    apt-get purge wget libncurses6 -y && \
     apt-get autoremove -y && apt-get clean && \
     rm -rf /var/lib/apt/lists/
 

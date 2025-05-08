@@ -1,6 +1,6 @@
 services:
   data-store:
-    image: "samply/blaze:0.31"
+    image: "samply/blaze:0.34"
     healthcheck:
       test: ["CMD-SHELL", "curl --fail -s http://localhost:8080/health"]
       interval: "5s"
