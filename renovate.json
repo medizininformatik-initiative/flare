@@ -9,6 +9,5 @@
       "groupName": "jackson"
     }
   ],
-  "baseBranches": ["develop"],
   "prConcurrentLimit": 3
 }
