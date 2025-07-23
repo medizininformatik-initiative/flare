@@ -1,12 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
   "packageRules": [
     {
-      "matchPackagePatterns": ["com.fasterxml.jackson"],
-      "groupName": "jackson"
+      "groupName": "jackson",
+      "matchPackageNames": [
+        "/com.fasterxml.jackson/"
+      ]
     }
   ],
   "prConcurrentLimit": 3
