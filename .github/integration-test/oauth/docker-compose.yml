@@ -50,7 +50,7 @@ services:
     volumes:
       - "./realm-test.json:/opt/keycloak/data/import/realm-test.json"
   proxy:
-    image: "nginx:1.28.0"
+    image: "nginx:1.29.0"
     healthcheck:
       test: ["CMD-SHELL", "curl --fail -s http://localhost:8080"]
       interval: "5s"
