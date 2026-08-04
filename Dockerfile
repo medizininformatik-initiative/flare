@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21.0.10_7-jre-noble@sha256:b35184e04749777b79e711cef0dbf95c7e7cdf1e8c59dab3b0c85bf1cc345127
+FROM eclipse-temurin:25.0.3_9-jre-noble@sha256:fbcf915c585659b30eb766ada4d6d7cfc9ec1040bf521e95bf61b10a25af73db
 
 ENV DEBIAN_FRONTEND=noninteractive
 
