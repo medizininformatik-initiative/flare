@@ -134,6 +134,9 @@ jobs:
           - basic-auth
           - oauth
           - no-auth-cohort-enabled
+        strict-handling:
+          - true
+          - false
     runs-on: ubuntu-24.04
 
     steps:
@@ -153,6 +156,8 @@ jobs:
         run: docker load --input /tmp/flare.tar
 
       - name: Run Flare and Blaze
+        env:
+          FLARE_FHIR_STRICT_HANDLING: ${{ matrix.strict-handling }}
         run: docker compose -f .github/integration-test/${{ matrix.test }}/docker-compose.yml up -d --wait --wait-timeout 300
 
       - name: Load Data
@@ -168,6 +173,9 @@ jobs:
       - name: Query for Viral sinusitis (disorder) cohort enabled
         if: ${{ matrix.test == 'no-auth-cohort-enabled' }}
         run: .github/scripts/execute-cohort-query-enabled.sh 444814009 69 16
+
+      - name: Query with unknown search parameter
+        run: .github/scripts/execute-query-unknown-search-param.sh ${{ matrix.strict-handling }}
 
   push-image:
     needs:

@@ -2,13 +2,13 @@ package de.medizininformatikinitiative.flare.service;
 
 import de.medizininformatikinitiative.flare.model.Population;
 import de.medizininformatikinitiative.flare.model.fhir.Query;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import de.medizininformatikinitiative.flare.model.fhir.QueryParams;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
@@ -37,7 +37,7 @@ class DataStoreIT {
 
     @Container
     @SuppressWarnings("resource")
-    private final GenericContainer<?> blaze = new GenericContainer<>("samply/blaze:1.6")
+    private final GenericContainer<?> blaze = new GenericContainer<>("samply/blaze:1.11")
             .withImagePullPolicy(PullPolicy.alwaysPull())
             .withEnv("LOG_LEVEL", "debug")
             .withExposedPorts(8080)
@@ -49,18 +49,19 @@ class DataStoreIT {
 
     @SuppressWarnings("HttpUrlsUsage")
     @BeforeEach
-    void setUp() {
+    void setUp(TestInfo testInfo) {
         var host = "%s:%d".formatted(blaze.getHost(), blaze.getFirstMappedPort());
         ConnectionProvider provider = ConnectionProvider.builder("custom")
                 .maxConnections(4)
                 .build();
         HttpClient httpClient = HttpClient.create(provider);
-        client = WebClient.builder()
+        var builder = WebClient.builder()
                 .baseUrl("http://%s/fhir".formatted(host))
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .defaultHeader("Accept", "application/fhir+json")
-                .defaultHeader("X-Forwarded-Host", host)
-                .build();
+                .defaultHeader("X-Forwarded-Host", host);
+        if (testInfo.getTags().contains("strictHandling")) builder.defaultHeader("Prefer", "handling=strict");
+        client = builder.build();
         dataStore = new DataStore(client, Clock.fixed(FIXED_INSTANT, ZoneOffset.UTC), 1000);
     }
 
@@ -135,6 +136,16 @@ class DataStoreIT {
         var result = Flux.range(1, 1000).flatMap(i -> dataStore.execute(ID, Query.ofType("Patient"))).collectList();
 
         StepVerifier.create(result).verifyErrorMessage("Pending acquire queue has reached its maximum size of 8");
+    }
+
+    @Test
+    @DisplayName("If strict handling of missing search parameters is enabled the corresponding header value should" +
+            " be set and the search request should fail if it contains an unknown search parameter")
+    @Tag("strictHandling")
+    void missingSearchParameterWithStrictHandling() {
+        var result = dataStore.execute(ID, Query.of("Observation", QueryParams.of("unknown", QueryParams.stringValue("abc"))));
+
+        StepVerifier.create(result).verifyError(WebClientResponseException.BadRequest.class);
     }
 
     private void createPatient(String id) {

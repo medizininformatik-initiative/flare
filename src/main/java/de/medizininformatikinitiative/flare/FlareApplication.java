@@ -53,6 +53,7 @@ public class FlareApplication {
                                      @Value("${flare.fhir.password}") String password,
                                      @Value("${flare.fhir.maxConnections}") int maxConnections,
                                      @Value("${flare.fhir.maxQueueSize}") int maxQueueSize,
+                                     @Value("${flare.fhir.strictHandling}") boolean strictHandling,
                                      ObjectMapper mapper,
                                      @Qualifier("oauth") ExchangeFilterFunction oauthExchangeFilterFunction) {
         logger.info("Create a HTTP connection pool to {} with a maximum of {} connections.", baseUrl, maxConnections);
@@ -64,7 +65,8 @@ public class FlareApplication {
         WebClient.Builder builder = WebClient.builder()
                 .baseUrl(baseUrl)
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
-                .defaultHeader("Accept", "application/fhir+json");
+                .defaultHeader("Accept", "application/fhir+json")
+                .defaultHeader("Prefer", "handling=" + (strictHandling ? "strict" : "lenient"));
         if (!user.isEmpty() && !password.isEmpty()) {
             builder = builder.filter(ExchangeFilterFunctions.basicAuthentication(user, password));
         }
