@@ -1,0 +1,38 @@
+{
+  "inclusionCriteria": [
+    [
+      {
+        "termCodes": [
+          {
+            "system": "http://loinc.org",
+            "code": "72166-2",
+            "display": "Tobacco smoking status NHIS"
+          }
+        ],
+        "context": {
+          "code": "Laboruntersuchung",
+          "display": "Laboruntersuchung",
+          "system": "fdpg.mii.cds",
+          "version": "1.0.0"
+        },
+        "attributeFilters": [
+          {
+            "selectedConcepts": [
+              {
+                "code": "123",
+                "display": "123",
+                "system": "http://example.org/fhir/CodeSystem/example"
+              }
+            ],
+            "type": "concept",
+            "attributeCode": {
+              "code": "unknown",
+              "display": "unknown",
+              "system": "http://hl7.org/fhir/StructureDefinition"
+            }
+          }
+        ]
+      }
+    ]
+  ]
+}
