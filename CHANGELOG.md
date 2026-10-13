@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.9.0
+
+### Enhancements
+
+* Make unknown FHIR search parameter handling behavior configurable (strict by default) ([#96](https://github.com/medizininformatik-initiative/flare/issues/96))
+
+The full changelog can be found [here](https://github.com/medizininformatik-initiative/flare/milestone/21?closed=1).
+
 ## v2.8.0
 
 ### Enhancements
