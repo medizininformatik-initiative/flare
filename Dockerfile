@@ -1,9 +1,11 @@
-FROM eclipse-temurin:21.0.11_10-jre-noble@sha256:ca397720325ceefe39ce397f186759fc87d9efafb2dc4ce53315980844c2f4f2
+FROM eclipse-temurin:25.0.5.1_2-jre-noble@sha256:2ec98aa522c472deadfd2b7c5b39bca680e33ef522a53a72f10789bdf89a6bb5
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# install curl for healthcheck in integration tests
 RUN apt-get update && \
     apt-get install libjemalloc2 -y && \
+    apt-get install curl -y && \
     apt-get purge wget libncurses6 -y && \
     apt-get autoremove -y && apt-get clean && \
     rm -rf /var/lib/apt/lists/
