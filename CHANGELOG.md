@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.9.1
+
+### Security
+
+* Update Eclipse Temurin ([#369](https://github.com/medizininformatik-initiative/flare/issues/369))
+
+The full changelog can be found [here](https://github.com/medizininformatik-initiative/flare/milestone/22?closed=1).
+
 ## v2.9.0
 
 ### Enhancements
